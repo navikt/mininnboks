@@ -1,0 +1,16 @@
+decorator:
+  footerType: WITH_ALPHABET
+
+proxy:
+  - contextPath: /login,
+    baseUrl: http://loginservice.default.svc.nais.local,
+    pingRequestPath: /internal/info
+
+  - contextPath: /mininnboks-api,
+    baseUrl: http://mininnboks-api.{{ NAIS_NAMESPACE }}.svc.nais.local,
+    requestRewrite: REMOVE_CONTEXT_PATH,
+    pingRequestPath: /internal/isAlive
+
+  - contextPath: /saksoversikt-api,
+    baseUrl: http://saksoversikt-api.{{ NAIS_NAMESPACE }}.svc.nais.local,
+    pingRequestPath: /saksoversikt-api/internal/isAlive
