@@ -1,0 +1,25 @@
+contextPath: /
+
+decorator:
+  footerType: WITH_ALPHABET
+
+auth:
+  enforce: true
+  loginUrl: {{ LOGINSERVICE_URL }}
+
+proxy:
+  - contextPath: /mininnboks-api
+    baseUrl: http://mininnboks-api.{{ NAIS_NAMESPACE }}.svc.nais.local
+    requestRewrite: REMOVE_CONTEXT_PATH
+    pingRequestPath: /internal/isAlive
+
+  - contextPath: /saksoversikt-api
+    baseUrl: http://saksoversikt-api.{{ NAIS_NAMESPACE }}.svc.nais.local
+    pingRequestPath: /saksoversikt-api/internal/isAlive
+
+
+redirect:
+  - from: /mininnboks
+    to: {{ MININNBOKS_URL }}
+  - from: /saksoversikt
+    to: {{ SAKSOVERSIKT_URL }}

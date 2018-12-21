@@ -1,0 +1,32 @@
+@import "../variables";
+
+.snakkeboble {
+
+    .avsnitt {
+        word-break: break-all;
+    }
+
+    .snakkeboble-panel {
+        min-width: 500px;
+    }
+
+    .ikon {
+        display: block;
+        background-size: contain;
+        background-repeat: no-repeat;
+
+        &.person-ikon {
+            background-image: url("@{imgDir}/person.svg");
+            width: 56px;
+            height: 56px;
+        }
+
+        &.nav-ikon {
+            background-image: url("@{imgDir}/nav.svg");
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+}
+

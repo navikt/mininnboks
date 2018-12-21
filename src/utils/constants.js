@@ -1,0 +1,15 @@
+
+const Constants = {
+    LEST: 'LEST',
+    IKKE_LEST: 'IKKE_LEST',
+    BESVART: 'BESVART',
+    LEST_UBESVART: 'LEST_UBESVART'
+};
+
+export const MeldingsTyper = {
+    SPORSMAL_SKRIFTLIG: 'SPORSMAL_SKRIFTLIG',
+    SVAR_SKRIFTLIG: 'SVAR_SKRIFTLIG',
+    DELVIS_SVAR: 'DELVIS_SVAR_SKRIFTLIG'
+};
+
+export default Constants;
