@@ -1,0 +1,40 @@
+- fjerne brødsmulesti? Tilbakeknapp?
+- Ping-pather
+
+- decorator-version
+
+- Enda mer config inn i pus-decorator (se Dockerfile)
+
+
+Funker også med OpenAM i q0
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED***
+
+***REMOVED***
+***REMOVED***
+
+
+
+
+Sjekk formattering:
+\\\\\\\\\\\\\\\\
+
+feilmelding.journalfortannettema.tekst
+dokumentvisning.kontakt.nav.link
+feilmelding.sikkerhetsbegrensning.tekst
+
+
+Sjekk med Tone:
+\\\\\\\\\\\\\\\\
+oppgave.nysykemelding
+oppgave.nysykemelding.fritekst
+
+
+dokumentvisning.bildelasting.feilet
+dokumentvisning.bildelasting.feilet.lenketekst
+
+ - Mangler dittnav.link i dagens versjon? (frontenden ser ut til å forvente denne)
