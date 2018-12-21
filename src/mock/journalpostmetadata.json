@@ -1,0 +1,27 @@
+{
+  "resultat": {
+    "retning": null,
+    "dato": null,
+    "navn": null,
+    "journalpostId": "420088717",
+    "hoveddokument": null,
+    "vedlegg": null,
+    "avsender": null,
+    "mottaker": null,
+    "tilhorendeSakid": null,
+    "tilhorendeFagsakId": null,
+    "behandlingsId": null,
+    "baksystem": [],
+    "temakode": null,
+    "temakodeVisning": null,
+    "ettersending": false,
+    "erJournalfort": true,
+    "feilWrapper": {
+      "inneholderFeil": false,
+      "feilmelding": null
+    },
+    "kategoriNotat": null,
+    "lenkeTilSoknad": null
+  },
+  "feilendeSystemer": []
+}
