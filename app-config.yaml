@@ -1,0 +1,52 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: repo.adeo.no:5443/oppfolging/mininnboks
+team: oppfolging
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 15
+  readiness:
+    path: /internal/isReady
+    initialDelay: 15
+prometheus:
+  enabled: true
+  path: /internal/metrics
+fasitResources:
+  used:
+
+  - alias: loadbalancer:mininnboks
+    resourceType: loadbalancerconfig
+
+  - alias: appres.cms
+    resourceType: baseurl
+
+  - alias: appdynamics
+    resourceType: applicationproperties
+
+  # oidc med AzureAD B2C
+  - alias: loginservice
+    resourceType: restservice
+    propertyMap:
+      # TODO inn i decorator.yaml
+      url: OIDC_LOGIN_URL
+  - alias: aad_b2c_clientid
+    resourceType: credential
+  - alias: aad_b2c_discovery
+    resourceType: baseurl
+
+resources:
+  limits:
+    cpu: 3
+    memory: 768Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
+
+webproxy: true
+alertProfiles:
+  - common-java-modules
