@@ -1,0 +1,12 @@
+[
+    {
+        "contextPath": "/login",
+        "baseUrl": "http://loginservice.default",
+        "pingRequestPath": "/internal/info"
+    },
+    {
+        "contextPath": "/api",
+        "baseUrl": "http://mininnboks-api",
+        "pingRequestPath": "/api/ping"
+    }
+]
