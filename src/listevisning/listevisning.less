@@ -1,0 +1,81 @@
+@import "../variables";
+
+.traad-liste {
+    margin-bottom: 3rem;
+    text-align: left;
+
+    .tema-avsnitt {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .lenkepanel__heading {
+        display: block;
+        width: calc(100% - 4rem);
+    }
+
+    .lenkepanel {
+        padding: 2rem 2rem 2rem 5.5rem;
+        background-position: 2.4rem 2.2rem;
+        background-repeat: no-repeat;
+        margin-bottom: 4px;
+
+        &:hover {
+            [class^="typo-"] {
+                color: @navMorkGra;
+                text-decoration: none;
+            }
+        }
+
+        &.uleste-meldinger {
+            border-left: 6px solid @navBla;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        &.dokument {
+            background-image: url("@{imgDir}/midlertidig/file-new.svg");
+            &:hover {
+                background-image: url("@{imgDir}/midlertidig/file-new_hover.svg");
+            }
+        }
+        &.oppgave {
+            background-image: url("@{imgDir}/midlertidig/first-aid-plaster.svg");
+            &:hover {
+                background-image: url("@{imgDir}/midlertidig/first-aid-plaster_hover.svg");
+            }
+        }
+        &.dialog {
+            background-image: url("@{imgDir}/midlertidig/bubble-chat.svg");
+            &.flere-meldinger {
+                background-image: url("@{imgDir}/midlertidig/chat-double-bubble.svg");
+                .antall-flere {
+                    position: absolute;
+                    left: 4rem;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                }
+                &:hover {
+                    background-image: url("@{imgDir}/midlertidig/chat-double-bubble_hover.svg");
+                    .antall-flere {
+                        color: @navBla;
+                    }
+                }
+            }
+            &:hover {
+                background-image: url("@{imgDir}/midlertidig/bubble-chat_hover.svg");
+            }
+        }
+    }
+
+    .purring {
+        color: @navRod;
+    }
+
+    @media (max-width: @screen-sm) {
+        .antall-flere {
+            display: none;
+        }
+    }
+}
