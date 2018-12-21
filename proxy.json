@@ -1,0 +1,10 @@
+[
+    {
+        "contextPath": "/login",
+        "baseUrl": "http://loginservice"
+    },
+    {
+        "contextPath": "/api",
+        "baseUrl": "http://mininnboks-api"
+    }
+]
