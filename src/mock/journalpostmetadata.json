@@ -1,0 +1,49 @@
+{
+  "resultat": {
+    "retning": "UT",
+    "dato": {
+      "dayOfYear": 269,
+      "dayOfWeek": "WEDNESDAY",
+      "dayOfMonth": 26,
+      "monthValue": 9,
+      "hour": 12,
+      "minute": 13,
+      "second": 1,
+      "nano": 0,
+      "year": 2018,
+      "month": "SEPTEMBER",
+      "chronology": {
+        "calendarType": "iso8601",
+        "id": "ISO"
+      }
+    },
+    "navn": "ZAHRA AHMADI",
+    "journalpostId": "433907792",
+    "hoveddokument": {
+      "tittel": "Vedtak om dagpenger",
+      "dokumentreferanse": "446860720",
+      "kanVises": true,
+      "logiskDokument": false
+    },
+    "vedlegg": [],
+    "avsender": "NAV",
+    "mottaker": "SLUTTBRUKER",
+    "tilhorendeSakid": "126702523",
+    "tilhorendeFagsakId": null,
+    "behandlingsId": null,
+    "baksystem": [
+      "JOARK"
+    ],
+    "temakode": "DAG",
+    "temakodeVisning": "Dagpenger",
+    "ettersending": false,
+    "erJournalfort": true,
+    "feilWrapper": {
+      "inneholderFeil": false,
+      "feilmelding": null
+    },
+    "kategoriNotat": null,
+    "lenkeTilSoknad": null
+  },
+  "feilendeSystemer": []
+}
