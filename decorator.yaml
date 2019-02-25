@@ -22,4 +22,4 @@ redirect:
   - from: /mininnboks
     to: {{ MININNBOKS_URL }}
   - from: /saksoversikt
-    to: {{ SAKSOVERSIKT_URL }}
+    to: {{ SAKSOVERSIKT_LINK_URL }}

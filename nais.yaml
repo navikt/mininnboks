@@ -31,7 +31,7 @@ fasitResources:
   - alias: mininnboks
     resourceType: baseurl
 
-  - alias: saksoversikt
+  - alias: saksoversikt.link
     resourceType: baseurl
 
   # oidc med AzureAD B2C
