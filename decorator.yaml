@@ -17,6 +17,8 @@ proxy:
     baseUrl: http://mininnboks-api.{{ NAIS_NAMESPACE }}.svc.nais.local
     requestRewrite: REMOVE_CONTEXT_PATH
     pingRequestPath: /internal/isAlive
+    # må kunne kalle apiet med kun openAM-sesjon
+    validateOidcToken: false
 
   - contextPath: /saksoversikt-api
     baseUrl: http://saksoversikt-api.{{ NAIS_NAMESPACE }}.svc.nais.local
