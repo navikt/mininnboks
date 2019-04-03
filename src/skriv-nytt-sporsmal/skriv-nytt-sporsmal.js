@@ -52,6 +52,10 @@ class SkrivNyttSporsmal extends React.Component {
         const submit = (event) => {
             event.preventDefault();
 
+            if(sendingStatus === STATUS.PENDING) {
+                return;
+            }
+
             const elements = event.target.elements;
             const fritekst = elements.fritekst.value;
             const godkjennVilkaar = elements.godkjennVilkaar.checked;
@@ -119,7 +123,7 @@ class SkrivNyttSporsmal extends React.Component {
                         inputName="godkjennVilkaar"
                         skalViseFeilmelding={!!errors.godkjennVilkaar}
                     />
-                    <Hovedknapp type="submit" spinner={sendingStatus === STATUS.PENDING}>
+                    <Hovedknapp type="submit" spinner={sendingStatus === STATUS.PENDING} aria-disabled={sendingStatus === STATUS.PENDING}>
                         <FormattedMessage id="send-sporsmal.still-sporsmal.send-inn"/>
                     </Hovedknapp>
                 </form>
