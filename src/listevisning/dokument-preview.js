@@ -13,12 +13,6 @@ const cls = (props) => classNames('blokk-xxxs dokument', props.ulestMeldingKlass
 });
 
 class DokumentPreview extends Component {
-    componentDidMount() {
-        if (this.props.aktiv) {
-            findDOMNode(this.refs.lenke).focus();
-        }
-    }
-
     render() {
         const { traad } = this.props;
         const dokument = traad.nyeste;
