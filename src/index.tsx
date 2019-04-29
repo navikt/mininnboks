@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import './polyfills';
 
 import './index.less';
 
