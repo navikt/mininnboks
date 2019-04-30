@@ -1,6 +1,6 @@
 "use strict";
 require("babel-core/register");
-require('core-js/shim');
+
 //disable
 var jsdom = require('jsdom');
 var document = jsdom.jsdom('<!doctype html><html><body></body></html>');
