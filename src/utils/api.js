@@ -53,7 +53,10 @@ export function markerSomLest(behandlingsId) {
     return fetchToJson(`${API_BASE_URL}/traader/lest/${behandlingsId}`, somPostConfig());
 }
 
-export function sendSporsmal(temagruppe, fritekst) {
+export function sendSporsmal(temagruppe, fritekst, isDirekte) {
+    if(isDirekte) {
+        return fetchToJson(`${API_BASE_URL}/traader/sporsmaldirekte`, sendSporsmalConfig(temagruppe, fritekst));
+    }
     return fetchToJson(`${API_BASE_URL}/traader/sporsmal`, sendSporsmalConfig(temagruppe, fritekst));
 }
 

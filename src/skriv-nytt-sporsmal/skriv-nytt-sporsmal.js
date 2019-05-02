@@ -48,6 +48,7 @@ class SkrivNyttSporsmal extends React.Component {
 
         const params = match.params;
         const temagruppe = params.temagruppe;
+        const isDirekte = match.path.includes('/direkte');
 
         const submit = (event) => {
             event.preventDefault();
@@ -70,7 +71,7 @@ class SkrivNyttSporsmal extends React.Component {
             });
 
             if (!Object.entries(errors).length) {
-                actions.sendSporsmal(temagruppe, fritekst);
+                actions.sendSporsmal(temagruppe, fritekst, isDirekte);
             }
         };
 
