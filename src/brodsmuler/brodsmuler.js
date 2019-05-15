@@ -73,7 +73,8 @@ function Brodsmuler() {
 
                 <span className="brodsmuler__item typo-normal">
                     <Switch>
-                        <Route path="/sporsmal/skriv/:temagruppe" component={NyMeldingSmule}/>
+                        <Route path="/sporsmal/skriv/:temagruppe/direkte" component={NyMeldingSmule}/>
+                        <Route path="/sporsmal/skriv/:temagruppe/" component={NyMeldingSmule}/>
                         <Route path="/traad/:traadId" component={TraadSmule}/>
                         <Route path="/:type" component={TypeSmule}/>
                     </Switch>

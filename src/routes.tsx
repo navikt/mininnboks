@@ -29,7 +29,8 @@ export default function () {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/sporsmal/skriv/:temagruppe" component={SkrivNyttSporsmal}/>
+                <Route exact path="/sporsmal/skriv/:temagruppe/" component={SkrivNyttSporsmal}/>
+                <Route exact path="/sporsmal/skriv/:temagruppe/direkte" component={SkrivNyttSporsmal}/>
                 <Route component={TradRouting}/>
             </Switch>
         </BrowserRouter>

@@ -74,9 +74,9 @@ export function hentTraader(pendingType = HENT_ALLE_PENDING) {
     });
 }
 
-export const sendSporsmal = (temagruppe, fritekst) => (dispatch) =>
+export const sendSporsmal = (temagruppe, fritekst, isDirekte) => (dispatch) =>
     doThenDispatch(
-        () => Api.sendSporsmal(temagruppe, fritekst).then(() => dispatch(hentTraader(HENT_ALLE_RELOAD))),
+        () => Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() => dispatch(hentTraader(HENT_ALLE_RELOAD))),
         innsendingActions
     )(dispatch);
 
