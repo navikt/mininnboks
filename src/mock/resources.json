@@ -146,6 +146,7 @@
   "traadvisning.overskrift": "{ kassert, select, true { Kassert dialog } false { Dialog om {temagruppeNavn }} other { Ukjent kasseringsstatus }}",
   "oppgave.0003": "Søknad",
   "status.SPORSMAL_SKRIFTLIG": "Beskjed – %s",
+  "status.SPORSMAL_SKRIFTLIG_DIREKTE": "Beskjed – %s",
   "oppgave.0004": "Aktivitetsplan",
   "temagruppe.liste": "ARBD FMLI HJLPM BIL ORT_HJE OKSOS PENS UFRT",
   "oppgave.0005": "Sykmelding",
