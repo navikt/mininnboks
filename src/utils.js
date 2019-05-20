@@ -115,3 +115,8 @@ export function erDev() {
     const url = window.location.href;
     return url.includes('debug=true') || url.includes('devillo.no:8586') || url.includes('localhost:8586');
 }
+
+const mockLogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
+export function getLogger() {
+    return window['frontendlogger'] || mockLogger;
+}

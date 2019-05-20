@@ -5,12 +5,13 @@ import Feilmelding from './../feilmelding/feilmelding';
 import Spinner from '../utils/spinner';
 import { storeShape } from '../proptype-shapes';
 import { STATUS } from './../ducks/utils';
+import {getLogger} from "../utils";
 
 const array = (value) => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => (element) => array(status).includes(element.status);
 const noenHarFeil = (avhengigheter) => avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
 const alleLastet = (avhengigheter) => avhengigheter && avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
-const medFeil = (avhengigheter) => avhengigheter.find(harStatus(STATUS.ERROR));
+const medFeil = (avhengigheter) => avhengigheter.filter(harStatus(STATUS.ERROR));
 
 const Innholdslaster = ({ avhengigheter, feilmeldingKey, intl, children }) => {
     if (alleLastet(avhengigheter)) {
@@ -27,6 +28,8 @@ const Innholdslaster = ({ avhengigheter, feilmeldingKey, intl, children }) => {
         const feilmelding = (feilmeldingKey && intl.messages[feilmeldingKey]) || (
             'Det skjedde en feil ved innlastningen av data'
             );
+
+        getLogger().error(`${feilmelding}: ${JSON.stringify(feilendeReducer)}`);
 
         return (
             <Feilmelding>{feilmelding}</Feilmelding>
