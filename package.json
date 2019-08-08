@@ -30,7 +30,7 @@
     "sinon": "1.17.6",
     "sinon-chai": "2.8.0",
     "typescript": "3.2.1",
-    "yet-another-fetch-mock": "^2.4.0"
+    "yet-another-fetch-mock": "^3.2.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -63,6 +63,7 @@
     "nav-frontend-snakkeboble-style": "^0.2.15",
     "nav-frontend-spinner": "^1.0.12",
     "nav-frontend-spinner-style": "^0.2.5",
+    "nav-frontend-tekstomrade": "^2.0.29",
     "nav-frontend-typografi": "^2.0.6",
     "nav-frontend-typografi-style": "^1.0.10",
     "prop-types": "^15.6.2",

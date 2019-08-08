@@ -1,7 +1,8 @@
 import PT from 'prop-types';
 import React from 'react';
-import { tilAvsnitt, prettyDate, leggTilLenkerTags } from '../utils';
+import { prettyDate } from '../utils';
 import Snakkeboble from 'nav-frontend-snakkeboble';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import {Normaltekst, Element } from 'nav-frontend-typografi';
 
 import './melding-container.less';
@@ -13,15 +14,12 @@ function MeldingContainer({ melding }) {
     const dato = prettyDate(melding.opprettet);
 
     const fritekst = melding.fritekst || "";
-    const avsnitt = fritekst.split(/[\r\n]+/)
-        .map(leggTilLenkerTags)
-        .map(tilAvsnitt);
 
     return (
         <Snakkeboble ikonClass={imgSrc} pilHoyre={fraBruker}>
             <Element tag="h2">{melding.statusTekst}</Element>
             <Normaltekst className="tema-avsnitt">{dato}</Normaltekst>
-            <Normaltekst className="avsnitt" tag="div">{avsnitt}</Normaltekst>
+            <Tekstomrade>{fritekst}</Tekstomrade>
         </Snakkeboble>
     );
 }
