@@ -6,22 +6,7 @@ import Constants from './utils/constants';
 
 moment.locale('nb');
 
-export const leggTilLenkerTags = (innhold) => {
-    const uriRegex = /(([\w-]+:\/\/?|www(?:-\w+)?\.)[^\s()<>]+\w)/g;
-    const httpRegex = /^(https?):\/\/.*$/;
-
-    return innhold.replace(uriRegex, (match) => {
-        const matched = match.match(httpRegex) ? match : `http://${match}`;
-        return `<a target="_blank" href="${matched}">${matched}</a>`;
-    });
-};
-
 export const safeHtml = (content) => sanitize(content, { allowedTags: ['a'] });
-
-export const tilAvsnitt = (avsnitt, index) => (
-    <p className="sanitized-content" dangerouslySetInnerHTML={{ __html: safeHtml(avsnitt) }} key={index} />
-);
-
 
 export const prettyDate = (date) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 
