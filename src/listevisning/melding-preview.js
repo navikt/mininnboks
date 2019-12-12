@@ -29,7 +29,7 @@ class MeldingPreview extends Component {
 
         const antallMeldinger = traad.meldinger.length;
 
-        const maBesvares = melding.type === 'SPORSMAL_MODIA_UTGAAENDE' ?
+        const maBesvares = melding.type === 'SPORSMAL_MODIA_UTGAAENDE' && !melding.kassert ?
             <span>/ <strong className="purring"><FormattedMessage id="purre.svar"/></strong></span> : null;
 
         const avsender = traad.nyeste.fraNav ? (
