@@ -3,7 +3,7 @@ import React from 'react';
 
 const BlurretDokument = ({ children }) => (
     <div className="feilmelding-container">
-        <img src="/saksoversikt/img/dokumenter/Dummy_dokument.png" alt=""/>
+        <img src="/img/Dummy_dokument.png" alt=""/>
         { children }
     </div>
 );
