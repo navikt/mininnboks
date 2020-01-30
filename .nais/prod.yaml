@@ -3,7 +3,7 @@ kind: "Application"
 metadata:
   name: mininnboks
   namespace: {{ namespace }}
-  cluster: dev-sbs
+  cluster: prod-sbs
   labels:
     team: personoversikt
 spec:
