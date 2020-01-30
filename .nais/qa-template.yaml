@@ -1,0 +1,46 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: mininnboks
+  namespace: {{ namespace }}
+  cluster: dev-sbs
+  labels:
+    team: personoversikt
+spec:
+  image: {{ image }}
+  port: 8080
+  team: personoversikt
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: /internal/isReady
+    initialDelay: 20
+  prometheus:
+    enabled: true
+    path: /internal/metrics
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 3000m
+      memory: 1024Mi
+  ingresses:
+    - https://mininnboks-{{ namespace }}.nav.no/
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 60
+  env:
+    - name: APPRES_CMS_URL
+      value: "https://appres-{{ namespace }}.nav.no"
+    - name: APPDYNAMICS
+      value: "APPDYNAMICS_CONTROLLER_HOST_NAME=appdynamics.adeo.no\rAPPDYNAMICS_CONTROLLER_PORT=443\rAPPDYNAMICS_CONTROLLER_SSL_ENABLED=true\rAPPDYNAMICS_AGENT_ACCOUNT_NAME=NON-PROD\rAPPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY=5ed4d975-ed5b-40b2-8ac6-9e0c0e61a67e"
+    - name: SAKSOVERSIKT_LINK
+      value: "https://tjenester-{{ namespace }}.nav.no/saksoversikt"
+    - name: AAD_B2C_CLIENTID_USERNAME
+      value: "0090b6e1-ffcc-4c37-bc21-049f7d1f0fe5"
+    - name: AAD_B2C_DISCOVERY_URL
+      value: "https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1"
+
