@@ -32,16 +32,29 @@ spec:
     min: 2
     max: 4
     cpuThresholdPercentage: 60
+  vault:
+    enabled: true
+    paths:
+      - kvPath: /serviceuser/data/prod/srvmininnboks-sbs
+        mountPath: /var/run/secrets/nais.io/srvmininnboks
+      - kvPath: /apikey/appdynamics/prod
+        mountPath: /var/run/secrets/nais.io/vault
   env:
+    - name: APP_NAME
+      value: "mininnboks"
+    - name: APP_VERSION
+      value: "{{version}}"
     - name: APPRES_CMS_URL
       value: "https://appres.nav.no"
-    - name: APPDYNAMICS
-      value: "APPDYNAMICS_CONTROLLER_HOST_NAME=appdynamics.adeo.no\rAPPDYNAMICS_CONTROLLER_PORT=443\rAPPDYNAMICS_CONTROLLER_SSL_ENABLED=true\rAPPDYNAMICS_AGENT_ACCOUNT_NAME=NON-PROD\rAPPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY=5ed4d975-ed5b-40b2-8ac6-9e0c0e61a67e"
     - name: SAKSOVERSIKT_LINK_URL
       value: "https://tjenester.nav.no/saksoversikt"
     - name: AAD_B2C_CLIENTID_USERNAME
       value: "45104d6a-f5bc-4e8c-b352-4bbfc9381f25"
+    - name: LOGINSERVICE_URL
+      value: "https://loginservice.nav.no/login"
     - name: AAD_B2C_DISCOVERY_URL
       value: "https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1"
     - name: MININNBOKS_URL
-      value: "https://tjenester.nav.no/mininnboks"
+      value: "https://mininnboks.nav.no"
+    - name: APP_ENVIRONMENT
+      value: {{namespace}}
