@@ -1,0 +1,5 @@
+ingresses:
+  - https://mininnboks-q1.nav.no
+  - https://mininnboks-q1.nais.oera-q.local
+  - https://tjenester-q1.nav.no/mininnboks
+appresurl: https://appres-q1.nav.no

@@ -1,0 +1,6 @@
+ingresses:
+  - https://mininnboks-q6.nav.no
+  - https://mininnboks-q6.nais.oera-q.local
+  - https://tjenester-q6.nav.no/mininnboks
+# Appres i q6 er slått av, krysskobler mot Q0.
+appresurl: https://appres-q0.nav.no
