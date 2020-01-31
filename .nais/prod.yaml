@@ -28,7 +28,9 @@ spec:
       memory: 1024Mi
   webproxy: true
   ingresses:
-    - https://mininnboks.nav.no/
+    - https://mininnboks.nav.no
+    - https://mininnboks.nais.oera.no
+    - https://tjenester.nav.no/mininnboks
   replicas:
     min: 2
     max: 4
