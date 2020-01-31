@@ -56,7 +56,7 @@ spec:
     - name: LOGINSERVICE_URL
       value: "https://loginservice.nav.no/login"
     - name: AAD_B2C_DISCOVERY_URL
-      value: "https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1"
+      value: "https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten"
     - name: MININNBOKS_URL
       value: "https://mininnboks.nav.no"
     - name: APP_ENVIRONMENT
