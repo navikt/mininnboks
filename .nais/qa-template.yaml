@@ -28,12 +28,9 @@ spec:
       memory: 1024Mi
   webproxy: true
   ingresses:
-    {{#if (eq namespace "q0")}}
-    - https://mininnboks-q.nav.no
-    {{/if}}
-    - https://mininnboks-{{ namespace }}.nav.no
-    - https://mininnboks-{{ namespace }}.nais.oera-q.local
-    - https://tjenester-{{ namespace }}.nav.no/mininnboks
+    {{#each ingresses}}
+     - {{this}}
+    {{/each}}
   replicas:
     min: 2
     max: 4
