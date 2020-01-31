@@ -53,7 +53,7 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
-          CLUSTER: dev-fss
+          CLUSTER: dev-sbs
           RESOURCE: .nais/qa-template.yaml
           VAR: namespace=${{matrix.namespace}},version=${{github.sha}}
 
@@ -68,6 +68,6 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
-          CLUSTER: prod-fss
+          CLUSTER: prod-sbs
           RESOURCE: .nais/prod.yaml
           VAR: version=${{github.sha}}
