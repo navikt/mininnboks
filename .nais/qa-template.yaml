@@ -48,7 +48,7 @@ spec:
     - name: APP_VERSION
       value: "{{version}}"
     - name: APPRES_CMS_URL
-      value: "https://appres-{{ namespace }}.nav.no"
+      value: "{{ appresurl }}"
     - name: SAKSOVERSIKT_LINK_URL
       value: "https://tjenester-{{ namespace }}.nav.no/saksoversikt"
     - name: AAD_B2C_CLIENTID_USERNAME

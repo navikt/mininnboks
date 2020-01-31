@@ -2,3 +2,4 @@ ingresses:
   - https://mininnboks-q.nav.no
   - https://mininnboks-q0.nais.oera-q.local
   - https://tjenester-q0.nav.no/mininnboks
+appresurl: https://appres-q0.nav.no
