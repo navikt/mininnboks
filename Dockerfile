@@ -1,4 +1,4 @@
-FROM navikt/pus-fss-frontend as builder
+FROM node:10 as builder
 
 # sett riktig tidssone
 ENV TZ Europe/Oslo
