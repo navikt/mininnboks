@@ -47,6 +47,8 @@ spec:
       value: "mininnboks"
     - name: APP_VERSION
       value: "{{version}}"
+    - name: APP_ENVIRONMENT
+      value: {{namespace}}
     - name: APPRES_CMS_URL
       value: "{{ appresurl }}"
     - name: SAKSOVERSIKT_LINK_URL
@@ -59,5 +61,3 @@ spec:
       value: "https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1"
     - name: MININNBOKS_URL
       value: "https://mininnboks-q.nav.no"
-    - name: APP_ENVIRONMENT
-      value: {{namespace}}

@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: mininnboks
-  namespace: {{ namespace }}
+  namespace: default
   cluster: prod-sbs
   labels:
     team: personoversikt
@@ -47,6 +47,8 @@ spec:
       value: "mininnboks"
     - name: APP_VERSION
       value: "{{version}}"
+    - name: APP_ENVIRONMENT
+      value: "p"
     - name: APPRES_CMS_URL
       value: "https://appres.nav.no"
     - name: SAKSOVERSIKT_LINK_URL
@@ -59,5 +61,3 @@ spec:
       value: "https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten"
     - name: MININNBOKS_URL
       value: "https://mininnboks.nav.no"
-    - name: APP_ENVIRONMENT
-      value: {{namespace}}
