@@ -1,0 +1,60 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: mininnboks
+  namespace: {{ namespace }}
+  cluster: prod-sbs
+  labels:
+    team: personoversikt
+spec:
+  image: {{ image }}
+  port: 8080
+  team: personoversikt
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: /internal/isReady
+    initialDelay: 20
+  prometheus:
+    enabled: true
+    path: /internal/metrics
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 3000m
+      memory: 1024Mi
+  ingresses:
+    - https://mininnboks.nav.no/
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 60
+  vault:
+    enabled: true
+    paths:
+      - kvPath: /serviceuser/data/prod/srvmininnboks-sbs
+        mountPath: /var/run/secrets/nais.io/srvmininnboks
+      - kvPath: /apikey/appdynamics/prod
+        mountPath: /var/run/secrets/nais.io/vault
+  env:
+    - name: APP_NAME
+      value: "mininnboks"
+    - name: APP_VERSION
+      value: "{{version}}"
+    - name: APPRES_CMS_URL
+      value: "https://appres.nav.no"
+    - name: SAKSOVERSIKT_LINK_URL
+      value: "https://tjenester.nav.no/saksoversikt"
+    - name: AAD_B2C_CLIENTID_USERNAME
+      value: "45104d6a-f5bc-4e8c-b352-4bbfc9381f25"
+    - name: LOGINSERVICE_URL
+      value: "https://loginservice.nav.no/login"
+    - name: AAD_B2C_DISCOVERY_URL
+      value: "https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1"
+    - name: MININNBOKS_URL
+      value: "https://mininnboks.nav.no"
+    - name: APP_ENVIRONMENT
+      value: {{namespace}}
