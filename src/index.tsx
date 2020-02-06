@@ -6,7 +6,7 @@ import MainApp from './mainapp';
 import { render } from 'react-dom';
 import setupMock from './mock/setup-mock';
 
-const KjorMotDevProxy = true;
+const KjorMotDevProxy = false;
 
 function erLocalhost() {
     const host: string = window.location.host;
