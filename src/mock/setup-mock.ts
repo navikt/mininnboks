@@ -18,9 +18,9 @@ export default () => {
 
     fetchMock.get(TRAADER_PATH, traader);
     fetchMock.get(RESOURCES_PATH, resources);
+    fetchMock.get('/mininnboks-api/tilgang/oksos', { resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' });
 
     fetchMock.post('/mininnboks-api/traader/svar', {});
     fetchMock.post('/mininnboks-api/traader/lest/:id', {});
     fetchMock.post('/mininnboks-api/traader/allelest/:id', {});
-
 };
