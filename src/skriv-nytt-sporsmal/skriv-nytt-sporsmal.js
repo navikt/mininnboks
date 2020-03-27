@@ -19,6 +19,7 @@ import Alertstripe from 'nav-frontend-alertstriper'
 import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
+import Spinner from "../utils/spinner";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -39,7 +40,8 @@ class SkrivNyttSporsmal extends React.Component {
             actions,
             sendingStatus,
             skalViseVilkarModal,
-            godkjenteTemagrupper
+            godkjenteTemagrupper,
+            tilgang
         } = this.props;
 
         const {
@@ -49,6 +51,24 @@ class SkrivNyttSporsmal extends React.Component {
         const params = match.params;
         const temagruppe = params.temagruppe;
         const isDirekte = match.path.includes('/direkte');
+
+        if (temagruppe.toLowerCase() === 'oksos') {
+            if (tilgang.status === STATUS.PENDING) {
+                return <Spinner />;
+            } else if (tilgang.status === STATUS.ERROR) {
+                return (
+                    <Alertstripe type="advarsel" >
+                        <FormattedMessage id={`feilmelding.kommunalsjekk.fetchfeilet`}/>
+                    </Alertstripe>
+                );
+            } else if (tilgang.status === STATUS.OK && tilgang.data.resultat !== 'OK') {
+                return (
+                    <Alertstripe type="info" >
+                        <FormattedMessage id={`feilmelding.kommunalsjekk.${tilgang.data.resultat}`}/>
+                    </Alertstripe>
+                );
+            }
+        }
 
         const submit = (event) => {
             event.preventDefault();
@@ -144,13 +164,24 @@ SkrivNyttSporsmal.propTypes = {
     }).isRequired,
     sendingStatus: PT.string,
     skalViseVilkarModal: PT.bool.isRequired,
-    godkjenteTemagrupper: PT.arrayOf(PT.string).isRequired
+    godkjenteTemagrupper: PT.arrayOf(PT.string).isRequired,
+    tilgang: PT.shape({
+        status: PT.string.isRequired,
+        data: PT.oneOfType([
+            PT.shape({
+                resultat: PT.string.isRequired,
+                melding: PT.string.isRequired
+            }).isRequired,
+            PT.shape({}).isRequired
+        ]).isRequired,
+    }).isRequired
 };
 
-const mapStateToProps = ({ledetekster, traader, ui}) => ({
+const mapStateToProps = ({ledetekster, traader, ui, tilgang}) => ({
     skalViseVilkarModal: ui.visVilkarModal,
     godkjenteTemagrupper: ledetekster.godkjenteTemagrupper,
-    sendingStatus: traader.innsendingStatus
+    sendingStatus: traader.innsendingStatus,
+    tilgang: tilgang
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(

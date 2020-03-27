@@ -63,3 +63,7 @@ export function sendSporsmal(temagruppe, fritekst, isDirekte) {
 export function sendSvar(traadId, fritekst) {
     return fetchToJson(`${API_BASE_URL}/traader/svar`, sendSvarConfig(traadId, fritekst));
 }
+
+export function harTilgangTilKommunaleTemagrupper() {
+    return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS)
+}
