@@ -21,10 +21,10 @@ spec:
     path: /internal/metrics
   resources:
     requests:
-      cpu: 200m
-      memory: 512Mi
+      cpu: 500m
+      memory: 768Mi
     limits:
-      cpu: 3000m
+      cpu: 1000m
       memory: 1024Mi
   webproxy: true
   ingresses:
