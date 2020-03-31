@@ -20,6 +20,7 @@ import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
 import Spinner from "../utils/spinner";
+import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -32,6 +33,13 @@ class SkrivNyttSporsmal extends React.Component {
         this.state = {
             errors: {},
         };
+    }
+
+    componentDidMount() {
+        const temagruppe = this.props.match.params.temagruppe.toLowerCase();
+        if (temagruppe === 'oksos') {
+            this.props.actions.harTilgangTilKommunaleTemagrupper();
+        }
     }
 
     render() {
@@ -185,7 +193,7 @@ const mapStateToProps = ({ledetekster, traader, ui, tilgang}) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(
-        {sendSporsmal, visVilkarModal, skjulVilkarModal},
+        {sendSporsmal, visVilkarModal, skjulVilkarModal, harTilgangTilKommunaleTemagrupper},
         dispatch
     )
 });
