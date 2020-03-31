@@ -22,9 +22,9 @@ spec:
   resources:
     requests:
       cpu: 200m
-      memory: 512Mi
+      memory: 768Mi
     limits:
-      cpu: 3000m
+      cpu: 1000m
       memory: 1024Mi
   webproxy: true
   ingresses:
@@ -34,7 +34,7 @@ spec:
   replicas:
     min: 2
     max: 4
-    cpuThresholdPercentage: 60
+    cpuThresholdPercentage: 50
   vault:
     enabled: true
     paths:
