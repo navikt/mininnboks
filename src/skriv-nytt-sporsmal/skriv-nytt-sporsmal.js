@@ -7,6 +7,7 @@ import {STATUS} from './../ducks/utils';
 import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './godta-vilkar';
 import Kvittering from './kvittering';
+import TemagruppeEkstraInfo from './temagruppe-ekstra-info';
 import Feilmelding from '../feilmelding/feilmelding';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
@@ -139,6 +140,7 @@ class SkrivNyttSporsmal extends React.Component {
                     <Normaltekst className="typo-normal blokk-xs">
                         <FormattedMessage id="textarea.infotekst"/>
                     </Normaltekst>
+                    <TemagruppeEkstraInfo temagruppe={temagruppe} />
                     { fritekstFeilmelding }
                     <TextareaControlled
                         name="fritekst"

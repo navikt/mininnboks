@@ -11,6 +11,6 @@ RUN npm ci
 ENV NODE_ENV=production
 RUN npm run build
 
-FROM navikt/pus-decorator
+FROM docker.pkg.github.com/navikt/pus-decorator/pus-decorator
 COPY --from=builder /source/build /app
 ADD decorator.yaml /decorator.yaml
