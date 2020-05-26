@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 import React from 'react';
 import Lenke from 'nav-frontend-lenker';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/personalia';
 import Dokumenter from './dokumentvisning/dokument/dokumenter';
 import IntlLenke from "../utils/intl-lenke";
@@ -17,7 +17,6 @@ class DokumentVisning extends React.Component {
         const {
             dokumentmetadata,
             journalpostmetadata,
-            intl,
             lastNedPdfOnClick,
             printPdfOnClick
         } = this.props;
@@ -57,8 +56,7 @@ DokumentVisning.propTypes = {
     dokumentmetadata: PT.array.isRequired,
     lastNedPdfOnClick: PT.func.isRequired,
     printPdfOnClick: PT.func.isRequired,
-    journalpostmetadata: PT.object.isRequired,
-    intl: PT.object.isRequired
+    journalpostmetadata: PT.object.isRequired
 };
 
-export default injectIntl(DokumentVisning);
+export default DokumentVisning;
