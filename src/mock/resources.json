@@ -54,7 +54,6 @@
   "innboks.avsender": "{ fraBruker, select, true { Melding fra deg } false { Melding fra NAV } other { Ukjent hvem som sendte meldingen }}",
   "status.SAMTALEREFERAT_TELEFON": "Samtalereferat telefon – %s",
   "henvendelse.status.SVAR_TELEFON.ulest": "Svar telefon, sendt",
-  "dokumentvisning.kontakt.nav.link": "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/Skriv+til+oss?kilde=dok",
   "feilmelding.dokumentikketilgjengelig.tittel": "Dokumentet ikke tilgjengelig",
   "innboks.kunne-ikke-hente-meldinger": "Kunne ikke hente dine meldinger",
   "oppgave.0003.fritekst": "Du har en søknad om sykepenger som er klar til å fylles ut",
