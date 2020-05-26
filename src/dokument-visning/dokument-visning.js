@@ -1,10 +1,10 @@
 import PT from 'prop-types';
 import React from 'react';
+import Lenke from 'nav-frontend-lenker';
+import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/personalia';
 import Dokumenter from './dokumentvisning/dokument/dokumenter';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import Lenke from 'nav-frontend-lenker';
-
+import IntlLenke from "../utils/intl-lenke";
 import './dokument-visning.less';
 
 class DokumentVisning extends React.Component {
@@ -17,13 +17,10 @@ class DokumentVisning extends React.Component {
         const {
             dokumentmetadata,
             journalpostmetadata,
-            intl,
             lastNedPdfOnClick,
             printPdfOnClick
         } = this.props;
         const { temakode } = journalpostmetadata.resultat;
-        const kontaktNavUrl = intl.messages['dokumentvisning.kontakt.nav.link'];
-
 
         return (
             <div className="dokinnsyn">
@@ -36,7 +33,9 @@ class DokumentVisning extends React.Component {
                             </Lenke>
                         </li>
                         <li>
-                            <Lenke href={kontaktNavUrl}><FormattedMessage id="dokumentvisning.kontakt.nav" /></Lenke>
+                            <IntlLenke href="skriv.ny.link" className="lenke">
+                                <FormattedMessage id="dokumentvisning.kontakt.nav" />
+                            </IntlLenke>
                         </li>
                     </ul>
                 </section>
@@ -57,8 +56,7 @@ DokumentVisning.propTypes = {
     dokumentmetadata: PT.array.isRequired,
     lastNedPdfOnClick: PT.func.isRequired,
     printPdfOnClick: PT.func.isRequired,
-    journalpostmetadata: PT.object.isRequired,
-    intl: PT.object.isRequired
+    journalpostmetadata: PT.object.isRequired
 };
 
-export default injectIntl(DokumentVisning);
+export default DokumentVisning;
