@@ -60,6 +60,7 @@ class SkrivNyttSporsmal extends React.Component {
         const params = match.params;
         const temagruppe = params.temagruppe;
         const isDirekte = match.path.includes('/direkte');
+        const kanSendeMelding = this.props.actions.sendSporsmal();
 
         if (temagruppe.toLowerCase() === 'oksos') {
             if (tilgang.status === STATUS.PENDING) {
@@ -83,6 +84,9 @@ class SkrivNyttSporsmal extends React.Component {
             event.preventDefault();
 
             if(sendingStatus === STATUS.PENDING) {
+                return;
+            }
+            if(!kanSendeMelding){
                 return;
             }
 
@@ -195,7 +199,7 @@ const mapStateToProps = ({ledetekster, traader, ui, tilgang}) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(
-        {sendSporsmal, visVilkarModal, skjulVilkarModal, harTilgangTilKommunaleTemagrupper},
+        {sendSporsmal, visVilkarModal, skjulVilkarModal, harTilgangTilKommunaleTemagrupper, kanSendeMelding},
         dispatch
     )
 });

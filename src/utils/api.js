@@ -67,3 +67,7 @@ export function sendSvar(traadId, fritekst) {
 export function harTilgangTilKommunaleTemagrupper() {
     return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS)
 }
+
+export function kanSendeMelding() {
+    return fetchToJson(`https://rate-limiter.prod-sbs.nais.io/rate-limiter/api/limit`)
+}
