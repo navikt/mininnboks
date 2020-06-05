@@ -22,6 +22,7 @@ import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
 import Spinner from "../utils/spinner";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
+import {kanSendeMelding} from "../utils/api";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -60,7 +61,7 @@ class SkrivNyttSporsmal extends React.Component {
         const params = match.params;
         const temagruppe = params.temagruppe;
         const isDirekte = match.path.includes('/direkte');
-        const kanSendeMelding = this.props.actions.sendSporsmal();
+        const kanSendeMelding = kanSendeMelding();
 
         if (temagruppe.toLowerCase() === 'oksos') {
             if (tilgang.status === STATUS.PENDING) {
@@ -80,6 +81,13 @@ class SkrivNyttSporsmal extends React.Component {
             }
         }
 
+        if(!kanSendeMelding){
+            return (
+                <Alertstripe type="info" >
+                    Du har sendt inn for mange spørsmål på kort tid. Vennligst prøv igjen snart.
+                </Alertstripe>
+            );
+        }
         const submit = (event) => {
             event.preventDefault();
 
