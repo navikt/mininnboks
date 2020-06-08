@@ -22,7 +22,7 @@ import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
 import Spinner from "../utils/spinner";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
-import {kanSendeMelding} from "../utils/api";
+import {sjekkOgOppdaterRatelimiter, sjekkRatelimiter} from "../utils/api";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -44,7 +44,7 @@ class SkrivNyttSporsmal extends React.Component {
             this.props.actions.harTilgangTilKommunaleTemagrupper();
         }
         this.setState({
-            kanSendeMelding: kanSendeMelding('GET')
+            kanSendeMelding: sjekkRatelimiter()
         })
     }
 
@@ -96,7 +96,7 @@ class SkrivNyttSporsmal extends React.Component {
         const submit = (event) => {
             event.preventDefault();
             this.setState({
-                kanSendeMelding: kanSendeMelding('POST')
+                kanSendeMelding: sjekkOgOppdaterRatelimiter()
             })
 
             if(sendingStatus === STATUS.PENDING) {

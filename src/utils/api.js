@@ -34,17 +34,9 @@ const sendSvarConfig = (traadId, fritekst) => ({
     body: JSON.stringify({ traadId, fritekst })
 });
 
-const rateLimiterConfig = (type) => ({
-    credentials: 'same-origin',
-    method: type,
-    headers: {
-        'Content-Type': 'application/json',
-        'selvbetjening-idtoken' : getCookie('selvbetjening-idtoken')
-    }
-});
-
 export const TRAADER_PATH = `${API_BASE_URL}/traader`;
 export const RESOURCES_PATH = `${API_BASE_URL}/resources`;
+const RATE_LIMITER_URL = `/rate-limiter/api/limit`;
 
 export function hentLedetekster() {
     return fetchToJson(RESOURCES_PATH, MED_CREDENTIALS);
@@ -77,6 +69,5 @@ export function harTilgangTilKommunaleTemagrupper() {
     return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS)
 }
 
-export function kanSendeMelding(type) {
-    return fetchToJson(`/rate-limiter/api/limit`, rateLimiterConfig(type))
-}
+export function sjekkRatelimiter() { return fetchToJson(RATE_LIMITER_URL, MED_CREDENTIALS); }
+export function sjekkOgOppdaterRatelimiter() { return fetchToJson(RATE_LIMITER_URL, postConfig()); }
