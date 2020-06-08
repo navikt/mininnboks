@@ -34,6 +34,7 @@ class SkrivNyttSporsmal extends React.Component {
         super(props);
         this.state = {
             errors: {},
+            kanSendeMelding: true,
         };
     }
 
@@ -42,6 +43,9 @@ class SkrivNyttSporsmal extends React.Component {
         if (temagruppe === 'oksos') {
             this.props.actions.harTilgangTilKommunaleTemagrupper();
         }
+        this.setState({
+            kanSendeMelding: kanSendeMelding('GET')
+        })
     }
 
     render() {
@@ -56,12 +60,12 @@ class SkrivNyttSporsmal extends React.Component {
 
         const {
             errors,
+            kanSendeMelding
         } = this.state;
 
         const params = match.params;
         const temagruppe = params.temagruppe;
         const isDirekte = match.path.includes('/direkte');
-        const kanSendeMelding = kanSendeMelding();
 
         if (temagruppe.toLowerCase() === 'oksos') {
             if (tilgang.status === STATUS.PENDING) {
@@ -83,13 +87,17 @@ class SkrivNyttSporsmal extends React.Component {
 
         if(!kanSendeMelding){
             return (
-                <Alertstripe type="info" >
-                    Du har sendt inn for mange spørsmål på kort tid. Vennligst prøv igjen snart.
-                </Alertstripe>
+                <Feilmelding>
+                    Du har sendt inn for mange spørsmål på kort tid. Vennligst prøv igjen senere.
+                </Feilmelding>
             );
         }
+
         const submit = (event) => {
             event.preventDefault();
+            this.setState({
+                kanSendeMelding: kanSendeMelding('POST')
+            })
 
             if(sendingStatus === STATUS.PENDING) {
                 return;
@@ -207,7 +215,7 @@ const mapStateToProps = ({ledetekster, traader, ui, tilgang}) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(
-        {sendSporsmal, visVilkarModal, skjulVilkarModal, harTilgangTilKommunaleTemagrupper, kanSendeMelding},
+        {sendSporsmal, visVilkarModal, skjulVilkarModal, harTilgangTilKommunaleTemagrupper},
         dispatch
     )
 });

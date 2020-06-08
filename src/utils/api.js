@@ -34,6 +34,15 @@ const sendSvarConfig = (traadId, fritekst) => ({
     body: JSON.stringify({ traadId, fritekst })
 });
 
+const rateLimiterConfig = (type) => ({
+    credentials: 'same-origin',
+    method: type,
+    headers: {
+        'Content-Type': 'application/json',
+        'selvbetjening-idtoken' : getCookie('selvbetjening-idtoken')
+    }
+});
+
 export const TRAADER_PATH = `${API_BASE_URL}/traader`;
 export const RESOURCES_PATH = `${API_BASE_URL}/resources`;
 
@@ -68,6 +77,6 @@ export function harTilgangTilKommunaleTemagrupper() {
     return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS)
 }
 
-export function kanSendeMelding() {
-    return fetchToJson(`https://rate-limiter.prod-sbs.nais.io/rate-limiter/api/limit`)
+export function kanSendeMelding(type) {
+    return fetchToJson(`/rate-limiter/api/limit`, rateLimiterConfig(type))
 }
