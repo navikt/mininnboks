@@ -174,5 +174,6 @@
   "ikon.feilmelding.aria-label": "Feilmelding-ikon",
   "oppgave.nysykemelding.fritekst": "Du har mottatt en ny sykmelding som krever en handling fra deg.",
   "feilmelding.journalfortfeil.tittel": "Kan ikke vise dokumentet",
-  "henvendelse.status.SAMTALEREFERAT_TELEFON.ulest": "Samtalereferat telefon, sendt"
+  "henvendelse.status.SAMTALEREFERAT_TELEFON.ulest": "Samtalereferat telefon, sendt",
+  "feilmelding.ratelimiter" : "Du har sendt inn for mange spørsmål på kort tid. Vennligst prøv igjen senere."
 }

@@ -34,7 +34,7 @@ class SkrivNyttSporsmal extends React.Component {
         super(props);
         this.state = {
             errors: {},
-            kanSendeMelding: true,
+            rateLimiter: true,
         };
     }
 
@@ -60,7 +60,7 @@ class SkrivNyttSporsmal extends React.Component {
 
         const {
             errors,
-            kanSendeMelding
+            rateLimiter
         } = this.state;
 
         const params = match.params;
@@ -85,13 +85,7 @@ class SkrivNyttSporsmal extends React.Component {
             }
         }
 
-        if(!kanSendeMelding){
-            return (
-                <Feilmelding>
-                    Du har sendt inn for mange spørsmål på kort tid. Vennligst prøv igjen senere.
-                </Feilmelding>
-            );
-        }
+
 
         const submit = (event) => {
             event.preventDefault();
@@ -102,8 +96,11 @@ class SkrivNyttSporsmal extends React.Component {
             if(sendingStatus === STATUS.PENDING) {
                 return;
             }
-            if(!kanSendeMelding){
-                return;
+            if(!rateLimiter){
+                return (    <Alertstripe type="advarsel" >
+                    <FormattedMessage id={`feilmelding.ratelimiter`}/>
+                </Alertstripe>
+                )
             }
 
             const elements = event.target.elements;
@@ -139,6 +136,10 @@ class SkrivNyttSporsmal extends React.Component {
                 <FormattedMessage id={`feilmelding.fritekst.${fritekstError}`}/>
             </Feilmelding>
         );
+        const ratelimiterFeilmelding = !rateLimiter &&
+            ( <Feilmelding>
+                        <FormattedMessage id={`feilmelding.ratelimiter`}/>
+            </Feilmelding>);
 
         return (
             <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
@@ -146,6 +147,7 @@ class SkrivNyttSporsmal extends React.Component {
                 <Sidetittel className="text-center blokk-m">
                     <FormattedMessage id="send-sporsmal.still-sporsmal.ny-melding-overskrift"/>
                 </Sidetittel>
+                {ratelimiterFeilmelding}
                 <form className="panel text-center" onSubmit={submit}>
                     <i className="meldingikon"/>
                     <Innholdstittel className="blokk-xl">
