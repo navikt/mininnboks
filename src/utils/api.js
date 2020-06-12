@@ -36,7 +36,7 @@ const sendSvarConfig = (traadId, fritekst) => ({
 
 export const TRAADER_PATH = `${API_BASE_URL}/traader`;
 export const RESOURCES_PATH = `${API_BASE_URL}/resources`;
-const RATE_LIMITER_URL = `/rate-limiter/api/limit`;
+export const RATE_LIMITER_URL = `/rate-limiter/api/limit`;
 
 export function hentLedetekster() {
     return fetchToJson(RESOURCES_PATH, MED_CREDENTIALS);

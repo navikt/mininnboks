@@ -43,8 +43,9 @@ class SkrivNyttSporsmal extends React.Component {
         if (temagruppe === 'oksos') {
             this.props.actions.harTilgangTilKommunaleTemagrupper();
         }
+        const sjekkRateLimtiter = sjekkRatelimiter();
         this.setState({
-            kanSendeMelding: sjekkRatelimiter()
+            kanSendeMelding: sjekkRateLimtiter ? sjekkRateLimtiter : true
         })
     }
 
@@ -89,8 +90,9 @@ class SkrivNyttSporsmal extends React.Component {
 
         const submit = (event) => {
             event.preventDefault();
+            const oppdaterRateLimiter = sjekkOgOppdaterRatelimiter();
             this.setState({
-                kanSendeMelding: sjekkOgOppdaterRatelimiter()
+                kanSendeMelding: oppdaterRateLimiter ? oppdaterRateLimiter : true
             })
 
             if(sendingStatus === STATUS.PENDING) {
