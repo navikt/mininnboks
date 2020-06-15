@@ -23,5 +23,5 @@ export default () => {
     fetchMock.post(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(false)));
     fetchMock.post('/mininnboks-api/traader/svar', (req, res, ctx) => res(ctx.json({})));
     fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
-    fetchMock.post('//mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
+    fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
 };
