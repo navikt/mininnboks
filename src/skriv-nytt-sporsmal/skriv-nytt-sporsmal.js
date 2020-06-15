@@ -91,27 +91,25 @@ class SkrivNyttSporsmal extends React.Component {
         const submit = (event) => {
             event.preventDefault();
 
-                        const elements = event.target.elements;
-                        const fritekst = elements.fritekst.value;
-                        const godkjennVilkaar = elements.godkjennVilkaar.checked;
-            sjekkOgOppdaterRatelimiter()
-                .then((isOK) =>
-                {
-                    if(isOK){
-                        if(sendingStatus === STATUS.PENDING) {
-                            return;
-                        }
+            const elements = event.target.elements;
+            const fritekst = elements.fritekst.value;
+            const godkjennVilkaar = elements.godkjennVilkaar.checked;
 
-
-                        const errors = validate({
+            if(sendingStatus === STATUS.PENDING) {
+                return;
+            }
+            const errors = validate({
                             fritekst,
                             godkjennVilkaar
-                        });
+            });
 
-                        this.setState({
-                            errors: errors,
-                        });
+            this.setState({
+                errors: errors,
+            });
 
+            sjekkOgOppdaterRatelimiter()
+                .then((isOK) => {
+                    if(isOK){
                         if (!Object.entries(errors).length) {
                             actions.sendSporsmal(temagruppe, fritekst, isDirekte);
                         }
