@@ -88,35 +88,41 @@ class SkrivNyttSporsmal extends React.Component {
         }
 
 
-
         const submit = (event) => {
             event.preventDefault();
-            sjekkOgOppdaterRatelimiter().then((res) =>
-                this.setState({
-                    rateLimiter: res
-                })
+
+                        const elements = event.target.elements;
+                        const fritekst = elements.fritekst.value;
+                        const godkjennVilkaar = elements.godkjennVilkaar.checked;
+            sjekkOgOppdaterRatelimiter()
+                .then((isOK) =>
+                {
+                    if(isOK){
+                        if(sendingStatus === STATUS.PENDING) {
+                            return;
+                        }
+
+
+                        const errors = validate({
+                            fritekst,
+                            godkjennVilkaar
+                        });
+
+                        this.setState({
+                            errors: errors,
+                        });
+
+                        if (!Object.entries(errors).length) {
+                            actions.sendSporsmal(temagruppe, fritekst, isDirekte);
+                        }
+                    } else {
+                        this.setState({
+                            rateLimiter: isOK
+                        })
+                    }
+                }
+
             )
-
-            if(sendingStatus === STATUS.PENDING) {
-                return;
-            }
-
-            const elements = event.target.elements;
-            const fritekst = elements.fritekst.value;
-            const godkjennVilkaar = elements.godkjennVilkaar.checked;
-
-            const errors = validate({
-                fritekst,
-                godkjennVilkaar
-            });
-
-            this.setState({
-                errors: errors,
-            });
-
-            if (!Object.entries(errors).length && rateLimiter) {
-                actions.sendSporsmal(temagruppe, fritekst, isDirekte);
-            }
         };
 
 
