@@ -70,4 +70,4 @@ export function harTilgangTilKommunaleTemagrupper() {
 }
 
 export function sjekkRatelimiter() { return fetchToJson(RATE_LIMITER_URL, MED_CREDENTIALS); }
-export function sjekkOgOppdaterRatelimiter() { return fetchToJson(RATE_LIMITER_URL, postConfig()); }
+export function sjekkOgOppdaterRatelimiter() { return fetchToJson(RATE_LIMITER_URL, somPostConfig()); }
