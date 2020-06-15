@@ -26,7 +26,7 @@ proxy:
 
   - contextPath: /rate-limiter
     baseUrl: http://rate-limiter.{{ NAIS_NAMESPACE }}.svc.nais.local
-    requestRewrite: REMOVE_CONTEXT_PATH
+    requestRewrite: INCLUDE_CONTEXT_PATH
     pingRequestPath: /internal/isAlive
 
 redirect:
