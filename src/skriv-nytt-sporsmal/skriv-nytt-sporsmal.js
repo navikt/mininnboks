@@ -43,10 +43,11 @@ class SkrivNyttSporsmal extends React.Component {
         if (temagruppe === 'oksos') {
             this.props.actions.harTilgangTilKommunaleTemagrupper();
         }
-        const sjekkRateLimtiter = sjekkRatelimiter();
-        this.setState({
-            kanSendeMelding: sjekkRateLimtiter ? sjekkRateLimtiter : true
-        })
+        sjekkRatelimiter().then((res) =>
+            this.setState({
+                rateLimiter: res
+            })
+        )
     }
 
     render() {
@@ -90,19 +91,14 @@ class SkrivNyttSporsmal extends React.Component {
 
         const submit = (event) => {
             event.preventDefault();
-            const oppdaterRateLimiter = sjekkOgOppdaterRatelimiter();
-            this.setState({
-                kanSendeMelding: oppdaterRateLimiter ? oppdaterRateLimiter : true
-            })
+            sjekkOgOppdaterRatelimiter().then((res) =>
+                this.setState({
+                    rateLimiter: res
+                })
+            )
 
             if(sendingStatus === STATUS.PENDING) {
                 return;
-            }
-            if(!rateLimiter){
-                return (    <Alertstripe type="advarsel" >
-                    <FormattedMessage id={`feilmelding.ratelimiter`}/>
-                </Alertstripe>
-                )
             }
 
             const elements = event.target.elements;
@@ -118,7 +114,7 @@ class SkrivNyttSporsmal extends React.Component {
                 errors: errors,
             });
 
-            if (!Object.entries(errors).length) {
+            if (!Object.entries(errors).length && rateLimiter) {
                 actions.sendSporsmal(temagruppe, fritekst, isDirekte);
             }
         };
@@ -138,10 +134,6 @@ class SkrivNyttSporsmal extends React.Component {
                 <FormattedMessage id={`feilmelding.fritekst.${fritekstError}`}/>
             </Feilmelding>
         );
-        const ratelimiterFeilmelding = !rateLimiter &&
-            ( <Feilmelding>
-                        <FormattedMessage id={`feilmelding.ratelimiter`}/>
-            </Feilmelding>);
 
         return (
             <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
@@ -149,7 +141,6 @@ class SkrivNyttSporsmal extends React.Component {
                 <Sidetittel className="text-center blokk-m">
                     <FormattedMessage id="send-sporsmal.still-sporsmal.ny-melding-overskrift"/>
                 </Sidetittel>
-                {ratelimiterFeilmelding}
                 <form className="panel text-center" onSubmit={submit}>
                     <i className="meldingikon"/>
                     <Innholdstittel className="blokk-xl">
@@ -158,6 +149,9 @@ class SkrivNyttSporsmal extends React.Component {
                     <Undertittel className="blokk-s">
                         <FormattedMessage id={temagruppe}/>
                     </Undertittel>
+                    <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
+                        <FormattedMessage id="feilmelding.ratelimiter"/>
+                    </AlertstripeVisibleIf>
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
