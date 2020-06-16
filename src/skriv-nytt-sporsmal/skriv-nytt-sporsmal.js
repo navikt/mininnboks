@@ -22,6 +22,7 @@ import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
 import Spinner from "../utils/spinner";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
+import {sjekkOgOppdaterRatelimiter, sjekkRatelimiter} from "../utils/api";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -33,6 +34,7 @@ class SkrivNyttSporsmal extends React.Component {
         super(props);
         this.state = {
             errors: {},
+            rateLimiter: true,
         };
     }
 
@@ -41,6 +43,11 @@ class SkrivNyttSporsmal extends React.Component {
         if (temagruppe === 'oksos') {
             this.props.actions.harTilgangTilKommunaleTemagrupper();
         }
+        sjekkRatelimiter().then((res) =>
+            this.setState({
+                rateLimiter: res
+            })
+        )
     }
 
     render() {
@@ -55,6 +62,7 @@ class SkrivNyttSporsmal extends React.Component {
 
         const {
             errors,
+            rateLimiter
         } = this.state;
 
         const params = match.params;
@@ -79,29 +87,40 @@ class SkrivNyttSporsmal extends React.Component {
             }
         }
 
+
         const submit = (event) => {
             event.preventDefault();
-
-            if(sendingStatus === STATUS.PENDING) {
-                return;
-            }
 
             const elements = event.target.elements;
             const fritekst = elements.fritekst.value;
             const godkjennVilkaar = elements.godkjennVilkaar.checked;
 
+            if(sendingStatus === STATUS.PENDING) {
+                return;
+            }
             const errors = validate({
-                fritekst,
-                godkjennVilkaar
+                            fritekst,
+                            godkjennVilkaar
             });
 
             this.setState({
                 errors: errors,
             });
 
-            if (!Object.entries(errors).length) {
-                actions.sendSporsmal(temagruppe, fritekst, isDirekte);
-            }
+            sjekkOgOppdaterRatelimiter()
+                .then((isOK) => {
+                    if(isOK){
+                        if (!Object.entries(errors).length) {
+                            actions.sendSporsmal(temagruppe, fritekst, isDirekte);
+                        }
+                    } else {
+                        this.setState({
+                            rateLimiter: isOK
+                        })
+                    }
+                }
+
+            )
         };
 
 
@@ -134,6 +153,9 @@ class SkrivNyttSporsmal extends React.Component {
                     <Undertittel className="blokk-s">
                         <FormattedMessage id={temagruppe}/>
                     </Undertittel>
+                    <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
+                        <FormattedMessage id="feilmelding.ratelimiter"/>
+                    </AlertstripeVisibleIf>
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>

@@ -24,6 +24,9 @@ proxy:
     baseUrl: http://saksoversikt-api.{{ NAIS_NAMESPACE }}.svc.nais.local
     pingRequestPath: /saksoversikt-api/internal/isAlive
 
+  - contextPath: /rate-limiter
+    baseUrl: http://rate-limiter.{{ NAIS_NAMESPACE }}.svc.nais.local
+    pingRequestPath: /rate-limiter/internal/isAlive
 
 redirect:
   - from: /mininnboks
