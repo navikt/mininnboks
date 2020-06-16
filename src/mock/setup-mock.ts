@@ -1,6 +1,5 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
-import { TRAADER_PATH, RESOURCES_PATH } from '../utils/api';
-
+import { TRAADER_PATH, RESOURCES_PATH, RATE_LIMITER_URL } from '../utils/api';
 import * as traader from './traader.json';
 import * as resources from './resources.json';
 
@@ -16,11 +15,13 @@ export default () => {
 
     console.log('### MOCK AKTIVERT! ###'); // tslint:disable-line:no-console
 
-    fetchMock.get(TRAADER_PATH, traader);
-    fetchMock.get(RESOURCES_PATH, resources);
-    fetchMock.get('/mininnboks-api/tilgang/oksos', { resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' });
+    fetchMock.get(TRAADER_PATH, (req, res, ctx) => res(ctx.json( traader )));
+    fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json( resources )));
+    fetchMock.get('/mininnboks-api/tilgang/oksos', (req, res, ctx) => res(ctx.json({ resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' })));
+    fetchMock.get(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(true)));
 
-    fetchMock.post('/mininnboks-api/traader/svar', {});
-    fetchMock.post('/mininnboks-api/traader/lest/:id', {});
-    fetchMock.post('/mininnboks-api/traader/allelest/:id', {});
+    fetchMock.post(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(false)));
+    fetchMock.post('/mininnboks-api/traader/svar', (req, res, ctx) => res(ctx.json({})));
+    fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
+    fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
 };
