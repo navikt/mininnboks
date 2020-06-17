@@ -74,4 +74,8 @@ export function sjekkRatelimiter() {
         // Ved feil sier vi at alt er greit slik at det ikke hindrer innsending
         .catch(() => true);
 }
-export function sjekkOgOppdaterRatelimiter() { return fetchToJson(RATE_LIMITER_URL, somPostConfig()); }
+export function sjekkOgOppdaterRatelimiter() {
+    return fetchToJson(RATE_LIMITER_URL, somPostConfig())
+        // Ved feil sier vi at alt er greit slik at det ikke hindrer innsending
+        .catch(() => true);
+}
