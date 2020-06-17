@@ -69,5 +69,9 @@ export function harTilgangTilKommunaleTemagrupper() {
     return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS)
 }
 
-export function sjekkRatelimiter() { return fetchToJson(RATE_LIMITER_URL, MED_CREDENTIALS); }
+export function sjekkRatelimiter() {
+    return fetchToJson(RATE_LIMITER_URL, MED_CREDENTIALS)
+        // Ved feil sier vi at alt er greit slik at det ikke hindrer innsending
+        .catch(() => true);
+}
 export function sjekkOgOppdaterRatelimiter() { return fetchToJson(RATE_LIMITER_URL, somPostConfig()); }
