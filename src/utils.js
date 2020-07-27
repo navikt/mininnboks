@@ -2,7 +2,6 @@ import React from 'react';
 import sanitize from 'sanitize-html';
 import moment from 'moment';
 import 'moment/locale/nb';
-import Constants from './utils/constants';
 
 moment.locale('nb');
 
@@ -11,17 +10,6 @@ export const safeHtml = (content) => sanitize(content, { allowedTags: ['a'] });
 export const prettyDate = (date) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 
 export const shortDate = (date) => moment(date).format('DD.MM.YY');
-
-export const status = (melding) => {
-    if (melding.type === 'SVAR_SBL_INNGAAENDE') {
-        return Constants.BESVART;
-    } else if (!melding.lest) {
-        return Constants.IKKE_LEST;
-    } else if (melding.type === 'SPORSMAL_MODIA_UTGAAENDE') {
-        return Constants.LEST_UBESVART;
-    }
-    return Constants.LEST;
-};
 
 export function nyesteTraadForst(traad1, traad2) {
     const d1 = new Date(traad1.nyeste.opprettet);
