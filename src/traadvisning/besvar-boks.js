@@ -46,7 +46,7 @@ class BesvarBoks extends React.Component {
                     textareaClass="fritekst"
                     name="fritekst"
                     label={""}
-                    maxLength={2500}
+                    maxLength={1000}
                 />
                 {feilmeldinger}
                 <div className="blokk-xs">
