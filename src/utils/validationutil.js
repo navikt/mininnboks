@@ -20,7 +20,7 @@ const defaultOpts = {
 };
 
 export function validate(verdier, opts = {}) {
-    const mergedOpts = { ...defaultOpts, ...opts }
+    const mergedOpts = { ...defaultOpts, ...opts };
     return Object.entries(verdier).reduce((errors, [felt, verdi]) => {
         if (!validationRules.hasOwnProperty(felt)) {
             return errors;

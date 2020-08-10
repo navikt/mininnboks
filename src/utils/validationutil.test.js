@@ -13,7 +13,7 @@ describe('validationRules', () => {
         });
 
         it('skal feile om teksten er for lang', () => {
-            const langTekst = Validationutils.validationRules.fritekst(new Array(1005).join('x'));
+            const langTekst = Validationutils.validationRules.fritekst(new Array(1005).join('x'), {maxLength: 1000});
 
             expect(langTekst).to.equal('max-len');
         });
@@ -56,10 +56,8 @@ describe('validate', () => {
 
         const formState = {
             fritekst: langTekst,
-            godkjennVilkaar: true,
-            maxLength: 2500
         };
-        const formStatus = Validationutils.validate(formState);
+        const formStatus = Validationutils.validate(formState, {maxLength: 2500});
 
         expect(formStatus).to.deep.equal({});
     });
