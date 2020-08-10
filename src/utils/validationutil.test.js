@@ -50,5 +50,18 @@ describe('validate', () => {
             godkjennVilkaar: 'required'
         });
     });
+
+    it('skal gi true på tegn over under 2500 ', () => {
+        const langTekst = new Array(2499).join('x');
+
+        const formState = {
+            fritekst: langTekst,
+            godkjennVilkaar: true,
+            maxLength: 2500
+        };
+        const formStatus = Validationutils.validate(formState);
+
+        expect(formStatus).to.deep.equal({});
+    });
 });
 
