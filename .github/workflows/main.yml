@@ -19,6 +19,8 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Test
+        run: npm test
 
   build-and-push:
     name: Build and push Docker container
