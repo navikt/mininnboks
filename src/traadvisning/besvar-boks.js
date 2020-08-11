@@ -18,7 +18,8 @@ class BesvarBoks extends React.Component {
         const {traadId, submit} = this.props;
         const fritekst = e.target.elements.fritekst.value;
         const errors = validate({
-            fritekst: fritekst,
+            fritekst: fritekst
+        }, {
             maxLength: 2500
         });
         const errorIds = Object.entries(errors).map(([field, errorType]) => `feilmelding.${field}.${errorType}`);
