@@ -8,6 +8,7 @@ ADD / /source
 ENV CI=true
 WORKDIR /source
 RUN npm ci
+RUN npm test
 ENV NODE_ENV=production
 RUN npm run build
 
