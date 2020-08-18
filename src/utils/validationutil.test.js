@@ -11,12 +11,6 @@ describe('validationRules', () => {
             expect(undefinedTekst).to.equal('required');
             expect(tomTekst).to.equal('required');
         });
-
-        it('skal feile om teksten er for lang', () => {
-            const langTekst = Validationutils.validationRules.fritekst(new Array(1005).join('x'));
-
-            expect(langTekst).to.equal('max-len');
-        });
     });
 
     describe('godkjennVilkår', () => {
@@ -49,6 +43,48 @@ describe('validate', () => {
             fritekst: 'required',
             godkjennVilkaar: 'required'
         });
+    });
+
+    it('skal gi true på tegn under 2500 ', () => {
+        const langTekst = new Array(2499).join('x');
+
+        const formState = {
+            fritekst: langTekst
+        };
+        const formStatus = Validationutils.validate(formState, {maxLength: 2500});
+
+        expect(formStatus).to.deep.equal({});
+    });
+
+    it('skal gi false på tegn over 2500 ', () => {
+        const langTekst = new Array(2505).join('x');
+
+        const formState = {
+            fritekst: langTekst
+        };
+        const formStatus = Validationutils.validate(formState, {maxLength: 2500});
+
+        expect(formStatus).to.deep.equal({fritekst: 'max-len'});
+    });
+
+    it('skal gi true på tegn over under 1000 ', () => {
+        const langTekst = new Array(999).join('x');
+        const formState = {
+            fritekst: langTekst
+        };
+        const formStatus = Validationutils.validate(formState);
+
+        expect(formStatus).to.deep.equal({});
+    });
+    it('skal gi false på tegn over 1000 ', () => {
+        const langTekst = new Array(1005).join('x');
+
+        const formState = {
+            fritekst: langTekst
+        };
+        const formStatus = Validationutils.validate(formState);
+
+        expect(formStatus).to.deep.equal({ fritekst: 'max-len'});
     });
 });
 

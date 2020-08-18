@@ -19,6 +19,8 @@ class BesvarBoks extends React.Component {
         const fritekst = e.target.elements.fritekst.value;
         const errors = validate({
             fritekst: fritekst
+        }, {
+            maxLength: 2500
         });
         const errorIds = Object.entries(errors).map(([field, errorType]) => `feilmelding.${field}.${errorType}`);
         this.setState({
@@ -46,7 +48,7 @@ class BesvarBoks extends React.Component {
                     textareaClass="fritekst"
                     name="fritekst"
                     label={""}
-                    maxLength={1000}
+                    maxLength={2500}
                 />
                 {feilmeldinger}
                 <div className="blokk-xs">
