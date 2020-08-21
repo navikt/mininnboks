@@ -5,9 +5,9 @@ import {visVilkarModal, skjulVilkarModal} from './../ducks/ui';
 import {sendSporsmal} from './../ducks/traader';
 import {STATUS} from './../ducks/utils';
 import {TextareaControlled} from 'nav-frontend-skjema';
-import GodtaVilkar from './godta-vilkar';
+import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './kvittering';
-import TemagruppeEkstraInfo from './temagruppe-ekstra-info';
+import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/feilmelding';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
@@ -20,7 +20,7 @@ import Alertstripe from 'nav-frontend-alertstriper'
 import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
-import Spinner from "../utils/spinner";
+import Spinner from "../utils/Spinner";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
 import {sjekkOgOppdaterRatelimiter, sjekkRatelimiter} from "../utils/api";
 

@@ -1,4 +1,4 @@
-import * as Api from './../utils/api';
+import * as Api from '../utils/api';
 import { STATUS, doThenDispatch } from './utils';
 
 // Actions

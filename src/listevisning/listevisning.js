@@ -1,11 +1,11 @@
 import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import IntlLenke from './../utils/intl-lenke';
+import IntlLenke from '../utils/IntlLenke';
 import { nyesteTraadForst } from '../utils';
 import MeldingListe from './melding-liste';
 import { connect } from 'react-redux';
-import VisibleIf from './../utils/hocs/visible-if';
+import VisibleIf from '../utils/hocs/visible-if';
 import { storeShape, traadShape } from './../proptype-shapes';
 import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import { withRouter } from 'react-router-dom';

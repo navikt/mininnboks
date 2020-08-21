@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { shortDate, safeHtml } from '../utils';
 import { withRouter } from 'react-router-dom';
-import Lenkepanel from '../utils/lenkepanel';
+import Lenkepanel from '../utils/Lenkepanel';
 import {Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 const cls = (props) => classNames('oppgave', props.ulestMeldingKlasse, {

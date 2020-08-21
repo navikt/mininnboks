@@ -4,7 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/personalia';
 import Dokumenter from './dokumentvisning/dokument/dokumenter';
-import IntlLenke from "../utils/intl-lenke";
+import IntlLenke from "../utils/IntlLenke";
 import './dokument-visning.less';
 
 class DokumentVisning extends React.Component {

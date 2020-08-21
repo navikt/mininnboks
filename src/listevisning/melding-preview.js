@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 import React, {Component} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Lenkepanel from '../utils/lenkepanel';
+import Lenkepanel from '../utils/Lenkepanel';
 import {shortDate, safeHtml} from '../utils';
 import AntallMeldinger from './antall-meldinger';
 import classNames from 'classnames';

@@ -2,7 +2,7 @@ import PT from 'prop-types';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { FormattedMessage } from 'react-intl';
-import Lenkepanel from '../utils/lenkepanel';
+import Lenkepanel from '../utils/Lenkepanel';
 import { shortDate } from '../utils';
 import {Normaltekst, Undertittel } from 'nav-frontend-typografi';
 

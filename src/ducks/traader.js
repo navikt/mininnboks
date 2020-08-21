@@ -1,6 +1,6 @@
-import * as Api from './../utils/api';
+import * as Api from '../utils/api';
 import { MeldingsTyper } from '../utils/constants';
-import { eldsteMeldingForst } from './../utils';
+import { eldsteMeldingForst } from '../utils';
 import { STATUS, doThenDispatch } from './utils';
 
 // Actions

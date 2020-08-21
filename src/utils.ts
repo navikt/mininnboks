@@ -1,17 +1,18 @@
-import React from 'react';
+import * as React from 'react';
 import sanitize from 'sanitize-html';
 import moment from 'moment';
 import 'moment/locale/nb';
+import {Melding, Traad} from "./Traad";
 
 moment.locale('nb');
 
 export const safeHtml = (content) => sanitize(content, { allowedTags: ['a'] });
 
-export const prettyDate = (date) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
+export const prettyDate = (date: string) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 
-export const shortDate = (date) => moment(date).format('DD.MM.YY');
+export const shortDate = (date: string) => moment(date).format('DD.MM.YY');
 
-export function nyesteTraadForst(traad1, traad2) {
+export function nyesteTraadForst(traad1 : Traad, traad2 : Traad) {
     const d1 = new Date(traad1.nyeste.opprettet);
     const d2 = new Date(traad2.nyeste.opprettet);
 
@@ -20,7 +21,7 @@ export function nyesteTraadForst(traad1, traad2) {
     return 0;
 }
 
-export function eldsteMeldingForst(melding1, melding2) {
+export function eldsteMeldingForst(melding1 : Melding, melding2 : Melding) {
     const d1 = new Date(melding1.opprettet);
     const d2 = new Date(melding2.opprettet);
 

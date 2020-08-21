@@ -1,4 +1,5 @@
 import { getCookie, fetchToJson } from './../ducks/utils';
+import {Temagruppe} from "../skriv-nytt-sporsmal/TemagruppeEkstraInfo";
 
 const API_BASE_URL = '/mininnboks-api';
 const MED_CREDENTIALS = { credentials: 'same-origin' };
@@ -12,7 +13,7 @@ const somPostConfig = () => ({
     }
 });
 
-const sendSporsmalConfig = (temagruppe, fritekst) => ({
+const sendSporsmalConfig = (temagruppe : Temagruppe, fritekst : string) => ({
     credentials: 'same-origin',
     method: 'POST',
     headers: {
@@ -23,7 +24,7 @@ const sendSporsmalConfig = (temagruppe, fritekst) => ({
     body: JSON.stringify({ temagruppe, fritekst })
 });
 
-const sendSvarConfig = (traadId, fritekst) => ({
+const sendSvarConfig = (traadId : string, fritekst: string) => ({
     credentials: 'same-origin',
     method: 'POST',
     headers: {
@@ -46,22 +47,22 @@ export function hentTraader() {
     return fetchToJson(TRAADER_PATH, MED_CREDENTIALS);
 }
 
-export function markerTraadSomLest(traadId) {
+export function markerTraadSomLest(traadId : string) {
     return fetchToJson(`${API_BASE_URL}/traader/allelest/${traadId}`, somPostConfig());
 }
 
-export function markerSomLest(behandlingsId) {
+export function markerSomLest(behandlingsId : string) {
     return fetchToJson(`${API_BASE_URL}/traader/lest/${behandlingsId}`, somPostConfig());
 }
 
-export function sendSporsmal(temagruppe, fritekst, isDirekte) {
+export function sendSporsmal(temagruppe : Temagruppe, fritekst : string, isDirekte : boolean) {
     if(isDirekte) {
         return fetchToJson(`${API_BASE_URL}/traader/sporsmaldirekte`, sendSporsmalConfig(temagruppe, fritekst));
     }
     return fetchToJson(`${API_BASE_URL}/traader/sporsmal`, sendSporsmalConfig(temagruppe, fritekst));
 }
 
-export function sendSvar(traadId, fritekst) {
+export function sendSvar(traadId : string, fritekst : string) {
     return fetchToJson(`${API_BASE_URL}/traader/svar`, sendSvarConfig(traadId, fritekst));
 }
 

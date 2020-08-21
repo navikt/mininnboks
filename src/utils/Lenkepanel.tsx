@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import {Link} from 'react-router-dom';
 
-function lenkeLager({href, ...props}) {
+function lenkeLager({href, ...props} : {href: string}) {
     return <Link to={href} {...props} />
 }
 

@@ -1,34 +1,41 @@
 import PT from 'prop-types';
-import React from 'react';
+import * as React from 'react';
+import {useEffect} from 'react';
 import BesvarBoks from './besvar-boks';
 import Feilmelding from './../feilmelding/feilmelding';
 import MeldingContainer from './melding-container';
 import SkrivKnapp from './skriv-knapp';
 import { STATUS } from './../ducks/utils';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import { markerTraadSomLest, sendSvar, selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
-import { visBesvarBoks, skjulBesvarBoks } from './../ducks/ui';
-import { connect } from 'react-redux';
-import { storeShape, traadShape } from './../proptype-shapes';
+import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi'
 import { withRouter } from 'react-router-dom';
 import Alertstripe from 'nav-frontend-alertstriper'
 import {visibleIfHOC} from "../utils/hocs/visible-if";
+import {Traad} from "../Traad";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
+interface Props {
+    traader: Traad[],
+    skalViseBesvarBoks: boolean,
+    innsendingStatus: string,
+    actions: TraadvisningActions,
+    match: object
+}
+interface TraadvisningActions {
+    sendSvar: (traadId : string, fritekst: string) => void,
+    markerSomLest: (traadId : string) => void,
+    visBesvarBoks: () => void,
+    skjulBesvarBoks: () => void
+}
+function TraadVisning (props: Props){
+        useEffect(() => {
+            props.actions.markerSomLest(props.match.params.traadId)
+        }, [])
 
-class TraadVisning extends React.Component {
-    componentDidMount() {
-        this.props.actions.markerSomLest(this.props.match.params.traadId);
-    }
-
-    render() {
-        const {
-            match, innsendingStatus, traader, skalViseBesvarBoks, actions
-        } = this.props;
-
-        const traadId = match.params.traadId;
-        const valgttraad = traader.data.find(traad => traad.traadId === traadId);
+        const traader = selectTraaderMedSammenslatteMeldinger(props.traader)
+        const traadId = props.match.params.traadId;
+        const valgttraad = props.traader.find(traad => traad.traadId === traadId);
 
         if (!valgttraad) {
             return (
@@ -56,14 +63,14 @@ class TraadVisning extends React.Component {
                 <div className="traad-container">
                     <AlertstripeVisibleIf
                         type="advarsel"
-                        visibleIf={innsendingStatus && innsendingStatus === STATUS.ERROR}
+                        visibleIf={props.innsendingStatus && props.innsendingStatus === STATUS.ERROR}
                         className="blokk-m"
                     >
                         <FormattedMessage id='infoboks.advarsel' />
                     </AlertstripeVisibleIf>
                     <SkrivKnapp
-                        visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks}
-                        onClick={actions.visBesvarBoks}
+                        visibleIf={valgttraad.kanBesvares && !props.skalViseBesvarBoks}
+                        onClick={props.actions.visBesvarBoks}
                     />
                     <AlertstripeVisibleIf
                         type="info"
@@ -75,45 +82,21 @@ class TraadVisning extends React.Component {
                         )}</FormattedMessage>
                     </AlertstripeVisibleIf>
                     <BesvarBoks
-                        innsendingStatus={innsendingStatus}
-                        visibleIf={skalViseBesvarBoks}
+                        innsendingStatus={props.innsendingStatus}
+                        visibleIf={props.skalViseBesvarBoks}
                         traadId={traadId}
-                        avbryt={actions.skjulBesvarBoks}
-                        submit={actions.sendSvar}
+                        avbryt={props.actions.skjulBesvarBoks}
+                        submit={props.actions.sendSvar}
                     />
                     {meldingItems}
                 </div>
             </div>
         );
-    }
 }
-
-TraadVisning.propTypes = {
-    traader: storeShape(traadShape).isRequired,
-    skalViseBesvarBoks: PT.bool.isRequired,
-    innsendingStatus: PT.string.isRequired,
-    actions: PT.shape({
-        sendSvar: PT.func.isRequired,
-        markerSomLest: PT.func.isRequired,
-        visBesvarBoks: PT.func.isRequired,
-        skjulBesvarBoks: PT.func.isRequired
-    }).isRequired,
-    match: PT.object.isRequired
-};
-
 const mapStateToProps = (state) => ({
     traader: selectTraaderMedSammenslatteMeldinger(state),
     innsendingStatus: state.traader.innsendingStatus,
     skalViseBesvarBoks: state.ui.visBesvarBoks
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    actions: {
-        markerSomLest: (traadId) => dispatch(markerTraadSomLest(traadId)),
-        visBesvarBoks: () => dispatch(visBesvarBoks()),
-        skjulBesvarBoks: () => dispatch(skjulBesvarBoks()),
-        sendSvar: (traadId, fritekst) => dispatch(sendSvar(traadId, fritekst))
-    }
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TraadVisning));
+export default withRouter(TraadVisning);

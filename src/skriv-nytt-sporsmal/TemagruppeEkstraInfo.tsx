@@ -1,10 +1,28 @@
-import React from 'react';
-import PT from 'prop-types';
+import * as React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import './temagruppe-ekstra-info.less';
+import {useState} from "react";
 
-const temagruppeInfo = {
+interface Props{
+    temagruppe: string;
+}
+
+interface Info {
+    heading: string;
+    intro: JSX.Element;
+    elementer: string[];
+}
+export enum Temagruppe {
+    ARBD= 'ARBD',
+    FMLI= 'FMLI',
+}
+
+type TemagruppeInfo = {
+    [P in Temagruppe]: Array<Info>;
+};
+
+const temagruppeInfo : TemagruppeInfo = {
     FMLI: [
         {
             heading: "Kontantstøtte: Skal du sende melding om barnehageplass?",
@@ -21,10 +39,10 @@ const temagruppeInfo = {
         {
             heading: "Tar du utdanning med støtte fra Lånekassen?",
             intro: (
-                <React.Fragment>
+                <>
                     <Normaltekst>Mottar du dagpenger? Skal du melde fra om at du tar utdanning med støtte fra Lånekassen?</Normaltekst>
                     <Normaltekst>Du må opplyse om:</Normaltekst>
-                </React.Fragment>
+                </>
             ),
             elementer: [
                 'Hvilken utdanning du deltar i',
@@ -38,8 +56,8 @@ const temagruppeInfo = {
     ]
 };
 
-function TemagruppeEkstraInfo(props) {
-    const [skjulEkstra, settSkjulEkstra] = React.useState(true);
+function TemagruppeEkstraInfo(props : Props) {
+    const [skjulEkstra, settSkjulEkstra] = useState(true);
     const allInfo = temagruppeInfo[props.temagruppe];
     if (!allInfo) {
         return null;
@@ -48,18 +66,18 @@ function TemagruppeEkstraInfo(props) {
     return (
         <div className="temagruppe-ekstra-info blokk-m">
             <Element className="text-center blokk-xxs">Aktuelt</Element>
-            {allInfo.map((info) => {
+            {allInfo.map((info : Info) => {
                 const ekstraInfo = skjulEkstra ? null : (
-                    <React.Fragment>
+                    <>
                         {info.intro}
                         <ul className="typo-normal">
                             {info.elementer.map((element, idx) => <li key={idx}>{element}</li>)}
                         </ul>
-                    </React.Fragment>
+                    </>
                 );
 
                 return (
-                    <React.Fragment>
+                    <>
                         <Lenke
                             href="#ekstrainfo"
                             className="temagruppe-ekstra-info__lenke"
@@ -68,15 +86,11 @@ function TemagruppeEkstraInfo(props) {
                             ▼ {info.heading}
                         </Lenke>
                         {ekstraInfo}
-                    </React.Fragment>
+                    </>
                 );
             })}
         </div>
     )
 }
-
-TemagruppeEkstraInfo.propTypes = {
-    temagruppe: PT.string.isRequired
-};
 
 export default TemagruppeEkstraInfo;

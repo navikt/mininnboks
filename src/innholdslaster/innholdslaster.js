@@ -2,7 +2,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import Feilmelding from './../feilmelding/feilmelding';
-import Spinner from '../utils/spinner';
+import Spinner from '../utils/Spinner';
 import { storeShape } from '../proptype-shapes';
 import { STATUS } from './../ducks/utils';
 import {getLogger} from "../utils";
