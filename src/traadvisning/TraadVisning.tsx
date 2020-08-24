@@ -1,10 +1,9 @@
-import PT from 'prop-types';
 import * as React from 'react';
 import {useEffect} from 'react';
 import BesvarBoks from './besvar-boks';
 import Feilmelding from './../feilmelding/feilmelding';
-import MeldingContainer from './melding-container';
-import SkrivKnapp from './skriv-knapp';
+import MeldingContainer from './MeldingContainer';
+import SkrivKnapp from './SkrivKnapp';
 import { STATUS } from './../ducks/utils';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
@@ -16,12 +15,21 @@ import {Traad} from "../Traad";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 interface Props {
-    traader: Traad[],
+    traader: { data: Array<Traad> }
     skalViseBesvarBoks: boolean,
-    innsendingStatus: string,
+    innsendingStatus: RestStatus,
     actions: TraadvisningActions,
     match: object
 }
+
+enum RestStatus {
+    NOT_STARTED= 'NOT_STARTED',
+    PENDING = 'PENDING',
+    OK = 'OK',
+    RELOADING = 'RELOADING',
+    ERROR = 'ERROR'
+}
+
 interface TraadvisningActions {
     sendSvar: (traadId : string, fritekst: string) => void,
     markerSomLest: (traadId : string) => void,
@@ -33,9 +41,9 @@ function TraadVisning (props: Props){
             props.actions.markerSomLest(props.match.params.traadId)
         }, [])
 
-        const traader = selectTraaderMedSammenslatteMeldinger(props.traader)
+        const traader = selectTraaderMedSammenslatteMeldinger(props.traader.data)
         const traadId = props.match.params.traadId;
-        const valgttraad = props.traader.find(traad => traad.traadId === traadId);
+        const valgttraad = props.traader.data.find(traad => traad.traadId === traadId);
 
         if (!valgttraad) {
             return (

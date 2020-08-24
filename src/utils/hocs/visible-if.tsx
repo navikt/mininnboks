@@ -3,7 +3,7 @@ import  {ReactNode} from 'react';
 import { fn, getDisplayName } from '../../utils';
 
 interface Props {
-    visibleIf: boolean | () => void,
+    visibleIf: () => boolean,
     children: ReactNode
 }
 
@@ -16,7 +16,7 @@ function VisibleIf(props: Props) {
 
 export default VisibleIf;
 
-export function visibleIfHOC(komponent) {
+export function visibleIfHOC(komponent : any) {
     function visibleIfWrapper({ visibleIf, ...props } : {visibleIf: boolean}) {
         if (fn(visibleIf)()) {
             return React.createElement(komponent, props);
