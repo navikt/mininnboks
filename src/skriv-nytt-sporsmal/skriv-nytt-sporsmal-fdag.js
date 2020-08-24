@@ -144,15 +144,17 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         label={""}
                         maxLength={1000}
                     />
-                    <GodtaVilkar
-                        visModal={skalViseVilkarModal}
-                        actions={actions}
-                        inputName="godkjennVilkaar"
-                        skalViseFeilmelding={!!errors.godkjennVilkaar}
-                    />
-                    <Hovedknapp type="submit" spinner={sendingStatus === STATUS.PENDING} aria-disabled={sendingStatus === STATUS.PENDING}>
-                        <FormattedMessage id="send-sporsmal.still-sporsmal.send-inn"/>
-                    </Hovedknapp>
+                    <div className="text-center">
+                        <GodtaVilkar
+                            visModal={skalViseVilkarModal}
+                            actions={actions}
+                            inputName="godkjennVilkaar"
+                            skalViseFeilmelding={!!errors.godkjennVilkaar}
+                        />
+                        <Hovedknapp type="submit" spinner={sendingStatus === STATUS.PENDING} aria-disabled={sendingStatus === STATUS.PENDING}>
+                            <FormattedMessage id="send-sporsmal.still-sporsmal.send-inn"/>
+                        </Hovedknapp>
+                    </div>
                 </form>
             </article>
         );
