@@ -79,7 +79,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                 .then((isOK) => {
                         if(isOK){
                             if (!Object.entries(errors).length) {
-                                actions.sendSporsmal(temagruppe, fritekst, isDirekte);
+                                actions.sendSporsmal(temagruppe, fritekst, false);
                             }
                         } else {
                             this.setState({ rateLimiter: isOK });
