@@ -123,7 +123,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
                     <Normaltekst className="typo-normal blokk-xs">
-                        Fra 1.september starter vi med tilbakebetalingen av forskuddet på dagpenger.
+                        Fra 1.september starter NAV med å kreve tilbake forskudd på dagpenger.
                         Vi vil trekke 15 prosent fra hver utbetaling av dagpenger inntil forskuddet er nedbetalt.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
