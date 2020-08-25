@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 import React from 'react';
 import MeldingPreview from './melding-preview';
-import DokumentPreview from './dokument-preview';
+import DokumentPreview from './DokumentPreview';
 import OppgavePreview from './oppgave-preview';
 import { FormattedMessage } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
