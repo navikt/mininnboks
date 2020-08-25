@@ -3,7 +3,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import IntlLenke from '../utils/IntlLenke';
 import { nyesteTraadForst } from '../utils';
-import MeldingListe from './melding-liste';
+import MeldingListe from './MeldingListe';
 import { connect } from 'react-redux';
 import VisibleIf from '../utils/hocs/visible-if';
 import { storeShape, traadShape } from './../proptype-shapes';

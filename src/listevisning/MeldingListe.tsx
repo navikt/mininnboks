@@ -1,11 +1,16 @@
-import PT from 'prop-types';
-import React from 'react';
-import MeldingPreview from './melding-preview';
+import * as React from 'react';
+import MeldingPreview from './MeldingPreview';
 import DokumentPreview from './DokumentPreview';
 import OppgavePreview from './oppgave-preview';
 import { FormattedMessage } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi'
+import {Melding} from "../Traad";
+
+interface Props {
+    meldinger: Array<Melding>,
+    overskrift: string
+}
 
 const previewMap = {
     DOKUMENT_VARSEL: DokumentPreview,
@@ -13,8 +18,8 @@ const previewMap = {
     defaultVisning: MeldingPreview
 };
 
-const MeldingListe = ({ meldinger, overskrift }) => {
-    const innhold = meldinger.map((config) => {
+function MeldingListe(props : Props) {
+    const innhold = props.meldinger.map((config : any) => {
         const type = config.traad.nyeste.type;
         const props = {
             aktiv: config.aktiv,
@@ -31,8 +36,8 @@ const MeldingListe = ({ meldinger, overskrift }) => {
         <section className="traad-liste">
             <Panel className="blokk-xxxs" >
                 <Undertittel tag="h2">
-                    <FormattedMessage id={overskrift} values={{ antallMeldinger: meldinger.length }} />
-                    <span className="vekk">({meldinger.length})</span>
+                    <FormattedMessage id={props.overskrift} values={{ antallMeldinger: props.meldinger.length }} />
+                    <span className="vekk">({props.meldinger.length})</span>
                 </Undertittel>
             </Panel>
             <ul className="ustilet">
@@ -40,11 +45,6 @@ const MeldingListe = ({ meldinger, overskrift }) => {
             </ul>
         </section>
     );
-};
-
-MeldingListe.propTypes = {
-    meldinger: PT.array.isRequired,
-    overskrift: PT.string.isRequired
 };
 
 export default MeldingListe;
