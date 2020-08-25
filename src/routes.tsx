@@ -6,7 +6,7 @@ import Traadvisning from './traadvisning/TraadVisning';
 import Oppgavevisning from './oppgave-visning/oppgave-visning';
 import SkrivNyttSporsmal from './skriv-nytt-sporsmal/skriv-nytt-sporsmal';
 import DokumentVisningSide from './dokument-visning/dokument-visning-side';
-import Traader from './traader/traader';
+import Traader from './traader/Traader';
 import Brodsmuler from './brodsmuler/brodsmuler';
 
 function TradRouting() {
