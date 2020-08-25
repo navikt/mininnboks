@@ -131,7 +131,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         <ul>
                             <li>Utsette mitt trekk én måned</li>
                             <li>Redusere trekket til 10%</li>
-                            <li>Øke trekket til 20%</li>
+                            <li>Øke trekket til 25%</li>
                             <li>Øke trekket til 30%</li>
                         </ul>
                         Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
