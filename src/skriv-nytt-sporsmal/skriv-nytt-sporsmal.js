@@ -6,7 +6,7 @@ import {sendSporsmal} from './../ducks/traader';
 import {STATUS} from './../ducks/utils';
 import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './GodtaVilkar';
-import Kvittering from './kvittering';
+import Kvittering from './Kvittering';
 import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/feilmelding';
 import {FormattedMessage} from 'react-intl';

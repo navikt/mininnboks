@@ -1,5 +1,4 @@
-import PT from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import {validate} from '../utils/validationutil';
 import {STATUS} from './../ducks/utils';
 import {FormattedMessage} from 'react-intl';
@@ -9,67 +8,62 @@ import {visibleIfHOC} from "../utils/hocs/visible-if";
 import Feilmelding from "../feilmelding/feilmelding";
 
 import './besvar-boks.less'
+import {ChangeEvent, FormEvent, FormEventHandler, useState} from "react";
 
-class BesvarBoks extends React.Component {
+interface Props {
+    innsendingStatus: string,
+    traadId: string,
+    submit: (traadId : string, fritekst? : string) => void,
+    avbryt: () => void
+}
 
-    onSubmit(e) {
+function BesvarBoks(props : Props) {
+    const [errorIds, setErrorIds] = useState<string[]>([]);
+    const onSubmit = (e : ChangeEvent) => {
         e.preventDefault();
 
-        const {traadId, submit} = this.props;
-        const fritekst = e.target.elements.fritekst.value;
+        const fritekst = e.target.nodeValue;
         const errors = validate({
             fritekst: fritekst
         }, {
             maxLength: 2500
         });
-        const errorIds = Object.entries(errors).map(([field, errorType]) => `feilmelding.${field}.${errorType}`);
-        this.setState({
-            errorIds: errorIds
-        });
+        const ids = Object.entries(errors).map(([field, errorType]) => `feilmelding.${field}.${errorType}`);
+
+        setErrorIds(ids);
 
         if (!errorIds.length) {
-            submit(traadId, fritekst);
+            props.submit(props.traadId, fritekst);
         }
     };
 
-    render() {
-        const {avbryt, innsendingStatus} = this.props;
-        const state = this.state;
-        const errorIds = state && state.errorIds;
-        const feilmeldinger = errorIds && errorIds.map(errorId => (
-            <Feilmelding className="blokk-m">
-                <FormattedMessage id={errorId}/>
-            </Feilmelding>
-        ));
+    const feilmeldinger = errorIds && errorIds.map(errorId => (
+        <Feilmelding>
+            <FormattedMessage id={errorId}/>
+        </Feilmelding>
+    ));
 
-        return (
-            <form className="besvar-boks text-center blokk-center blokk-l" onSubmit={this.onSubmit.bind(this)}>
-                <TextareaControlled
-                    textareaClass="fritekst"
-                    name="fritekst"
-                    label={""}
-                    maxLength={2500}
-                />
-                {feilmeldinger}
-                <div className="blokk-xs">
-                    <Hovedknapp type="submit" spinner={innsendingStatus === STATUS.PENDING}>
-                        <FormattedMessage id="traadvisning.besvar.send"/>
-                    </Hovedknapp>
-                </div>
-                <Flatknapp onClick={avbryt}>
-                    <FormattedMessage id="traadvisning.besvar.avbryt"/>
-                </Flatknapp>
-            </form>
-        );
-    }
+    return (
+        <form className="besvar-boks text-center blokk-center blokk-l" onSubmit={onSubmit}>
+            <TextareaControlled
+                textareaClass="fritekst"
+                name="fritekst"
+                label={""}
+                maxLength={2500}
+                defaultValue={""}
+            />
+            {feilmeldinger}
+            <div className="blokk-xs">
+                <Hovedknapp htmlType="submit" spinner={props.innsendingStatus === STATUS.PENDING}>
+                    <FormattedMessage id="traadvisning.besvar.send"/>
+                </Hovedknapp>
+            </div>
+            <Flatknapp onClick={props.avbryt}>
+                <FormattedMessage id="traadvisning.besvar.avbryt"/>
+            </Flatknapp>
+        </form>
+    );
 }
 
-
-BesvarBoks.propTypes = {
-    innsendingStatus: PT.string.isRequired,
-    traadId: PT.string.isRequired,
-    submit: PT.func.isRequired,
-    avbryt: PT.func.isRequired,
-};
 
 export default visibleIfHOC(BesvarBoks);

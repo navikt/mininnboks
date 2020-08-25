@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect} from 'react';
-import BesvarBoks from './besvar-boks';
+import BesvarBoks from './BesvarBoks';
 import Feilmelding from './../feilmelding/feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
