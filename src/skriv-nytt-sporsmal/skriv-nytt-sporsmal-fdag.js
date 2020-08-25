@@ -114,7 +114,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                 <form className="panel" onSubmit={submit}>
                     <i className="meldingikon"/>
                     <Innholdstittel className="blokk-xl text-center">
-                        Forskudd på dagpenger
+                        Tilbakebetaling av forskudd på dagpenger
                     </Innholdstittel>
                     <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
                         <FormattedMessage id="feilmelding.ratelimiter"/>
@@ -127,15 +127,14 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         Vi vil trekke 15 prosent fra hver utbetaling av dagpenger inntil forskuddet er nedbetalt.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
-                        Oppgi i tekstfeltet under hvilken av følgende endringer du ønsker:
+                        Du kan utsette eller endre trekket. Skriv i tekstfeltet hvilken endring du ønsker.
                         <ul>
                             <li>Utsette mitt trekk én måned</li>
                             <li>Redusere trekket til 10%</li>
+                            <li>Øke trekket til 20%</li>
                             <li>Øke trekket til 30%</li>
-                            <li>Øke trekket til 40%</li>
-                            <li>Øke trekket til 50%</li>
                         </ul>
-                        Du vil få bekreftelse på at netbetalingsplanen er endret innen 1 dag.
+                        Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
                     </Normaltekst>
                     { fritekstFeilmelding }
                     <TextareaControlled
