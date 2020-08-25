@@ -113,7 +113,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                 </Sidetittel>
                 <form className="panel" onSubmit={submit}>
                     <i className="meldingikon"/>
-                    <Innholdstittel className="blokk-xl text-center">
+                    <Innholdstittel tag="h2" className="blokk-xl text-center">
                         Tilbakebetaling av forskudd på dagpenger
                     </Innholdstittel>
                     <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
