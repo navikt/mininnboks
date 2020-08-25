@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MeldingPreview from './MeldingPreview';
 import DokumentPreview from './DokumentPreview';
-import OppgavePreview from './oppgave-preview';
+import OppgavePreview from './OppgavePreview';
 import { FormattedMessage } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi'
