@@ -147,7 +147,7 @@ class SkrivNyttSporsmal extends React.Component {
                 </Sidetittel>
                 <form className="panel text-center" onSubmit={submit}>
                     <i className="meldingikon"/>
-                    <Innholdstittel className="blokk-xl">
+                    <Innholdstittel tag="h2" className="blokk-xl">
                         <FormattedMessage id="send-sporsmal.still-sporsmal.deloverskrift"/>
                     </Innholdstittel>
                     <Undertittel className="blokk-s">

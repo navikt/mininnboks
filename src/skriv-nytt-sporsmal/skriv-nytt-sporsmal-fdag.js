@@ -113,7 +113,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                 </Sidetittel>
                 <form className="panel" onSubmit={submit}>
                     <i className="meldingikon"/>
-                    <Innholdstittel className="blokk-xl text-center">
+                    <Innholdstittel tag="h2" className="blokk-xl text-center">
                         Tilbakebetaling av forskudd på dagpenger
                     </Innholdstittel>
                     <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
@@ -123,7 +123,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
                     <Normaltekst className="typo-normal blokk-xs">
-                        Fra 1.september starter vi med tilbakebetalingen av forskuddet på dagpenger.
+                        Fra 1.september starter NAV med å kreve tilbake forskudd på dagpenger.
                         Vi vil trekke 15 prosent fra hver utbetaling av dagpenger inntil forskuddet er nedbetalt.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
@@ -131,7 +131,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         <ul>
                             <li>Utsette mitt trekk én måned</li>
                             <li>Redusere trekket til 10%</li>
-                            <li>Øke trekket til 20%</li>
+                            <li>Øke trekket til 25%</li>
                             <li>Øke trekket til 30%</li>
                         </ul>
                         Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
