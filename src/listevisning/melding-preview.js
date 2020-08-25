@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Lenkepanel from '../utils/Lenkepanel';
 import {shortDate, safeHtml} from '../utils';
-import AntallMeldinger from './antall-meldinger';
+import AntallMeldinger from './AntallMeldinger';
 import classNames from 'classnames';
 import {Link, withRouter} from 'react-router-dom';
 import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi'

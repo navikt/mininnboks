@@ -1,9 +1,8 @@
-import PT from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 
-const AntallMeldinger = ({ antall }) => {
+function AntallMeldinger( antall : number ) {
     const antallCls = classNames('antall-ikon', {
         'antall-en': antall === 1,
         'antall-flere': antall > 1
@@ -13,7 +12,7 @@ const AntallMeldinger = ({ antall }) => {
 
     if (antall > 1) {
         if (antall < 10) {
-            antallTekst = antall;
+            antallTekst = antall.toString();
         } else {
             antallTekst = '9+';
         }
@@ -29,10 +28,6 @@ const AntallMeldinger = ({ antall }) => {
             <span className="vekk">{flereMeldingerAriaLabel}</span>
         </div>
     );
-};
-
-AntallMeldinger.propTypes = {
-    antall: PT.number
 };
 
 export default AntallMeldinger;
