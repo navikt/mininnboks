@@ -18,8 +18,7 @@ const cls = (props : Props) => classNames('blokk-xxxs dokument', props.ulestMeld
 });
 
 function DokumentPreview(props : Props) {
-    const { traad } = props;
-    const dokument = traad.nyeste;
+    const dokument = props.traad.nyeste;
     const avsender = <span className="avsender-fra-nav"><FormattedMessage id="avsender.tekst.NAV" /></span>;
     const dato = shortDate(dokument.opprettet);
     const temanavn = dokument.temaNavn;
