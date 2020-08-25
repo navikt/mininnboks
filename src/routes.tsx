@@ -5,6 +5,7 @@ import Listevisning from './listevisning/listevisning';
 import Traadvisning from './traadvisning/traadvisning';
 import Oppgavevisning from './oppgave-visning/oppgave-visning';
 import SkrivNyttSporsmal from './skriv-nytt-sporsmal/skriv-nytt-sporsmal';
+import SkrivNyttSporsmalFDAG from './skriv-nytt-sporsmal/skriv-nytt-sporsmal-fdag';
 import DokumentVisningSide from './dokument-visning/dokument-visning-side';
 import Traader from './traader/traader';
 import Brodsmuler from './brodsmuler/brodsmuler';
@@ -29,6 +30,7 @@ export default function () {
     return (
         <BrowserRouter>
             <Switch>
+                <Route exact path="/sporsmal/skriv/FDAG" component={SkrivNyttSporsmalFDAG}/>
                 <Route exact path="/sporsmal/skriv/:temagruppe/" component={SkrivNyttSporsmal}/>
                 <Route exact path="/sporsmal/skriv/:temagruppe/direkte" component={SkrivNyttSporsmal}/>
                 <Route component={TradRouting}/>
