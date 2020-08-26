@@ -1,39 +1,35 @@
-import PT from 'prop-types';
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../utils/Spinner';
-import { storeShape, traadShape } from './../proptype-shapes';
 import { markerTraadSomLest } from './../ducks/traader';
 import { withRouter } from 'react-router-dom';
+import {Traad} from "../Traad";
+import {useEffect} from "react";
 
-class OppgaveVisning extends Component {
-    componentDidMount() {
-        const { match, traader, actions } = this.props;
-        const traadId = match.params.id;
-        const traad = traader.data.find((trad) => trad.traadId === traadId);
 
-        actions.markerSomLest(traadId)
+interface Props {
+    match: any,
+    traader: Traad[],
+    markerSomLest: (traadId : string) => void
+}
+
+function OppgaveVisning(props : Props) {
+    useEffect(() => {
+        const traadId = props.match.params.id;
+        const traad = props.traader.find((trad : Traad) => trad.traadId === traadId);
+
+        props.markerSomLest(traadId)
             .then(() => {
                 window.location.replace(traad.nyeste.oppgaveUrl);
             });
-    }
+    }, [])
 
-    render() {
-        return <Spinner/>;
-    }
+    return <Spinner/>;
 }
-
-OppgaveVisning.propTypes = {
-    match: PT.object.isRequired,
-    traader: storeShape(traadShape).isRequired,
-    actions: PT.shape({
-        markerSomLest: PT.func.isRequired
-    }).isRequired
-};
 
 const mapStateToProps = ({ traader }) => ({ traader });
 const mapDispatchToProps = (dispatch) => ({
-    actions: {
+    markerSomLest: {
         markerSomLest: (id) => dispatch(markerTraadSomLest(id))
     }
 });
