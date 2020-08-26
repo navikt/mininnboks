@@ -19,10 +19,10 @@ interface Props {
 
 function BesvarBoks(props : Props) {
     const [errorIds, setErrorIds] = useState<string[]>([]);
-    const onSubmit = (e : ChangeEvent) => {
+    const onSubmit = (e : FormEvent) => {
         e.preventDefault();
 
-        const fritekst = e.target.nodeValue;
+        const fritekst = e.target.;
         const errors = validate({
             fritekst: fritekst
         }, {

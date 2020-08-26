@@ -3,7 +3,7 @@ import React from 'react';
 import DokumentFeilmelding from './dokument-feilmelding';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import ImageLoader from 'react-imageloader';
-import Spinner from '../util/spinner';
+import Spinner from '../util/DokumentSpinner';
 import BlurretDokument from './blurret-dokument';
 import Alertstripe from 'nav-frontend-alertstriper'
 

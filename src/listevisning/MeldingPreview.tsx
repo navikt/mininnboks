@@ -8,6 +8,7 @@ import {withRouter} from 'react-router-dom';
 import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi'
 import {Traad} from "../Traad";
 import {useEffect} from "react";
+import { useHistory } from 'react-router';
 
 interface Props {
     traad: Traad,
@@ -21,9 +22,10 @@ const cls = (props : Props) => classNames('dialog', props.ulestMeldingKlasse, {
 });
 
 function MeldingPreview(props : Props) {
+    const history = useHistory();
     useEffect(() => {
         if (props.aktiv) {
-            props.history.push(`traad/${props.traad.nyeste.id}`);
+            history.push(`traad/${props.traad.nyeste.id}`);
         }
     }, [])
 

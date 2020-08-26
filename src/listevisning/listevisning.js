@@ -7,7 +7,7 @@ import MeldingListe from './MeldingListe';
 import { connect } from 'react-redux';
 import VisibleIf from '../utils/hocs/visible-if';
 import { storeShape, traadShape } from './../proptype-shapes';
-import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
+import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { withRouter } from 'react-router-dom';
 import { parse } from 'query-string';
 import {Sidetittel} from 'nav-frontend-typografi'

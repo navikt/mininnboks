@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Lenkepanel from '../utils/Lenkepanel';
 import { shortDate } from '../utils';
 import {Normaltekst, Undertittel } from 'nav-frontend-typografi';
-
 import classNames from 'classnames';
 import {Traad} from "../Traad";
+import Lenkepanel from "../utils/Lenkepanel";
 
 interface Props {
     traad: Traad,

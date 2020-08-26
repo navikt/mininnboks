@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 interface IntlLenkeProps {
     intl: object,
     href: string,
-    childern: ReactNode
+    children: ReactNode
 }
 function IntlLenke(props : IntlLenkeProps) {
     return (

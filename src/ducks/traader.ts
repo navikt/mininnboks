@@ -2,6 +2,7 @@ import * as Api from '../utils/api';
 import { MeldingsTyper } from '../utils/constants';
 import { eldsteMeldingForst } from '../utils';
 import { STATUS, doThenDispatch } from './utils';
+import {Melding, Traad} from 'Traad';
 
 // Actions
 export const HENT_ALLE_OK = 'mininnboks/traader/HENT_ALLE_OK';
@@ -14,14 +15,19 @@ export const INNSENDING_OK = 'mininnboks/traader/INNSENDING_OK';
 export const INNSENDING_FEILET = 'mininnboks/traader/INNSENDING_FEILET';
 export const INNSENDING_PENDING = 'mininnboks/traader/INNSENDING_PENDING';
 
-const initalState = {
+export interface TraaderState {
+    status: string,
+    innsendingStatus: string,
+    data: Traad[]
+}
+const initalState : TraaderState = {
     status: STATUS.NOT_STARTED,
     innsendingStatus: STATUS.NOT_STARTED,
     data: []
 };
 
 // Utils
-const markerMeldingSomLest = (melding) => ({ ...melding, lest: true });
+const markerMeldingSomLest = (melding : Melding) => ({ ...melding, lest: true });
 
 // Reducer
 export default function reducer(state = initalState, action) {

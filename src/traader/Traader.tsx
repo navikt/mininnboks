@@ -1,6 +1,6 @@
 import PT from 'prop-types';
 import React, {Component, ReactNode, useEffect} from 'react';
-import { hentTraader } from './../ducks/traader';
+import { hentTraader } from '../ducks/traader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { storeShape, traadShape } from './../proptype-shapes';

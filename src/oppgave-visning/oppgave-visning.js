@@ -1,10 +1,11 @@
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Spinner from '../utils/Spinner';
 import { storeShape, traadShape } from './../proptype-shapes';
-import { markerTraadSomLest } from './../ducks/traader';
+import { markerTraadSomLest } from '../ducks/traader';
 import { withRouter } from 'react-router-dom';
+import { Spinner } from '../utils/Spinner';
+
 
 class OppgaveVisning extends Component {
     componentDidMount() {

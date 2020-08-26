@@ -6,7 +6,7 @@ import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
 import { STATUS } from './../ducks/utils';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
+import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi'
 import { withRouter } from 'react-router-dom';
 import Alertstripe from 'nav-frontend-alertstriper'
