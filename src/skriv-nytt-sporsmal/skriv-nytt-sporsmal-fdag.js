@@ -129,10 +129,10 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <Normaltekst className="typo-normal blokk-xs">
                         Du kan utsette eller endre trekket. Skriv i tekstfeltet hvilken endring du ønsker.
                         <ul>
-                            <li>Utsette mitt trekk én måned</li>
-                            <li>Redusere trekket til 10%</li>
-                            <li>Øke trekket til 25%</li>
-                            <li>Øke trekket til 30%</li>
+                            <li>Utsett trekket én måned</li>
+                            <li>Reduser trekket til 10%</li>
+                            <li>Øk trekket til 25%</li>
+                            <li>Øk trekket til 30%</li>
                         </ul>
                         Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
                     </Normaltekst>
