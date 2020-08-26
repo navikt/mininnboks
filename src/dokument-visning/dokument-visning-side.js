@@ -6,7 +6,7 @@ import { hentDokumentVisningData, visLastNedPdfModal } from './../ducks/dokument
 import { withRouter } from 'react-router-dom';
 import Innholdslaster from './../innholdslaster/innholdslaster';
 import Feilmelding from './../feilmelding/feilmelding';
-import Dokumentvisning from './dokument-visning';
+import Dokumentvisning from './DokumentVisning';
 import LastNedModal from './last-ned-pdf-modal';
 
 class DokumentVisningSide extends React.Component {

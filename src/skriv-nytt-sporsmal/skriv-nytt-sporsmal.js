@@ -11,7 +11,7 @@ import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/feilmelding';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
-import Brodsmuler from '../brodsmuler/brodsmuler';
+import Brodsmuler from '../brodsmuler/Brodsmuler';
 import {withRouter} from 'react-router-dom';
 import {Sidetittel, Innholdstittel, Undertittel, Normaltekst} from 'nav-frontend-typografi'
 import {Hovedknapp} from 'nav-frontend-knapper';
