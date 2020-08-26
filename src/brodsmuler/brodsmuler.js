@@ -2,7 +2,7 @@ import React from 'react';
 
 import PT from 'prop-types';
 import personSvg from './person.svg';
-import Brodsmule from './brodsmule';
+import Brodsmule from './Brodsmule';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl'
 import {connect} from 'react-redux';
