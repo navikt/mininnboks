@@ -130,9 +130,9 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         Du kan utsette eller endre trekket. Skriv i tekstfeltet hvilken endring du ønsker.
                         <ul>
                             <li>Utsett trekket én måned</li>
-                            <li>Reduser trekket til 10%</li>
-                            <li>Øk trekket til 25%</li>
-                            <li>Øk trekket til 30%</li>
+                            <li>Reduser trekket til 10 prosent</li>
+                            <li>Øk trekket til 25 prosent</li>
+                            <li>Øk trekket til 30 prosent</li>
                         </ul>
                         Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
                     </Normaltekst>
