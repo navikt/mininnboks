@@ -3,7 +3,6 @@ import { FormattedDate } from 'react-intl';
 import AvsenderMottaker from './AvsenderMottaker';
 import {Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import {Melding} from "../../../Traad";
 
 
 interface Props {
