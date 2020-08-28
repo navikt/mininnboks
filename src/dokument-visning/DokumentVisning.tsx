@@ -2,7 +2,7 @@ import PT from 'prop-types';
 import* as React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { FormattedMessage } from 'react-intl';
-import Personalia from './dokumentvisning/personalia/personalia';
+import Personalia from './dokumentvisning/personalia/Personalia';
 import Dokumenter from './dokumentvisning/dokument/dokumenter';
 import IntlLenke from "../utils/IntlLenke";
 import './dokument-visning.less';
