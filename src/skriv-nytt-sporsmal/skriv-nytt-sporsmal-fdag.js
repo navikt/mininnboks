@@ -9,14 +9,14 @@ import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './godta-vilkar';
 import Kvittering from './kvittering';
 import Feilmelding from '../feilmelding/feilmelding';
-import {FormattedHTMLMessage, FormattedMessage} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 import Brodsmuler from '../brodsmuler/brodsmuler';
 import {withRouter} from 'react-router-dom';
 import {Sidetittel, Innholdstittel, Normaltekst} from 'nav-frontend-typografi'
 import {Hovedknapp} from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper'
-import Lenke from "nav-frontend-lenker";
+
 import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
