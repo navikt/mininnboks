@@ -1,5 +1,6 @@
 import PT from 'prop-types';
 import React from 'react';
+import IntlLenke from './../utils/intl-lenke';
 import {bindActionCreators} from 'redux';
 import {visVilkarModal, skjulVilkarModal} from './../ducks/ui';
 import {sendSporsmal} from './../ducks/traader';
@@ -8,19 +9,20 @@ import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './godta-vilkar';
 import Kvittering from './kvittering';
 import Feilmelding from '../feilmelding/feilmelding';
-import {FormattedMessage} from 'react-intl';
+import {FormattedHTMLMessage, FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 import Brodsmuler from '../brodsmuler/brodsmuler';
 import {withRouter} from 'react-router-dom';
 import {Sidetittel, Innholdstittel, Normaltekst} from 'nav-frontend-typografi'
 import {Hovedknapp} from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper'
-
+import Lenke from "nav-frontend-lenker";
 import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
 import {sjekkOgOppdaterRatelimiter, sjekkRatelimiter} from "../utils/api";
+import {AlertStripeInfoSolid} from "nav-frontend-alertstriper";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -122,6 +124,10 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
+                    <AlertStripeInfoSolid className="blokk-xs">
+                        Skal kun brukes for endring av nedbetalingsplan ved forskudd.<br/> For andre spørsmål bruk:
+                        <IntlLenke href="skriv.ny.link" className="Lenke"> Skriv til Oss</IntlLenke>
+                    </AlertStripeInfoSolid>
                     <Normaltekst className="typo-normal blokk-xs">
                         Fra 1.september starter NAV med å kreve tilbake forskudd på dagpenger.
                         Vi vil trekke 15 prosent fra hver utbetaling av dagpenger inntil forskuddet er nedbetalt.
