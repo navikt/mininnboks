@@ -1,5 +1,6 @@
 import PT from 'prop-types';
 import React from 'react';
+import IntlLenke from './../utils/intl-lenke';
 import {bindActionCreators} from 'redux';
 import {visVilkarModal, skjulVilkarModal} from './../ducks/ui';
 import {sendSporsmal} from './../ducks/traader';
@@ -21,6 +22,7 @@ import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
 import {sjekkOgOppdaterRatelimiter, sjekkRatelimiter} from "../utils/api";
+import {AlertStripeInfoSolid} from "nav-frontend-alertstriper";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -122,6 +124,10 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
+                    <AlertStripeInfoSolid className="blokk-xs">
+                        Skal kun brukes for endring av nedbetalingsplan ved forskudd.<br/> For andre spørsmål bruk:
+                        <IntlLenke href="skriv.ny.link" className="Lenke"> Skriv til Oss</IntlLenke>
+                    </AlertStripeInfoSolid>
                     <Normaltekst className="typo-normal blokk-xs">
                         Fra 1.september starter NAV med å kreve tilbake forskudd på dagpenger.
                         Vi vil trekke 15 prosent fra hver utbetaling av dagpenger inntil forskuddet er nedbetalt.
@@ -129,10 +135,10 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <Normaltekst className="typo-normal blokk-xs">
                         Du kan utsette eller endre trekket. Skriv i tekstfeltet hvilken endring du ønsker.
                         <ul>
-                            <li>Utsette mitt trekk én måned</li>
-                            <li>Redusere trekket til 10%</li>
-                            <li>Øke trekket til 25%</li>
-                            <li>Øke trekket til 30%</li>
+                            <li>Utsett trekket én måned</li>
+                            <li>Reduser trekket til 10 prosent</li>
+                            <li>Øk trekket til 25 prosent</li>
+                            <li>Øk trekket til 30 prosent</li>
                         </ul>
                         Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
                     </Normaltekst>
