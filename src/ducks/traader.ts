@@ -1,7 +1,7 @@
 import * as Api from '../utils/api';
 import { MeldingsTyper } from '../utils/constants';
 import { eldsteMeldingForst } from '../utils';
-import { STATUS, doThenDispatch } from './utils';
+import { STATUS, doThenDispatch } from './ducks-utils';
 import {Melding, Traad} from 'Traad';
 
 // Actions
@@ -16,8 +16,8 @@ export const INNSENDING_FEILET = 'mininnboks/traader/INNSENDING_FEILET';
 export const INNSENDING_PENDING = 'mininnboks/traader/INNSENDING_PENDING';
 
 export interface TraaderState {
-    status: string,
-    innsendingStatus: string,
+    status: STATUS,
+    innsendingStatus: STATUS,
     data: Traad[]
 }
 const initalState : TraaderState = {
@@ -86,20 +86,20 @@ export const sendSporsmal = (temagruppe, fritekst, isDirekte) => (dispatch) =>
         innsendingActions
     )(dispatch);
 
-export const sendSvar = (traadId, fritekst) => (dispatch) =>
+export const sendSvar = (traadId : string, fritekst : string) => (dispatch) =>
     doThenDispatch(
         () => Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(HENT_ALLE_RELOAD))),
         innsendingActions
     )(dispatch);
 
 
-export function markerTraadSomLest(traadId) {
+export function markerTraadSomLest(traadId : string) {
     return doThenDispatch(() => Api.markerTraadSomLest(traadId), {
         OK: MARKERT_SOM_LEST_OK,
         FEILET: MARKERT_SOM_LEST_FEILET
     });
 }
-export function markerBehandlingsIdSomLest(behandlingsId) {
+export function markerBehandlingsIdSomLest(behandlingsId : string) {
     return doThenDispatch(() => Api.markerSomLest(behandlingsId), {
         OK: MARKERT_SOM_LEST_OK,
         FEILET: MARKERT_SOM_LEST_FEILET
@@ -109,15 +109,15 @@ export function markerBehandlingsIdSomLest(behandlingsId) {
 
 // Selectors
 
-function erSkriftligSvar(melding) {
+function erSkriftligSvar(melding : Melding) {
     return melding.type === MeldingsTyper.SVAR_SKRIFTLIG;
 }
 
-function erDelvisSvar(melding) {
+function erDelvisSvar(melding : Melding) {
     return melding.type === MeldingsTyper.DELVIS_SVAR;
 }
 
-function flettDelviseSvarInnISkriftligSvar(traad, delviseSvar) {
+function flettDelviseSvarInnISkriftligSvar(traad : Traad, delviseSvar) {
     const skriftligeSvar = traad.meldinger.filter(erSkriftligSvar);
     if (skriftligeSvar.length > 0) {
         const avsluttendeSvar = skriftligeSvar.sort(eldsteMeldingForst)[0];
@@ -130,7 +130,7 @@ function flettDelviseSvarInnISkriftligSvar(traad, delviseSvar) {
     }
 }
 
-function flettMeldingerITraad(traad) {
+function flettMeldingerITraad(traad : Traad) {
     const delviseSvar = traad.meldinger.filter(erDelvisSvar);
     if (delviseSvar.length > 0) {
         flettDelviseSvarInnISkriftligSvar(traad, delviseSvar);

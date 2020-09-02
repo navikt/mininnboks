@@ -8,10 +8,11 @@ import BlurretDokument from './blurret-dokument';
 import Alertstripe from 'nav-frontend-alertstriper'
 
 import "./dokument-side.less"
+import DokumentSpinner from "../util/DokumentSpinner";
 
 const renderPreloader = () => (
     <BlurretDokument>
-        <Spinner spin/>
+        <DokumentSpinner spin/>
     </BlurretDokument>
 );
 

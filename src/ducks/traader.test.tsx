@@ -1,9 +1,11 @@
-/* eslint-env mocha */
+import * as React from 'react';
 import reducer, * as E from './traader';
-import { expect } from 'chai';
-import { MeldingsTyper } from '../utils/constants';
+import {TraaderState} from './traader';
+import {MeldingsTyper} from '../utils/constants';
+import {STATUS} from "./ducks-utils";
+import {Melding, Traad} from 'Traad';
 
-function lagTraad(traadId, antallMeldinger) {
+function lagTraad(traadId: string, antallMeldinger : number) : Traad {
     const meldinger = new Array(antallMeldinger)
         .fill(0)
         .map((_, index) => ({
@@ -23,7 +25,7 @@ function lagTraad(traadId, antallMeldinger) {
 describe('traader-ducks', () => {
     describe('reducer', () => {
         it('skal oppdatere alle meldinger med med rett traadId med status lest', () => {
-            const initialState = { data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
+            const initialState : TraaderState = {status: STATUS.OK, innsendingStatus: STATUS.OK, data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
 
             const markertSomLest = reducer(initialState, {
                 type: E.MARKERT_SOM_LEST_OK,
@@ -32,15 +34,15 @@ describe('traader-ducks', () => {
                 }
             });
 
-            function harUlestMelding(meldinger) {
+            function harUlestMelding(meldinger : Melding[]) {
                 const lestArray = meldinger.filter((melding) => (melding.lest));
                 return lestArray[0] === undefined;
             }
 
-            function erAlleMeldingerLest(traadId) {
+            function erAlleMeldingerLest(traadId : string) {
                 return markertSomLest.data
-                    .filter((traad) => (traad.traadId === traadId))
-                    .map((traad) => (traad.meldinger))
+                    .filter((traad : Traad) => (traad.traadId === traadId))
+                    .map((traad : Traad) => (traad.meldinger))
                     .filter(harUlestMelding);
             }
 

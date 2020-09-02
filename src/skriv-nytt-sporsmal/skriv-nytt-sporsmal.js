@@ -1,9 +1,9 @@
 import PT from 'prop-types';
 import React from 'react';
 import {bindActionCreators} from 'redux';
-import {visVilkarModal, skjulVilkarModal} from './../ducks/ui';
+import {visVilkarModal, skjulVilkarModal} from '../ducks/ui';
 import {sendSporsmal} from '../ducks/traader';
-import {STATUS} from './../ducks/utils';
+import {STATUS} from '../ducks/ducks-utils';
 import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';

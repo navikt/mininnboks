@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {validate} from '../utils/validationutil';
-import {STATUS} from './../ducks/utils';
+import {STATUS} from '../ducks/ducks-utils';
 import {FormattedMessage} from 'react-intl';
 import {TextareaControlled} from 'nav-frontend-skjema';
 import {Hovedknapp, Flatknapp} from 'nav-frontend-knapper';
@@ -8,10 +8,10 @@ import {visibleIfHOC} from "../utils/hocs/visible-if";
 import Feilmelding from "../feilmelding/feilmelding";
 
 import './besvar-boks.less'
-import {ChangeEvent, FormEvent, FormEventHandler, useState} from "react";
+import {FormEvent, useState} from "react";
 
 interface Props {
-    innsendingStatus: string,
+    innsendingStatus: STATUS,
     traadId: string,
     submit: (traadId : string, fritekst? : string) => void,
     avbryt: () => void
@@ -19,10 +19,10 @@ interface Props {
 
 function BesvarBoks(props : Props) {
     const [errorIds, setErrorIds] = useState<string[]>([]);
+    const [fritekst, setFritekst] = useState('');
     const onSubmit = (e : FormEvent) => {
         e.preventDefault();
 
-        const fritekst = e.target.;
         const errors = validate({
             fritekst: fritekst
         }, {
@@ -51,6 +51,7 @@ function BesvarBoks(props : Props) {
                 label={""}
                 maxLength={2500}
                 defaultValue={""}
+                onChange={(e) => setFritekst(e.currentTarget.value)}
             />
             {feilmeldinger}
             <div className="blokk-xs">

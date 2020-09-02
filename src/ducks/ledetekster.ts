@@ -1,11 +1,17 @@
 import * as Api from '../utils/api';
-import { STATUS, doThenDispatch } from './utils';
+import { STATUS, doThenDispatch } from './ducks-utils';
+import {Temagruppe} from "../skriv-nytt-sporsmal/TemagruppeEkstraInfo";
 
 // Actions
 export const OK = 'mininnboks/ledetekster/OK';
 export const FEILET = 'mininnboks/ledetekster/FEILET';
 export const PENDING = 'mininnboks/ledetekster/PENDING';
 
+export interface LedeteksterState {
+    status: STATUS,
+    godkjenteTemagrupper: Temagruppe[],
+    data: any[]
+}
 const initalState = {
     status: STATUS.NOT_STARTED,
     godkjenteTemagrupper: [],

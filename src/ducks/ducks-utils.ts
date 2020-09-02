@@ -1,9 +1,9 @@
-export const STATUS = {
-    NOT_STARTED: 'NOT_STARTED',
-    PENDING: 'PENDING',
-    OK: 'OK',
-    RELOADING: 'RELOADING',
-    ERROR: 'ERROR'
+export enum STATUS {
+    NOT_STARTED = 'NOT_STARTED',
+    PENDING = 'PENDING',
+    OK = 'OK',
+    RELOADING = 'RELOADING',
+    ERROR = 'ERROR'
 };
 
 export function sjekkStatuskode(response) {
@@ -45,19 +45,20 @@ export function handterFeil(dispatch, action) {
     };
 }
 
-export const getCookie = (name) => {
+export const getCookie = (name : string) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
 };
 
-export function fetchToJson(url, config = {}) {
+export function fetchToJson(url: string, config = {}) {
     return fetch(url, config)
         .then(sjekkStatuskode)
         .then(toJson);
 }
 
-export function doThenDispatch(fn, { OK, FEILET, PENDING }) {
+
+export function doThenDispatch(fn, { OK , FEILET, PENDING } ) {
     return (dispatch) => {
         if (PENDING) {
             dispatch({ type: PENDING });

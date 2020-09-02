@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { sjekkStatuskode, toJson, getCookie } from './utils.js';
+import { sjekkStatuskode, toJson, getCookie } from './ducks-utils.ts';
 
 describe('utils', () => {
     describe('Sjekk-statuskode', () => {

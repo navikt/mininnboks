@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 
-function AntallMeldinger( antall : number ) {
+function AntallMeldinger( { antall } : {antall: number }) {
     const antallCls = classNames('antall-ikon', {
         'antall-en': antall === 1,
         'antall-flere': antall > 1

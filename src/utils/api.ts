@@ -1,4 +1,4 @@
-import { getCookie, fetchToJson } from './../ducks/utils';
+import { getCookie, fetchToJson } from '../ducks/ducks-utils';
 import {Temagruppe} from "../skriv-nytt-sporsmal/TemagruppeEkstraInfo";
 
 const API_BASE_URL = '/mininnboks-api';

@@ -8,7 +8,7 @@ import { Undertittel } from 'nav-frontend-typografi'
 import {Melding} from "../Traad";
 
 interface Props {
-    meldinger: Array<Melding>,
+    meldinger: Melding[],
     overskrift: string
 }
 

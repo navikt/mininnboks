@@ -1,9 +1,14 @@
-import { doThenDispatch, STATUS } from "./utils";
+import { doThenDispatch, STATUS } from "./ducks-utils";
 import * as Api from "../utils/api";
 
 export const INNSENDING_KOMMUNALE_SJEKK_OK = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_OK';
 export const INNSENDING_KOMMUNALE_SJEKK_PENDING = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_PENDING';
 export const INNSENDING_KOMMUNALE_SJEKK_FEILET = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_FEILET';
+
+export interface TilgangState {
+    status: STATUS,
+    data: any
+}
 
 const initialState = {
     status: STATUS.NOT_STARTED,

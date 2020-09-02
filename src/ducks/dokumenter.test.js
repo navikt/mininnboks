@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import reducer, * as E from './dokumenter';
-import { STATUS } from './utils';
+import { STATUS } from './ducks-utils';
 import { expect, Assertion } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

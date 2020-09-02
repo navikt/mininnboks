@@ -4,7 +4,6 @@ import Lenkepanel from '../utils/Lenkepanel';
 import {shortDate, safeHtml} from '../utils';
 import AntallMeldinger from './AntallMeldinger';
 import classNames from 'classnames';
-import {withRouter} from 'react-router-dom';
 import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi'
 import {Traad} from "../Traad";
 import {useEffect} from "react";
@@ -52,7 +51,7 @@ function MeldingPreview(props : Props) {
                 <p className="vekk">
                     <FormattedMessage id="meldinger.ikon"/>
                 </p>
-                <AntallMeldinger antall={antallMeldinger}/>
+                <AntallMeldinger antall={antallMeldinger} />
                 <Normaltekst className="blokk-xxxs">
                     <span>{dato}</span>
                     {avsender}
@@ -71,6 +70,6 @@ function MeldingPreview(props : Props) {
     );
 }
 
-export default withRouter(MeldingPreview);
+export default MeldingPreview;
 
 

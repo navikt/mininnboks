@@ -4,6 +4,10 @@ import { INNSENDING_OK } from './traader';
 export const VIS_VILKAR_MODAL = 'mininnboks/ui/VIS_VILKAR_MODAL';
 export const VIS_BESVAR_BOKS = 'mininnboks/ui/VIS_BESVAR_BOKS';
 
+export interface UIState {
+    visVilkarModal: boolean,
+    visBesvarBoks: boolean
+}
 const initalState = {
     visVilkarModal: false,
     visBesvarBoks: false

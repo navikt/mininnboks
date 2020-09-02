@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Listevisning from './listevisning/listevisning';
+import Listevisning from './listevisning/ListeVisning';
 import Traadvisning from './traadvisning/TraadVisning';
-import Oppgavevisning from './oppgave-visning/oppgave-visning';
+import Oppgavevisning from './oppgave-visning/OppgaveVisning';
 import SkrivNyttSporsmal from './skriv-nytt-sporsmal/skriv-nytt-sporsmal';
 import DokumentVisningSide from './dokument-visning/dokument-visning-side';
 import Traader from './traader/Traader';

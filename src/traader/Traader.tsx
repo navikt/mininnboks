@@ -1,35 +1,19 @@
-import PT from 'prop-types';
-import React, {Component, ReactNode, useEffect} from 'react';
-import { hentTraader } from '../ducks/traader';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { storeShape, traadShape } from './../proptype-shapes';
+import * as React from 'react';
 import Innholdslaster from './../innholdslaster/innholdslaster';
-import {Traad} from "../Traad";
+import { useSelector} from "react-redux";
+import {AppState} from "../reducer";
 
-interface TraaderProps {
-    children: ReactNode
+
+interface Props {
+    children: JSX.Element
 }
-
-interface StateProps {
-    traader: Array<Traad>
-}
-
-interface DispatchProps {
-    hentTraader: () => Array<Traad>
-}
-
-type Props = TraaderProps & StateProps & DispatchProps;
 
 function Traader(props : Props) {
+    const traader = useSelector((state: AppState) => state.traader).data;
     return (
-        <Innholdslaster avhengigheter={[props.traader]}>
+        <Innholdslaster avhengigheter={[traader]}>
             {props.children}
         </Innholdslaster>
     );
 }
-
-const mapStateToProps : (state : State) => StateProps = (state) => ({  });
-const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators({ hentTraader }, dispatch) });
-
 export default Traader;

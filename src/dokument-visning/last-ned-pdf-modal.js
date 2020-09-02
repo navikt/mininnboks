@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { skjulLastNedPdfModal } from './../ducks/dokumenter.js';
+import { skjulLastNedPdfModal } from '../ducks/dokumenter.ts';
 import NavFrontendModal from 'nav-frontend-modal'
 import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper'

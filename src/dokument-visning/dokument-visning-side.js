@@ -2,7 +2,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { markerBehandlingsIdSomLest } from '../ducks/traader';
-import { hentDokumentVisningData, visLastNedPdfModal } from './../ducks/dokumenter';
+import { hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter';
 import { withRouter } from 'react-router-dom';
 import Innholdslaster from './../innholdslaster/innholdslaster';
 import Feilmelding from './../feilmelding/feilmelding';
