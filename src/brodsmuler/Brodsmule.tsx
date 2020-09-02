@@ -1,14 +1,17 @@
-import React from 'react';
-import PT from 'prop-types';
+import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-function Brodsmule(props) {
-    const path = props.path;
-    const lenke = path.startsWith("/")
-        ? <Link to={path} className="lenke">
+interface Props {
+    tekst: string,
+    path: string
+}
+
+function Brodsmule(props : Props) {
+    const lenke = props.path.startsWith("/")
+        ? <Link to={props.path} className="lenke">
             {props.tekst}
         </Link>
-        : <a href={path} className="lenke">
+        : <a href={props.path} className="lenke">
             {props.tekst}
         </a>
     ;
@@ -19,11 +22,6 @@ function Brodsmule(props) {
         </li>
     );
 }
-
-Brodsmule.propTypes = {
-    tekst: PT.string.isRequired,
-    path: PT.string.isRequired,
-};
 
 Brodsmule.defaultProps = {
     skalVises: true,

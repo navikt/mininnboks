@@ -1,29 +1,34 @@
-import React from 'react';
-
-import PT from 'prop-types';
+import * as React from 'react';
 import personSvg from './person.svg';
-import Brodsmule from './brodsmule';
+import Brodsmule from './Brodsmule';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl'
 import {connect} from 'react-redux';
 
 import './brodsmuler.less'
 import {selectTraaderMedSammenslatteMeldinger} from "../ducks/traader";
+import {Traad} from "../Traad";
+
+interface Props {
+    match: any,
+    traader: Traad[],
+    underOppfolging: boolean
+}
 
 const typeMap = {
     "dokument": "Dokumentvisning",
     "oppgave": "Oppgavevisning",
 };
 
-function TypeSmule({match}) {
-    const params = match.params;
+function TypeSmule(props : Props) {
+    const params = props.match.params;
     return <React.Fragment>{typeMap[params.type]}</React.Fragment>
 }
 
-function TraadSmule({match, traader}) {
-    const params = match.params;
+function TraadSmule(props : Props) {
+    const params = props.match.params;
     const traadId = params.traadId;
-    const valgttraad = traader.data.find(traad => traad.traadId === traadId);
+    const valgttraad = props.traader.find(traad => traad.traadId === traadId);
     if (!valgttraad) {
         return null;
     }
@@ -86,10 +91,6 @@ function Brodsmuler() {
 
 Brodsmuler.defaultProps = {
     underOppfolging: false,
-};
-
-Brodsmuler.propTypes = {
-    underOppfolging: PT.bool,
 };
 
 Brodsmuler.defaultProps = {

@@ -7,7 +7,7 @@ import Oppgavevisning from './oppgave-visning/OppgaveVisning';
 import SkrivNyttSporsmal from './skriv-nytt-sporsmal/skriv-nytt-sporsmal';
 import DokumentVisningSide from './dokument-visning/dokument-visning-side';
 import Traader from './traader/Traader';
-import Brodsmuler from './brodsmuler/brodsmuler';
+import Brodsmuler from './brodsmuler/Brodsmuler';
 
 function TradRouting() {
     return (
