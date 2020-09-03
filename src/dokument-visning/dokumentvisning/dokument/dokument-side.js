@@ -4,7 +4,7 @@ import DokumentFeilmelding from './dokument-feilmelding';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import ImageLoader from 'react-imageloader';
 import Spinner from '../util/DokumentSpinner';
-import BlurretDokument from './blurret-dokument';
+import BlurretDokument from './BlurretDokument';
 import Alertstripe from 'nav-frontend-alertstriper'
 
 import "./dokument-side.less"

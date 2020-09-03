@@ -1,31 +1,25 @@
 import * as React from 'react';
-import Spinner from '../utils/Spinner';
 import { markerTraadSomLest } from './../ducks/traader';
 import {Traad} from "../Traad";
 import { useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import Spinner from 'utils/spinner';
+import { useParams } from 'react-router';
+import {AppState} from "../reducer";
 
 
-interface OwnProps {
-    match: any,
-}
-interface StateProps {
-    traader: Traad[]
-}
-
-interface DispatchProps {
-    markerSomLest: (traadId : string) => void
-}
-type Props = OwnProps & StateProps & DispatchProps;
-
-
-function OppgaveVisning(props : Props) {
+function OppgaveVisning() {
+    const dispatch = useDispatch();
+    const params = useParams<{ id: string }>();
+    const traader = useSelector((state : AppState) => state.traader.data)
     useEffect(() => {
-        const traadId = props.match.params.id;
-        const traad = props.traader.find((trad : Traad) => trad.traadId === traadId);
-
-        markerTraadSomLest(traadId)
+        const traadId = params.id;
+        const traad = traader.find((trad : Traad) => trad.traadId === traadId);
+        //TODO: hva skal oppgaveurl være hvis traad ikke finnes?
+        const oppgaveUrl = traad ? traad.nyeste.oppgaveUrl : ''
+        dispatch(markerTraadSomLest(traadId))
             .then(() => {
-                window.location.replace(traad.nyeste.oppgaveUrl);
+                window.location.replace(oppgaveUrl);
             });
     }, [])
 
