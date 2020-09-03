@@ -8,7 +8,7 @@ import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';
 import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
-import Feilmelding from '../feilmelding/feilmelding';
+import Feilmelding from '../feilmelding/Feilmelding';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 import Brodsmuler from '../brodsmuler/Brodsmuler';

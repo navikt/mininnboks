@@ -5,7 +5,7 @@ import {FormattedMessage} from 'react-intl';
 import {TextareaControlled} from 'nav-frontend-skjema';
 import {Hovedknapp, Flatknapp} from 'nav-frontend-knapper';
 import {visibleIfHOC} from "../utils/hocs/visible-if";
-import Feilmelding from "../feilmelding/feilmelding";
+import Feilmelding from "../feilmelding/Feilmelding";
 
 import './besvar-boks.less'
 import {FormEvent, useState} from "react";

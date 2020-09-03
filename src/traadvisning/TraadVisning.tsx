@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import BesvarBoks from './BesvarBoks';
-import Feilmelding from './../feilmelding/feilmelding';
+import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
 import { STATUS } from '../ducks/ducks-utils';

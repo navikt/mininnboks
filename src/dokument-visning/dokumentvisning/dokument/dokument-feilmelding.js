@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import Feilmelding from "../../../feilmelding/feilmelding";
+import Feilmelding from "../../../feilmelding/Feilmelding";
 import { Undertittel } from 'nav-frontend-typografi';
 
 import './dokument-feilmelding.less'

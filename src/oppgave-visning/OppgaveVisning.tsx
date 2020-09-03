@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import Spinner from '../utils/Spinner';
 import { markerTraadSomLest } from './../ducks/traader';
-import { withRouter } from 'react-router-dom';
 import {Traad} from "../Traad";
 import { useEffect} from "react";
-import {Dispatch} from "redux";
 
 
 interface OwnProps {
@@ -26,7 +23,7 @@ function OppgaveVisning(props : Props) {
         const traadId = props.match.params.id;
         const traad = props.traader.find((trad : Traad) => trad.traadId === traadId);
 
-        props.markerSomLest(traadId)
+        markerTraadSomLest(traadId)
             .then(() => {
                 window.location.replace(traad.nyeste.oppgaveUrl);
             });
@@ -35,11 +32,5 @@ function OppgaveVisning(props : Props) {
     return <Spinner/>;
 }
 
-const mapStateToProps = () : StateProps => ({ traader : Traad[]});
-const mapDispatchToProps = (dispatch : Dispatch<any>) : DispatchProps=> ({
-    markerSomLest: {
-        markerSomLest: (id: string) => dispatch(markerTraadSomLest(id))
-    }
-});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OppgaveVisning));
+export default OppgaveVisning;
