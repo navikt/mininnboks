@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { markerBehandlingsIdSomLest } from '../ducks/traader';
 import { hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter';
 import { withRouter } from 'react-router-dom';
-import Innholdslaster from './../innholdslaster/innholdslaster';
+import Innholdslaster from '../innholdslaster/Innholdslaster';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedModal from './last-ned-pdf-modal';

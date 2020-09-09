@@ -16,13 +16,14 @@ interface Props{
     skjulVilkarModal: () => void;
     skalViseFeilmelding: boolean;
     inputName: string;
+    setVilkaarGodtatt: (godtatt : boolean) => void
 }
 function GodtaVilkar(props: Props) {
 
     const [vilkarGodtatt, setVilkarGodtatt] = useState(false)
 
     const godkjennVilkaar = () => {
-        setVilkarGodtatt(true);
+        props.setVilkaarGodtatt(true);
         props.skjulVilkarModal();
     };
 

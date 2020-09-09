@@ -1,5 +1,5 @@
 import * as React from "react";
-import  {ReactNode} from 'react';
+import { ReactNode} from 'react';
 import { fn, getDisplayName } from '../../utils';
 
 interface Props {
@@ -16,7 +16,7 @@ function VisibleIf(props: Props) {
 
 export default VisibleIf;
 
-export function visibleIfHOC(komponent : any) {
+export function visibleIfHOC(komponent : React.ReactElement) {
     function visibleIfWrapper({ visibleIf, ...props } : {visibleIf: boolean}) {
         if (fn(visibleIf)()) {
             return React.createElement(komponent, props);

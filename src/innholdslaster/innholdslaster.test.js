@@ -2,7 +2,7 @@
 import { render } from '../test-config';
 import React from 'react';
 import { expect } from 'chai';
-import Innholdslaster from './innholdslaster';
+import Innholdslaster from './Innholdslaster';
 import { STATUS } from '../ducks/ducks-utils';
 
 const {PENDING, ERROR, OK} = STATUS;

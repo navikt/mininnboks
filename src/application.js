@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import nb from 'react-intl/locale-data/nb';
-import Innholdslaster from './innholdslaster/innholdslaster';
+import Innholdslaster from './innholdslaster/Innholdslaster';
 import Routes from './routes'
 import { hentLedetekster } from './ducks/ledetekster';
 

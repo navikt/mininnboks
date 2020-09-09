@@ -1,6 +1,6 @@
 import PT from 'prop-types';
-import React from 'react';
-import {bindActionCreators} from 'redux';
+import * as React from 'react';
+import {bindActionCreators, Dispatch} from 'redux';
 import {visVilkarModal, skjulVilkarModal} from '../ducks/ui';
 import {sendSporsmal} from '../ducks/traader';
 import {STATUS} from '../ducks/ducks-utils';
@@ -10,7 +10,7 @@ import Kvittering from './Kvittering';
 import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/Feilmelding';
 import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import Brodsmuler from '../brodsmuler/Brodsmuler';
 import {withRouter} from 'react-router-dom';
 import {Sidetittel, Innholdstittel, Undertittel, Normaltekst} from 'nav-frontend-typografi'
@@ -20,103 +20,100 @@ import Alertstripe from 'nav-frontend-alertstriper'
 import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
-import Spinner from "../utils/Spinner";
 import {harTilgangTilKommunaleTemagrupper} from "../ducks/tilgang";
 import {sjekkOgOppdaterRatelimiter, sjekkRatelimiter} from "../utils/api";
+import {FormEvent, useEffect, useState} from "react";
+import {useParams, useLocation} from "react-router";
+import {AppState} from "../reducer";
+import Spinner from "../utils/Spinner";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
 const ukjentTemagruppeTittel = <FormattedMessage id="skriv-sporsmal.ukjent-temagruppe"/>;
+const godkjenteTemagrupper = ['ARBD'];
 
-class SkrivNyttSporsmal extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            errors: {},
-            rateLimiter: true,
-        };
+interface Props {
+    actions: {
+        sendSporsmal: (temagruppe : string, fritekst : string, isDirekte: boolean) => {};
+        visVilkarModal: () => void;
     }
+    sendingStatus: string;
+    skalViseVilkarModal: boolean;
+    godkjenteTemagrupper: string[];
+    tilgang: {
+        status: string;
+        data: {
+            resultat: string;
+            melding: string;
+        }
+    }
+}
+interface Errors {
+    fritekst?: string
+    godkjennVilkaar?: string
+}
+function SkrivNyttSporsmal (props : Props){
 
-    componentDidMount() {
-        const temagruppe = this.props.match.params.temagruppe.toLowerCase();
+    const [rateLimiter, setRateLimiter] = useState(true);
+    const [error, setError] = useState<Errors>({fritekst: undefined, godkjennVilkaar: undefined})
+    const params = useParams<{ temagruppe: string }>();
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        const temagruppe = params.temagruppe.toLowerCase();
         if (temagruppe === 'oksos') {
-            this.props.actions.harTilgangTilKommunaleTemagrupper();
+            dispatch(harTilgangTilKommunaleTemagrupper());
         }
         sjekkRatelimiter().then((res) =>
-            this.setState({
-                rateLimiter: res
-            })
+           setRateLimiter(res)
         )
-    }
 
-    render() {
-        const {
-            match,
-            actions,
-            sendingStatus,
-            skalViseVilkarModal,
-            godkjenteTemagrupper,
-            tilgang
-        } = this.props;
+    },[])
 
-        const {
-            errors,
-            rateLimiter
-        } = this.state;
-
-        const params = match.params;
+        const location = useLocation();
         const temagruppe = params.temagruppe;
-        const isDirekte = match.path.includes('/direkte');
+        const isDirekte = location.pathname.includes('/direkte');
 
         if (temagruppe.toLowerCase() === 'oksos') {
-            if (tilgang.status === STATUS.PENDING) {
+            if (props.tilgang.status === STATUS.PENDING) {
                 return <Spinner />;
-            } else if (tilgang.status === STATUS.ERROR) {
+            } else if (props.tilgang.status === STATUS.ERROR) {
                 return (
                     <Alertstripe type="advarsel" >
                         <FormattedMessage id={`feilmelding.kommunalsjekk.fetchfeilet`}/>
                     </Alertstripe>
                 );
-            } else if (tilgang.status === STATUS.OK && tilgang.data.resultat !== 'OK') {
+            } else if (props.tilgang.status === STATUS.OK && props.tilgang.data.resultat !== 'OK') {
                 return (
                     <Alertstripe type="info" >
-                        <FormattedMessage id={`feilmelding.kommunalsjekk.${tilgang.data.resultat}`}/>
+                        <FormattedMessage id={`feilmelding.kommunalsjekk.${props.tilgang.data.resultat}`}/>
                     </Alertstripe>
                 );
             }
         }
 
 
-        const submit = (event) => {
+        const [fritekst, setFritekst] = useState('');
+        const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
+        const submit = (event : FormEvent) => {
             event.preventDefault();
 
-            const elements = event.target.elements;
-            const fritekst = elements.fritekst.value;
-            const godkjennVilkaar = elements.godkjennVilkaar.checked;
-
-            if(sendingStatus === STATUS.PENDING) {
+            if(props.sendingStatus === STATUS.PENDING) {
                 return;
             }
-            const errors = validate({
+            setError(validate({
                             fritekst,
                             godkjennVilkaar
-            });
-
-            this.setState({
-                errors: errors,
-            });
-
+            }));
             sjekkOgOppdaterRatelimiter()
                 .then((isOK) => {
                     if(isOK){
-                        if (!Object.entries(errors).length) {
-                            actions.sendSporsmal(temagruppe, fritekst, isDirekte);
+                        if (!Object.entries(error).length) {
+                            sendSporsmal(temagruppe, fritekst, isDirekte);
                         }
                     } else {
-                        this.setState({
-                            rateLimiter: isOK
-                        })
+                        setRateLimiter(isOK);
                     }
                 }
 
@@ -128,11 +125,11 @@ class SkrivNyttSporsmal extends React.Component {
             return (
                 <Feilmelding>{ukjentTemagruppeTittel}</Feilmelding>
             );
-        } else if (sendingStatus === STATUS.OK) {
+        } else if (props.sendingStatus === STATUS.OK) {
             return <Kvittering/>;
         }
 
-        const fritekstError = errors.fritekst;
+        const fritekstError = error.fritekst;
         const fritekstFeilmelding = fritekstError && (
             <Feilmelding className="blokk-m">
                 <FormattedMessage id={`feilmelding.fritekst.${fritekstError}`}/>
@@ -156,7 +153,7 @@ class SkrivNyttSporsmal extends React.Component {
                     <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
                         <FormattedMessage id="feilmelding.ratelimiter"/>
                     </AlertstripeVisibleIf>
-                    <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
+                    <AlertstripeVisibleIf type="advarsel" visibleIf={props.sendingStatus && props.sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
                     <Normaltekst className="typo-normal blokk-xs">
@@ -165,61 +162,41 @@ class SkrivNyttSporsmal extends React.Component {
                     <TemagruppeEkstraInfo temagruppe={temagruppe} />
                     { fritekstFeilmelding }
                     <TextareaControlled
+                        defaultValue={''}
                         name="fritekst"
                         textareaClass="fritekst"
                         label={""}
                         maxLength={1000}
+                        onChange={(e) => setFritekst(e.currentTarget.value)}
                     />
                     <GodtaVilkar
-                        visModal={skalViseVilkarModal}
-                        actions={actions}
+                        visModal={props.skalViseVilkarModal}
+                        actions={props.actions}
                         inputName="godkjennVilkaar"
-                        skalViseFeilmelding={!!errors.godkjennVilkaar}
+                        skalViseFeilmelding={!!error.godkjennVilkaar}
+                        setVilkaarGodtatt={setGodkjennVilkaar}
                     />
-                    <Hovedknapp type="submit" spinner={sendingStatus === STATUS.PENDING} aria-disabled={sendingStatus === STATUS.PENDING}>
+                    <Hovedknapp htmlType="submit" spinner={props.sendingStatus === STATUS.PENDING} aria-disabled={props.sendingStatus === STATUS.PENDING}>
                         <FormattedMessage id="send-sporsmal.still-sporsmal.send-inn"/>
                     </Hovedknapp>
                 </form>
             </article>
         );
-    }
 }
 
-SkrivNyttSporsmal.defaultProps = {
-    godkjenteTemagrupper: ['ARBD']
-};
-SkrivNyttSporsmal.propTypes = {
-    match: PT.object.isRequired,
-    actions: PT.shape({
-        sendSporsmal: PT.func,
-        visVilkarModal: PT.func
-    }).isRequired,
-    sendingStatus: PT.string,
-    skalViseVilkarModal: PT.bool.isRequired,
-    godkjenteTemagrupper: PT.arrayOf(PT.string).isRequired,
-    tilgang: PT.shape({
-        status: PT.string.isRequired,
-        data: PT.oneOfType([
-            PT.shape({
-                resultat: PT.string.isRequired,
-                melding: PT.string.isRequired
-            }).isRequired,
-            PT.shape({}).isRequired
-        ]).isRequired,
-    }).isRequired
-};
-
-const mapStateToProps = ({ledetekster, traader, ui, tilgang}) => ({
+const mapStateToProps = ({ledetekster, traader, ui, tilgang} : AppState) => ({
     skalViseVilkarModal: ui.visVilkarModal,
     godkjenteTemagrupper: ledetekster.godkjenteTemagrupper,
     sendingStatus: traader.innsendingStatus,
     tilgang: tilgang
 });
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(
-        {sendSporsmal, visVilkarModal, skjulVilkarModal, harTilgangTilKommunaleTemagrupper},
-        dispatch
-    )
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+    actions: {
+        sendSporsmal: (temagruppe : string, fritekst: string, isDirekte: boolean) => dispatch(sendSporsmal(temagruppe, fritekst, isDirekte)),
+        visVilkarModal: () => dispatch(visVilkarModal()),
+        skjulVilkarModal:() => dispatch(skjulVilkarModal()),
+        harTilgangTilKommunaleTemagrupper: () => dispatch(harTilgangTilKommunaleTemagrupper())
+    }
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SkrivNyttSporsmal));

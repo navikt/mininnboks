@@ -3,6 +3,7 @@ import { MeldingsTyper } from '../utils/constants';
 import { eldsteMeldingForst } from '../utils';
 import { STATUS, doThenDispatch } from './ducks-utils';
 import {Melding, Traad} from 'Traad';
+import {Dispatch} from "redux";
 
 // Actions
 export const HENT_ALLE_OK = 'mininnboks/traader/HENT_ALLE_OK';
@@ -80,7 +81,7 @@ export function hentTraader(pendingType = HENT_ALLE_PENDING) {
     });
 }
 
-export const sendSporsmal = (temagruppe, fritekst, isDirekte) => (dispatch) =>
+export const sendSporsmal = (temagruppe : string, fritekst: string, isDirekte: boolean) => (dispatch : Dispatch<any>) =>
     doThenDispatch(
         () => Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() => dispatch(hentTraader(HENT_ALLE_RELOAD))),
         innsendingActions

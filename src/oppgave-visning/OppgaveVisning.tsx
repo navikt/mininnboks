@@ -15,7 +15,6 @@ function OppgaveVisning() {
     useEffect(() => {
         const traadId = params.id;
         const traad = traader.find((trad : Traad) => trad.traadId === traadId);
-        //TODO: hva skal oppgaveurl være hvis traad ikke finnes?
         const oppgaveUrl = traad ? traad.nyeste.oppgaveUrl : ''
         dispatch(markerTraadSomLest(traadId))
             .then(() => {
