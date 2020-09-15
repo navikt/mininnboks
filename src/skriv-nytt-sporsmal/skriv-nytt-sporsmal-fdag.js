@@ -124,13 +124,18 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
+
                     <Normaltekst className="typo-normal blokk-xs">
-                        Fra 1.september Startet NAV med å kreve tilbake forskudd på dagpenger.<br/>
-                        Har du spørsmål om ordningen kan du skriver til oss i feltet under.<p/>
-                        Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til DittNav og<br/>
-                        <IntlLenke href="https://www.nav.no/dagpenger/forskudd/oversikt" ClassName="Lenke">endrer nedbetalingsplanen</IntlLenke> der.<br/><p/>
-                        Du kan også
-                        <IntlLenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/kampanje-korona/tilbakebetaling-og-trekk-av-forskudd-pa-dagpenger" ClassName="Lenke"> lese om tilbakebetaling av forskudd</IntlLenke>
+                        Fra 1.september Startet NAV med å kreve tilbake forskudd på dagpenger.
+                        Har du spørsmål om ordningen kan du skriver til oss i feltet under.
+                    </Normaltekst>
+                    <Normaltekst className="typo-normal blokk-xs">
+                        Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til DittNav og&nbsp;
+                        <IntlLenke href="https://www.nav.no/dagpenger/forskudd/oversikt" className="Lenke">endrer nedbetalingsplanen</IntlLenke> der.
+                    </Normaltekst>
+                    <Normaltekst className="typo-normal blokk-xs">
+                        Du kan også&nbsp;
+                        <IntlLenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/kampanje-korona/tilbakebetaling-og-trekk-av-forskudd-pa-dagpenger" className="Lenke">lese om tilbakebetaling av forskudd.</IntlLenke>
                     </Normaltekst>
 
                     { fritekstFeilmelding }
