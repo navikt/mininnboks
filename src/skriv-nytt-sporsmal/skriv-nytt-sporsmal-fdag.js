@@ -124,24 +124,20 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
-                    <AlertStripeInfoSolid className="blokk-xs">
-                        Skal kun brukes for endring av nedbetalingsplan ved forskudd.<br/> For andre spørsmål bruk:
-                        <IntlLenke href="skriv.ny.link" className="Lenke"> Skriv til Oss</IntlLenke>
-                    </AlertStripeInfoSolid>
+
                     <Normaltekst className="typo-normal blokk-xs">
-                        Fra 1.september starter NAV med å kreve tilbake forskudd på dagpenger.
-                        Vi vil trekke 15 prosent fra hver utbetaling av dagpenger inntil forskuddet er nedbetalt.
+                        Fra 1.september Startet NAV med å kreve tilbake forskudd på dagpenger.
+                        Har du spørsmål om ordningen kan du skriver til oss i feltet under.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
-                        Du kan utsette eller endre trekket. Skriv i tekstfeltet hvilken endring du ønsker.
-                        <ul>
-                            <li>Utsett trekket én måned</li>
-                            <li>Reduser trekket til 10 prosent</li>
-                            <li>Øk trekket til 25 prosent</li>
-                            <li>Øk trekket til 30 prosent</li>
-                        </ul>
-                        Vi sender deg en bekreftelse på at netbetalingsplanen er endret innen fem dager.
+                        Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til DittNav og&nbsp;
+                        <IntlLenke href="https://www.nav.no/dagpenger/forskudd/oversikt" className="Lenke">endrer nedbetalingsplanen</IntlLenke> der.
                     </Normaltekst>
+                    <Normaltekst className="typo-normal blokk-xs">
+                        Du kan også&nbsp;
+                        <IntlLenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/kampanje-korona/tilbakebetaling-og-trekk-av-forskudd-pa-dagpenger" className="Lenke">lese om tilbakebetaling av forskudd.</IntlLenke>
+                    </Normaltekst>
+
                     { fritekstFeilmelding }
                     <TextareaControlled
                         name="fritekst"
