@@ -111,12 +111,12 @@ class SkrivNyttSporsmalFDAG extends React.Component {
             <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
                 <Brodsmuler/>
                 <Sidetittel className="text-center blokk-m">
-                    Endre nedbetalingsplan
+                    Tilbakebetaling av forskudd på dagpenger
                 </Sidetittel>
                 <form className="panel" onSubmit={submit}>
                     <i className="meldingikon"/>
                     <Innholdstittel tag="h2" className="blokk-xl text-center">
-                        Tilbakebetaling av forskudd på dagpenger
+                        Skriv melding
                     </Innholdstittel>
                     <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
                         <FormattedMessage id="feilmelding.ratelimiter"/>
@@ -127,7 +127,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
 
                     <Normaltekst className="typo-normal blokk-xs">
                         Fra 1.september Startet NAV med å kreve tilbake forskudd på dagpenger.
-                        Har du spørsmål om ordningen kan du skriver til oss i feltet under.
+                        Har du spørsmål om ordningen kan du skrive til oss i feltet under.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
                         Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til DittNav og&nbsp;
