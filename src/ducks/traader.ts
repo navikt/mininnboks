@@ -4,6 +4,7 @@ import { eldsteMeldingForst } from '../utils';
 import { STATUS, doThenDispatch } from './ducks-utils';
 import {Melding, Traad} from 'Traad';
 import {Dispatch} from "redux";
+import {AppState} from "../reducer";
 
 // Actions
 export const HENT_ALLE_OK = 'mininnboks/traader/HENT_ALLE_OK';
@@ -142,6 +143,6 @@ function flettMeldingerITraad(traad : Traad) {
     return sammenslaatTraad;
 }
 
-export function selectTraaderMedSammenslatteMeldinger(store) {
+export function selectTraaderMedSammenslatteMeldinger(store : AppState) {
     return { data: store.traader.data.map(flettMeldingerITraad) };
 }

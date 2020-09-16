@@ -1,10 +1,9 @@
 import * as React from "react";
-import { ReactNode} from 'react';
 import { fn, getDisplayName } from '../../utils';
 
 interface Props {
-    visibleIf: () => boolean,
-    children: ReactNode
+    visibleIf: boolean | (() => boolean);
+    children: React.ReactNode
 }
 
 function VisibleIf(props: Props) {
@@ -16,10 +15,10 @@ function VisibleIf(props: Props) {
 
 export default VisibleIf;
 
-export function visibleIfHOC(komponent : React.ReactElement) {
-    function visibleIfWrapper({ visibleIf, ...props } : {visibleIf: boolean}) {
+export function visibleIfHOC<T extends { children: React.ReactNode }>(komponent: React.ComponentType<T>): React.ComponentType<T & Props> {
+    function visibleIfWrapper({ visibleIf} : {visibleIf: boolean | (() => boolean)}) {
         if (fn(visibleIf)()) {
-            return React.createElement(komponent, props);
+            return React.createElement(komponent);
         }
         return null;
     }

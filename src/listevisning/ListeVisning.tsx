@@ -3,19 +3,18 @@ import { FormattedMessage } from 'react-intl';
 import IntlLenke from '../utils/IntlLenke';
 import { nyesteTraadForst } from '../utils';
 import MeldingListe from './MeldingListe';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import VisibleIf from '../utils/hocs/visible-if';
 import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import { withRouter } from 'react-router-dom';
-import { parse } from 'query-string';
 import {Sidetittel} from 'nav-frontend-typografi'
 import './listevisning.less';
 import {Melding, Traad} from "../Traad";
-import { useHistory } from 'react-router';
+import {useParams} from 'react-router';
 import { AppState } from 'reducer';
 
 
-interface Props {
+interface StateFromProps {
     traader: Traad[]
 }
 
@@ -30,21 +29,18 @@ const getTraadLister = (traader : Traad[]) => {
     };
 };
 
-const erAktivRegel = (varselId : string) => (melding : Melding) => melding.korrelasjonsId === varselId;
+const erAktivRegel = (varselId : string ) => ( melding : Melding) => melding.korrelasjonsId === varselId;
 
-function ListeVisning( props : Props) {
-    const history = useHistory();
-    const queryParams = parse(history.location.search);
-    const varselId = queryParams.varselId;
+function ListeVisning( props : StateFromProps) {
+    const params = useParams<{ varselId: string }>();
     const traaderGruppert = getTraadLister(props.traader);
-
-    const erAktiv = erAktivRegel(varselId);
+    const erAktiv = erAktivRegel(params.varselId);
 
     const ulesteTraader = traaderGruppert.uleste.map((traad) => ({
-        traad, aktiv: erAktiv(traad.nyeste), ulestMeldingKlasse: 'uleste-meldinger'
+        data: traad, aktiv: erAktiv(traad.nyeste), ulestMeldingKlasse: 'uleste-meldinger'
     }));
     const lesteTraader = traaderGruppert.leste.map((traad) => ({
-        traad, aktiv: erAktiv(traad.nyeste)
+        data: traad, aktiv: erAktiv(traad.nyeste)
     }));
 
     return (
@@ -74,4 +70,4 @@ function ListeVisning( props : Props) {
 const mapStateToProps = (state : AppState) => ({
     traader: selectTraaderMedSammenslatteMeldinger(state)
 });
-export default withRouter(connect(mapStateToProps)(ListeVisning));
+export default withRouter(connect<StateFromProps>(mapStateToProps)(ListeVisning));

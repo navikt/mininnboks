@@ -5,10 +5,16 @@ import OppgavePreview from './OppgavePreview';
 import { FormattedMessage } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi'
-import {Melding} from "../Traad";
+import {Traad} from "../Traad";
 
+
+interface MeldingsListeElement {
+    data: Traad,
+    aktiv: boolean,
+    ulestMeldingKlasse?: string
+}
 interface Props {
-    meldinger: Melding[],
+    meldinger: MeldingsListeElement[],
     overskrift: string
 }
 
@@ -19,13 +25,13 @@ const previewMap = {
 };
 
 function MeldingListe(props : Props) {
-    const innhold = props.meldinger.map((config : any) => {
-        const type = config.traad.nyeste.type;
+    const innhold = props.meldinger.map((melding : MeldingsListeElement) => {
+        const type = melding.data.nyeste.type;
         const props = {
-            aktiv: config.aktiv,
-            key: config.traad.traadId,
-            traad: config.traad,
-            ulestMeldingKlasse: config.ulestMeldingKlasse
+            aktiv: melding.aktiv,
+            key: melding.data.traadId,
+            traad: melding.data,
+            ulestMeldingKlasse: melding.ulestMeldingKlasse
         };
 
         const previewComponent = previewMap[type] || previewMap.defaultVisning;

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {ReactNode} from 'react';
-import { injectIntl } from 'react-intl';
+import {InjectedIntl, injectIntl} from 'react-intl';
 
 interface IntlLenkeProps {
-    intl: object,
+    intl: InjectedIntl,
     href: string,
     children: ReactNode
 }
