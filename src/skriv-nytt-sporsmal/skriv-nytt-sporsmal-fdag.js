@@ -126,7 +126,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     </AlertstripeVisibleIf>
 
                     <Normaltekst className="typo-normal blokk-xs">
-                        Fra 1.september Startet NAV med å kreve tilbake forskudd på dagpenger.
+                        Fra 1.september startet NAV med å kreve tilbake forskudd på dagpenger.
                         Har du spørsmål om ordningen kan du skrive til oss i feltet under.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
