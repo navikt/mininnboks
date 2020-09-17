@@ -124,7 +124,10 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                     <AlertstripeVisibleIf type="advarsel" visibleIf={sendingStatus && sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
-
+                    <AlertStripeInfoSolid className="blokk-xs">
+                        Hvis ditt spørsmål gjelder noe annet enn tilbakebetaling av forskudd kan du bruke
+                        <IntlLenke href="skriv.ny.link" className="Lenke"> Skriv til Oss</IntlLenke>
+                    </AlertStripeInfoSolid>
                     <Normaltekst className="typo-normal blokk-xs">
                         Fra 1.september startet NAV med å kreve tilbake forskudd på dagpenger.
                         Har du spørsmål om ordningen kan du skrive til oss i feltet under.
