@@ -1,6 +1,8 @@
 import { Dispatch } from 'redux';
 
-type ErrorWithResponse = Error & { response: Response };
+export type ErrorWithResponse = Error & { response: Response };
+export type DucksData<T> = { data: T };
+
 export enum STATUS {
     NOT_STARTED = 'NOT_STARTED',
     PENDING = 'PENDING',
