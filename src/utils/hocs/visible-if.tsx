@@ -3,7 +3,8 @@ import { fn, getDisplayName } from '../../utils';
 
 interface Props {
     visibleIf: boolean | (() => boolean);
-    children: React.ReactNode
+    children: React.ReactNode;
+    id?: string;
 }
 
 function VisibleIf(props: Props) {

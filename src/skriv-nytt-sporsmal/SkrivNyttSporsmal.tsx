@@ -1,6 +1,5 @@
-import PT from 'prop-types';
 import * as React from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
+import { Dispatch} from 'redux';
 import {visVilkarModal, skjulVilkarModal} from '../ducks/ui';
 import {sendSporsmal} from '../ducks/traader';
 import {STATUS} from '../ducks/ducks-utils';
@@ -34,11 +33,11 @@ const godkjenteTemagrupper = ['ARBD'];
 
 interface Props {
     actions: {
-        sendSporsmal: (temagruppe : string, fritekst : string, isDirekte: boolean) => {};
         visVilkarModal: () => void;
+        skjulVilkarModal: () => void;
     }
-    sendingStatus: string;
     skalViseVilkarModal: boolean;
+    sendingStatus: string;
     godkjenteTemagrupper: string[];
     tilgang: {
         status: string;
@@ -58,7 +57,6 @@ function SkrivNyttSporsmal (props : Props){
     const [error, setError] = useState<Errors>({fritekst: undefined, godkjennVilkaar: undefined})
     const params = useParams<{ temagruppe: string }>();
     const dispatch = useDispatch();
-
 
     useEffect(() => {
         const temagruppe = params.temagruppe.toLowerCase();
@@ -110,7 +108,7 @@ function SkrivNyttSporsmal (props : Props){
                 .then((isOK) => {
                     if(isOK){
                         if (!Object.entries(error).length) {
-                            sendSporsmal(temagruppe, fritekst, isDirekte);
+                            dispatch(sendSporsmal(temagruppe, fritekst, isDirekte));
                         }
                     } else {
                         setRateLimiter(isOK);
@@ -153,7 +151,7 @@ function SkrivNyttSporsmal (props : Props){
                     <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
                         <FormattedMessage id="feilmelding.ratelimiter"/>
                     </AlertstripeVisibleIf>
-                    <AlertstripeVisibleIf type="advarsel" visibleIf={props.sendingStatus && props.sendingStatus === STATUS.ERROR}>
+                    <AlertstripeVisibleIf type="advarsel" visibleIf={props.sendingStatus === STATUS.ERROR}>
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
                     <Normaltekst className="typo-normal blokk-xs">
@@ -192,10 +190,8 @@ const mapStateToProps = ({ledetekster, traader, ui, tilgang} : AppState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     actions: {
-        sendSporsmal: (temagruppe : string, fritekst: string, isDirekte: boolean) => dispatch(sendSporsmal(temagruppe, fritekst, isDirekte)),
         visVilkarModal: () => dispatch(visVilkarModal()),
         skjulVilkarModal:() => dispatch(skjulVilkarModal()),
-        harTilgangTilKommunaleTemagrupper: () => dispatch(harTilgangTilKommunaleTemagrupper())
     }
 });
 

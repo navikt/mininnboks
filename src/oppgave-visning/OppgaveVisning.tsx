@@ -3,9 +3,9 @@ import { markerTraadSomLest } from './../ducks/traader';
 import {Traad} from "../Traad";
 import { useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import Spinner from 'utils/spinner';
 import { useParams } from 'react-router';
 import {AppState} from "../reducer";
+import Spinner from "../utils/Spinner";
 
 
 function OppgaveVisning() {

@@ -74,7 +74,7 @@ const innsendingActions = {
 };
 
 // Action Creators
-export function hentTraader(pendingType = HENT_ALLE_PENDING) {
+export function hentTraader(pendingType : string = HENT_ALLE_PENDING) {
     return doThenDispatch(() => Api.hentTraader(), {
         OK: HENT_ALLE_OK,
         FEILET: HENT_ALLE_FEILET,
@@ -88,7 +88,7 @@ export const sendSporsmal = (temagruppe : string, fritekst: string, isDirekte: b
         innsendingActions
     )(dispatch);
 
-export const sendSvar = (traadId : string, fritekst : string) => (dispatch) =>
+export const sendSvar = (traadId : string, fritekst : string) => (dispatch: Dispatch<any>) =>
     doThenDispatch(
         () => Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(HENT_ALLE_RELOAD))),
         innsendingActions
@@ -119,7 +119,7 @@ function erDelvisSvar(melding : Melding) {
     return melding.type === MeldingsTyper.DELVIS_SVAR;
 }
 
-function flettDelviseSvarInnISkriftligSvar(traad : Traad, delviseSvar) {
+function flettDelviseSvarInnISkriftligSvar(traad : Traad, delviseSvar : Melding[]) {
     const skriftligeSvar = traad.meldinger.filter(erSkriftligSvar);
     if (skriftligeSvar.length > 0) {
         const avsluttendeSvar = skriftligeSvar.sort(eldsteMeldingForst)[0];

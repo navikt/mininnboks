@@ -68,6 +68,6 @@ function ListeVisning( props : StateFromProps) {
 
 
 const mapStateToProps = (state : AppState) => ({
-    traader: selectTraaderMedSammenslatteMeldinger(state)
+    traader: selectTraaderMedSammenslatteMeldinger(state).data
 });
 export default withRouter(connect<StateFromProps>(mapStateToProps)(ListeVisning));

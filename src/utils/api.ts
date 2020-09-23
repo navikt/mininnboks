@@ -13,7 +13,7 @@ const somPostConfig = () => ({
     }
 });
 
-const sendSporsmalConfig = (temagruppe : Temagruppe, fritekst : string) => ({
+const sendSporsmalConfig = (temagruppe : string, fritekst : string) => ({
     credentials: 'same-origin',
     method: 'POST',
     headers: {
@@ -55,7 +55,7 @@ export function markerSomLest(behandlingsId : string) {
     return fetchToJson(`${API_BASE_URL}/traader/lest/${behandlingsId}`, somPostConfig());
 }
 
-export function sendSporsmal(temagruppe : Temagruppe, fritekst : string, isDirekte : boolean) {
+export function sendSporsmal(temagruppe : string, fritekst : string, isDirekte : boolean) {
     if(isDirekte) {
         return fetchToJson(`${API_BASE_URL}/traader/sporsmaldirekte`, sendSporsmalConfig(temagruppe, fritekst));
     }
