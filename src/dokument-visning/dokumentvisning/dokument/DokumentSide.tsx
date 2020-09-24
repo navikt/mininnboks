@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import DokumentFeilmelding from './dokument-feilmelding';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import ImageLoader from 'react-imageloader';
@@ -10,13 +10,21 @@ import Alertstripe from 'nav-frontend-alertstriper'
 import "./dokument-side.less"
 import DokumentSpinner from "../util/DokumentSpinner";
 
+interface Props {
+    url: string;
+    openPdfUrl: string;
+    kanVises: boolean;
+    ekstrafeilinfo: any;
+    feilmelding: string;
+}
+
 const renderPreloader = () => (
     <BlurretDokument>
         <DokumentSpinner spin/>
     </BlurretDokument>
 );
 
-const renderFeilkomponent = (openPdfUrl) =>
+const renderFeilkomponent = (openPdfUrl : string) =>
     <BlurretDokument>
         <Alertstripe type="advarsel" className="feilmelding">
             <FormattedMessage id="dokumentvisning.bildelasting.feilet"/>
@@ -25,11 +33,14 @@ const renderFeilkomponent = (openPdfUrl) =>
         </Alertstripe>
     </BlurretDokument>;
 
-function loaderWrapper(props, children) {
+function loaderWrapper({props, children} : {props: any, children : React.ReactNode}) {
     return <div {...props} >{children}</div>;
 }
-
-const robustImg = (src, imgProps, feilkomponent) => (
+interface ImgProps {
+    alt: string;
+    tabIndex: string
+}
+const robustImg = (src : string, imgProps : ImgProps, feilkomponent : React.ReactNode) => (
     <ImageLoader
         src={src}
         className="dokument-laster"
@@ -40,12 +51,11 @@ const robustImg = (src, imgProps, feilkomponent) => (
         { feilkomponent }
     </ImageLoader>
 );
-
-const DokumentSide = ({ url, openPdfUrl, kanVises, tittel, side, feilmelding, ekstrafeilinfo, intl: { formatMessage } }) => {
+function DokumentSide ({props, side, tittel, formatMessage} : {props: Props, side: any, tittel: string, formatMessage: any }){
     const bildetekst = formatMessage({ id: 'dokumentinnsyn.side.alttekst' }, { sidetall: side, tittel });
-    return kanVises ?
-        robustImg(url, { alt: bildetekst, tabIndex: '0' }, renderFeilkomponent(openPdfUrl)) :
-        <DokumentFeilmelding url={url} feilmelding={feilmelding} ekstrafeilinfo={ekstrafeilinfo}/>;
+    return props.kanVises ?
+        robustImg(props.url, { alt: bildetekst, tabIndex: '0' }, renderFeilkomponent(props.openPdfUrl)) :
+        <DokumentFeilmelding url={props.url} feilmelding={props.feilmelding} ekstrafeilinfo={props.ekstrafeilinfo}/>;
 };
 
 DokumentSide.propTypes = {

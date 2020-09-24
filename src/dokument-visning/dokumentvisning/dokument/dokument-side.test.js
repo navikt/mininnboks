@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '../../../test-config';
 import { expect } from 'chai';
-import DokumentSide from './dokument-side';
+import DokumentSide from './DokumentSide';
 
 describe('DokumentBilde', () => {
     const messages = {

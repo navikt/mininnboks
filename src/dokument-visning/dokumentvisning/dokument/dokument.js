@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import DokumentSide from './dokument-side';
+import DokumentSide from './DokumentSide';
 // import { Element } from 'react-scroll';
 import { FormattedMessage } from 'react-intl';
 import DokumentHeader from './dokument-header';
