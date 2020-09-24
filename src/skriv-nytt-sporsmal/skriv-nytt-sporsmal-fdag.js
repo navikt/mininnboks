@@ -125,7 +125,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         <FormattedMessage id="infoboks.advarsel"/>
                     </AlertstripeVisibleIf>
                     <AlertStripeInfoSolid className="blokk-xs">
-                        Hvis ditt spørsmål gjelder noe annet enn tilbakebetaling av forskudd kan du bruke
+                        Hvis spørsmålet ditt  gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
                         <IntlLenke href="skriv.ny.link" className="Lenke"> Skriv til Oss</IntlLenke>
                     </AlertStripeInfoSolid>
                     <Normaltekst className="typo-normal blokk-xs">
@@ -133,7 +133,7 @@ class SkrivNyttSporsmalFDAG extends React.Component {
                         Har du spørsmål om ordningen kan du skrive til oss i feltet under.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
-                        Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til DittNav og&nbsp;
+                        Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til Ditt Nav og&nbsp;
                         <IntlLenke href="https://www.nav.no/dagpenger/forskudd/oversikt" className="Lenke">endrer nedbetalingsplanen</IntlLenke> der.
                     </Normaltekst>
                     <Normaltekst className="typo-normal blokk-xs">
