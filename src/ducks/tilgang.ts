@@ -1,27 +1,37 @@
-import { doThenDispatch, STATUS } from "./ducks-utils";
+import {doThenDispatch, DucksData, STATUS} from "./ducks-utils";
 import * as Api from "../utils/api";
+import {Action} from "redux";
 
-export const INNSENDING_KOMMUNALE_SJEKK_OK = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_OK';
-export const INNSENDING_KOMMUNALE_SJEKK_PENDING = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_PENDING';
-export const INNSENDING_KOMMUNALE_SJEKK_FEILET = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_FEILET';
+enum TypeKeys {
+    INNSENDING_KOMMUNALE_SJEKK_OK = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_OK',
+    INNSENDING_KOMMUNALE_SJEKK_PENDING = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_PENDING',
+    INNSENDING_KOMMUNALE_SJEKK_FEILET = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_FEILET',
+
+}
+
+type InnsendingKommunaleSjekkOk = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK> & DucksData<boolean>;
+type InnsendingKommunaleSjekkPending = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_PENDING>;
+type InnsendingKommunaleSjekkFeilet = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_FEILET> & DucksData<Error>;
+
+type Actions = InnsendingKommunaleSjekkOk | InnsendingKommunaleSjekkPending | InnsendingKommunaleSjekkFeilet;
 
 export interface TilgangState {
     status: STATUS,
-    data: any
+    data: boolean | Error
 }
 
 const initialState = {
     status: STATUS.NOT_STARTED,
-    data: {}
+    data: []
 };
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action : Actions) {
     switch (action.type) {
-        case INNSENDING_KOMMUNALE_SJEKK_PENDING:
+        case TypeKeys.INNSENDING_KOMMUNALE_SJEKK_PENDING:
             return { ...state, status: STATUS.PENDING };
-        case INNSENDING_KOMMUNALE_SJEKK_OK:
+        case TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK:
             return { ...state, status: STATUS.OK, data: action.data };
-        case INNSENDING_KOMMUNALE_SJEKK_FEILET:
+        case TypeKeys.INNSENDING_KOMMUNALE_SJEKK_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         default:
             return state;
@@ -30,8 +40,8 @@ export default function reducer(state = initialState, action) {
 
 export function harTilgangTilKommunaleTemagrupper() {
     return doThenDispatch(() => Api.harTilgangTilKommunaleTemagrupper(), {
-        OK: INNSENDING_KOMMUNALE_SJEKK_OK,
-        PENDING: INNSENDING_KOMMUNALE_SJEKK_PENDING,
-        FEILET: INNSENDING_KOMMUNALE_SJEKK_FEILET
+        OK: TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK,
+        PENDING: TypeKeys.INNSENDING_KOMMUNALE_SJEKK_PENDING,
+        FEILET: TypeKeys.INNSENDING_KOMMUNALE_SJEKK_FEILET
     });
 }

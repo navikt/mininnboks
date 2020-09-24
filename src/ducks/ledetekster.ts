@@ -1,16 +1,26 @@
 import * as Api from '../utils/api';
-import { STATUS, doThenDispatch } from './ducks-utils';
+import {STATUS, doThenDispatch, DucksData} from './ducks-utils';
 import {Temagruppe} from "../skriv-nytt-sporsmal/TemagruppeEkstraInfo";
+import {Action} from "redux";
+
 
 // Actions
-export const OK = 'mininnboks/ledetekster/OK';
-export const FEILET = 'mininnboks/ledetekster/FEILET';
-export const PENDING = 'mininnboks/ledetekster/PENDING';
+enum TypeKeys {
+    OK = 'mininnboks/ledetekster/OK',
+    FEILET = 'mininnboks/ledetekster/FEILET',
+    PENDING = 'mininnboks/ledetekster/PENDING',
+}
+
+type Ok = Action<TypeKeys.OK> & DucksData<string[]>;
+type Feilet = Action<TypeKeys.FEILET> & DucksData<Error>;
+type Pending = Action<TypeKeys.PENDING>;
+
+type Actions = Ok | Feilet | Pending;
 
 export interface LedeteksterState {
     status: STATUS,
     godkjenteTemagrupper: Temagruppe[],
-    data: any[]
+    data: string[] | Error
 }
 const initalState = {
     status: STATUS.NOT_STARTED,
@@ -20,13 +30,13 @@ const initalState = {
 
 
 // Reducer
-export default function reducer(state = initalState, action) {
+export default function reducer(state = initalState, action : Actions) {
     switch (action.type) {
-        case PENDING:
+        case TypeKeys.PENDING:
             return { ...state, status: STATUS.PENDING };
-        case FEILET:
+        case TypeKeys.FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
-        case OK: {
+        case TypeKeys.OK: {
             const godkjenteTemagrupper = action.data['temagruppe.liste'].split(' ');
             return { ...state, status: STATUS.OK, data: action.data, godkjenteTemagrupper };
         }
@@ -38,8 +48,8 @@ export default function reducer(state = initalState, action) {
 // Action Creators
 export function hentLedetekster() {
     return doThenDispatch(() => Api.hentLedetekster(), {
-        OK,
-        FEILET,
-        PENDING
+        OK: TypeKeys.OK,
+        FEILET: TypeKeys.FEILET,
+        PENDING: TypeKeys.PENDING
     });
 }

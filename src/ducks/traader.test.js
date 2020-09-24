@@ -5,7 +5,7 @@ import {MeldingsTyper} from '../utils/constants';
 import {STATUS} from "./ducks-utils";
 import {Melding, Traad} from 'Traad';
 
-function lagTraad(traadId: string, antallMeldinger : number) : Traad {
+function lagTraad(traadId, antallMeldinger ) {
     const meldinger = new Array(antallMeldinger)
         .fill(0)
         .map((_, index) => ({
@@ -25,7 +25,7 @@ function lagTraad(traadId: string, antallMeldinger : number) : Traad {
 describe('traader-ducks', () => {
     describe('reducer', () => {
         it('skal oppdatere alle meldinger med med rett traadId med status lest', () => {
-            const initialState : TraaderState = {status: STATUS.OK, innsendingStatus: STATUS.OK, data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
+            const initialState  = {status: STATUS.OK, innsendingStatus: STATUS.OK, data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
 
             const markertSomLest = reducer(initialState, {
                 type: E.MARKERT_SOM_LEST_OK,
@@ -34,15 +34,15 @@ describe('traader-ducks', () => {
                 }
             });
 
-            function harUlestMelding(meldinger : Melding[]) {
+            function harUlestMelding(meldinger ) {
                 const lestArray = meldinger.filter((melding) => (melding.lest));
                 return lestArray[0] === undefined;
             }
 
-            function erAlleMeldingerLest(traadId : string) {
+            function erAlleMeldingerLest(traadId) {
                 return markertSomLest.data
-                    .filter((traad : Traad) => (traad.traadId === traadId))
-                    .map((traad : Traad) => (traad.meldinger))
+                    .filter((traad) => (traad.traadId === traadId))
+                    .map((traad ) => (traad.meldinger))
                     .filter(harUlestMelding);
             }
 
