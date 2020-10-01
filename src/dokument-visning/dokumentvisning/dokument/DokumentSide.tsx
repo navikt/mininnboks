@@ -1,12 +1,9 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import DokumentFeilmelding from './dokument-feilmelding';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import ImageLoader from 'react-imageloader';
-import Spinner from '../util/DokumentSpinner';
 import BlurretDokument from './BlurretDokument';
 import Alertstripe from 'nav-frontend-alertstriper'
-
 import "./dokument-side.less"
 import DokumentSpinner from "../util/DokumentSpinner";
 
@@ -56,14 +53,6 @@ function DokumentSide ({props, side, tittel, formatMessage} : {props: Props, sid
     return props.kanVises ?
         robustImg(props.url, { alt: bildetekst, tabIndex: '0' }, renderFeilkomponent(props.openPdfUrl)) :
         <DokumentFeilmelding url={props.url} feilmelding={props.feilmelding} ekstrafeilinfo={props.ekstrafeilinfo}/>;
-};
-
-DokumentSide.propTypes = {
-    url: PropTypes.string.isRequired,
-    openPdfUrl: PropTypes.string.isRequired,
-    kanVises: PropTypes.bool.isRequired,
-    ekstrafeilinfo: PropTypes.object,
-    feilmelding: PropTypes.string
 };
 
 export default injectIntl(DokumentSide);

@@ -5,6 +5,7 @@ export interface DokumentMetadata {
     tittel: string,
     ekstrafeilinfo: any,
     feilmelding: string;
+    dokumentreferanse?: string;
 }
 
 export interface Dokument {

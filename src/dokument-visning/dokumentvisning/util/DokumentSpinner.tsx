@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function DokumentSpinner(spin: boolean) {
+function DokumentSpinner({spin} : {spin: boolean}) {
 
     return spin ? <div className="spinner"></div> : null;
 }
