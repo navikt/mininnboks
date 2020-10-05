@@ -1,11 +1,9 @@
 import * as React from 'react';
-import {ReactNode} from 'react';
 import {InjectedIntl, injectIntl} from 'react-intl';
 
-interface IntlLenkeProps {
-    intl: InjectedIntl,
-    href: string,
-    children: ReactNode
+interface IntlLenkeProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+    intl: InjectedIntl;
+    href: string;
 }
 function IntlLenke(props : IntlLenkeProps) {
     return (

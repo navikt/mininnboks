@@ -10,6 +10,19 @@ export interface DokumentMetadata {
 
 export interface Dokument {
     dokumentmetadata: DokumentMetadata;
-    journalpostmetadata: any;
+    journalpostmetadata: Journalpostmetadata;
     
+}
+
+export interface Journalpostmetadata {
+    retning: string,
+    navn: string,
+    avsender: string,
+    mottaker: string,
+    dato: string
+    journalPostId: string
+    resultat: {
+        temakode: string;
+        journalpostId: string;
+    }
 }

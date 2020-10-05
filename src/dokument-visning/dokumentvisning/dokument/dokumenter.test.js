@@ -2,7 +2,7 @@
 import { render } from '../../../test-config';
 import React from 'react';
 import { expect } from 'chai';
-import Dokumenter from './dokumenter';
+import Dokumenter from './Dokumenter';
 
 describe('Vedleggliste', () => {
     it('Returnerer tom liste om ingen vedlegg', () => {

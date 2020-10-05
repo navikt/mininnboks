@@ -1,20 +1,20 @@
-import PT from 'prop-types';
 import* as React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/Personalia';
-import Dokumenter from './dokumentvisning/dokument/dokumenter';
+import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import IntlLenke from "../utils/IntlLenke";
 import './dokument-visning.less';
 import {useEffect} from "react";
 import Dokument from './dokumentvisning/dokument/dokument';
+import {Journalpostmetadata} from "../Dokument";
 
 
 interface Props {
     dokumentmetadata: Array<Dokument>,
-    lastNedPdfOnClick: PT.func.isRequired,
-    printPdfOnClick: PT.func.isRequired,
-    journalpostmetadata: Personalia
+    lastNedPdfOnClick: () => void,
+    printPdfOnClick: () => void,
+    journalpostmetadata: Journalpostmetadata
 }
 
 function DokumentVisning(props : Props) {
@@ -28,7 +28,7 @@ function DokumentVisning(props : Props) {
     return (
         <div className="dokinnsyn">
             <section className="dokumentvisning-header blokk-m">
-                <Personalia journalpostmetadata={props.journalpostmetadata.resultat} hode={false} className="blokk-m" />
+                <Personalia journalpostmetadata={props.journalpostmetadata} hode={false} className="blokk-m" />
                 <ul className="ustilet">
                     <li>
                         <Lenke href={`/saksoversikt/app/tema/${temakode}`}>

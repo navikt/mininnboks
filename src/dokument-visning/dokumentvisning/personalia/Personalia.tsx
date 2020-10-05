@@ -3,20 +3,13 @@ import { FormattedDate } from 'react-intl';
 import AvsenderMottaker from './AvsenderMottaker';
 import {Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
+import { Journalpostmetadata } from 'Dokument';
 
 
 interface Props {
     hode: boolean,
     journalpostmetadata: Journalpostmetadata
-}
-
-interface Journalpostmetadata {
-    retning: string,
-    navn: string,
-    avsender: string,
-    mottaker: string,
-    dato: string
-    journalPostId: string
+    className : string
 }
 
 const UKJENT_JOURNALPOSTID = 'x';
@@ -33,7 +26,7 @@ function Personalia(props : Props) {
         return null;
     }
     return (
-        <section className={className}>
+        <section className={props.className}>
             <Undertittel tag="h1">
                 <AvsenderMottaker
                     retning={props.journalpostmetadata.retning}
