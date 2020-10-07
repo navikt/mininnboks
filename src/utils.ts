@@ -1,10 +1,7 @@
-import sanitize from 'sanitize-html';
 import moment from 'moment';
 import {Melding, Traad} from "./Traad";
 import * as React from "react";
 import {Context} from "react";
-
-export const safeHtml = (content : string) => sanitize(content, { allowedTags: ['a'] });
 
 export const prettyDate = (date: string) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 

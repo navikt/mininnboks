@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import { shortDate, safeHtml } from '../utils';
+import { shortDate } from '../utils';
 import { withRouter } from 'react-router-dom';
 import Lenkepanel from '../utils/Lenkepanel';
 import {Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import {Traad} from "../Traad";
 import {useEffect} from "react";
+import Tekstomrade from "nav-frontend-tekstomrade";
+import { useHistory } from 'react-router';
 
 interface Props {
     traad: Traad,
@@ -19,15 +21,15 @@ const cls = (props : Props) => classNames('oppgave', props.ulestMeldingKlasse, {
 });
 
 function OppgavePreview(props : Props) {
+    const history = useHistory();
     useEffect(() => {
         if (props.aktiv) {
-            props.history.replace(`oppgave/${props.traad.nyeste.id}`);
+            history.replace(`oppgave/${props.traad.nyeste.id}`);
         }
     }, [])
 
     const melding = props.traad.nyeste;
     const dato = shortDate(melding.opprettet);
-    const avsnitt = safeHtml(melding.fritekst);
 
     const avsender = props.traad.nyeste.fraNav ? (
         <span>/ Fra <span className="avsender-fra-nav"><FormattedMessage id="avsender.tekst.NAV" /></span></span>
@@ -49,7 +51,7 @@ function OppgavePreview(props : Props) {
                 <Undertittel tag="h3">
                     {melding.statusTekst}
                 </Undertittel>
-                <Normaltekst className="tema-avsnitt">{avsnitt}</Normaltekst>
+                <Tekstomrade className="tema-avsnitt">{melding.fritekst}</Tekstomrade>
             </Lenkepanel>
         </li>
     );

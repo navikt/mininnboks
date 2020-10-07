@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 import Lenkepanel from '../utils/Lenkepanel';
-import {shortDate, safeHtml} from '../utils';
+import {shortDate} from '../utils';
 import AntallMeldinger from './AntallMeldinger';
 import classNames from 'classnames';
-import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi'
+import {Normaltekst, Undertittel} from 'nav-frontend-typografi'
 import {Traad} from "../Traad";
 import {useEffect} from "react";
 import { useHistory } from 'react-router';
+import Tekstomrade, {defaultRules} from "nav-frontend-tekstomrade";
 
 interface Props {
     traad: Traad,
@@ -30,7 +31,6 @@ function MeldingPreview(props : Props) {
 
     const melding = props.traad.nyeste;
     const dato = shortDate(melding.opprettet);
-    const fritekst = safeHtml(melding.fritekst);
 
     const antallMeldinger = props.traad.meldinger.length;
 
@@ -64,7 +64,7 @@ function MeldingPreview(props : Props) {
                         {maBesvares}
                     </span>
                 </Undertittel>
-                <Undertekst className="tema-avsnitt">{fritekst}</Undertekst>
+                <Tekstomrade rules={[...defaultRules]} className="tema-avsnitt">{melding.fritekst}</Tekstomrade>
             </Lenkepanel>
         </li>
     );
