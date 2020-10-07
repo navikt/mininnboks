@@ -7,7 +7,7 @@ import IntlLenke from "../utils/IntlLenke";
 import './dokument-visning.less';
 import {useEffect} from "react";
 import Dokument from './dokumentvisning/dokument/dokument';
-import {Journalpostmetadata} from "../Dokument";
+import {Journalpostmetadata} from "../dokument";
 
 
 interface Props {

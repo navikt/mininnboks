@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Dokument from './dokument';
-import {DokumentMetadata} from "../../../Dokument";
+import {DokumentMetadata} from "../../../dokument";
 
 interface Props {
     journalpostId: string;

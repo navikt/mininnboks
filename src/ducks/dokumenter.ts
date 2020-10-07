@@ -4,7 +4,7 @@ export const API_BASE_URL = '/saksoversikt-api/tjenester';
 
 const MED_CREDENTIALS = { credentials: 'same-origin' };
 import {STATUS, fetchToJson, doThenDispatch, DucksData} from './ducks-utils';
-import {Dokument} from "../Dokument";
+import {Dokument} from "../dokument";
 
 interface PdfModal {
     skalVises: boolean,

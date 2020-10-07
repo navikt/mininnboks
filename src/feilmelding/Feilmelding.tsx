@@ -1,11 +1,7 @@
 import * as React from 'react';
 import Alertstripe from 'nav-frontend-alertstriper'
 
-interface Props {
- children: JSX.Element | React.ReactNode;
- className?: string;
-}
-function Feilmelding(props: Props) {
+function Feilmelding(props: React.HtmlHTMLAttributes<HTMLElement>) {
     return <Alertstripe className={props.className} type="advarsel">{props.children}</Alertstripe>
 }
 

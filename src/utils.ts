@@ -1,12 +1,10 @@
-import * as React from 'react';
 import sanitize from 'sanitize-html';
 import moment from 'moment';
-import 'moment/locale/nb';
 import {Melding, Traad} from "./Traad";
+import * as React from "react";
+import {Context} from "react";
 
-moment.locale('nb');
-
-export const safeHtml = (content) => sanitize(content, { allowedTags: ['a'] });
+export const safeHtml = (content : string) => sanitize(content, { allowedTags: ['a'] });
 
 export const prettyDate = (date: string) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 
@@ -33,7 +31,7 @@ export function eldsteMeldingForst(melding1 : Melding, melding2 : Melding) {
     return 0;
 }
 
-export function autobind(ctx) {
+export function autobind(ctx : Context<unknown>) {
     Object.getOwnPropertyNames(ctx.constructor.prototype)
         .filter((prop) => typeof ctx[prop] === 'function')
         .forEach((method) => {
@@ -42,31 +40,31 @@ export function autobind(ctx) {
         });
 }
 
-export function debounce(func, wait, immediate) {
-    let timeout;
+export function debounce(func : () => {}, wait, immediate) {
+    let timeout: number | undefined;
     return function debounced(...args) {
         const context = this;
         const later = () => {
-            timeout = null;
+            timeout = undefined;
             if (!immediate) {
                 func.apply(context, args);
             }
         };
         const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        window.clearTimeout(timeout);
+        timeout = window.setTimeout(later, wait);
         if (callNow) {
             func.apply(context, args);
         }
     };
 }
 
-export const fn = (value) => (typeof value === 'function' ? value : () => value);
-export const getDisplayName = (component) => component.displayName || component.name || 'Component';
+export const fn = (value : unknown) => (typeof value === 'function' ? value : () => value);
+export const getDisplayName = (component : React.ComponentType) => component.displayName || component.name || 'Component';
 
-export function throttle(func, threshold = 250) {
-    let last;
-    let deferTimer;
+export function throttle(func: () => {}, threshold = 250) {
+    let last: number | undefined;
+    let deferTimer: number | undefined;
 
     return function throttled(...args) {
         const context = this;
@@ -74,7 +72,7 @@ export function throttle(func, threshold = 250) {
         const now = +new Date();
         if (last && now < last + threshold) {
             clearTimeout(deferTimer);
-            deferTimer = setTimeout(() => {
+            deferTimer = window.setTimeout(() => {
                 last = now;
                 func.apply(context, args);
             }, threshold);
@@ -94,3 +92,5 @@ const mockLogger = { info: function(){}, warn: function(){}, error: function(){}
 export function getLogger() {
     return window['frontendlogger'] || mockLogger;
 }
+
+

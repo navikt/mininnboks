@@ -4,16 +4,16 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import Spinner from '../utils/Spinner';
 import { STATUS } from '../ducks/ducks-utils';
 import {getLogger} from "../utils";
+import {Avhengighet} from "../avhengigheter";
 
-const array = (value : any[]) => (Array.isArray(value) ? value : [value]);
-const harStatus = (...status) => (element) => array(status).includes(element.status);
-const noenHarFeil = (avhengigheter : string[]) => avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
-const alleLastet = (avhengigheter : string[]) => avhengigheter && avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
-const medFeil = (avhengigheter : string[]) => avhengigheter.filter(harStatus(STATUS.ERROR));
+const array = (value : unknown[]) => (Array.isArray(value) ? value : [value]);
+const harStatus = (...status : STATUS[]) => (element : Avhengighet<unknown>) => array(status).includes(element.status);
+const noenHarFeil = (avhengigheter : Avhengighet<unknown>[]) => avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
+const alleLastet = (avhengigheter : Avhengighet<unknown>[]) => avhengigheter && avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
+const medFeil = (avhengigheter : Avhengighet<unknown>[]) => avhengigheter.filter(harStatus(STATUS.ERROR));
 
-interface Props {
-    avhengigheter: any[];
-    children: React.ReactNode;
+interface Props extends React.HTMLAttributes<HTMLElement>{
+    avhengigheter: Array<Avhengighet<unknown>>;
     intl: InjectedIntl;
     feilmeldingKey?: string;
 }
