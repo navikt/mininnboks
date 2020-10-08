@@ -16,10 +16,18 @@ type InnsendingKommunaleSjekkFeilet = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK
 
 type Actions = InnsendingKommunaleSjekkOk | InnsendingKommunaleSjekkPending | InnsendingKommunaleSjekkFeilet;
 
-export interface TilgangState {
-    status: STATUS,
-    data: TilgangsDTO | Error
+interface OkState {
+    status: STATUS.OK | STATUS.RELOADING;
+    data: TilgangsDTO;
 }
+interface ErrorState {
+    status: STATUS.ERROR;
+    error: Error;
+}
+interface OtherState {
+    status: STATUS.NOT_STARTED | STATUS.PENDING
+}
+export type TilgangState = OkState | ErrorState | OtherState;
 
 const initialState = {
     status: STATUS.NOT_STARTED,
@@ -33,7 +41,7 @@ export default function reducer(state = initialState, action : Actions) {
         case TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case TypeKeys.INNSENDING_KOMMUNALE_SJEKK_FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR, error: action.data };
         default:
             return state;
     }
