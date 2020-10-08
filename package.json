@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "@types/classnames": "^2.2.6",
-    "@types/moment": "^2.13.0",
     "@types/react-imageloader": "^2.1.10",
     "@types/react-intl": "^2.3.18",
     "@types/react-redux": "^7.1.9",
@@ -43,7 +42,7 @@
     "classnames": "^2.2.6",
     "intl": "1.2.5",
     "lodash.throttle": "^4.1.1",
-    "moment": "2.15.1",
+    "moment": "2.29.1",
     "nav-frontend-alertstriper": "^1.0.27",
     "nav-frontend-alertstriper-style": "^0.2.48",
     "nav-frontend-chevron": "^1.0.6",

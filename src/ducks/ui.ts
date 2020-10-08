@@ -2,7 +2,7 @@ import {Action} from "redux";
 import {DucksData} from "./ducks-utils";
 
 // Actions
-enum TypeKeys {
+export enum TypeKeys {
     VIS_VILKAR_MODAL = 'mininnboks/ui/VIS_VILKAR_MODAL',
     VIS_BESVAR_BOKS = 'mininnboks/ui/VIS_BESVAR_BOKS',
     INNSENDING_OK = 'mininnboks/traader/INNSENDING_OK',

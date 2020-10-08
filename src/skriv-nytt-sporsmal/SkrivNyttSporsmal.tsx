@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Dispatch} from 'redux';
-import {visVilkarModal, skjulVilkarModal} from '../ducks/ui';
+import {visVilkarModal, skjulVilkarModal, TypeKeys} from '../ducks/ui';
 import {sendSporsmal} from '../ducks/traader';
 import {STATUS} from '../ducks/ducks-utils';
 import {TextareaControlled} from 'nav-frontend-skjema';
@@ -33,8 +33,8 @@ const godkjenteTemagrupper = ['ARBD'];
 
 interface Props {
     actions: {
-        visVilkarModal: () => void;
-        skjulVilkarModal: () => void;
+        visVilkarModal: () => { type: TypeKeys, data: boolean  };
+        skjulVilkarModal: () => { type: TypeKeys, data: boolean  };
     }
     skalViseVilkarModal: boolean;
     sendingStatus: string;

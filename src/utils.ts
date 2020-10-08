@@ -1,7 +1,6 @@
-import moment from 'moment';
+import * as moment from 'moment';
 import {Melding, Traad} from "./Traad";
 import * as React from "react";
-import {Context} from "react";
 
 export const prettyDate = (date: string) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 
@@ -28,62 +27,8 @@ export function eldsteMeldingForst(melding1 : Melding, melding2 : Melding) {
     return 0;
 }
 
-export function autobind(ctx : Context<unknown>) {
-    Object.getOwnPropertyNames(ctx.constructor.prototype)
-        .filter((prop) => typeof ctx[prop] === 'function')
-        .forEach((method) => {
-            // eslint-disable-next-line
-            ctx[method] = ctx[method].bind(ctx);
-        });
-}
-
-export function debounce(func : () => {}, wait, immediate) {
-    let timeout: number | undefined;
-    return function debounced(...args) {
-        const context = this;
-        const later = () => {
-            timeout = undefined;
-            if (!immediate) {
-                func.apply(context, args);
-            }
-        };
-        const callNow = immediate && !timeout;
-        window.clearTimeout(timeout);
-        timeout = window.setTimeout(later, wait);
-        if (callNow) {
-            func.apply(context, args);
-        }
-    };
-}
-
 export const fn = (value : unknown) => (typeof value === 'function' ? value : () => value);
 export const getDisplayName = (component : React.ComponentType) => component.displayName || component.name || 'Component';
-
-export function throttle(func: () => {}, threshold = 250) {
-    let last: number | undefined;
-    let deferTimer: number | undefined;
-
-    return function throttled(...args) {
-        const context = this;
-
-        const now = +new Date();
-        if (last && now < last + threshold) {
-            clearTimeout(deferTimer);
-            deferTimer = window.setTimeout(() => {
-                last = now;
-                func.apply(context, args);
-            }, threshold);
-        } else {
-            last = now;
-            func.apply(context, args);
-        }
-    };
-}
-
-export function erDev() {
-    const url = window.location.href;
-    return url.includes('debug=true') || url.includes('devillo.no:8586') || url.includes('localhost:8586');
-}
 
 const mockLogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
 export function getLogger() {

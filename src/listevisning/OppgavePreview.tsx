@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { shortDate } from '../utils';
-import { withRouter } from 'react-router-dom';
 import Lenkepanel from '../utils/Lenkepanel';
 import {Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import {Traad} from "../Traad";
@@ -57,4 +56,4 @@ function OppgavePreview(props : Props) {
     );
 }
 
-export default withRouter(OppgavePreview);
+export default OppgavePreview;
