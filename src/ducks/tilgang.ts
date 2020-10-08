@@ -1,6 +1,7 @@
 import {doThenDispatch, DucksData, STATUS} from "./ducks-utils";
 import * as Api from "../utils/api";
 import {Action} from "redux";
+import { TilgangsDTO } from '../utils/api';
 
 enum TypeKeys {
     INNSENDING_KOMMUNALE_SJEKK_OK = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_OK',
@@ -9,7 +10,7 @@ enum TypeKeys {
 
 }
 
-type InnsendingKommunaleSjekkOk = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK> & DucksData<boolean>;
+type InnsendingKommunaleSjekkOk = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK> & DucksData<TilgangsDTO>;
 type InnsendingKommunaleSjekkPending = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_PENDING>;
 type InnsendingKommunaleSjekkFeilet = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_FEILET> & DucksData<Error>;
 
@@ -17,7 +18,7 @@ type Actions = InnsendingKommunaleSjekkOk | InnsendingKommunaleSjekkPending | In
 
 export interface TilgangState {
     status: STATUS,
-    data: boolean | Error
+    data: TilgangsDTO | Error
 }
 
 const initialState = {

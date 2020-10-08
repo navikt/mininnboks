@@ -16,7 +16,7 @@ import {AppState} from "../reducer";
 import {connect, useDispatch} from "react-redux";
 import {TypeKeys, visBesvarBoks} from "../ducks/ui";
 import {markerSomLest} from "../utils/api";
-import {STATUS} from "../ducks/ducks-utils";
+import { STATUS } from '../ducks/ducks-utils';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 interface Props {
