@@ -16,22 +16,15 @@ import {AppState} from "../reducer";
 import {connect, useDispatch} from "react-redux";
 import {TypeKeys, visBesvarBoks} from "../ducks/ui";
 import {markerSomLest} from "../utils/api";
+import { STATUS } from '../ducks/ducks-utils';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 interface Props {
     traader: { data: Array<Traad> }
     skalViseBesvarBoks: boolean,
-    innsendingStatus: RestStatus,
+    innsendingStatus: STATUS,
     actions: TraadvisningActions,
     match: object
-}
-
-enum RestStatus {
-    NOT_STARTED= 'NOT_STARTED',
-    PENDING = 'PENDING',
-    OK = 'OK',
-    RELOADING = 'RELOADING',
-    ERROR = 'ERROR'
 }
 
 interface TraadvisningActions {
@@ -78,7 +71,7 @@ function TraadVisning (props: Props){
                 <div className="traad-container">
                     <AlertstripeVisibleIf
                         type="advarsel"
-                        visibleIf={props.innsendingStatus && props.innsendingStatus === RestStatus.ERROR}
+                        visibleIf={props.innsendingStatus && props.innsendingStatus === STATUS.ERROR}
                         className="blokk-m"
                     >
                         <FormattedMessage id='infoboks.advarsel' />

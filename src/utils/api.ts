@@ -65,7 +65,12 @@ export function sendSvar(traadId : string, fritekst : string) {
     return fetchToJson(`${API_BASE_URL}/traader/svar`, sendSvarConfig(traadId, fritekst));
 }
 
-export function harTilgangTilKommunaleTemagrupper() {
+export interface TilgangsDTO {
+    resultat: 'FEILET' | 'KODE6' | 'INGEN_ENHET' | 'OK';
+    melding: string;
+}
+
+export function harTilgangTilKommunaleTemagrupper(): Promise<TilgangsDTO> {
     return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS)
 }
 
