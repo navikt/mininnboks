@@ -11,11 +11,9 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import {FormattedMessage} from 'react-intl';
 import {connect, useDispatch} from 'react-redux';
 import Brodsmuler from '../brodsmuler/Brodsmuler';
-import {withRouter} from 'react-router-dom';
 import {Sidetittel, Innholdstittel, Undertittel, Normaltekst} from 'nav-frontend-typografi'
 import {Hovedknapp} from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper'
-
 import './skriv-nytt-sporsmal.less';
 import {validate} from "../utils/validationutil";
 import {visibleIfHOC} from "../utils/hocs/visible-if";
@@ -52,7 +50,6 @@ interface Errors {
     godkjennVilkaar?: string
 }
 function SkrivNyttSporsmal (props : Props){
-
     const [rateLimiter, setRateLimiter] = useState(true);
     const [error, setError] = useState<Errors>({fritekst: undefined, godkjennVilkaar: undefined})
     const params = useParams<{ temagruppe: string }>();
@@ -188,12 +185,12 @@ const mapStateToProps = ({ledetekster, traader, ui, tilgang} : AppState) => ({
     sendingStatus: traader.innsendingStatus,
     tilgang: tilgang
 });
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     actions: {
         visVilkarModal: () => dispatch(visVilkarModal()),
         skjulVilkarModal:() => dispatch(skjulVilkarModal()),
     }
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SkrivNyttSporsmal));
+export default connect(mapStateToProps, mapDispatchToProps)(SkrivNyttSporsmal);
 

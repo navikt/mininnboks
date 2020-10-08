@@ -14,9 +14,9 @@ export const hasTraader = (traader : TraaderState) => {
 function Traader(props : React.HtmlHTMLAttributes<HTMLElement>) {
 
     const traader = useAppState(state => state.traader);
-    const traaderAvhengigheter: Avhengighet<Traad> = {data: hasTraader(traader), status: traader.status}
+    const traaderAvhengigheter: Avhengighet<Traad[]> = {data: hasTraader(traader), status: traader.status}
     return (
-        <Innholdslaster avhengigheter={traaderAvhengigheter}>
+        <Innholdslaster avhengigheter={[traaderAvhengigheter]}>
             {props.children}
         </Innholdslaster>
     );
