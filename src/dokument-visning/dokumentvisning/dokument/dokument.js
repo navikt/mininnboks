@@ -3,7 +3,7 @@ import React from 'react';
 import DokumentSide from './DokumentSide';
 // import { Element } from 'react-scroll';
 import { FormattedMessage } from 'react-intl';
-import DokumentHeader from './dokument-header';
+import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
 
 const lagDokumentTittel = (kanVises, ekstrafeilinfo, tittel) => {

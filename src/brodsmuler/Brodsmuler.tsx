@@ -8,9 +8,10 @@ import {connect} from 'react-redux';
 import './brodsmuler.less'
 import {selectTraaderMedSammenslatteMeldinger} from "../ducks/traader";
 import {Traad} from "../Traad";
+import {AppState} from "../reducer";
+import {useParams} from "react-router";
 
 interface Props {
-    match: any,
     traader: Traad[],
     underOppfolging: boolean
 }
@@ -20,13 +21,13 @@ const typeMap = {
     "oppgave": "Oppgavevisning",
 };
 
-function TypeSmule(props : Props) {
-    const params = props.match.params;
-    return <React.Fragment>{typeMap[params.type]}</React.Fragment>
+function TypeSmule() {
+    const params = useParams<{ type: string }>();
+    return <>{typeMap[params.type]}</>
 }
 
 function TraadSmule(props : Props) {
-    const params = props.match.params;
+    const params = useParams<{ traadId: string }>();
     const traadId = params.traadId;
     const valgttraad = props.traader.find(traad => traad.traadId === traadId);
     if (!valgttraad) {
@@ -44,14 +45,14 @@ function TraadSmule(props : Props) {
     );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state : AppState) => ({
     traader: selectTraaderMedSammenslatteMeldinger(state),
 });
 
 TraadSmule = withRouter(connect(mapStateToProps)(TraadSmule));
 
 function NyMeldingSmule() {
-    return <React.Fragment>Ny melding</React.Fragment>
+    return <>Ny melding</>
 }
 
 function Brodsmuler() {
@@ -64,9 +65,9 @@ function Brodsmuler() {
             />
             <ol className="brodsmuler__list">
                 <FormattedMessage id="brodsmulesti.dittnav.lenketekst">
-                    {(tekst) => (
+                    {(tekst : string) => (
                         <FormattedMessage id="dittnav.url">
-                            {(url) => <Brodsmule tekst={tekst} path={url}/>}
+                            {(url: string) => <Brodsmule tekst={tekst} path={url}/>}
                         </FormattedMessage>
                     )}
                 </FormattedMessage>

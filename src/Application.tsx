@@ -1,23 +1,28 @@
 import PT from 'prop-types';
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import * as React from 'react';
+import {bindActionCreators, Dispatch} from 'redux';
+import {connect, useDispatch} from 'react-redux';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import nb from 'react-intl/locale-data/nb';
 import Innholdslaster from './innholdslaster/Innholdslaster';
 import Routes from './routes'
 import { hentLedetekster } from './ducks/ledetekster';
+import {AppState} from "./reducer";
+import { useEffect } from 'react';
 
 addLocaleData(nb);
 
-class Application extends React.Component {
-    componentWillMount() {
-        this.props.actions.hentLedetekster();
-    }
+interface Props {
+    ledetekster: string[]
+}
+function Application(props: Props){
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(hentLedetekster());
 
-    render() {
-        const { ledetekster = {} } = this.props;
+    }, [])
 
+        const { ledetekster = {} } = props;
         return (
             <IntlProvider defaultLocale="nb" locale="nb" messages={ledetekster.data} >
                 <Innholdslaster avhengigheter={[ledetekster]}>
@@ -25,7 +30,6 @@ class Application extends React.Component {
                 </Innholdslaster>
             </IntlProvider>
         );
-    }
 }
 
 Application.propTypes = {
@@ -35,7 +39,7 @@ Application.propTypes = {
     ledetekster: PT.object
 };
 
-const mapStateToProps = ({ ledetekster }) => ({ ledetekster });
-const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators({ hentLedetekster }, dispatch) });
+const mapStateToProps = ({ ledetekster } : AppState) => ({ ledetekster });
+const mapDispatchToProps = (dispatch : Dispatch) => ({ actions: bindActionCreators({ hentLedetekster }, dispatch) });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

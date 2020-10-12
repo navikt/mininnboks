@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FormEvent} from 'react';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import {Sidetittel} from 'nav-frontend-typografi'
 import { Hovedknapp  } from 'nav-frontend-knapper';
@@ -30,7 +30,7 @@ function Betingelser (props: Props){
                         <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.overskrift" />
                     </Sidetittel>
                     <div className="blokk-m">
-                        <FormattedHTMLMessage id="send-sporsmal.still-sporsmal.betingelser.tekst" />
+                        <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.tekst" />
                     </div>
                     <hr className="blokk-m" />
                     <div className="svar-godta text-center blokk-m">
