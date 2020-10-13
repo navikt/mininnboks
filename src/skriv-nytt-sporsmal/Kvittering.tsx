@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 function Kvittering() {
@@ -10,7 +10,7 @@ function Kvittering() {
             </h1>
 
             <p className="blokk-m">
-                <FormattedHTMLMessage id="send-sporsmal.bekreftelse.varslingsinfo" />
+                <FormattedMessage id="send-sporsmal.bekreftelse.varslingsinfo" />
             </p>
 
             <hr className="blokk-m" />

@@ -4,7 +4,7 @@ import BesvarBoks from './BesvarBoks';
 import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi'
 import { withRouter } from 'react-router-dom';
@@ -24,7 +24,6 @@ interface Props {
     skalViseBesvarBoks: boolean,
     innsendingStatus: STATUS,
     actions: TraadvisningActions,
-    match: object
 }
 
 interface TraadvisningActions {
@@ -86,7 +85,7 @@ function TraadVisning (props: Props){
                         className="blokk-m"
                     >
                         <FormattedMessage id="skriv.ny.link">{(lenke) => (
-                            <FormattedHTMLMessage id="traadvisning.kan-ikke-svare" values={{ lenke }} />
+                            <FormattedMessage id="traadvisning.kan-ikke-svare" values={{ lenke }} />
                         )}</FormattedMessage>
                     </AlertstripeVisibleIf>
                     <BesvarBoks

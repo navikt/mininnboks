@@ -6,8 +6,8 @@ import { hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter
 import { withRouter } from 'react-router-dom';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
-import LastNedModal from './last-ned-pdf-modal';
 import Innholdslaster from "../innholdslaster/Innholdslaster.tsx";
+import LastNedPdfModal from "./LastNedPdfModal";
 
 class DokumentVisningSide extends React.Component {
     constructor() {
@@ -57,7 +57,7 @@ class DokumentVisningSide extends React.Component {
                 avhengigheter={[dokumenter]}
                 feilmeldingKey="innlastning.dokument.feil"
             >
-                <LastNedModal />
+                <LastNedPdfModal />
                 <Dokumentvisning
                     params={params}
                     {...dokumenter.data}

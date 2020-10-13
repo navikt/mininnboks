@@ -1,45 +1,31 @@
-import PT from 'prop-types';
 import * as React from 'react';
-import {bindActionCreators, Dispatch} from 'redux';
-import {connect, useDispatch} from 'react-redux';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import nb from 'react-intl/locale-data/nb';
+import  {useDispatch} from 'react-redux';
+import {IntlProvider} from 'react-intl';
+
 import Innholdslaster from './innholdslaster/Innholdslaster';
 import Routes from './routes'
 import { hentLedetekster } from './ducks/ledetekster';
-import {AppState} from "./reducer";
 import { useEffect } from 'react';
+import { useAppState } from 'utils/custom-hooks';
 
-addLocaleData(nb);
+import '@formatjs/intl-pluralrules/polyfill';
+import '@formatjs/intl-pluralrules/locale-data/nb';
 
-interface Props {
-    ledetekster: string[]
-}
-function Application(props: Props){
+import '@formatjs/intl-relativetimeformat/polyfill';
+import '@formatjs/intl-relativetimeformat/locale-data/nb';
+
+function Application() {
     const dispatch = useDispatch();
+    const ledetekster = useAppState((state) => state.ledetekster);
     useEffect(() => {
         dispatch(hentLedetekster());
-
-    }, [])
-
-        const { ledetekster = {} } = props;
-        return (
-            <IntlProvider defaultLocale="nb" locale="nb" messages={ledetekster.data} >
-                <Innholdslaster avhengigheter={[ledetekster]}>
-                    <Routes/>
-                </Innholdslaster>
-            </IntlProvider>
-        );
+    }, []);
+    return (
+        <IntlProvider defaultLocale="nb" locale="nb" messages={ledetekster.data}>
+            <Innholdslaster avhengigheter={[ledetekster]}>
+                <Routes/>
+            </Innholdslaster>
+        </IntlProvider>
+    );
 }
-
-Application.propTypes = {
-    actions: PT.shape({
-        hentLedetekster: PT.func
-    }).isRequired,
-    ledetekster: PT.object
-};
-
-const mapStateToProps = ({ ledetekster } : AppState) => ({ ledetekster });
-const mapDispatchToProps = (dispatch : Dispatch) => ({ actions: bindActionCreators({ hentLedetekster }, dispatch) });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Application);
+export default Application;

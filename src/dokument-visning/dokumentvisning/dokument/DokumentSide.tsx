@@ -1,5 +1,5 @@
 import * as React from 'react';
-import DokumentFeilmelding from './dokument-feilmelding';
+import DokumentFeilmelding from './DokumentFeilmelding';
 import { injectIntl, FormattedMessage } from 'react-intl';
 // @ts-ignore
 import ImageLoader from 'react-imageloader';

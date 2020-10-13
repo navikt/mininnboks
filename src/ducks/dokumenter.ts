@@ -6,7 +6,7 @@ const MED_CREDENTIALS = { credentials: 'same-origin' };
 import {STATUS, fetchToJson, doThenDispatch, DucksData} from './ducks-utils';
 import {Dokument} from "../dokument";
 
-interface PdfModal {
+export interface PdfModal {
     skalVises: boolean,
     dokumentUrl: string | undefined
 }
