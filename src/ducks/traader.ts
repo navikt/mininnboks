@@ -5,6 +5,7 @@ import { STATUS, doThenDispatch, DucksData } from './ducks-utils';
 import {Melding, Traad} from 'Traad';
 import { Action, Dispatch } from 'redux';
 import {AppState} from "../reducer";
+import {TilgangsDTO} from "../utils/api";
 
 // Actions
 enum TypeKeys {
@@ -39,12 +40,26 @@ type Actions = HentAlleOk |
                InnsendingFeilet |
                InnsendingPending;
 
-export interface TraaderState {
-    status: STATUS,
-    innsendingStatus: STATUS,
-    data: Traad[] | Error
+
+interface OkState {
+    status: STATUS.OK | STATUS.RELOADING;
+    innsendingStatus: STATUS.OK,
+    data: Traad[];
 }
-const initalState : TraaderState = {
+interface ErrorState {
+    status: STATUS.ERROR;
+    innsendingStatus: STATUS.ERROR,
+    error: Error;
+}
+interface OtherState {
+    status: STATUS.NOT_STARTED | STATUS.PENDING
+    innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING,
+
+}
+export type TraaderState = OkState | ErrorState | OtherState;
+
+
+const initalState = {
     status: STATUS.NOT_STARTED,
     innsendingStatus: STATUS.NOT_STARTED,
     data: []
@@ -54,7 +69,7 @@ const initalState : TraaderState = {
 const markerMeldingSomLest = (melding : Melding) => ({ ...melding, lest: true });
 
 // Reducer
-export default function reducer(state : TraaderState = initalState, action: Actions) {
+export default function reducer(state  = initalState, action: Actions) {
     switch (action.type) {
         case TypeKeys.HENT_ALLE_PENDING:
             return { ...state, status: STATUS.PENDING };

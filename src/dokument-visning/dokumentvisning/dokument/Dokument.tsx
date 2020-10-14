@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import DokumentSide from './DokumentSide';
 // import { Element } from 'react-scroll';
 import { FormattedMessage } from 'react-intl';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
+import {DokumentMetadata, Ekstrafeilinfo} from "../../../dokument";
 
-const lagDokumentTittel = (kanVises, ekstrafeilinfo, tittel) => {
+const lagDokumentTittel = (kanVises : boolean, ekstrafeilinfo : Ekstrafeilinfo, tittel : string) => {
     if (kanVises) {
         return <h1 className="typo-element">{tittel}</h1>;
     } else if (ekstrafeilinfo.korruptPdf === 'true') {
@@ -15,13 +15,22 @@ const lagDokumentTittel = (kanVises, ekstrafeilinfo, tittel) => {
     return null;
 };
 
-const Dokument = ({ dokref, journalpostId, dokumentmetadata, first, lastNedPdfOnClick, printPdfOnClick }) => {
-    const { bildeurler, kanVises, tittel, feilmelding, ekstrafeilinfo } = dokumentmetadata;
-    const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${journalpostId}/${dokref}`;
-    const printUrl = `/saksoversikt/app/print/${journalpostId}/${dokref}`;
+interface Props {
+    dokref: string;
+    first: boolean;
+    journalpostId: string;
+    lastNedPdfOnClick: (url : string, event : Event) => void
+    printPdfOnClick: (url : string, event : Event) => void;
+    dokumentmetadata: DokumentMetadata;
+}
 
-    const onLastNedClick = !lastNedPdfOnClick ? null : lastNedPdfOnClick.bind(this, openPdfUrl);
-    const onPrintClick = !printPdfOnClick ? null : printPdfOnClick.bind(this, printUrl);
+function Dokument (props: Props){
+    const { bildeurler, kanVises, tittel, feilmelding, ekstrafeilinfo } = props.dokumentmetadata;
+    const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostId}/${props.dokref}`;
+    const printUrl = `/saksoversikt/app/print/${props.journalpostId}/${props.dokref}`;
+
+    const onLastNedClick = !props.lastNedPdfOnClick ? null : props.lastNedPdfOnClick.bind(props.lastNedPdfOnClick, openPdfUrl);
+    const onPrintClick = !props.printPdfOnClick ? null : props.printPdfOnClick.bind(props.printPdfOnClick, printUrl);
 
     const pdfLink = (
         <Lenke target="_blank" href={openPdfUrl} onClick={onLastNedClick}>
@@ -49,29 +58,14 @@ const Dokument = ({ dokref, journalpostId, dokumentmetadata, first, lastNedPdfOn
         />);
 
     return (
-        <li id={dokref} className="dokument">
-            <DokumentHeader tabbable={!!maybeDokumentTittel} scrollToTopOnFocus={first}>
+        <li id={props.dokref} className="dokument">
+            <DokumentHeader tabbable={!!maybeDokumentTittel} scrollToTopOnFocus={props.first}>
                 {maybeDokumentTittel}
                 {linker}
             </DokumentHeader>
             {bilder}
         </li>
     );
-};
-
-Dokument.propTypes = {
-    dokref: PropTypes.string.isRequired,
-    first: PropTypes.bool.isRequired,
-    journalpostId: PropTypes.string.isRequired,
-    lastNedPdfOnClick: PropTypes.func,
-    printPdfOnClick: PropTypes.func,
-    dokumentmetadata: PropTypes.shape({
-        bildeurler: PropTypes.array.isRequired,
-        kanVises: PropTypes.bool.isRequired,
-        tittel: PropTypes.string,
-        ekstrafeilinfo: PropTypes.object,
-        feilmelding: PropTypes.string
-    }).isRequired
 };
 
 export default Dokument;

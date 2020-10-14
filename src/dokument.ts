@@ -5,7 +5,7 @@ export interface DokumentMetadata {
     tittel: string,
     ekstrafeilinfo: any,
     feilmelding: string;
-    dokumentreferanse?: string;
+    dokumentreferanse: string;
 }
 
 export interface Dokument {
@@ -25,4 +25,9 @@ export interface Journalpostmetadata {
         temakode: string;
         journalpostId: string;
     }
+}
+
+export interface Ekstrafeilinfo {
+    tittel: string;
+    korruptPdf: string;
 }

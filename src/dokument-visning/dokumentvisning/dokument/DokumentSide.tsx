@@ -1,19 +1,23 @@
 import * as React from 'react';
 import DokumentFeilmelding from './DokumentFeilmelding';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import {injectIntl, FormattedMessage, InjectedIntl} from 'react-intl';
 // @ts-ignore
 import ImageLoader from 'react-imageloader';
 import BlurretDokument from './BlurretDokument';
 import Alertstripe from 'nav-frontend-alertstriper'
 import "./dokument-side.less"
 import DokumentSpinner from "../util/DokumentSpinner";
+import { Ekstrafeilinfo } from 'dokument';
 
-interface Props {
+interface Props{
     url: string;
     openPdfUrl: string;
     kanVises: boolean;
-    ekstrafeilinfo: any;
+    ekstrafeilinfo: Ekstrafeilinfo;
     feilmelding: string;
+    side: number;
+    tittel: string;
+    intl: InjectedIntl
 }
 
 const renderPreloader = () => (
@@ -49,8 +53,9 @@ const robustImg = (src : string, imgProps : ImgProps, feilkomponent : React.Reac
         { feilkomponent }
     </ImageLoader>
 );
-function DokumentSide ({props, side, tittel, formatMessage} : {props: Props, side: any, tittel: string, formatMessage: any }){
-    const bildetekst = formatMessage({ id: 'dokumentinnsyn.side.alttekst' }, { sidetall: side, tittel });
+function DokumentSide (props: Props){
+    const tittel = props.tittel;
+    const bildetekst = props.intl.formatMessage({ id: 'dokumentinnsyn.side.alttekst' }, { sidetall: props.side, tittel});
     return props.kanVises ?
         robustImg(props.url, { alt: bildetekst, tabIndex: '0' }, renderFeilkomponent(props.openPdfUrl)) :
         <DokumentFeilmelding url={props.url} feilmelding={props.feilmelding} ekstrafeilinfo={props.ekstrafeilinfo}/>;

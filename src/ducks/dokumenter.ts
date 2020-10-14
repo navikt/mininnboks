@@ -1,10 +1,10 @@
 import {Action} from "redux";
+import {doThenDispatch, DucksData, fetchToJson, STATUS} from './ducks-utils';
+import {Dokument} from "../dokument";
 
 export const API_BASE_URL = '/saksoversikt-api/tjenester';
 
 const MED_CREDENTIALS = { credentials: 'same-origin' };
-import {STATUS, fetchToJson, doThenDispatch, DucksData} from './ducks-utils';
-import {Dokument} from "../dokument";
 
 export interface PdfModal {
     skalVises: boolean,
@@ -19,38 +19,47 @@ enum TypeKeys {
 }
 
 type DokumentvisningDataOk = Action<TypeKeys.DOKUMENTVISNING_DATA_OK> & DucksData<any>;
-type DokumentvisningDataFeilet = Action<TypeKeys.DOKUMENTVISNING_DATA_FEILET>;
+type DokumentvisningDataFeilet = Action<TypeKeys.DOKUMENTVISNING_DATA_FEILET> & DucksData<Error>;
 type DokumentvisningDataPending = Action<TypeKeys.DOKUMENTVISNING_DATA_PENDING>;
 type StatusPdfModal = Action<TypeKeys.STATUS_PDF_MODAL> & DucksData<{pdfModal: PdfModal; }>;
 
 type Actions = DokumentvisningDataOk | DokumentvisningDataFeilet | DokumentvisningDataPending | StatusPdfModal;
+interface OkState {
+    status: STATUS.OK | STATUS.RELOADING;
+    data: Dokument[];
+}
 
-export interface DokumentState {
-    status: STATUS,
-    data: Dokument[] | Error,
+interface PdfModalState {
+    status: STATUS.OK | STATUS.RELOADING;
     pdfModal: PdfModal
 }
+
+interface ErrorState {
+    status: STATUS.ERROR;
+    error: Error;
+}
+interface OtherState {
+    status: STATUS.NOT_STARTED | STATUS.PENDING
+}
+export type DokumentState = OkState | ErrorState | PdfModalState | OtherState;
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
-    pdfModal: {
-        skalVises: false,
-        dokumentUrl: undefined
-    }
 };
 
 // Reducer
-export default function reducer(state : DokumentState = initalState, action : Actions) : DokumentState {
+export default function reducer(state  = initalState, action : Actions) : DokumentState {
     switch (action.type) {
         case TypeKeys.DOKUMENTVISNING_DATA_PENDING:
             return { ...state, status: STATUS.PENDING };
         case TypeKeys.DOKUMENTVISNING_DATA_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, error: action.data};
         case TypeKeys.DOKUMENTVISNING_DATA_OK: {
             const [dokumentmetadata, journalpostmetadata] = action.data;
             return { ...state, status: STATUS.OK, data: [dokumentmetadata, journalpostmetadata]};
         } case TypeKeys.STATUS_PDF_MODAL:
-            return { ...state, pdfModal: action.data.pdfModal };
+            return { ...state, pdfModal: action.data.pdfModal, status: STATUS.OK };
         default:
             return state;
     }

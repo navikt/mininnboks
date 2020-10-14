@@ -6,14 +6,13 @@ import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import IntlLenke from "../utils/IntlLenke";
 import './dokument-visning.less';
 import {useEffect} from "react";
-import Dokument from './dokumentvisning/dokument/dokument';
-import {Journalpostmetadata} from "../dokument";
+import {DokumentMetadata, Journalpostmetadata} from "../dokument";
 
 
 interface Props {
-    dokumentmetadata: Array<Dokument>,
-    lastNedPdfOnClick: () => void,
-    printPdfOnClick: () => void,
+    dokumentmetadata: DokumentMetadata[],
+    lastNedPdfOnClick: (url : string, event : Event) => void,
+    printPdfOnClick: (url : string, event : Event) => void,
     journalpostmetadata: Journalpostmetadata
 }
 

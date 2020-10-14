@@ -4,12 +4,13 @@ import {useAppState} from "../utils/custom-hooks";
 import {TraaderState} from "../ducks/traader";
 import {Avhengighet} from "../avhengigheter";
 import {Traad} from "../Traad";
+import {STATUS} from "../ducks/ducks-utils";
 
 export const hasTraader = (traader : TraaderState) => {
-    if(traader.data instanceof Error){
+    if(traader.status  == STATUS.ERROR){
         return []
     }
-    return traader.data
+    return traader
 }
 function Traader(props : React.HtmlHTMLAttributes<HTMLElement>) {
 

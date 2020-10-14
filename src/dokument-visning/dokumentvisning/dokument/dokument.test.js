@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '../../../test-config';
 import { expect } from 'chai';
-import Dokument from './dokument';
+import Dokument from './Dokument';
 
 describe('Vedlegg', () => {
     it('Viser ikke tittel og url til pdf hvis dokumentet ikke kan vises, ' +
