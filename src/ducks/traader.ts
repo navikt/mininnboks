@@ -1,10 +1,10 @@
 import * as Api from '../utils/api';
 import { MeldingsTyper } from '../utils/constants';
 import { eldsteMeldingForst } from '../utils';
-import { STATUS, doThenDispatch, DucksData } from './ducks-utils';
-import {Melding, Traad} from 'Traad';
+import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
+import { Melding, Traad } from 'Traad';
 import { Action, Dispatch } from 'redux';
-import {AppState} from "../reducer";
+import { AppState } from '../reducer';
 
 // Actions
 enum TypeKeys {
@@ -57,11 +57,14 @@ interface OtherState {
 }
 export type TraaderState = OkState | ErrorState | OtherState;
 
+export function harTraader(state: TraaderState): state is OkState {
+    return [STATUS.OK, STATUS.RELOADING].includes(state.status);
+}
 
-const initalState = {
+
+const initalState: TraaderState = {
     status: STATUS.NOT_STARTED,
-    innsendingStatus: STATUS.NOT_STARTED,
-    data: []
+    innsendingStatus: STATUS.NOT_STARTED
 };
 
 // Utils
@@ -81,7 +84,7 @@ export default function reducer(state  = initalState, action: Actions) {
         case TypeKeys.MARKERT_SOM_LEST_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case TypeKeys.MARKERT_SOM_LEST_OK: {
-            if (!Array.isArray(state.data)) {
+            if (!harTraader(state)) {
                 return state;
             }
             const traader = state.data.map((traad) => {
@@ -183,7 +186,7 @@ function flettMeldingerITraad(traad : Traad): Traad {
 }
 
 export function selectTraaderMedSammenslatteMeldinger(store : AppState): { data: Traad[] } {
-    if (Array.isArray(store.traader.data)) {
+    if (harTraader(store.traader)) {
         return { data: store.traader.data.map(flettMeldingerITraad) };
     }
     return { data: [] };
