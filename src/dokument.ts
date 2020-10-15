@@ -3,15 +3,14 @@ export interface DokumentMetadata {
     bildeurler: string[],
     kanVises: boolean,
     tittel: string,
-    ekstrafeilinfo: any,
+    ekstrafeilinfo: { [key:string]: string },
     feilmelding: string;
     dokumentreferanse: string;
 }
 
 export interface Dokument {
-    dokumentmetadata: DokumentMetadata;
+    dokumentmetadata: DokumentMetadata[];
     journalpostmetadata: Journalpostmetadata;
-    
 }
 
 export interface Journalpostmetadata {
@@ -25,9 +24,4 @@ export interface Journalpostmetadata {
         temakode: string;
         journalpostId: string;
     }
-}
-
-export interface Ekstrafeilinfo {
-    tittel: string;
-    korruptPdf: string;
 }

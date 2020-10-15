@@ -2,12 +2,12 @@ import {doThenDispatch, DucksData, STATUS} from "./ducks-utils";
 import * as Api from "../utils/api";
 import {Action} from "redux";
 import { TilgangsDTO } from '../utils/api';
+import { Avhengigheter } from '../avhengigheter';
 
 enum TypeKeys {
     INNSENDING_KOMMUNALE_SJEKK_OK = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_OK',
     INNSENDING_KOMMUNALE_SJEKK_PENDING = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_PENDING',
     INNSENDING_KOMMUNALE_SJEKK_FEILET = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_FEILET',
-
 }
 
 type InnsendingKommunaleSjekkOk = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK> & DucksData<TilgangsDTO>;
@@ -16,17 +16,9 @@ type InnsendingKommunaleSjekkFeilet = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK
 
 type Actions = InnsendingKommunaleSjekkOk | InnsendingKommunaleSjekkPending | InnsendingKommunaleSjekkFeilet;
 
-interface OkState {
-    status: STATUS.OK | STATUS.RELOADING;
-    data: TilgangsDTO;
-}
-interface ErrorState {
-    status: STATUS.ERROR;
-    error: Error;
-}
-interface OtherState {
-    status: STATUS.NOT_STARTED | STATUS.PENDING
-}
+interface OkState extends Avhengigheter.OkState<TilgangsDTO> {}
+interface ErrorState extends Avhengigheter.ErrorState {}
+interface OtherState extends Avhengigheter.OtherState {}
 export type TilgangState = OkState | ErrorState | OtherState;
 
 const initialState = {

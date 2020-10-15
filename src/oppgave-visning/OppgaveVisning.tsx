@@ -1,22 +1,21 @@
 import * as React from 'react';
-import {harTraader, markerTraadSomLest} from './../ducks/traader';
-import {Traad} from "../Traad";
-import { useEffect} from "react";
-
-import Spinner from "../utils/Spinner";
-import {useThunkDispatch} from "../useThunkDispatch";
+import { useEffect } from 'react';
+import { getTraaderSafe, markerTraadSomLest } from './../ducks/traader';
+import { Traad } from '../Traad';
+import { useSelector } from 'react-redux';
+import { AppState } from '../reducer';
+import Spinner from '../utils/Spinner';
+import { useThunkDispatch } from '../useThunkDispatch';
 import { useParams } from 'react-router';
-import {useAppState} from "../utils/custom-hooks";
-
 
 function OppgaveVisning() {
     const dispatch = useThunkDispatch();
     const params = useParams<{traadId: string }>();
-    const traader = useAppState((state) => state.traader);
-
+    const traaderResources = useSelector((state : AppState) => state.traader);
+    const traader = getTraaderSafe(traaderResources);
     useEffect(() => {
         const traadId = params.traadId;
-        const traad = harTraader(traader) && traader.data.find((trad : Traad) => trad.traadId === traadId);
+        const traad = traader.find((trad : Traad) => trad.traadId === traadId);
         const oppgaveUrl = traad ? traad.nyeste.oppgaveUrl : ''
         dispatch(markerTraadSomLest(traadId))
             .then(() => {

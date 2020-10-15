@@ -1,12 +1,11 @@
 import * as React from 'react';
 import DokumentSide from './DokumentSide';
-// import { Element } from 'react-scroll';
 import { FormattedMessage } from 'react-intl';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
-import {DokumentMetadata, Ekstrafeilinfo} from "../../../dokument";
+import {DokumentMetadata} from "../../../dokument";
 
-const lagDokumentTittel = (kanVises : boolean, ekstrafeilinfo : Ekstrafeilinfo, tittel : string) => {
+const lagDokumentTittel = (kanVises : boolean, ekstrafeilinfo : { [key:string]: string }, tittel : string) => {
     if (kanVises) {
         return <h1 className="typo-element">{tittel}</h1>;
     } else if (ekstrafeilinfo.korruptPdf === 'true') {

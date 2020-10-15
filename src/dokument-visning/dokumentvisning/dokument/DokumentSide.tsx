@@ -7,13 +7,12 @@ import BlurretDokument from './BlurretDokument';
 import Alertstripe from 'nav-frontend-alertstriper'
 import "./dokument-side.less"
 import DokumentSpinner from "../util/DokumentSpinner";
-import { Ekstrafeilinfo } from 'dokument';
 
 interface Props{
     url: string;
     openPdfUrl: string;
     kanVises: boolean;
-    ekstrafeilinfo: Ekstrafeilinfo;
+    ekstrafeilinfo: { [key:string]: string };
     feilmelding: string;
     side: number;
     tittel: string;

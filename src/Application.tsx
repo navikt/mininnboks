@@ -4,7 +4,7 @@ import {IntlProvider} from 'react-intl';
 
 import Innholdslaster from './innholdslaster/Innholdslaster';
 import Routes from './routes'
-import { hentLedetekster } from './ducks/ledetekster';
+import { hentLedetekster, Ledetekster } from './ducks/ledetekster';
 import { useEffect } from 'react';
 import { useAppState } from 'utils/custom-hooks';
 
@@ -21,11 +21,13 @@ function Application() {
         dispatch(hentLedetekster());
     }, []);
     return (
-        <IntlProvider defaultLocale="nb" locale="nb" messages={ledetekster.data}>
-            <Innholdslaster avhengigheter={[ledetekster]}>
-                <Routes/>
-            </Innholdslaster>
-        </IntlProvider>
+        <Innholdslaster avhengigheter={[ledetekster]}>
+            {(lastLedetekster: Ledetekster.OkState) => (
+                <IntlProvider defaultLocale="nb" locale="nb" messages={lastLedetekster.data}>
+                        <Routes/>
+                </IntlProvider>
+            )}
+        </Innholdslaster>
     );
 }
 export default Application;

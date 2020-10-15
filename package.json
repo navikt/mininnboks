@@ -76,6 +76,7 @@
     "nav-frontend-typografi-style": "^1.0.10",
     "prop-types": "^15.6.2",
     "query-string": "^6.13.1",
+    "raw.macro": "^0.4.2",
     "react": "^16.13.1",
     "react-dom": "16.8.2",
     "react-imageloader": "^3.0.0",

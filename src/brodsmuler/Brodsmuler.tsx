@@ -1,20 +1,19 @@
 import * as React from 'react';
-import personSvg from './person.svg';
 import Brodsmule from './Brodsmule';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl'
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import raw from 'raw.macro';
+
 
 import './brodsmuler.less'
 import {selectTraaderMedSammenslatteMeldinger} from "../ducks/traader";
-import {Traad} from "../Traad";
-import {AppState} from "../reducer";
-import {useParams} from "react-router";
 
-interface Props {
-    traader: Traad[],
-    underOppfolging: boolean
-}
+import {useParams} from "react-router";
+import {useAppState} from "../utils/custom-hooks";
+
+const personSvg = raw('./person.svg');
+
 
 const typeMap = {
     "dokument": "Dokumentvisning",
@@ -26,10 +25,14 @@ function TypeSmule() {
     return <>{typeMap[params.type]}</>
 }
 
-function TraadSmule(props : Props) {
+function TraadSmule() {
     const params = useParams<{ traadId: string }>();
     const traadId = params.traadId;
-    const valgttraad = props.traader.find(traad => traad.traadId === traadId);
+    const state = useAppState(state => state);
+    const dispatch = useDispatch();
+    const traader = dispatch(selectTraaderMedSammenslatteMeldinger(state))
+    const valgttraad = traader.data.find(traad => traad.traadId === traadId);
+
     if (!valgttraad) {
         return null;
     }
@@ -44,12 +47,6 @@ function TraadSmule(props : Props) {
         />
     );
 }
-
-const mapStateToProps = (state : AppState) => ({
-    traader: selectTraaderMedSammenslatteMeldinger(state),
-});
-
-TraadSmule = withRouter(connect(mapStateToProps)(TraadSmule));
 
 function NyMeldingSmule() {
     return <>Ny melding</>
@@ -89,13 +86,5 @@ function Brodsmuler() {
         </div>
     );
 }
-
-Brodsmuler.defaultProps = {
-    underOppfolging: false,
-};
-
-Brodsmuler.defaultProps = {
-    underOppfolging: undefined,
-};
 
 export default Brodsmuler;

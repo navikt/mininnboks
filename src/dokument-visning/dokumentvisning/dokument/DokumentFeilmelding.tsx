@@ -4,7 +4,6 @@ import Feilmelding from "../../../feilmelding/Feilmelding";
 import { Undertittel } from 'nav-frontend-typografi';
 
 import './dokument-feilmelding.less'
-import {Ekstrafeilinfo} from "../../../dokument";
 
 function createMarkup(markuptekst : string) {
     return {
@@ -13,7 +12,7 @@ function createMarkup(markuptekst : string) {
 }
 interface Props {
     url: string;
-    ekstrafeilinfo: Ekstrafeilinfo;
+    ekstrafeilinfo: { [key:string]: string };
     feilmelding: string;
     intl: InjectedIntl;
 }
