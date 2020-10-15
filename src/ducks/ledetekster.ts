@@ -2,6 +2,7 @@ import * as Api from '../utils/api';
 import {STATUS, doThenDispatch, DucksData} from './ducks-utils';
 import {Temagruppe} from "../skriv-nytt-sporsmal/TemagruppeEkstraInfo";
 import {Action} from "redux";
+import { Avhengigheter } from '../avhengigheter';
 
 
 // Actions
@@ -17,15 +18,16 @@ type Pending = Action<TypeKeys.PENDING>;
 
 type Actions = Ok | Feilet | Pending;
 
-export interface LedeteksterState {
-    status: STATUS,
-    godkjenteTemagrupper: Temagruppe[],
-    data: string[] | Error
+export namespace Ledetekster {
+    export interface OkState extends Avhengigheter.OkState<string[]> {
+        godkjenteTemagrupper: Temagruppe[]
+    }
+    export interface ErrorState extends Avhengigheter.ErrorState {}
+    export interface OtherState extends Avhengigheter.OtherState {}
 }
-const initalState = {
-    status: STATUS.NOT_STARTED,
-    godkjenteTemagrupper: [],
-    data: {}
+export type LedeteksterState = Ledetekster.OkState | Ledetekster.ErrorState | Ledetekster.OtherState;
+const initalState: LedeteksterState = {
+    status: STATUS.NOT_STARTED
 };
 
 

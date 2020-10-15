@@ -5,6 +5,7 @@ import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
 import { Melding, Traad } from 'Traad';
 import { Action, Dispatch } from 'redux';
 import { AppState } from '../reducer';
+import { Avhengigheter, harData } from '../avhengigheter';
 
 // Actions
 enum TypeKeys {
@@ -40,25 +41,23 @@ type Actions = HentAlleOk |
                InnsendingPending;
 
 
-interface OkState {
-    status: STATUS.OK | STATUS.RELOADING;
+interface OkState extends Avhengigheter.OkState<Traad[]>{
     innsendingStatus: STATUS.OK,
-    data: Traad[];
 }
-interface ErrorState {
-    status: STATUS.ERROR;
+interface ErrorState extends Avhengigheter.ErrorState {
     innsendingStatus: STATUS.ERROR,
-    error: Error;
 }
-interface OtherState {
-    status: STATUS.NOT_STARTED | STATUS.PENDING
+interface OtherState extends Avhengigheter.OtherState {
     innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING,
 
 }
 export type TraaderState = OkState | ErrorState | OtherState;
 
-export function harTraader(state: TraaderState): state is OkState {
-    return [STATUS.OK, STATUS.RELOADING].includes(state.status);
+export function getTraaderSafe(state: TraaderState): Array<Traad> {
+    if (harData(state)) {
+        return state.data;
+    }
+    return [];
 }
 
 
@@ -84,7 +83,7 @@ export default function reducer(state  = initalState, action: Actions) {
         case TypeKeys.MARKERT_SOM_LEST_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case TypeKeys.MARKERT_SOM_LEST_OK: {
-            if (!harTraader(state)) {
+            if (!harData(state)) {
                 return state;
             }
             const traader = state.data.map((traad) => {
@@ -186,7 +185,7 @@ function flettMeldingerITraad(traad : Traad): Traad {
 }
 
 export function selectTraaderMedSammenslatteMeldinger(store : AppState): { data: Traad[] } {
-    if (harTraader(store.traader)) {
+    if (harData(store.traader)) {
         return { data: store.traader.data.map(flettMeldingerITraad) };
     }
     return { data: [] };

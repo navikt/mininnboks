@@ -9,9 +9,8 @@ export interface DokumentMetadata {
 }
 
 export interface Dokument {
-    dokumentmetadata: DokumentMetadata;
+    dokumentmetadata: DokumentMetadata[];
     journalpostmetadata: Journalpostmetadata;
-    
 }
 
 export interface Journalpostmetadata {
