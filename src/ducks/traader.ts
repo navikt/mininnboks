@@ -5,7 +5,6 @@ import { STATUS, doThenDispatch, DucksData } from './ducks-utils';
 import {Melding, Traad} from 'Traad';
 import { Action, Dispatch } from 'redux';
 import {AppState} from "../reducer";
-import {TilgangsDTO} from "../utils/api";
 
 // Actions
 enum TypeKeys {
