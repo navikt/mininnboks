@@ -1,6 +1,7 @@
 import * as renderer from 'react-test-renderer';
 import Dokumenter from './Dokumenter';
 import { render } from 'test-config';
+import Dokumenter from './Dokumenter';
 
 describe('Vedleggliste', () => {
     it('Returnerer tom liste om ingen vedlegg', () => {

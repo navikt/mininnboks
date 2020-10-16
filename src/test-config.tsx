@@ -6,6 +6,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({adapter: new Adapter()});
 
-export function render(component : JSX.Element) {
+export function render(component : React.ReactNode) {
     return mount(<IntlProvider>{component}</IntlProvider>).first();
 }
