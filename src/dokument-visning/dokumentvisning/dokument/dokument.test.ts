@@ -1,5 +1,5 @@
-import * as renderer from 'react-test-renderer';
 import Dokument from './dokument';
+import { render } from 'test-config';
 
 describe('Vedlegg', () => {
     it('Viser ikke tittel og url til pdf hvis dokumentet ikke kan vises, ' +
@@ -16,7 +16,7 @@ describe('Vedlegg', () => {
             }
         };
 
-        const wrapper = renderer.create(<Dokument {...props}/>);
+        const wrapper = render(<Dokument {...props}/>);
 
         const renderedVedleggListe = wrapper.find('.lokal-linker');
         expect(renderedVedleggListe.length).toEqual(0);
@@ -37,7 +37,7 @@ describe('Vedlegg', () => {
                 ekstrafeilinfo: { korruptPdf: 'true' } // Konverteringstjenesten melder om korrupt pdf
             }
         };
-        const wrapper = renderer.create(<Dokument {...props}/>);
+        const wrapper = render(<Dokument {...props}/>);
 
         const renderedVedleggListe = wrapper.find('.lokal-linker');
         expect(renderedVedleggListe.length).toEqual(1);

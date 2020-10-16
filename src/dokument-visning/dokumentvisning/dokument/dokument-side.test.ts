@@ -1,5 +1,5 @@
-import * as renderer from 'react-test-renderer';
 import DokumentSide from './DokumentSide';
+import { render } from 'test-config';
 
 describe('DokumentBilde', () => {
     const messages = {
@@ -17,7 +17,7 @@ describe('DokumentBilde', () => {
             feilmelding: 'feilmelding'
         };
 
-        const wrapper = renderer.create(
+        const wrapper = render(
             <DokumentSide {...props} />);
 
         const renderedFeilmelding = wrapper.find('.feilmelding-container');
@@ -35,7 +35,7 @@ describe('DokumentBilde', () => {
             feilmelding: 'feilmelding'
         };
 
-        const wrapper = renderer.create(<DokumentSide {...props} />);
+        const wrapper = render(<DokumentSide {...props} />);
 
         const renderedDokumentlaster = wrapper.find('.dokument-laster');
         expect(renderedDokumentlaster.length).toBeGreaterThan(0);

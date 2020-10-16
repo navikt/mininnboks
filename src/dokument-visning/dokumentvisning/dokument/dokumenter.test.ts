@@ -1,5 +1,6 @@
 import * as renderer from 'react-test-renderer';
 import Dokumenter from './Dokumenter';
+import { render } from 'test-config';
 
 describe('Vedleggliste', () => {
     it('Returnerer tom liste om ingen vedlegg', () => {
@@ -8,7 +9,7 @@ describe('Vedleggliste', () => {
             dokumentmetadata: []
         };
 
-        const wrapper = renderer.create(<Dokumenter {...props} />);
+        const wrapper = render(<Dokumenter {...props} />);
         const renderedVedleggListe = wrapper.find('.dokumentliste');
 
         expect(renderedVedleggListe.length).toEqual(1);
@@ -32,7 +33,7 @@ describe('Vedleggliste', () => {
             ]
         };
 
-        const wrapper = renderer.create(<Dokumenter {...props}/>);
+        const wrapper = render(<Dokumenter {...props}/>);
 
         const renderedVedleggListe = wrapper.('.dokumentliste');
         expect(renderedVedleggListe.length).toEqual(1);
