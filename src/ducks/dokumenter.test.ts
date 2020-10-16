@@ -1,20 +1,20 @@
 /* eslint-env mocha */
 import reducer, * as E from './dokumenter';
 import { STATUS } from './ducks-utils';
-import { expect, Assertion } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 
-const dataAction = (type, data) => {
+function dataAction<T>(type : any, data: T){
     if (data) {
         return { type, data };
     }
     return { type };
 };
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const array = (value) => (Array.isArray(value) ? value : [value]);
+const array = (value: any) => (Array.isArray(value) ? value : [value]);
 
 Assertion.addMethod('received', function receivedMethod(actions, deepEquality = false) {
     const receivedActions = this._obj.getActions(); // eslint-disable-line no-underscore-dangle
@@ -44,9 +44,9 @@ describe('dokumenter-ducks', () => {
             const feiletState = reducer(initalState, dataAction(E.DOKUMENTVISNING_DATA_FEILET));
             const okState = reducer(initalState, dataAction(E.DOKUMENTVISNING_DATA_OK, [0, 0]));
 
-            expect(pendingState.status).to.equal(STATUS.PENDING);
-            expect(feiletState.status).to.equal(STATUS.ERROR);
-            expect(okState.status).to.equal(STATUS.OK);
+            expect(pendingState.status).toEqual(STATUS.PENDING);
+            expect(feiletState.status).toEqual(STATUS.ERROR);
+            expect(okState.status).toEqual(STATUS.OK);
         });
 
         it('skal oppdatere pdfModal korrekt', () => {
@@ -68,11 +68,11 @@ describe('dokumenter-ducks', () => {
                 }
             });
 
-            expect(visPdfModal).to.have.deep.property('pdfModal.skalVises', true);
-            expect(visPdfModal).to.have.deep.property('pdfModal.dokumentUrl', dokumentUrl);
+            expect(visPdfModal).toHaveProperty('pdfModal.skalVises', true);
+            expect(visPdfModal).toHaveProperty('pdfModal.dokumentUrl', dokumentUrl);
 
-            expect(skjulPdfModal).to.have.deep.property('pdfModal.skalVises', false);
-            expect(skjulPdfModal).to.have.deep.property('pdfModal.dokumentUrl', null);
+            expect(skjulPdfModal).toHaveProperty('pdfModal.skalVises', false);
+            expect(skjulPdfModal).toHaveProperty('pdfModal.dokumentUrl', null);
         });
     });
 
@@ -87,7 +87,7 @@ describe('dokumenter-ducks', () => {
 
                 return store.dispatch(E.hentDokumentVisningData('', ''))
                     .then(() => {
-                        expect(store).to.have.received([
+                        expect(store).toEqual([
                             dataAction(E.DOKUMENTVISNING_DATA_PENDING, undefined),
                             dataAction(E.DOKUMENTVISNING_DATA_OK, [
                                 [{ test: 'asda' }],
@@ -131,8 +131,8 @@ describe('dokumenter-ducks', () => {
 
                 setTimeout(() => { // Må vente litt pga masse async/promise og dispatching.
                     res.then(() => {
-                        expect(store).to.have.not.received(dataAction(E.DOKUMENTVISNING_DATA_OK));
-                        expect(store).to.have.received([
+                        expect(store).not.toEqual((dataAction(E.DOKUMENTVISNING_DATA_OK));
+                        expect(store).toReturn([
                             dataAction(E.DOKUMENTVISNING_DATA_PENDING, undefined),
                             dataAction(E.DOKUMENTVISNING_DATA_FEILET)
                         ]);
@@ -148,7 +148,7 @@ describe('dokumenter-ducks', () => {
 
             store.dispatch(E.visLastNedPdfModal(dokumentUrl));
 
-            expect(store).to.have.received(
+            expect(store).toReturn(
                 {
                     type: E.STATUS_PDF_MODAL,
                     pdfModal: {
@@ -162,7 +162,7 @@ describe('dokumenter-ducks', () => {
 
             store.dispatch(E.skjulLastNedPdfModal());
 
-            expect(store).to.have.received({
+            expect(store).toReturn({
                 type: E.STATUS_PDF_MODAL,
                 pdfModal: {
                     skalVises: false,

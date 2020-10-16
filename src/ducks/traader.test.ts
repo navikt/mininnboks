@@ -1,11 +1,10 @@
-import * as React from 'react';
 import reducer, * as E from './traader';
-import {TraaderState} from './traader';
+import {TypeKeys} from './traader';
 import {MeldingsTyper} from '../utils/constants';
 import {STATUS} from "./ducks-utils";
-import {Melding, Traad} from 'Traad';
+import {Melding} from 'Traad';
 
-function lagTraad(traadId, antallMeldinger ) {
+function lagTraad(traadId : string, antallMeldinger : number) {
     const meldinger = new Array(antallMeldinger)
         .fill(0)
         .map((_, index) => ({
@@ -28,26 +27,26 @@ describe('traader-ducks', () => {
             const initialState  = {status: STATUS.OK, innsendingStatus: STATUS.OK, data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
 
             const markertSomLest = reducer(initialState, {
-                type: E.MARKERT_SOM_LEST_OK,
+                type: TypeKeys.MARKERT_SOM_LEST_OK,
                 data: {
                     traadId: 'traad1'
                 }
             });
 
-            function harUlestMelding(meldinger ) {
+            function harUlestMelding(meldinger : Melding[]) {
                 const lestArray = meldinger.filter((melding) => (melding.lest));
                 return lestArray[0] === undefined;
             }
 
-            function erAlleMeldingerLest(traadId) {
+            function erAlleMeldingerLest(traadId : string) {
                 return markertSomLest.data
                     .filter((traad) => (traad.traadId === traadId))
                     .map((traad ) => (traad.meldinger))
                     .filter(harUlestMelding);
             }
 
-            expect(erAlleMeldingerLest('traad1')).to.deep.equal([]);
-            expect(erAlleMeldingerLest('traad2')).to.not.deep.equal([]);
+            expect(erAlleMeldingerLest('traad1')).toEqual([]);
+            expect(erAlleMeldingerLest('traad2')).not.toBe([]);
         });
     });
     describe('selector', () => {
@@ -87,14 +86,14 @@ describe('traader-ducks', () => {
             };
             it('skal ikke selecte delvise svar', () => {
                 const sammenslaatteTraader = E.selectTraaderMedSammenslatteMeldinger(initialState);
-                expect(sammenslaatteTraader.data[0].meldinger.length).to.equal(3);
+                expect(sammenslaatteTraader.data[0].meldinger.length).toEqual(3);
             });
             it('skal merge teksten fra delvise svar inn i førstkommende skriftlige svar', () => {
                 const sammenslaatteTraader = E.selectTraaderMedSammenslatteMeldinger(initialState);
                 const avsluttendeSvar = sammenslaatteTraader.data[0].meldinger
                     .find(melding => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID);
-                expect(avsluttendeSvar.fritekst).to.have.string(DELVIS_SVAR_TEKST)
-                    .and.to.have.string(SVAR_TEKST);
+                expect(avsluttendeSvar.fritekst).toContain(DELVIS_SVAR_TEKST);
+                expect(avsluttendeSvar.fritekst).toContain(SVAR_TEKST);
             });
         });
     });

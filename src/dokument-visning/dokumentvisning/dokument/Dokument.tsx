@@ -18,8 +18,8 @@ interface Props {
     dokref: string;
     first: boolean;
     journalpostId: string;
-    lastNedPdfOnClick: (url : string, event : Event) => void
-    printPdfOnClick: (url : string, event : Event) => void;
+    lastNedPdfOnClick: (url : string, event : React.MouseEvent) => void
+    printPdfOnClick: (url : string, event : React.MouseEvent) => void;
     dokumentmetadata: DokumentMetadata;
 }
 
@@ -28,11 +28,11 @@ function Dokument (props: Props){
     const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostId}/${props.dokref}`;
     const printUrl = `/saksoversikt/app/print/${props.journalpostId}/${props.dokref}`;
 
-    const onLastNedClick = (e: Event) => {
+    const onLastNedClick = (e: React.MouseEvent) => {
         props.lastNedPdfOnClick(openPdfUrl, e);
     };
 
-    const onPrintClick = (e : Event) => {
+    const onPrintClick = (e : React.MouseEvent) => {
         props.printPdfOnClick(printUrl, e);
     }
 

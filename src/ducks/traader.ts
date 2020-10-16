@@ -8,7 +8,7 @@ import { AppState } from '../reducer';
 import { Avhengigheter, harData } from '../avhengigheter';
 
 // Actions
-enum TypeKeys {
+export enum TypeKeys {
     HENT_ALLE_OK = 'mininnboks/traader/HENT_ALLE_OK',
     HENT_ALLE_FEILET = 'mininnboks/traader/HENT_ALLE_FEILET',
     HENT_ALLE_PENDING = 'mininnboks/traader/HENT_ALLE_PENDING',
