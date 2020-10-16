@@ -1,13 +1,15 @@
-import * as renderer from 'react-test-renderer';
-import Dokumenter from './Dokumenter';
 import { render } from 'test-config';
 import Dokumenter from './Dokumenter';
+import * as React from 'react';
 
 describe('Vedleggliste', () => {
     it('Returnerer tom liste om ingen vedlegg', () => {
         const props = {
             journalpostId: 'x',
-            dokumentmetadata: []
+            dokumentmetadata: [],
+            lastNedPdfOnClick: () => {},
+            printPdfOnClick: () => {}
+
         };
 
         const wrapper = render(<Dokumenter {...props} />);
@@ -31,12 +33,14 @@ describe('Vedleggliste', () => {
                     ekstrafeilinfo: {},
                     dokumentreferanse: '321'
                 }
-            ]
+            ],
+            lastNedPdfOnClick: () => {},
+            printPdfOnClick: () => {}
         };
 
         const wrapper = render(<Dokumenter {...props}/>);
 
-        const renderedVedleggListe = wrapper.('.dokumentliste');
+        const renderedVedleggListe = wrapper.find('.dokumentliste');
         expect(renderedVedleggListe.length).toEqual(1);
 
         const vedleggListe = wrapper.find('li');

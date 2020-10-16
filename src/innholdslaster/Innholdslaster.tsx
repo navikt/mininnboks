@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {InjectedIntl, injectIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Spinner from '../utils/Spinner';
 import { STATUS } from '../ducks/ducks-utils';
@@ -14,11 +14,11 @@ const medFeil = (avhengigheter : Avhengighet<unknown>[]) => avhengigheter.filter
 
 interface Props extends React.HTMLAttributes<HTMLElement>{
     avhengigheter: Array<Avhengighet<unknown>>;
-    intl: InjectedIntl;
     feilmeldingKey?: string;
 }
 
 function Innholdslaster(props: Props){
+    const intl = useIntl();
     if (alleLastet(props.avhengigheter)) {
         if (typeof props.children === 'function') {
             return <>{props.children(props.avhengigheter)}</>;
@@ -30,7 +30,7 @@ function Innholdslaster(props: Props){
         const feilendeReducer = medFeil(props.avhengigheter);
         console.log(feilendeReducer); // eslint-disable-line no-console
 
-        const feilmelding = (props.feilmeldingKey && props.intl.messages[props.feilmeldingKey]) || (
+        const feilmelding = (props.feilmeldingKey && intl.messages[props.feilmeldingKey]) || (
             'Det skjedde en feil ved innlastningen av data'
             );
 
@@ -43,4 +43,4 @@ function Innholdslaster(props: Props){
     return <Spinner />;
 };
 
-export default injectIntl(Innholdslaster);
+export default Innholdslaster;

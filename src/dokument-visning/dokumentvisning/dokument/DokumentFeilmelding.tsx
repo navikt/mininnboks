@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormattedMessage, InjectedIntl, injectIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import Feilmelding from "../../../feilmelding/Feilmelding";
 import { Undertittel } from 'nav-frontend-typografi';
 
@@ -14,12 +14,12 @@ interface Props {
     url: string;
     ekstrafeilinfo: { [key:string]: string };
     feilmelding: string;
-    intl: InjectedIntl;
 }
 
 function DokumentFeilmelding (props : Props){
+        const intl = useIntl();
         const enonicFeilmeldingstekstKey = props.feilmelding.concat('.tekst');
-        const innhold = props.intl.formatMessage({ id: enonicFeilmeldingstekstKey }, props.ekstrafeilinfo);
+        const innhold = intl.formatMessage({ id: enonicFeilmeldingstekstKey }, props.ekstrafeilinfo);
 
         return (
             <div className="dokument-feilmelding feilmelding-container">
@@ -35,4 +35,4 @@ function DokumentFeilmelding (props : Props){
         );
 }
 
-export default injectIntl(DokumentFeilmelding);
+export default DokumentFeilmelding;

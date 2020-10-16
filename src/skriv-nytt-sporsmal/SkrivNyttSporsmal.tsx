@@ -25,6 +25,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {useParams, useLocation} from "react-router";
 import {AppState} from "../reducer";
 import Spinner from "../utils/Spinner";
+import {harData} from "../avhengigheter";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -170,7 +171,7 @@ function SkrivNyttSporsmal(props: Props) {
 
 const mapStateToProps = ({ledetekster, traader, ui, tilgang} : AppState) => ({
     skalViseVilkarModal: ui.visVilkarModal,
-    godkjenteTemagrupper: ledetekster.godkjenteTemagrupper,
+    godkjenteTemagrupper: harData(ledetekster) ? ledetekster.godkjenteTemagrupper : [],
     sendingStatus: traader.innsendingStatus,
     tilgang: tilgang
 });

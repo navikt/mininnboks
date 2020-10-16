@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 import * as Utils from './utils';
 
 describe('Utils', () => {

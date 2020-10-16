@@ -1,6 +1,6 @@
 import DokumentSide from './DokumentSide';
 import { render } from 'test-config';
-import DokumentSide from './DokumentSide';
+import * as React from "react";
 
 describe('DokumentBilde', () => {
     const messages = {

@@ -8,7 +8,7 @@ export const validationRules = {
         }
         return undefined;
     },
-    godkjennVilkaar: (verdi : boolean) => {
+    godkjennVilkaar: (verdi?: boolean) => {
         if (verdi !== true) {
             return 'required';
         }

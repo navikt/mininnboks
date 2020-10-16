@@ -1,11 +1,9 @@
 import * as React from 'react';
-import {BrowserRouter} from 'react-router-dom';
 import createStore from './store';
 import {Provider} from 'react-redux';
 import Application from "./Application";
 
-const store = createStore(history);
-
+const store = createStore();
 
 export default function MainApp() {
     return (

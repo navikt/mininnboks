@@ -1,5 +1,6 @@
-import Dokument from './dokument';
 import { render } from 'test-config';
+import * as React from "react";
+import Dokument from "./Dokument";
 
 describe('Vedlegg', () => {
     it('Viser ikke tittel og url til pdf hvis dokumentet ikke kan vises, ' +
