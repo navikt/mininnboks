@@ -3,19 +3,15 @@ import { render } from 'test-config';
 import * as React from "react";
 
 describe('DokumentBilde', () => {
-    const messages = {
-        'dokumentinnsyn.side.alttekst': 'alt-tekst',
-        'feilmelding.tekst': 'feilmeldingtekst',
-        'feilmelding.tittel': 'feilmeldingtittel',
-        'ikon.feilmelding.aria-label': 'aria-label',
-        'dokumentvisning.bildelasting.feilet': 'bildelasting feilet'
-    };
     it('Viser feilmelding om bildet ikke kan vises', () => {
         const props = {
             kanVises: false,
             url: '/saksoversikt/img/dokumenter/mockside/1',
             ekstrafeilinfo: {},
-            feilmelding: 'feilmelding'
+            feilmelding: 'feilmelding',
+            openPdfUrl: 'string',
+            side: 1,
+            tittel: 'tittel',
         };
 
         const wrapper = render(
@@ -33,7 +29,10 @@ describe('DokumentBilde', () => {
             url: 'http://localhost:9876/saksoversikt/img/dokumenter/mockside/1',
             kanVises: true,
             ekstrafeilinfo: {},
-            feilmelding: 'feilmelding'
+            feilmelding: 'feilmelding',
+            openPdfUrl: 'string',
+            side: 1,
+            tittel: 'tittel',
         };
 
         const wrapper = render(<DokumentSide {...props} />);

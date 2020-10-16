@@ -28,8 +28,13 @@ function Dokument (props: Props){
     const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostId}/${props.dokref}`;
     const printUrl = `/saksoversikt/app/print/${props.journalpostId}/${props.dokref}`;
 
-    const onLastNedClick = !props.lastNedPdfOnClick ? undefined : props.lastNedPdfOnClick.bind(props.lastNedPdfOnClick, openPdfUrl);
-    const onPrintClick = !props.printPdfOnClick ? undefined : props.printPdfOnClick.bind(props.printPdfOnClick, printUrl);
+    const onLastNedClick = (e: Event) => {
+        props.lastNedPdfOnClick(openPdfUrl, e);
+    };
+
+    const onPrintClick = (e : Event) => {
+        props.printPdfOnClick(printUrl, e);
+    }
 
     const pdfLink = (
         <Lenke target="_blank" href={openPdfUrl} onClick={onLastNedClick}>
