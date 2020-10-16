@@ -1,7 +1,4 @@
-/* eslint-env mocha */
-import { render } from '../../../test-config';
-import React from 'react';
-import { expect } from 'chai';
+import * as renderer from 'react-test-renderer';
 import Dokumenter from './Dokumenter';
 
 describe('Vedleggliste', () => {
@@ -11,13 +8,13 @@ describe('Vedleggliste', () => {
             dokumentmetadata: []
         };
 
-        const wrapper = render(<Dokumenter {...props} />);
+        const wrapper = renderer.create(<Dokumenter {...props} />);
         const renderedVedleggListe = wrapper.find('.dokumentliste');
 
-        expect(renderedVedleggListe.length).to.equal(1);
+        expect(renderedVedleggListe.length).toEqual(1);
 
         const vedleggListe = wrapper.find('li');
-        expect(vedleggListe.length).to.equal(0);
+        expect(vedleggListe.length).toEqual(0);
     });
 
     it('Returnerer listeelementer om det er vedlegg', () => {
@@ -35,12 +32,12 @@ describe('Vedleggliste', () => {
             ]
         };
 
-        const wrapper = render(<Dokumenter {...props}/>);
+        const wrapper = renderer.create(<Dokumenter {...props}/>);
 
-        const renderedVedleggListe = wrapper.find('.dokumentliste');
-        expect(renderedVedleggListe.length).to.equal(1);
+        const renderedVedleggListe = wrapper.('.dokumentliste');
+        expect(renderedVedleggListe.length).toEqual(1);
 
         const vedleggListe = wrapper.find('li');
-        expect(vedleggListe.length).to.equal(1);
+        expect(vedleggListe.length).toEqual(1);
     });
 });

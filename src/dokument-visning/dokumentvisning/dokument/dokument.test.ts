@@ -1,8 +1,5 @@
-/* eslint-env mocha */
-import React from 'react';
-import { render } from '../../../test-config';
-import { expect } from 'chai';
-import Dokument from './Dokument';
+import * as renderer from 'react-test-renderer';
+import Dokument from './dokument';
 
 describe('Vedlegg', () => {
     it('Viser ikke tittel og url til pdf hvis dokumentet ikke kan vises, ' +
@@ -19,13 +16,13 @@ describe('Vedlegg', () => {
             }
         };
 
-        const wrapper = render(<Dokument {...props}/>);
+        const wrapper = renderer.create(<Dokument {...props}/>);
 
         const renderedVedleggListe = wrapper.find('.lokal-linker');
-        expect(renderedVedleggListe.length).to.equal(0);
+        expect(renderedVedleggListe.length).toEqual(0);
 
         const vedleggListe = wrapper.find('h2');
-        expect(vedleggListe.length).to.equal(0);
+        expect(vedleggListe.length).toEqual(0);
     });
 
     it('Viser tittel og url til pdf hvis Konverteringstjenesten ikke klarer å konvertere til bilder', () => {
@@ -40,12 +37,12 @@ describe('Vedlegg', () => {
                 ekstrafeilinfo: { korruptPdf: 'true' } // Konverteringstjenesten melder om korrupt pdf
             }
         };
-        const wrapper = render(<Dokument {...props}/>);
+        const wrapper = renderer.create(<Dokument {...props}/>);
 
         const renderedVedleggListe = wrapper.find('.lokal-linker');
-        expect(renderedVedleggListe.length).to.equal(1);
+        expect(renderedVedleggListe.length).toEqual(1);
 
         const vedleggListe = wrapper.find('h1');
-        expect(vedleggListe.length).to.equal(1);
+        expect(vedleggListe.length).toEqual(1);
     });
 });

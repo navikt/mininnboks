@@ -1,7 +1,4 @@
-/* eslint-env mocha */
-import React from 'react';
-import { render } from '../../../test-config';
-import { expect } from 'chai';
+import * as renderer from 'react-test-renderer';
 import DokumentSide from './DokumentSide';
 
 describe('DokumentBilde', () => {
@@ -20,13 +17,14 @@ describe('DokumentBilde', () => {
             feilmelding: 'feilmelding'
         };
 
-        const wrapper = render(<DokumentSide {...props} />);
+        const wrapper = renderer.create(
+            <DokumentSide {...props} />);
 
         const renderedFeilmelding = wrapper.find('.feilmelding-container');
-        expect(renderedFeilmelding.length).to.equal(1);
+        expect(renderedFeilmelding.length).toEqual(1);
 
         const renderedDokumentlaster = wrapper.find('.dokument-laster');
-        expect(renderedDokumentlaster.length).to.equal(0);
+        expect(renderedDokumentlaster.length).toEqual(0);
     });
 
     it('Viser dokumentlasting om bildet kan vises', () => {
@@ -37,9 +35,9 @@ describe('DokumentBilde', () => {
             feilmelding: 'feilmelding'
         };
 
-        const wrapper = render(<DokumentSide {...props} />);
+        const wrapper = renderer.create(<DokumentSide {...props} />);
 
         const renderedDokumentlaster = wrapper.find('.dokument-laster');
-        expect(renderedDokumentlaster.length).to.be.above(0);
+        expect(renderedDokumentlaster.length).toBeGreaterThan(0);
     });
 });

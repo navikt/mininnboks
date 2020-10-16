@@ -18,8 +18,8 @@ interface Props {
     dokref: string;
     first: boolean;
     journalpostId: string;
-    lastNedPdfOnClick: (url : string, event : Event) => void
-    printPdfOnClick: (url : string, event : Event) => void;
+    lastNedPdfOnClick?: (url : string, event : Event) => void
+    printPdfOnClick?: (url : string, event : Event) => void;
     dokumentmetadata: DokumentMetadata;
 }
 

@@ -1,5 +1,5 @@
 export const validationRules = {
-    fritekst: (verdi, opts) => {
+    fritekst: (verdi? : any, opts? : any) => {
         if (!verdi || verdi.length === 0) {
             return 'required';
         }
@@ -8,7 +8,7 @@ export const validationRules = {
         }
         return undefined;
     },
-    godkjennVilkaar: (verdi) => {
+    godkjennVilkaar: (verdi : boolean) => {
         if (verdi !== true) {
             return 'required';
         }
@@ -19,7 +19,7 @@ const defaultOpts = {
     maxLength: 1000
 };
 
-export function validate(verdier, opts = {}) {
+export function validate(verdier? : any, opts = {}) {
     const mergedOpts = { ...defaultOpts, ...opts };
     return Object.entries(verdier).reduce((errors, [felt, verdi]) => {
         if (!validationRules.hasOwnProperty(felt)) {

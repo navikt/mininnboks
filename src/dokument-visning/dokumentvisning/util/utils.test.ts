@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-import { expect } from 'chai';
 import * as Utils from './utils';
 
 describe('Utils', () => {
@@ -9,32 +8,32 @@ describe('Utils', () => {
 
             const result = Utils.arr(input);
 
-            expect(result).to.equal(input);
+            expect(result).toEqual(input);
         });
         it('skal returnere array om input er en verdi', () => {
             const input = 'verdi';
 
             const result = Utils.arr(input);
 
-            expect(Array.isArray(result)).to.equal(true);
-            expect(result.length).to.equal(1);
-            expect(result[0]).to.equal(input);
+            expect(Array.isArray(result)).toEqual(true);
+            expect(result.length).toEqual(1);
+            expect(result[0]).toEqual(input);
         });
     });
     describe('lagOffset', () => {
         it('skal returnere en liste av riktig lengde', () => {
             const result = Utils.lagOffset(10, [0]);
 
-            expect(result.length).to.equal(10);
+            expect(result.length).toEqual(10);
         });
 
         it('skal kopiere siste element i listen', () => {
             const result = Utils.lagOffset(3, [0, 'a']);
 
-            expect(result.length).to.equal(3);
-            expect(result[0]).to.equal(0);
-            expect(result[1]).to.equal('a');
-            expect(result[2]).to.equal('a');
+            expect(result.length).toEqual(3);
+            expect(result[0]).toEqual(0);
+            expect(result[1]).toEqual('a');
+            expect(result[2]).toEqual('a');
         });
     });
     describe('zip', () => {
@@ -44,11 +43,11 @@ describe('Utils', () => {
 
             const result = Utils.zip(liste1, liste2, 'b');
 
-            expect(result.length).to.equal(2);
-            expect(result[0].a).to.equal(1);
-            expect(result[0].b).to.equal('a');
-            expect(result[1].a).to.equal(2);
-            expect(result[1].b).to.equal('b');
+            expect(result.length).toEqual(2);
+            expect(result[0].a).toEqual(1);
+            expect(result[0].b).toEqual('a');
+            expect(result[1].a).toEqual(2);
+            expect(result[1].b).toEqual('b');
         });
     });
 });

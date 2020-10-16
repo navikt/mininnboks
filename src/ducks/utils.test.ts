@@ -1,6 +1,4 @@
-/* eslint-env mocha */
-import { expect } from 'chai';
-import { sjekkStatuskode, toJson, getCookie } from './ducks-utils.ts';
+import {sjekkStatuskode, toJson, getCookie} from "./ducks-utils";
 
 describe('utils', () => {
     describe('Sjekk-statuskode', () => {
@@ -10,7 +8,7 @@ describe('utils', () => {
                 status: 200,
                 statusText: 'Status OK'
             };
-            expect(sjekkStatuskode(response)).to.deep.equal(response);
+            expect(sjekkStatuskode(response)).toEqual(response);
         });
         it('Skal returnere error når respons ikke er ok', () => {
             const response = {
@@ -18,7 +16,7 @@ describe('utils', () => {
                 status: 200,
                 statusText: 'Feilstatus'
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
         it('Skal returnere error når status er over 299', () => {
             const response = {
@@ -26,7 +24,7 @@ describe('utils', () => {
                 status: 300,
                 statusText: 'Feilstatus'
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
         it('Skal returnere error når status er under 200', () => {
             const response = {
@@ -34,7 +32,7 @@ describe('utils', () => {
                 status: 199,
                 statusText: 'Feilstatus'
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
         it('Skal returnere error når statuskode er under 200 og ok er false', () => {
             const response = {
@@ -42,7 +40,7 @@ describe('utils', () => {
                 status: 199,
                 statusText: 'Feilstatus'
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
     });
     describe('toJson', () => {
@@ -51,24 +49,24 @@ describe('utils', () => {
                 status: 200,
                 json: () => ({ testprop: 'testprop' })
             };
-            expect(toJson(response)).to.deep.equal(response.json());
+            expect(toJson(response)).toEqual(response.json());
         });
         it('Returnerer respons ved 204', () => {
             const response = {
                 status: 204,
                 json: () => ({ testprop: 'testprop' })
             };
-            expect(toJson(response)).to.deep.equal(response);
+            expect(toJson(response)).toEqual(response);
         });
     });
     describe('getCookie', () => {
         it('Henter ut fra cookie', () => {
-            global.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
-            expect(getCookie('test1')).to.equal('detteerentest123');
+            window.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
+            expect(getCookie('test1')).toEqual('detteerentest123');
         });
         it('Tom streng ved inge match', () => {
-            global.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
-            expect(getCookie('test0')).to.equal('');
+            window.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
+            expect(getCookie('test0')).toEqual('');
         });
     });
 });

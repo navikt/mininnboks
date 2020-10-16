@@ -1,6 +1,5 @@
 /* eslint-env mocha */
 import * as Validationutils from './validationutil';
-import { expect } from 'chai';
 
 describe('validationRules', () => {
     describe('fritekst', () => {
@@ -8,8 +7,8 @@ describe('validationRules', () => {
             const undefinedTekst = Validationutils.validationRules.fritekst();
             const tomTekst = Validationutils.validationRules.fritekst('');
 
-            expect(undefinedTekst).to.equal('required');
-            expect(tomTekst).to.equal('required');
+            expect(undefinedTekst).toEqual('required');
+            expect(tomTekst).toEqual('required');
         });
     });
 
@@ -18,8 +17,8 @@ describe('validationRules', () => {
             const undefinedTest = Validationutils.validationRules.godkjennVilkaar();
             const ikkeTrueTest = Validationutils.validationRules.godkjennVilkaar(false);
 
-            expect(undefinedTest).to.equal('required');
-            expect(ikkeTrueTest).to.equal('required');
+            expect(undefinedTest).toEqual('required');
+            expect(ikkeTrueTest).toEqual('required');
         });
     });
 });
@@ -32,14 +31,14 @@ describe('validate', () => {
         };
         const formStatus = Validationutils.validate(formState);
 
-        expect(formStatus).to.deep.equal({});
+        expect(formStatus).toEqual({});
     });
 
     it('skal gi feilmeldinger for alle feilene', () => {
         const formState = { fritekst: undefined, godkjennVilkaar: undefined };
         const formStatus = Validationutils.validate(formState);
 
-        expect(formStatus).to.deep.equal({
+        expect(formStatus).toEqual({
             fritekst: 'required',
             godkjennVilkaar: 'required'
         });
@@ -53,7 +52,7 @@ describe('validate', () => {
         };
         const formStatus = Validationutils.validate(formState, {maxLength: 2500});
 
-        expect(formStatus).to.deep.equal({});
+        expect(formStatus).toEqual({});
     });
 
     it('skal gi false på tegn over 2500 ', () => {
@@ -64,7 +63,7 @@ describe('validate', () => {
         };
         const formStatus = Validationutils.validate(formState, {maxLength: 2500});
 
-        expect(formStatus).to.deep.equal({fritekst: 'max-len'});
+        expect(formStatus).toEqual({fritekst: 'max-len'});
     });
 
     it('skal gi true på tegn over under 1000 ', () => {
@@ -74,7 +73,7 @@ describe('validate', () => {
         };
         const formStatus = Validationutils.validate(formState);
 
-        expect(formStatus).to.deep.equal({});
+        expect(formStatus).toEqual({});
     });
     it('skal gi false på tegn over 1000 ', () => {
         const langTekst = new Array(1005).join('x');
@@ -84,7 +83,7 @@ describe('validate', () => {
         };
         const formStatus = Validationutils.validate(formState);
 
-        expect(formStatus).to.deep.equal({ fritekst: 'max-len'});
+        expect(formStatus).toEqual({ fritekst: 'max-len'});
     });
 });
 
