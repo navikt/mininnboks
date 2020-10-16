@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../ducks/traader';
-import { DokumentVisning, hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter';
+import { hentDokumentVisningData, OkState, visLastNedPdfModal } from '../ducks/dokumenter';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedPdfModal from './LastNedPdfModal';
@@ -51,7 +51,7 @@ function DokumentVisningSide() {
             avhengigheter={[dokumenter]}
             feilmeldingKey="innlastning.dokument.feil"
         >
-            {(lastetDokumenter: DokumentVisning.OkState) => (
+            {(lastetDokumenter: OkState) => (
                 <>
                     <LastNedPdfModal/>
                     <Dokumentvisning
