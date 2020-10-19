@@ -9,10 +9,10 @@ const MED_CREDENTIALS = { credentials: 'same-origin' };
 
 export interface PdfModal {
     skalVises: boolean,
-    dokumentUrl: string | undefined
+    dokumentUrl: string | undefined | null
 }
 
-enum TypeKeys {
+export enum TypeKeys {
     DOKUMENTVISNING_DATA_OK = 'DOKUMENTVISNING_DATA_OK',
     DOKUMENTVISNING_DATA_FEILET = 'DOKUMENTVISNING_DATA_FEILET',
     DOKUMENTVISNING_DATA_PENDING = 'DOKUMENTVISNING_DATA_PENDING',
@@ -22,22 +22,22 @@ enum TypeKeys {
 type DokumentvisningDataOk = Action<TypeKeys.DOKUMENTVISNING_DATA_OK> & DucksData<any>;
 type DokumentvisningDataFeilet = Action<TypeKeys.DOKUMENTVISNING_DATA_FEILET> & DucksData<Error>;
 type DokumentvisningDataPending = Action<TypeKeys.DOKUMENTVISNING_DATA_PENDING>;
-type StatusPdfModal = Action<TypeKeys.STATUS_PDF_MODAL> & DucksData<{pdfModal: PdfModal; }>;
+type StatusPdfModal = Action<TypeKeys.STATUS_PDF_MODAL> & { pdfModal: PdfModal; };
 
 type Actions = DokumentvisningDataOk | DokumentvisningDataFeilet | DokumentvisningDataPending | StatusPdfModal;
 interface PdfModalState {
     skalVises: boolean;
-    dokumentUrl: string | undefined;
+    dokumentUrl: string | undefined | null;
 }
-export namespace DokumentVisning {
-    export interface BaseState {
-        pdfModal: PdfModalState;
-    }
-    export interface OkState extends BaseState, Avhengigheter.OkState<Dokument> {}
-    export interface ErrorState extends BaseState, Avhengigheter.ErrorState {}
-    export interface OtherState extends BaseState, Avhengigheter.OtherState {}
+
+export interface BaseState {
+    pdfModal: PdfModalState;
 }
-export type DokumentState = DokumentVisning.OkState | DokumentVisning.ErrorState | DokumentVisning.OtherState;
+export interface OkState extends BaseState, Avhengigheter.OkState<Dokument> {}
+export interface ErrorState extends BaseState, Avhengigheter.ErrorState {}
+export interface OtherState extends BaseState, Avhengigheter.OtherState {}
+
+export type DokumentState = OkState | ErrorState | OtherState;
 
 const initalState: DokumentState = {
     status: STATUS.NOT_STARTED,
@@ -58,7 +58,7 @@ export default function reducer(state  = initalState, action : Actions) : Dokume
             const [dokumentmetadata, journalpostmetadata] = action.data;
             return { ...state, status: STATUS.OK, data: {dokumentmetadata, journalpostmetadata}};
         } case TypeKeys.STATUS_PDF_MODAL:
-            return { ...state, pdfModal: action.data.pdfModal };
+            return { ...state, pdfModal: action.pdfModal };
         default:
             return state;
     }
@@ -95,6 +95,6 @@ export function visLastNedPdfModal(dokumentUrl : string)  {
 
 
 export function skjulLastNedPdfModal() {
-    return { type: TypeKeys.STATUS_PDF_MODAL, pdfModal: { skalVises: false, dokumentUrl: undefined } };
+    return { type: TypeKeys.STATUS_PDF_MODAL, pdfModal: { skalVises: false, dokumentUrl: null } };
 }
 
