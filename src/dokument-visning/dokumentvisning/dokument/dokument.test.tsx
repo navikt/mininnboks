@@ -14,7 +14,11 @@ describe('Vedlegg', () => {
                 tittel: 'en tittel',
                 feilmelding: '',
                 ekstrafeilinfo: { } // Ikke noe korruptPdf: 'true' i ekstrafeilinfo her
-            }
+            },
+            first: false,
+            lastNedPdfOnClick: undefined,
+            printPdfOnClick: undefined
+
         };
 
         const wrapper = render(<Dokument {...props}/>);

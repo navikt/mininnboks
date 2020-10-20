@@ -1,11 +1,10 @@
-import reducer, * as E from './traader';
-import {TypeKeys} from './traader';
+import reducer, {selectTraaderMedSammenslatteMeldinger, TypeKeys} from './traader';
 import {MeldingsTyper} from '../utils/constants';
 import {STATUS} from "./ducks-utils";
-import {Melding} from 'Traad';
+import {Melding, Traad} from 'Traad';
 
-function lagTraad(traadId : string, antallMeldinger : number) {
-    const meldinger = new Array(antallMeldinger)
+function lagTraad(traadId : string, antallMeldinger : number) : Traad{
+    const meldinger : Partial<Melding[]>= new Array(antallMeldinger)
         .fill(0)
         .map((_, index) => ({
             id: `id${index + 1}`,
@@ -14,10 +13,12 @@ function lagTraad(traadId : string, antallMeldinger : number) {
         }));
 
     return ({
-        traadId,
-        meldinger,
+        traadId: traadId,
+        meldinger: meldinger,
         nyeste: meldinger[0],
-        eldste: meldinger[meldinger.length - 1]
+        eldste: meldinger[meldinger.length - 1],
+        kanBesvares: true,
+        avsluttet: false
     });
 }
 
@@ -39,6 +40,7 @@ describe('traader-ducks', () => {
             }
 
             function erAlleMeldingerLest(traadId : string) {
+                const traader = markertSomLest.status === STATUS.OK ? markertSomLest.data : []
                 return markertSomLest.data
                     .filter((traad) => (traad.traadId === traadId))
                     .map((traad ) => (traad.meldinger))
@@ -85,11 +87,11 @@ describe('traader-ducks', () => {
                 }
             };
             it('skal ikke selecte delvise svar', () => {
-                const sammenslaatteTraader = E.selectTraaderMedSammenslatteMeldinger(initialState);
+                const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
                 expect(sammenslaatteTraader.data[0].meldinger.length).toEqual(3);
             });
             it('skal merge teksten fra delvise svar inn i førstkommende skriftlige svar', () => {
-                const sammenslaatteTraader = E.selectTraaderMedSammenslatteMeldinger(initialState);
+                const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
                 const avsluttendeSvar = sammenslaatteTraader.data[0].meldinger
                     .find(melding => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID);
                 expect(avsluttendeSvar.fritekst).toContain(DELVIS_SVAR_TEKST);

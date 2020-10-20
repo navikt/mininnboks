@@ -9,17 +9,20 @@ import Feilmelding from "../feilmelding/Feilmelding";
 
 import './besvar-boks.less'
 import {FormEvent, useState} from "react";
+import {useDispatch} from "react-redux";
+import {skjulBesvarBoks} from "../ducks/ui";
+import {sendSvar} from "../ducks/traader";
 
 interface Props {
     innsendingStatus: STATUS,
     traadId: string,
-    submit: (traadId : string, fritekst? : string) => void,
-    avbryt: () => void
 }
 
 function BesvarBoks(props : Props) {
     const [errorIds, setErrorIds] = useState<string[]>([]);
     const [fritekst, setFritekst] = useState('');
+    const dispatch = useDispatch();
+    
     const onSubmit = (e : FormEvent) => {
         e.preventDefault();
 
@@ -33,7 +36,7 @@ function BesvarBoks(props : Props) {
         setErrorIds(ids);
 
         if (!errorIds.length) {
-            props.submit(props.traadId, fritekst);
+            dispatch(sendSvar(props.traadId, fritekst));
         }
     };
 
@@ -42,6 +45,10 @@ function BesvarBoks(props : Props) {
             <FormattedMessage id={errorId}/>
         </Feilmelding>
     ));
+
+    const avbryt = () => {
+        dispatch(skjulBesvarBoks());
+    }
 
     return (
         <form className="besvar-boks text-center blokk-center blokk-l" onSubmit={onSubmit}>
@@ -59,7 +66,7 @@ function BesvarBoks(props : Props) {
                     <FormattedMessage id="traadvisning.besvar.send"/>
                 </Hovedknapp>
             </div>
-            <Flatknapp onClick={props.avbryt}>
+            <Flatknapp onClick={avbryt}>
                 <FormattedMessage id="traadvisning.besvar.avbryt"/>
             </Flatknapp>
         </form>

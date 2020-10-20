@@ -7,40 +7,30 @@ import SkrivKnapp from './SkrivKnapp';
 import { FormattedMessage } from 'react-intl';
 import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi'
-import { withRouter } from 'react-router-dom';
 import Alertstripe from 'nav-frontend-alertstriper'
 import {visibleIfHOC} from "../utils/hocs/visible-if";
-import {Traad} from "../Traad";
 import {useParams} from "react-router";
-import {AppState} from "../reducer";
-import {connect, useDispatch} from "react-redux";
-import {TypeKeys, visBesvarBoks} from "../ducks/ui";
+import {useDispatch} from "react-redux";
+import {visBesvarBoks} from "../ducks/ui";
 import {markerSomLest} from "../utils/api";
 import { STATUS } from '../ducks/ducks-utils';
+import {useAppState} from "../utils/custom-hooks";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
-interface Props {
-    traader: { data: Array<Traad> }
-    skalViseBesvarBoks: boolean,
-    innsendingStatus: STATUS,
-    actions: TraadvisningActions,
-}
 
-interface TraadvisningActions {
-    sendSvar: (traadId : string, fritekst: string) => void,
-    markerSomLest: (traadId : string) => void,
-    visBesvarBoks: () => { type: TypeKeys, data: boolean },
-    skjulBesvarBoks: () => { type: TypeKeys, data: boolean }
-}
-function TraadVisning (props: Props){
+function TraadVisning (){
         const params = useParams<{ traadId: string }>();
+        const skalViseBesvarBoks = useAppState(state => state.ui.visBesvarBoks);
+        const innsendingStatus = useAppState(state => state.traader.innsendingStatus);
         const dispatch = useDispatch();
+        const traader = useAppState(state => dispatch(selectTraaderMedSammenslatteMeldinger(state)))
+
         useEffect(() => {
             dispatch(markerSomLest(params.traadId))
         }, []);
 
         const traadId = params.traadId;
-        const valgttraad = props.traader.data.find(traad => traad.traadId === traadId);
+        const valgttraad = traader.data.find(traad => traad.traadId === traadId);
 
         if (!valgttraad) {
             return (
@@ -70,13 +60,13 @@ function TraadVisning (props: Props){
                 <div className="traad-container">
                     <AlertstripeVisibleIf
                         type="advarsel"
-                        visibleIf={props.innsendingStatus && props.innsendingStatus === STATUS.ERROR}
+                        visibleIf={innsendingStatus && innsendingStatus === STATUS.ERROR}
                         className="blokk-m"
                     >
                         <FormattedMessage id='infoboks.advarsel' />
                     </AlertstripeVisibleIf>
                     <SkrivKnapp
-                        visibleIf={valgttraad.kanBesvares && !props.skalViseBesvarBoks}
+                        visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks}
                         onClick={skrivKnappOnClick}
                     />
                     <AlertstripeVisibleIf
@@ -89,21 +79,14 @@ function TraadVisning (props: Props){
                         )}</FormattedMessage>
                     </AlertstripeVisibleIf>
                     <BesvarBoks
-                        innsendingStatus={props.innsendingStatus}
-                        visibleIf={props.skalViseBesvarBoks}
+                        innsendingStatus={innsendingStatus}
+                        visibleIf={skalViseBesvarBoks}
                         traadId={traadId}
-                        avbryt={props.actions.skjulBesvarBoks}
-                        submit={props.actions.sendSvar}
                     />
                     {meldingItems}
                 </div>
             </div>
         );
 }
-const mapStateToProps = (state : AppState) => ({
-    traader: selectTraaderMedSammenslatteMeldinger(state),
-    innsendingStatus: state.traader.innsendingStatus,
-    skalViseBesvarBoks: state.ui.visBesvarBoks
-});
 
-export default withRouter(connect(mapStateToProps)(TraadVisning));
+export default (TraadVisning);

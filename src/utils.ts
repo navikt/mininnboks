@@ -1,6 +1,6 @@
-import * as moment from 'moment';
 import {Melding, Traad} from "./Traad";
 import * as React from "react";
+import moment from "moment";
 
 export const prettyDate = (date: string) => moment(date).format('Do MMMM YYYY, [kl.] HH:mm');
 
@@ -28,7 +28,7 @@ export function eldsteMeldingForst(melding1 : Melding, melding2 : Melding) {
 }
 
 export const fn = (value : unknown) => (typeof value === 'function' ? value : () => value);
-export const getDisplayName = (component : React.ComponentType) => component.displayName || component.name || 'Component';
+export const getDisplayName =<T>(component : React.ComponentType<T>) => component.displayName || component.name || 'Component';
 
 const mockLogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
 export function getLogger() {

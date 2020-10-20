@@ -151,7 +151,6 @@ export function markerBehandlingsIdSomLest(behandlingsId : string) {
 
 
 // Selectors
-
 function erSkriftligSvar(melding : Melding) {
     return melding.type === MeldingsTyper.SVAR_SKRIFTLIG;
 }

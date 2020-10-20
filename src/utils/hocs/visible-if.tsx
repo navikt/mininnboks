@@ -14,7 +14,7 @@ function VisibleIf(props: Props) {
 
 export default VisibleIf;
 
-export function visibleIfHOC<T extends { children?: React.ReactNode }>(komponent: React.ComponentType<T>): React.ComponentType<T & Props> {
+export function visibleIfHOC<T extends { children?: React.ReactNode|JSX.Element }>(komponent: React.ComponentType<T>): React.ComponentType<T & Props> {
     function visibleIfWrapper({ visibleIf} : {visibleIf: boolean | (() => boolean)}) {
         if (fn(visibleIf)()) {
             return React.createElement(komponent);

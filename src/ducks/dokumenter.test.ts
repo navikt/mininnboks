@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import reducer, * as E from './dokumenter';
+import reducer from './dokumenter';
 import { STATUS } from './ducks-utils';
 // @ts-ignore
 import configureMockStore from 'redux-mock-store';
@@ -7,7 +7,7 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 // @ts-ignore
 import fetchMock from 'fetch-mock';
 import { AnyAction, Store } from 'redux';
-import { DokumentState, TypeKeys } from './dokumenter';
+import {DokumentState, hentDokumentVisningData, skjulLastNedPdfModal, TypeKeys, visLastNedPdfModal} from './dokumenter';
 
 function dataAction<T>(type: any, data?: T) {
     if (data) {
@@ -125,7 +125,7 @@ describe('dokumenter-ducks', () => {
                 fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', {data: 'asda'});
                 const store = mockStore({status: STATUS.NOT_STARTED});
 
-                return store.dispatch(E.hentDokumentVisningData('', ''))
+                return store.dispatch(hentDokumentVisningData('', ''))
                     .then(() => {
                         expect(store).toHaveReceived([
                                                   dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
@@ -145,7 +145,7 @@ describe('dokumenter-ducks', () => {
                 fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', {data: 'asda'});
                 const store = mockStore({status: STATUS.NOT_STARTED});
 
-                const res = store.dispatch(E.hentDokumentVisningData('', ''));
+                const res = store.dispatch(hentDokumentVisningData('', ''));
 
                 setTimeout(() => { // Må vente litt pga masse async/promise og dispatching.
                     res.then(() => {
@@ -167,7 +167,7 @@ describe('dokumenter-ducks', () => {
                 });
                 const store = mockStore({status: STATUS.NOT_STARTED});
 
-                const res = store.dispatch(E.hentDokumentVisningData('', ''));
+                const res = store.dispatch(hentDokumentVisningData('', ''));
 
                 setTimeout(() => { // Må vente litt pga masse async/promise og dispatching.
                     res.then(() => {
@@ -186,7 +186,7 @@ describe('dokumenter-ducks', () => {
             const store = mockStore();
             const dokumentUrl = 'http://vg.no';
 
-            store.dispatch(E.visLastNedPdfModal(dokumentUrl));
+            store.dispatch(visLastNedPdfModal(dokumentUrl));
 
             expect(store).toHaveReceived(
                 {
@@ -200,7 +200,7 @@ describe('dokumenter-ducks', () => {
         it('skjulLastNedPdfModal', () => {
             const store = mockStore();
 
-            store.dispatch(E.skjulLastNedPdfModal());
+            store.dispatch(skjulLastNedPdfModal());
 
             expect(store).toHaveReceived({
                                        type: TypeKeys.STATUS_PDF_MODAL,
