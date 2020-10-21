@@ -14,6 +14,7 @@ function erLocalhost() {
 }
 
 if (erLocalhost() && !KjorMotDevProxy) {
+    console.log('------ Mock -----');
     setupMock();
 }
 

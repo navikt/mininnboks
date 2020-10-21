@@ -5,12 +5,14 @@ import { nyesteTraadForst } from '../utils';
 import MeldingListe from './MeldingListe';
 import {useDispatch} from 'react-redux';
 import VisibleIf from '../utils/hocs/visible-if';
-import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
+import { hentTraader, selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import {Sidetittel} from 'nav-frontend-typografi'
 import './listevisning.less';
 import {Melding, Traad} from "../Traad";
-import {useParams} from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import {useAppState} from "../utils/custom-hooks";
+import { useEffect } from 'react';
+import { harData } from '../avhengigheter';
 
 
 const getTraadLister = (traader : Traad[]) => {
@@ -24,13 +26,14 @@ const getTraadLister = (traader : Traad[]) => {
     };
 };
 
-const erAktivRegel = (varselId : string ) => ( melding : Melding) => melding.korrelasjonsId === varselId;
+const erAktivRegel = (varselId?: string ) => ( melding : Melding) => melding.korrelasjonsId === varselId;
 
 function ListeVisning() {
-    const params = useParams<{ varselId: string }>();
-    const dispatch = useDispatch();
+    const loc = useLocation();
+    console.log('ListeVisning', loc);
+    const params = useParams<{ varselId?: string }>();
     const appState = useAppState(state => state);
-    const traader = dispatch(selectTraaderMedSammenslatteMeldinger(appState)).data
+    const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
     const traaderGruppert = getTraadLister(traader);
     const erAktiv = erAktivRegel(params.varselId);
 
@@ -66,4 +69,4 @@ function ListeVisning() {
 
 
 
-export default (ListeVisning);
+export default ListeVisning;

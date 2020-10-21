@@ -1,4 +1,5 @@
-import 'babel-polyfill';
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import 'whatwg-fetch';
 
 if (!global.Intl) {
@@ -19,9 +20,11 @@ if (!global.Intl) {
         'groupCollapsed,groupEnd,info,log,markTimeline,profile,profiles,profileEnd,' +
         'show,table,time,timeEnd,timeline,timelineEnd,timeStamp,trace,warn').split(',');
     properties.forEach((prop) => {
+        // @ts-ignore
         console[prop] = empty;
     });
     methods.forEach((method) => {
+        // @ts-ignore
         console[method] = dummy;
     });
 

@@ -32,7 +32,7 @@ export const getDisplayName =<T>(component : React.ComponentType<T>) => componen
 
 const mockLogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
 export function getLogger() {
-    return window['frontendlogger'] || mockLogger;
+    return (window as any)['frontendlogger'] || mockLogger;
 }
 
 

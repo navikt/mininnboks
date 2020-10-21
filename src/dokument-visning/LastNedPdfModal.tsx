@@ -1,4 +1,3 @@
-/* eslint-disable no-script-url */
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
 import {useIntl} from 'react-intl';
@@ -6,7 +5,7 @@ import NavFrontendModal from 'nav-frontend-modal'
 import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper'
 import "./last-ned-pdf-modal.less"
-import { skjulLastNedPdfModal } from 'ducks/dokumenter';
+import { skjulLastNedPdfModal } from '../ducks/dokumenter';
 import {useAppState} from "../utils/custom-hooks";
 
 
@@ -36,7 +35,7 @@ function LastNedPdfModal () {
                             <div className="blokk-s">
                                 <a
                                     target="_blank"
-                                    href={pdfModal.dokumentUrl}
+                                    href={pdfModal.dokumentUrl as string}
                                     className="knapp knapp--hoved"
                                     onClick={deactivateModal}
                                 >

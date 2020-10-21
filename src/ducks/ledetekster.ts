@@ -2,7 +2,11 @@ import * as Api from '../utils/api';
 import {STATUS, doThenDispatch, DucksData} from './ducks-utils';
 import {Temagruppe} from "../skriv-nytt-sporsmal/TemagruppeEkstraInfo";
 import {Action} from "redux";
-import { Avhengigheter } from '../avhengigheter';
+import {
+    OkState as AvhengigheterOkState,
+    ErrorState as AvhengigheterErrorState,
+    OtherState as AvhengigheterOtherState
+} from '../avhengigheter';
 
 
 // Actions
@@ -12,20 +16,19 @@ enum TypeKeys {
     PENDING = 'mininnboks/ledetekster/PENDING',
 }
 
-type Ok = Action<TypeKeys.OK> & DucksData<string[]>;
+type Ok = Action<TypeKeys.OK> & DucksData<{ [key: string]: string; }>;
 type Feilet = Action<TypeKeys.FEILET> & DucksData<Error>;
 type Pending = Action<TypeKeys.PENDING>;
 
 type Actions = Ok | Feilet | Pending;
 
-export namespace Ledetekster {
-    export interface OkState extends Avhengigheter.OkState<string[]> {
-        godkjenteTemagrupper: Temagruppe[]
-    }
-    export interface ErrorState extends Avhengigheter.ErrorState {}
-    export interface OtherState extends Avhengigheter.OtherState {}
+export interface OkState extends AvhengigheterOkState<string[]> {
+    godkjenteTemagrupper: Temagruppe[]
 }
-export type LedeteksterState = Ledetekster.OkState | Ledetekster.ErrorState | Ledetekster.OtherState;
+export interface ErrorState extends AvhengigheterErrorState {}
+export interface OtherState extends AvhengigheterOtherState {}
+
+export type LedeteksterState = OkState | ErrorState | OtherState;
 const initalState: LedeteksterState = {
     status: STATUS.NOT_STARTED
 };

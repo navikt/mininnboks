@@ -1,16 +1,18 @@
 import { Action } from 'redux';
 import { doThenDispatch, DucksData, fetchToJson, STATUS } from './ducks-utils';
 import { Dokument } from '../dokument';
-import { Avhengigheter } from '../avhengigheter';
+import {
+    OkState as AvhengigheterOkState,
+    ErrorState as AvhengigheterErrorState,
+    OtherState as AvhengigheterOtherState
+} from '../avhengigheter';
 
 export const API_BASE_URL = '/saksoversikt-api/tjenester';
 
 const MED_CREDENTIALS = { credentials: 'same-origin' };
-
-export interface PdfModal {
-    skalVises: boolean,
-    dokumentUrl: string | undefined | null
-}
+type VisPdfModal = { skalVises: true; dokumentUrl: string; }
+type IkkeVisPdlModal = { skalVises: false; dokumentUrl: null | undefined; }
+export type PdfModal = VisPdfModal | IkkeVisPdlModal;
 
 export enum TypeKeys {
     DOKUMENTVISNING_DATA_OK = 'DOKUMENTVISNING_DATA_OK',
@@ -25,17 +27,14 @@ type DokumentvisningDataPending = Action<TypeKeys.DOKUMENTVISNING_DATA_PENDING>;
 type StatusPdfModal = Action<TypeKeys.STATUS_PDF_MODAL> & { pdfModal: PdfModal; };
 
 type Actions = DokumentvisningDataOk | DokumentvisningDataFeilet | DokumentvisningDataPending | StatusPdfModal;
-interface PdfModalState {
-    skalVises: boolean;
-    dokumentUrl: string | undefined | null;
-}
+type PdfModalState = VisPdfModal | IkkeVisPdlModal;
 
 export interface BaseState {
     pdfModal: PdfModalState;
 }
-export interface OkState extends BaseState, Avhengigheter.OkState<Dokument> {}
-export interface ErrorState extends BaseState, Avhengigheter.ErrorState {}
-export interface OtherState extends BaseState, Avhengigheter.OtherState {}
+export interface OkState extends BaseState, AvhengigheterOkState<Dokument> {}
+export interface ErrorState extends BaseState, AvhengigheterErrorState {}
+export interface OtherState extends BaseState, AvhengigheterOtherState {}
 
 export type DokumentState = OkState | ErrorState | OtherState;
 

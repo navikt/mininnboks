@@ -18,7 +18,7 @@ interface Props {
     overskrift: string
 }
 
-const previewMap = {
+const previewMap: { [key: string]: React.ComponentType<any> } = {
     DOKUMENT_VARSEL: DokumentPreview,
     OPPGAVE_VARSEL: OppgavePreview,
     defaultVisning: MeldingPreview
