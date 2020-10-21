@@ -1,9 +1,8 @@
 import * as React from "react";
 import { fn, getDisplayName } from '../../utils';
 
-interface Props extends React.HTMLAttributes<HTMLElement>{
-    visibleIf: boolean | (() => boolean);
-}
+type VisibleIfProp = { visibleIf: boolean | (() => boolean); };
+interface Props extends VisibleIfProp, React.HTMLAttributes<HTMLElement>{}
 
 function VisibleIf(props: Props) {
     if (fn(props.visibleIf)()) {
@@ -14,10 +13,11 @@ function VisibleIf(props: Props) {
 
 export default VisibleIf;
 
-export function visibleIfHOC<T extends { children?: React.ReactNode|JSX.Element }>(komponent: React.ComponentType<T>): React.ComponentType<T & Props> {
-    function visibleIfWrapper({ visibleIf} : {visibleIf: boolean | (() => boolean)}) {
+export function visibleIfHOC<T>(komponent: React.ComponentType<T>): React.ComponentType<T & Props> {
+    function visibleIfWrapper(props: VisibleIfProp & T) {
+        const { visibleIf, ...rest } = props;
         if (fn(visibleIf)()) {
-            return React.createElement(komponent);
+            return React.createElement(komponent, rest as unknown as T);
         }
         return null;
     }
