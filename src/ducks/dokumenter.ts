@@ -9,7 +9,7 @@ const MED_CREDENTIALS = { credentials: 'same-origin' };
 
 export interface PdfModal {
     skalVises: boolean,
-    dokumentUrl: string | undefined | null
+    dokumentUrl: string | undefined
 }
 
 export enum TypeKeys {
@@ -27,7 +27,7 @@ type StatusPdfModal = Action<TypeKeys.STATUS_PDF_MODAL> & { pdfModal: PdfModal; 
 type Actions = DokumentvisningDataOk | DokumentvisningDataFeilet | DokumentvisningDataPending | StatusPdfModal;
 interface PdfModalState {
     skalVises: boolean;
-    dokumentUrl: string | undefined | null;
+    dokumentUrl: string | undefined;
 }
 
 export interface BaseState {

@@ -1,4 +1,3 @@
-import {Temagruppe} from "./skriv-nytt-sporsmal/TemagruppeEkstraInfo";
 import {Meldingstype} from "./meldingstype";
 
 export interface Traad {
@@ -14,10 +13,7 @@ export interface Melding {
     id: string,
     traadId: string,
     fritekst: string,
-    kanal: string,
-    eksternAktor: string,
     brukersEnhet: string,
-    tilknyttetEnhet: string,
     temagruppeNavn: string,
     statusTekst: string,
     kontorsperreEnhet: string,
@@ -26,17 +22,12 @@ export interface Melding {
     korrelasjonsId: string,
     journalpostId: string,
     dokumentIdListe: string[],
-    oppgaveType: string,
     oppgaveUrl: string,
     type: Meldingstype,
-    temagruppe: Temagruppe
     opprettet: string,
     avsluttet: string,
     fraNav: boolean,
     fraBruker: boolean,
     kassert: boolean,
-    erTilknyttetAnsatt: boolean,
-    ferdigstiltUtenSvar: boolean,
-    lestDato: string,
     lest: boolean
 }

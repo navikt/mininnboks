@@ -29,12 +29,12 @@ function DokumentVisningSide() {
         }
     }, []);
 
-    const onLastNedPdfClick = (url: string, event: Event) => {
+    const onLastNedPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();
         dispatch(visLastNedPdfModal(url));
     };
 
-    const onPrintPdfClick = (url: string, event: Event) => {
+    const onPrintPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();
         dispatch(visLastNedPdfModal(url));
     };

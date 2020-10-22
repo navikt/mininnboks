@@ -11,8 +11,8 @@ import {DokumentMetadata, Journalpostmetadata} from "../dokument";
 
 interface Props {
     dokumentmetadata: DokumentMetadata[],
-    lastNedPdfOnClick: (url : string, event : Event) => void,
-    printPdfOnClick: (url : string, event : Event) => void,
+    lastNedPdfOnClick: (url : string, event : React.MouseEvent) => void,
+    printPdfOnClick: (url : string, event : React.MouseEvent) => void,
     journalpostmetadata: Journalpostmetadata
 }
 

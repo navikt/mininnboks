@@ -2,8 +2,8 @@ import * as React from 'react';
 import { FormattedDate } from 'react-intl';
 import AvsenderMottaker from './AvsenderMottaker';
 import {Undertittel } from 'nav-frontend-typografi';
-import * as moment from 'moment';
 import { Journalpostmetadata } from 'dokument';
+import moment from 'moment';
 
 
 interface Props {
