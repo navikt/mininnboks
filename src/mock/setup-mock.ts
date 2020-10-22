@@ -1,15 +1,15 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import { TRAADER_PATH, RESOURCES_PATH, RATE_LIMITER_URL } from '../utils/api';
-import * as traader from './traader.json';
-import * as resources from './resources.json';
+import traader from './traader.json';
+import resources from './resources.json';
 
 export default () => {
     const fetchMock = FetchMock.configure({
         enableFallback: true, // default: true
         middleware: MiddlewareUtils.combine(
+            MiddlewareUtils.loggingMiddleware(),
             MiddlewareUtils.delayMiddleware(200),
-            MiddlewareUtils.failurerateMiddleware(0.01),
-            MiddlewareUtils.loggingMiddleware()
+            MiddlewareUtils.failurerateMiddleware(0.01)
         )
     });
 

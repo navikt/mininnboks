@@ -6,7 +6,7 @@ import {STATUS} from '../ducks/ducks-utils';
 import {TextareaControlled} from 'nav-frontend-skjema';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';
-import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
+import TemagruppeEkstraInfo, { Temagruppe } from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/Feilmelding';
 import {FormattedMessage} from 'react-intl';
 import {connect, useDispatch} from 'react-redux';
@@ -51,7 +51,9 @@ function SkrivNyttSporsmal(props: Props) {
 
     const [rateLimiter, setRateLimiter] = useState(true);
     const [error, setError] = useState<Errors>({fritekst: undefined, godkjennVilkaar: undefined});
-    const params = useParams<{ temagruppe: string }>();
+    const params = useParams<{ temagruppe: Temagruppe }>();
+    const [fritekst, setFritekst] = useState('');
+    const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -84,8 +86,6 @@ function SkrivNyttSporsmal(props: Props) {
         }
     }
 
-    const [fritekst, setFritekst] = useState('');
-    const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
     const submit = (event: FormEvent) => {
         event.preventDefault();
 

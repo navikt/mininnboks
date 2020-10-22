@@ -1,4 +1,4 @@
-import* as React from 'react';
+import * as React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/Personalia';

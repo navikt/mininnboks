@@ -6,8 +6,9 @@ interface IntlLenkeProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 function IntlLenke(props : IntlLenkeProps) {
     const intl = useIntl();
+    const { href, ...rest } = props;
     return (
-        <a href={intl.formatMessage({ id: props.href })} {...props}>
+        <a href={intl.formatMessage({ id: href })} {...rest}>
             {props.children}
         </a>
     );

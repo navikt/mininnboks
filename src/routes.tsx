@@ -8,10 +8,13 @@ import SkrivNyttSporsmal from './skriv-nytt-sporsmal/SkrivNyttSporsmal';
 import DokumentVisningSide from './dokument-visning/DokumentVisningSide';
 import Traader from './traader/Traader';
 import Brodsmuler from './brodsmuler/Brodsmuler';
+import { useLocation } from 'react-router';
 
 function TradRouting() {
+    const loc = useLocation();
+    console.log('TradRouting', loc);
     return (
-        <React.Fragment>
+        <>
             <Brodsmuler/>
             <Traader>
                 <Switch>
@@ -21,7 +24,7 @@ function TradRouting() {
                     <Route component={Listevisning}/>
                 </Switch>
             </Traader>
-        </React.Fragment>
+        </>
     );
 }
 

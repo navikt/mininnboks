@@ -5,7 +5,7 @@ import './temagruppe-ekstra-info.less';
 import {useState} from "react";
 
 interface Props{
-    temagruppe: string;
+    temagruppe: Temagruppe;
 }
 
 interface Info {

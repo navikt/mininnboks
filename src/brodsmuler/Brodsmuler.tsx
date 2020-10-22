@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Brodsmule from './Brodsmule';
 import {Route, Switch} from 'react-router-dom';
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage, useIntl} from 'react-intl'
 import {useDispatch} from 'react-redux';
 import raw from 'raw.macro';
 
@@ -15,7 +15,7 @@ import {useAppState} from "../utils/custom-hooks";
 const personSvg = raw('./person.svg');
 
 
-const typeMap = {
+const typeMap: { [key: string]: string; } = {
     "dokument": "Dokumentvisning",
     "oppgave": "Oppgavevisning",
 };
@@ -53,6 +53,9 @@ function NyMeldingSmule() {
 }
 
 function Brodsmuler() {
+    const intl = useIntl();
+    const dittnavTekst = intl.formatMessage({ id: "brodsmulesti.dittnav.lenketekst" });
+    const dittnavUrl = intl.formatMessage({ id: "dittnav.url" });
     return (
         <div className="brodsmuler">
             <img
@@ -61,14 +64,7 @@ function Brodsmuler() {
                 className="brodsmuler__illustrasjon"
             />
             <ol className="brodsmuler__list">
-                <FormattedMessage id="brodsmulesti.dittnav.lenketekst">
-                    {(tekst : string) => (
-                        <FormattedMessage id="dittnav.url">
-                            {(url: string) => <Brodsmule tekst={tekst} path={url}/>}
-                        </FormattedMessage>
-                    )}
-                </FormattedMessage>
-
+                <Brodsmule tekst={dittnavTekst} path={dittnavUrl} />
                 <Brodsmule
                     tekst="Min innboks"
                     path="/"

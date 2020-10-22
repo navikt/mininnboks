@@ -2,10 +2,15 @@ import * as Api from '../utils/api';
 import { MeldingsTyper } from '../utils/constants';
 import { eldsteMeldingForst } from '../utils';
 import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
-import { Melding, Traad } from 'Traad';
 import { Action, Dispatch } from 'redux';
 import { AppState } from '../reducer';
-import { Avhengigheter, harData } from '../avhengigheter';
+import {
+    harData,
+    OkState as AvhengigheterOkState,
+    ErrorState as AvhengigheterErrorState,
+    OtherState as AvhengigheterOtherState
+} from '../avhengigheter';
+import { Melding, Traad } from '../Traad';
 
 // Actions
 export enum TypeKeys {
@@ -41,13 +46,13 @@ type Actions = HentAlleOk |
                InnsendingPending;
 
 
-interface OkState extends Avhengigheter.OkState<Traad[]>{
+interface OkState extends AvhengigheterOkState<Traad[]>{
     innsendingStatus: STATUS.OK,
 }
-interface ErrorState extends Avhengigheter.ErrorState {
+interface ErrorState extends AvhengigheterErrorState {
     innsendingStatus: STATUS.ERROR,
 }
-interface OtherState extends Avhengigheter.OtherState {
+interface OtherState extends AvhengigheterOtherState {
     innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING,
 
 }

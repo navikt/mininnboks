@@ -1,4 +1,7 @@
-export const validationRules = {
+type ValidationRule = (verdi?: any, opts?: any) => string | undefined;
+type ValidationRuleMap = { [key: string]: ValidationRule; };
+
+export const validationRules: ValidationRuleMap = {
     fritekst: (verdi? : any, opts? : any) => {
         if (!verdi || verdi.length === 0) {
             return 'required';

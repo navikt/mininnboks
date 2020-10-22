@@ -2,8 +2,8 @@ import * as React from 'react';
 import { FormattedDate } from 'react-intl';
 import AvsenderMottaker from './AvsenderMottaker';
 import {Undertittel } from 'nav-frontend-typografi';
-import { Journalpostmetadata } from 'dokument';
-import moment from 'moment';
+import * as moment from 'moment';
+import { Journalpostmetadata } from '../../../dokument';
 
 
 interface Props {
@@ -14,7 +14,10 @@ interface Props {
 
 const UKJENT_JOURNALPOSTID = 'x';
 const toDate = (dato : string) => {
-    return moment(dato).toDate();
+    // @ts-ignore
+    const res =  moment(dato).toDate();
+    console.log('moment bruk Personalia', res);
+    return res;
 };
 
 const erGyldigJournalpost = (journalPostId : string) => {
