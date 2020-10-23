@@ -48,7 +48,6 @@ interface Errors {
 }
 
 function SkrivNyttSporsmal(props: Props) {
-
     const [rateLimiter, setRateLimiter] = useState(true);
     const [error, setError] = useState<Errors>({fritekst: undefined, godkjennVilkaar: undefined});
     const params = useParams<{ temagruppe: Temagruppe }>();
@@ -123,7 +122,6 @@ function SkrivNyttSporsmal(props: Props) {
 
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
-            <Brodsmuler/>
             <Sidetittel className="text-center blokk-m">
                 <FormattedMessage id="send-sporsmal.still-sporsmal.ny-melding-overskrift"/>
             </Sidetittel>

@@ -44,18 +44,15 @@ type Actions = HentAlleOk |
                InnsendingOk |
                InnsendingFeilet |
                InnsendingPending;
+type OkInnsendingState = { innsendingStatus: STATUS.OK; }
+type ErrorInnsendingState = { innsendingStatus: STATUS.ERROR; }
+type OtherInnsendingState = { innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING; }
+type InnsendingState = OkInnsendingState | ErrorInnsendingState | OtherInnsendingState;
 
+type OkState = AvhengigheterOkState<Traad[]> & InnsendingState;
+type ErrorState = AvhengigheterErrorState & InnsendingState;
+type OtherState = AvhengigheterOtherState & InnsendingState;
 
-interface OkState extends AvhengigheterOkState<Traad[]>{
-    innsendingStatus: STATUS.OK,
-}
-interface ErrorState extends AvhengigheterErrorState {
-    innsendingStatus: STATUS.ERROR,
-}
-interface OtherState extends AvhengigheterOtherState {
-    innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING,
-
-}
 export type TraaderState = OkState | ErrorState | OtherState;
 
 export function getTraaderSafe(state: TraaderState): Array<Traad> {
@@ -75,18 +72,18 @@ const initalState: TraaderState = {
 const markerMeldingSomLest = (melding : Melding) => ({ ...melding, lest: true });
 
 // Reducer
-export default function reducer(state = initalState, action: Actions) {
+export default function reducer(state: TraaderState  = initalState, action: Actions): TraaderState {
     switch (action.type) {
         case TypeKeys.HENT_ALLE_PENDING:
             return { ...state, status: STATUS.PENDING };
         case TypeKeys.HENT_ALLE_FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR, error: action.data };
         case TypeKeys.HENT_ALLE_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case TypeKeys.HENT_ALLE_RELOAD:
-            return { ...state, status: STATUS.RELOADING };
+            return { ...(state as AvhengigheterOkState<Traad[]> & InnsendingState), status: STATUS.RELOADING };
         case TypeKeys.MARKERT_SOM_LEST_FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR, error: action.data };
         case TypeKeys.MARKERT_SOM_LEST_OK: {
             if (!harData(state)) {
                 return state;
@@ -188,9 +185,9 @@ function flettMeldingerITraad(traad : Traad): Traad {
     return sammenslaatTraad;
 }
 
-export function selectTraaderMedSammenslatteMeldinger(store : TraaderState): { data: Traad[] } {
-    if (harData(store)) {
-        return { data: store.data.map(flettMeldingerITraad) };
+export function selectTraaderMedSammenslatteMeldinger(store : AppState): { data: Traad[] } {
+    if (harData(store.traader)) {
+        return { data: store.traader.data.map(flettMeldingerITraad) };
     }
     return { data: [] };
 }

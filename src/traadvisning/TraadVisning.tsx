@@ -23,10 +23,10 @@ function TraadVisning (){
         const skalViseBesvarBoks = useAppState(state => state.ui.visBesvarBoks);
         const innsendingStatus = useAppState(state => state.traader.innsendingStatus);
         const dispatch = useDispatch();
-        const traader = useAppState(state => dispatch(selectTraaderMedSammenslatteMeldinger(state.traader)))
+        const traader = useAppState(selectTraaderMedSammenslatteMeldinger)
 
         useEffect(() => {
-            dispatch(markerSomLest(params.traadId))
+            markerSomLest(params.traadId)
         }, []);
 
         const traadId = params.traadId;
@@ -71,7 +71,7 @@ function TraadVisning (){
                     />
                     <AlertstripeVisibleIf
                         type="info"
-                        visibleIf={valgttraad.avsluttet}
+                        visibleIf={valgttraad.avsluttet ?? false}
                         className="blokk-m"
                     >
                         <FormattedMessage id="skriv.ny.link">{(lenke) => (

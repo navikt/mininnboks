@@ -1,8 +1,8 @@
 import { getCookie, fetchToJson } from '../ducks/ducks-utils';
 
 const API_BASE_URL = '/mininnboks-api';
-const MED_CREDENTIALS = { credentials: 'same-origin' };
-const somPostConfig = () => ({
+export const MED_CREDENTIALS: RequestInit = { credentials: 'same-origin' };
+export const somPostConfig: () => RequestInit = () => ({
     credentials: 'same-origin',
     method: 'POST',
     redirect: 'manual',

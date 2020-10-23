@@ -1,19 +1,12 @@
 import * as React from 'react';
-import Brodsmule from './Brodsmule';
 import {Route, Switch} from 'react-router-dom';
 import {FormattedMessage, useIntl} from 'react-intl'
-import {useDispatch} from 'react-redux';
-import raw from 'raw.macro';
-
-
-import './brodsmuler.less'
-import {selectTraaderMedSammenslatteMeldinger} from "../ducks/traader";
-
 import {useParams} from "react-router";
+import Brodsmule from './Brodsmule';
+import {selectTraaderMedSammenslatteMeldinger} from "../ducks/traader";
 import {useAppState} from "../utils/custom-hooks";
-
-const personSvg = raw('./person.svg');
-
+import personSvg from './person.svg';
+import './brodsmuler.less'
 
 const typeMap: { [key: string]: string; } = {
     "dokument": "Dokumentvisning",
@@ -27,11 +20,8 @@ function TypeSmule() {
 
 function TraadSmule() {
     const params = useParams<{ traadId: string }>();
-    const traadId = params.traadId;
-    const state = useAppState(state => state);
-    const dispatch = useDispatch();
-    const traader = dispatch(selectTraaderMedSammenslatteMeldinger(state.traader))
-    const valgttraad = traader.data.find(traad => traad.traadId === traadId);
+    const traader = useAppState(selectTraaderMedSammenslatteMeldinger);
+    const valgttraad = traader.data.find(traad => traad.traadId === params.traadId);
 
     if (!valgttraad) {
         return null;
@@ -65,11 +55,7 @@ function Brodsmuler() {
             />
             <ol className="brodsmuler__list">
                 <Brodsmule tekst={dittnavTekst} path={dittnavUrl} />
-                <Brodsmule
-                    tekst="Min innboks"
-                    path="/"
-                />
-
+                <Brodsmule tekst="Min innboks" path="/" />
                 <span className="brodsmuler__item typo-normal">
                     <Switch>
                         <Route path="/sporsmal/skriv/:temagruppe/direkte" component={NyMeldingSmule}/>
