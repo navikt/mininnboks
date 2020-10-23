@@ -75,7 +75,7 @@ const initalState: TraaderState = {
 const markerMeldingSomLest = (melding : Melding) => ({ ...melding, lest: true });
 
 // Reducer
-export default function reducer(state  = initalState, action: Actions) {
+export default function reducer(state = initalState, action: Actions) {
     switch (action.type) {
         case TypeKeys.HENT_ALLE_PENDING:
             return { ...state, status: STATUS.PENDING };
@@ -188,9 +188,9 @@ function flettMeldingerITraad(traad : Traad): Traad {
     return sammenslaatTraad;
 }
 
-export function selectTraaderMedSammenslatteMeldinger(store : AppState): { data: Traad[] } {
-    if (harData(store.traader)) {
-        return { data: store.traader.data.map(flettMeldingerITraad) };
+export function selectTraaderMedSammenslatteMeldinger(store : TraaderState): { data: Traad[] } {
+    if (harData(store)) {
+        return { data: store.data.map(flettMeldingerITraad) };
     }
     return { data: [] };
 }

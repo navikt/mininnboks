@@ -1,10 +1,17 @@
-import reducer, {selectTraaderMedSammenslatteMeldinger, TypeKeys} from './traader';
+import reducer, {selectTraaderMedSammenslatteMeldinger, TraaderState, TypeKeys} from './traader';
 import {MeldingsTyper} from '../utils/constants';
 import {STATUS} from "./ducks-utils";
-import {Melding, Traad} from 'Traad';
+import {Melding, Traad} from '../Traad';
+
+function dataAction<T>(type: any, data?: T) {
+    if (data) {
+        return {type, data};
+    }
+    return {type};
+}
 
 function lagTraad(traadId : string, antallMeldinger : number) : Traad{
-    const meldinger : Partial<Melding[]>= new Array(antallMeldinger)
+    const meldinger : Melding[] = new Array(antallMeldinger)
         .fill(0)
         .map((_, index) => ({
             id: `id${index + 1}`,
@@ -17,30 +24,23 @@ function lagTraad(traadId : string, antallMeldinger : number) : Traad{
         meldinger: meldinger,
         nyeste: meldinger[0],
         eldste: meldinger[meldinger.length - 1],
-        kanBesvares: true,
-        avsluttet: false
+        kanBesvares: true
     });
 }
 
 describe('traader-ducks', () => {
     describe('reducer', () => {
         it('skal oppdatere alle meldinger med med rett traadId med status lest', () => {
-            const initialState  = {status: STATUS.OK, innsendingStatus: STATUS.OK, data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
+            const initialState : TraaderState = {status: STATUS.OK, innsendingStatus: STATUS.OK, data: [lagTraad('traad1', 2), lagTraad('traad2', 2)] };
 
-            const markertSomLest = reducer(initialState, {
-                type: TypeKeys.MARKERT_SOM_LEST_OK,
-                data: {
-                    traadId: 'traad1'
-                }
-            });
+            const markertSomLest = reducer(initialState, dataAction(TypeKeys.MARKERT_SOM_LEST_OK, {traadId: 'traad1'}));
 
             function harUlestMelding(meldinger : Melding[]) {
                 const lestArray = meldinger.filter((melding) => (melding.lest));
                 return lestArray[0] === undefined;
             }
 
-            function erAlleMeldingerLest(traadId : string) {
-                const traader = markertSomLest.status === STATUS.OK ? markertSomLest.data : []
+            function erAlleMeldingerLest(traadId : string) : Traad[] {
                 return markertSomLest.data
                     .filter((traad) => (traad.traadId === traadId))
                     .map((traad ) => (traad.meldinger))
@@ -57,34 +57,45 @@ describe('traader-ducks', () => {
             const DELVIS_SVAR_TEKST = 'Jeg svarer på et delvis spørsmål';
             const SVAR_TEKST = 'Jeg avslutter det delvise spørsmålet ved å svare på oppgaven';
             const NYTT_SVAR_TEKST = 'Jeg stiller et helt nytt spørsmål';
-            const initialState = {
-                traader: {
+            const meldinger = [
+                {
+                    id: '1',
+                    traadId: '1',
+                    type: MeldingsTyper.SPORSMAL_SKRIFTLIG
+                },
+                {
+                    id: '2',
+                    traadId: '2',
+                    type: MeldingsTyper.DELVIS_SVAR,
+                    fritekst: DELVIS_SVAR_TEKST
+                },
+                {
+                    id: AVSLUTTENDE_SVAR_MELDINGS_ID,
+                    traadId: '3',
+                    type: MeldingsTyper.SVAR_SKRIFTLIG,
+                    fritekst: SVAR_TEKST
+                },
+                {
+                    id: '4',
+                    traadId: '4',
+                    type: MeldingsTyper.SVAR_SKRIFTLIG,
+                    fritekst: NYTT_SVAR_TEKST
+                }
+            ];
+            const initialState : TraaderState = {
                     data: [
                         {
-                            meldinger: [
-                                {
-                                    id: '1',
-                                    type: MeldingsTyper.SPORSMAL_SKRIFTLIG
-                                },
-                                {
-                                    id: '2',
-                                    type: MeldingsTyper.DELVIS_SVAR,
-                                    fritekst: DELVIS_SVAR_TEKST
-                                },
-                                {
-                                    id: AVSLUTTENDE_SVAR_MELDINGS_ID,
-                                    type: MeldingsTyper.SVAR_SKRIFTLIG,
-                                    fritekst: SVAR_TEKST
-                                },
-                                {
-                                    id: '4',
-                                    type: MeldingsTyper.SVAR_SKRIFTLIG,
-                                    fritekst: NYTT_SVAR_TEKST
-                                }
-                            ]
+                            traadId: '1234',
+                            meldinger: meldinger,
+                            nyeste: meldinger[0],
+                            eldste: meldinger[meldinger.length-1],
+                            kanBesvares: true
+
                         }
-                    ]
-                }
+                    ],
+                    innsendingStatus: STATUS.OK,
+                    status: STATUS.OK
+
             };
             it('skal ikke selecte delvise svar', () => {
                 const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
@@ -93,7 +104,7 @@ describe('traader-ducks', () => {
             it('skal merge teksten fra delvise svar inn i førstkommende skriftlige svar', () => {
                 const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
                 const avsluttendeSvar = sammenslaatteTraader.data[0].meldinger
-                    .find(melding => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID);
+                    .find(melding => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID) as Melding;
                 expect(avsluttendeSvar.fritekst).toContain(DELVIS_SVAR_TEKST);
                 expect(avsluttendeSvar.fritekst).toContain(SVAR_TEKST);
             });

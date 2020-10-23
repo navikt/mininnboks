@@ -33,7 +33,7 @@ function ListeVisning() {
     console.log('ListeVisning', loc);
     const params = useParams<{ varselId?: string }>();
     const appState = useAppState(state => state);
-    const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
+    const traader = selectTraaderMedSammenslatteMeldinger(appState.traader).data;
     const traaderGruppert = getTraadLister(traader);
     const erAktiv = erAktivRegel(params.varselId);
 

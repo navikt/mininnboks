@@ -23,7 +23,7 @@ function TraadVisning (){
         const skalViseBesvarBoks = useAppState(state => state.ui.visBesvarBoks);
         const innsendingStatus = useAppState(state => state.traader.innsendingStatus);
         const dispatch = useDispatch();
-        const traader = useAppState(state => dispatch(selectTraaderMedSammenslatteMeldinger(state)))
+        const traader = useAppState(state => dispatch(selectTraaderMedSammenslatteMeldinger(state.traader)))
 
         useEffect(() => {
             dispatch(markerSomLest(params.traadId))

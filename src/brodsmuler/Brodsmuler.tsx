@@ -30,7 +30,7 @@ function TraadSmule() {
     const traadId = params.traadId;
     const state = useAppState(state => state);
     const dispatch = useDispatch();
-    const traader = dispatch(selectTraaderMedSammenslatteMeldinger(state))
+    const traader = dispatch(selectTraaderMedSammenslatteMeldinger(state.traader))
     const valgttraad = traader.data.find(traad => traad.traadId === traadId);
 
     if (!valgttraad) {
