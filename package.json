@@ -10,8 +10,7 @@
     "test": "craco test",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/*.ts* --fix",
-    "pretty-quick": "pretty-quick --pattern \"src/**/*.{ts,tsx,js,jsx,css,less,html}\"",
-    "prettier:fix": "prettier --write src/**/*.{ts,tsx,js,jsx,css,less,html}"
+    "pretty-quick": "pretty-quick --pattern \"src/**/*.{ts,tsx,js,jsx,css,less,html}\""
   },
   "devDependencies": {
     "@craco/craco": "^5.6.4",
