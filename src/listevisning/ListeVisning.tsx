@@ -3,16 +3,14 @@ import { FormattedMessage } from 'react-intl';
 import IntlLenke from '../utils/IntlLenke';
 import { nyesteTraadForst } from '../utils';
 import MeldingListe from './MeldingListe';
-import {useDispatch} from 'react-redux';
 import VisibleIf from '../utils/hocs/visible-if';
-import { hentTraader, selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
+import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import {Sidetittel} from 'nav-frontend-typografi'
 import './listevisning.less';
 import {Melding, Traad} from "../Traad";
 import { useLocation, useParams } from 'react-router';
 import {useAppState} from "../utils/custom-hooks";
-import { useEffect } from 'react';
-import { harData } from '../avhengigheter';
+
 
 
 const getTraadLister = (traader : Traad[]) => {
@@ -33,7 +31,7 @@ function ListeVisning() {
     console.log('ListeVisning', loc);
     const params = useParams<{ varselId?: string }>();
     const appState = useAppState(state => state);
-    const traader = selectTraaderMedSammenslatteMeldinger(appState.traader).data;
+    const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
     const traaderGruppert = getTraadLister(traader);
     const erAktiv = erAktivRegel(params.varselId);
 

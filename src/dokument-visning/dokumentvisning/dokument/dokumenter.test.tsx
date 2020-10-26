@@ -1,6 +1,6 @@
-import { render } from 'test-config';
 import Dokumenter from './Dokumenter';
 import * as React from 'react';
+import { render } from '../../../test-config';
 
 describe('Vedleggliste', () => {
     it('Returnerer tom liste om ingen vedlegg', () => {

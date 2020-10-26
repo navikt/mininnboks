@@ -94,14 +94,14 @@ describe('traader-ducks', () => {
             } as unknown as AppState;
             it('skal ikke selecte delvise svar', () => {
                 const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
-                expect(sammenslaatteTraader.data.length).toEqual(3);
+                expect(sammenslaatteTraader.data[0].meldinger.length).toEqual(3);
             });
             it('skal merge teksten fra delvise svar inn i førstkommende skriftlige svar', () => {
                 const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
                 const avsluttendeSvar = sammenslaatteTraader.data[0].meldinger
-                    .find(melding => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID);
-                expect(avsluttendeSvar?.fritekst).toContain(DELVIS_SVAR_TEKST);
-                expect(avsluttendeSvar?.fritekst).toContain(SVAR_TEKST);
+                    .find(melding => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID) as Melding;
+                expect(avsluttendeSvar.fritekst).toContain(DELVIS_SVAR_TEKST);
+                expect(avsluttendeSvar.fritekst).toContain(SVAR_TEKST);
             });
         });
     });

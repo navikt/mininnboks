@@ -16,7 +16,7 @@ function OppgaveVisning() {
     useEffect(() => {
         const traadId = params.traadId;
         const traad = traader.find((trad : Traad) => trad.traadId === traadId);
-        const oppgaveUrl = traad ? traad.nyeste.oppgaveUrl : ''
+        const oppgaveUrl = traad && traad.nyeste.oppgaveUrl ? traad.nyeste.oppgaveUrl : ''
         dispatch(markerTraadSomLest(traadId))
             .then(() => {
                 window.location.replace(oppgaveUrl);

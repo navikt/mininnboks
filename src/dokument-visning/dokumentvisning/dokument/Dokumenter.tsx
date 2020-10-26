@@ -10,11 +10,12 @@ interface Props {
 }
 
 function Dokumenter (props: Props) {
+
     const vedleggListe = props.dokumentmetadata.map((vedlegg, index) =>
             <Dokument
                 journalpostId={props.journalpostId}
                 dokumentmetadata={vedlegg}
-                dokref = {vedlegg.dokumentreferanse}
+                dokref = {vedlegg.dokumentreferanse ? vedlegg.dokumentreferanse : ''}
                 key = {vedlegg.dokumentreferanse}
                 lastNedPdfOnClick = {props.lastNedPdfOnClick}
                 printPdfOnClick = {props.printPdfOnClick}
