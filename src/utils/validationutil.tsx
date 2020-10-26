@@ -1,3 +1,6 @@
+import { FieldState } from "@nutgaard/use-formstate";
+import {ReactNode} from "react";
+
 type ValidationRule = (verdi?: any, opts?: any) => string | undefined;
 type ValidationRuleMap = { [key: string]: ValidationRule; };
 
@@ -35,5 +38,9 @@ export function validate(verdier? : any, opts = {}) {
 
         return errors;
     }, {});
+}
+
+export function feilmelding(field: FieldState): ReactNode | undefined {
+    return field.touched && field.error !== undefined ? <>{field.error}</> : undefined;
 }
 
