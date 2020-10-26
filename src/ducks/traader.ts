@@ -4,13 +4,9 @@ import { eldsteMeldingForst } from '../utils';
 import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
 import { Action, Dispatch } from 'redux';
 import { AppState } from '../reducer';
-import {
-    harData,
-    OkState as AvhengigheterOkState,
-    ErrorState as AvhengigheterErrorState,
-    OtherState as AvhengigheterOtherState
-} from '../avhengigheter';
+import { ErrorState as AvhengigheterErrorState, harData, OkState as AvhengigheterOkState, OtherState as AvhengigheterOtherState } from '../avhengigheter';
 import { Melding, Traad } from '../Traad';
+import { ThunkAction } from 'redux-thunk';
 
 // Actions
 export enum TypeKeys {
@@ -36,14 +32,14 @@ type InnsendingFeilet = Action<TypeKeys.INNSENDING_FEILET>;
 type InnsendingPending = Action<TypeKeys.INNSENDING_PENDING>;
 
 type Actions = HentAlleOk |
-               HentAlleFeilet |
-               HentAllePending |
-               HentAlleReloading |
-               MarkertSomLestOk |
-               MarkertSomLestFeilet |
-               InnsendingOk |
-               InnsendingFeilet |
-               InnsendingPending;
+    HentAlleFeilet |
+    HentAllePending |
+    HentAlleReloading |
+    MarkertSomLestOk |
+    MarkertSomLestFeilet |
+    InnsendingOk |
+    InnsendingFeilet |
+    InnsendingPending;
 type OkInnsendingState = { innsendingStatus: STATUS.OK; }
 type ErrorInnsendingState = { innsendingStatus: STATUS.ERROR; }
 type OtherInnsendingState = { innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING; }
@@ -62,28 +58,27 @@ export function getTraaderSafe(state: TraaderState): Array<Traad> {
     return [];
 }
 
-
 const initalState: TraaderState = {
     status: STATUS.NOT_STARTED,
     innsendingStatus: STATUS.NOT_STARTED
 };
 
 // Utils
-const markerMeldingSomLest = (melding : Melding) => ({ ...melding, lest: true });
+const markerMeldingSomLest = (melding: Melding) => ({...melding, lest: true});
 
 // Reducer
-export default function reducer(state: TraaderState  = initalState, action: Actions): TraaderState {
+export default function reducer(state: TraaderState = initalState, action: Actions): TraaderState {
     switch (action.type) {
         case TypeKeys.HENT_ALLE_PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return {...state, status: STATUS.PENDING};
         case TypeKeys.HENT_ALLE_FEILET:
-            return { ...state, status: STATUS.ERROR, error: action.data };
+            return {...state, status: STATUS.ERROR, error: action.data};
         case TypeKeys.HENT_ALLE_OK:
-            return { ...state, status: STATUS.OK, data: action.data };
+            return {...state, status: STATUS.OK, data: action.data};
         case TypeKeys.HENT_ALLE_RELOAD:
-            return { ...(state as AvhengigheterOkState<Traad[]> & InnsendingState), status: STATUS.RELOADING };
+            return {...(state as AvhengigheterOkState<Traad[]> & InnsendingState), status: STATUS.RELOADING};
         case TypeKeys.MARKERT_SOM_LEST_FEILET:
-            return { ...state, status: STATUS.ERROR, error: action.data };
+            return {...state, status: STATUS.ERROR, error: action.data};
         case TypeKeys.MARKERT_SOM_LEST_OK: {
             if (!harData(state)) {
                 return state;
@@ -93,18 +88,18 @@ export default function reducer(state: TraaderState  = initalState, action: Acti
                     const nyeste = markerMeldingSomLest(traad.nyeste);
                     const eldste = markerMeldingSomLest(traad.eldste);
                     const meldinger = traad.meldinger.map(markerMeldingSomLest);
-                    return { ...traad, nyeste, eldste, meldinger };
+                    return {...traad, nyeste, eldste, meldinger};
                 }
                 return traad;
             });
-            return { ...state, data: traader, status: STATUS.OK };
+            return {...state, data: traader, status: STATUS.OK};
         }
         case TypeKeys.INNSENDING_OK:
-            return { ...state, innsendingStatus: STATUS.OK };
+            return {...state, innsendingStatus: STATUS.OK};
         case TypeKeys.INNSENDING_FEILET:
-            return { ...state, innsendingStatus: STATUS.ERROR };
+            return {...state, innsendingStatus: STATUS.ERROR};
         case TypeKeys.INNSENDING_PENDING:
-            return { ...state, innsendingStatus: STATUS.PENDING };
+            return {...state, innsendingStatus: STATUS.PENDING};
         default:
             return state;
     }
@@ -117,7 +112,7 @@ const innsendingActions = {
 };
 
 // Action Creators
-export function hentTraader(pendingType : string = TypeKeys.HENT_ALLE_PENDING) {
+export function hentTraader(pendingType: string = TypeKeys.HENT_ALLE_PENDING) {
     return doThenDispatch(() => Api.hentTraader(), {
         OK: TypeKeys.HENT_ALLE_OK,
         FEILET: TypeKeys.HENT_ALLE_FEILET,
@@ -125,43 +120,51 @@ export function hentTraader(pendingType : string = TypeKeys.HENT_ALLE_PENDING) {
     });
 }
 
-export const sendSporsmal = (temagruppe : string, fritekst: string, isDirekte: boolean) => (dispatch : Dispatch<any>) =>
+export const sendSporsmal = (temagruppe: string, fritekst: string, isDirekte: boolean) => (dispatch: Dispatch<any>) =>
     doThenDispatch(
         () => Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
         innsendingActions
     )(dispatch);
 
-export const sendSvar = (traadId : string, fritekst : string) => (dispatch: Dispatch<any>) =>
+export function sendSvar(traadId: string, fritekst: string): ThunkAction<Promise<unknown>, AppState, null, Actions> {
+    return doThenDispatch(
+        (dispatch: Dispatch<any>) =>
+            Api.sendSvar(traadId, fritekst)
+                .then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
+        innsendingActions
+    );
+}
+
+export const sendSvar2 = (traadId: string, fritekst: string) => (dispatch: Dispatch<any>) =>
     doThenDispatch(
         () => Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
         innsendingActions
     )(dispatch);
 
-
-export function markerTraadSomLest(traadId : string) {
+export function markerTraadSomLest(traadId: string) {
     return doThenDispatch(() => Api.markerTraadSomLest(traadId), {
         OK: TypeKeys.MARKERT_SOM_LEST_OK,
         FEILET: TypeKeys.MARKERT_SOM_LEST_FEILET
     });
 }
-export function markerBehandlingsIdSomLest(behandlingsId : string) {
+
+export function markerBehandlingsIdSomLest(behandlingsId: string) {
     return doThenDispatch(() => Api.markerSomLest(behandlingsId), {
         OK: TypeKeys.MARKERT_SOM_LEST_OK,
         FEILET: TypeKeys.MARKERT_SOM_LEST_FEILET
     });
 }
 
-
 // Selectors
-function erSkriftligSvar(melding : Melding) {
+function erSkriftligSvar(melding: Melding) {
     return melding.type === MeldingsTyper.SVAR_SKRIFTLIG;
 }
 
-function erDelvisSvar(melding : Melding) {
+function erDelvisSvar(melding: Melding) {
     return melding.type === MeldingsTyper.DELVIS_SVAR;
 }
 
-function flettDelviseSvarInnISkriftligSvar(traad : Traad, delviseSvar : Melding[]) {
+function flettDelviseSvarInnISkriftligSvar(traad: Traad, delviseSvar: Melding[]) {
     const skriftligeSvar = traad.meldinger.filter(erSkriftligSvar);
     if (skriftligeSvar.length > 0) {
         const avsluttendeSvar = skriftligeSvar.sort(eldsteMeldingForst)[0];
@@ -174,7 +177,7 @@ function flettDelviseSvarInnISkriftligSvar(traad : Traad, delviseSvar : Melding[
     }
 }
 
-function flettMeldingerITraad(traad : Traad): Traad {
+function flettMeldingerITraad(traad: Traad): Traad {
     const delviseSvar = traad.meldinger.filter(erDelvisSvar);
     if (delviseSvar.length > 0) {
         flettDelviseSvarInnISkriftligSvar(traad, delviseSvar);
@@ -185,9 +188,9 @@ function flettMeldingerITraad(traad : Traad): Traad {
     return sammenslaatTraad;
 }
 
-export function selectTraaderMedSammenslatteMeldinger(store : AppState): { data: Traad[] } {
+export function selectTraaderMedSammenslatteMeldinger(store: AppState): { data: Traad[] } {
     if (harData(store.traader)) {
-        return { data: store.traader.data.map(flettMeldingerITraad) };
+        return {data: store.traader.data.map(flettMeldingerITraad)};
     }
-    return { data: [] };
+    return {data: []};
 }

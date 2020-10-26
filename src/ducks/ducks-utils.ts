@@ -67,12 +67,12 @@ export type AsyncActions = {
     PENDING?: string;
     FEILET: string;
 }
-export function doThenDispatch(fn: () => Promise<any>, { OK , FEILET, PENDING }: AsyncActions ) {
+export function doThenDispatch(fn: (dispatch: Dispatch<any>) => Promise<any>, { OK , FEILET, PENDING }: AsyncActions ) {
     return (dispatch: Dispatch<any>) => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }
-        return fn()
+        return fn(dispatch)
             .then(sendResultatTilDispatch(dispatch, OK))
             .catch(handterFeil(dispatch, FEILET));
     };
