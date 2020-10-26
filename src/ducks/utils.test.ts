@@ -1,7 +1,6 @@
-import {sjekkStatuskode, toJson, getCookie} from "./ducks-utils";
+import { sjekkStatuskode, toJson, getCookie } from './ducks-utils';
 
-
-function createReponse (response : Partial<Response>) : Response {
+function createReponse(response: Partial<Response>): Response {
     return response as Response;
 }
 
@@ -52,14 +51,20 @@ describe('utils', () => {
         it('Sjekk at funksjonen returnere json ved gyldig status', () => {
             const response = createReponse({
                 status: 200,
-                json: () => new Promise(() =>{ testprop: 'testprop' })
+                json: () =>
+                    new Promise(() => {
+                        testprop: 'testprop';
+                    })
             });
             expect(toJson(response)).toEqual(response.json());
         });
         it('Returnerer respons ved 204', () => {
             const response = createReponse({
                 status: 204,
-                json: () => new Promise(() =>{ testprop: 'testprop' })
+                json: () =>
+                    new Promise(() => {
+                        testprop: 'testprop';
+                    })
             });
             expect(toJson(response)).toEqual(response);
         });
@@ -75,4 +80,3 @@ describe('utils', () => {
         });
     });
 });
-

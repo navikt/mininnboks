@@ -6,18 +6,14 @@ import { useEffect } from 'react';
 import { hentTraader } from '../ducks/traader';
 
 function Traader(props: React.HtmlHTMLAttributes<HTMLElement>) {
-    const traaderState = useAppState(state => state.traader);
+    const traaderState = useAppState((state) => state.traader);
     const dispatch = useDispatch();
     useEffect(() => {
         console.log('fetching data');
         dispatch(hentTraader());
     }, []);
 
-    return (
-        <Innholdslaster avhengigheter={[traaderState]}>
-            {props.children}
-        </Innholdslaster>
-    );
+    return <Innholdslaster avhengigheter={[traaderState]}>{props.children}</Innholdslaster>;
 }
 
 export default Traader;

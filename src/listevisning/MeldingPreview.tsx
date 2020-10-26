@@ -1,27 +1,28 @@
 import * as React from 'react';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Lenkepanel from '../utils/Lenkepanel';
-import {shortDate} from '../utils';
+import { shortDate } from '../utils';
 import AntallMeldinger from './AntallMeldinger';
 import classNames from 'classnames';
-import {Normaltekst, Undertittel} from 'nav-frontend-typografi'
-import {Traad} from "../Traad";
-import {useEffect} from "react";
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Traad } from '../Traad';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import Tekstomrade, {defaultRules} from "nav-frontend-tekstomrade";
+import Tekstomrade, { defaultRules } from 'nav-frontend-tekstomrade';
 
 interface Props {
-    traad: Traad,
-    aktiv: boolean,
-    ulestMeldingKlasse: string
+    traad: Traad;
+    aktiv: boolean;
+    ulestMeldingKlasse: string;
 }
 
-const cls = (props : Props) => classNames('dialog', props.ulestMeldingKlasse, {
-    markert: props.aktiv,
-    'flere-meldinger': props.traad.meldinger.length > 1
-});
+const cls = (props: Props) =>
+    classNames('dialog', props.ulestMeldingKlasse, {
+        markert: props.aktiv,
+        'flere-meldinger': props.traad.meldinger.length > 1
+    });
 
-function MeldingPreview(props : Props) {
+function MeldingPreview(props: Props) {
     const history = useHistory();
 
     useEffect(() => {
@@ -35,22 +36,31 @@ function MeldingPreview(props : Props) {
 
     const antallMeldinger = props.traad.meldinger.length;
 
-    const maBesvares = melding.type === 'SPORSMAL_MODIA_UTGAAENDE' && !melding.kassert ?
-        <span>/ <strong className="purring"><FormattedMessage id="purre.svar"/></strong></span> : null;
+    const maBesvares =
+        melding.type === 'SPORSMAL_MODIA_UTGAAENDE' && !melding.kassert ? (
+            <span>
+                /{' '}
+                <strong className="purring">
+                    <FormattedMessage id="purre.svar" />
+                </strong>
+            </span>
+        ) : null;
 
     const avsender = props.traad.nyeste.fraNav ? (
-        <span>/ Fra <span className="avsender-fra-nav"><FormattedMessage id="avsender.tekst.NAV"/></span></span>
+        <span>
+            / Fra{' '}
+            <span className="avsender-fra-nav">
+                <FormattedMessage id="avsender.tekst.NAV" />
+            </span>
+        </span>
     ) : null;
     const flereMeldinger = antallMeldinger > 1 ? `(${antallMeldinger})` : null;
 
     return (
         <li className="traad blokk-xxxs" key={melding.traadId}>
-            <Lenkepanel
-                href={`/traad/${melding.traadId}`}
-                className={cls(props)}
-            >
+            <Lenkepanel href={`/traad/${melding.traadId}`} className={cls(props)}>
                 <p className="vekk">
-                    <FormattedMessage id="meldinger.ikon"/>
+                    <FormattedMessage id="meldinger.ikon" />
                 </p>
                 <AntallMeldinger antall={antallMeldinger} />
                 <Normaltekst className="blokk-xxxs">
@@ -65,12 +75,12 @@ function MeldingPreview(props : Props) {
                         {maBesvares}
                     </span>
                 </Undertittel>
-                <Tekstomrade rules={[...defaultRules]} className="tema-avsnitt">{melding.fritekst}</Tekstomrade>
+                <Tekstomrade rules={[...defaultRules]} className="tema-avsnitt">
+                    {melding.fritekst}
+                </Tekstomrade>
             </Lenkepanel>
         </li>
     );
 }
 
 export default MeldingPreview;
-
-

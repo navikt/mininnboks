@@ -21,7 +21,8 @@ export function sjekkStatuskode(response: Response) {
 }
 
 export function toJson(response: Response) {
-    if (response.status !== 204) { // No content
+    if (response.status !== 204) {
+        // No content
         return response.json();
     }
     return response;
@@ -50,30 +51,26 @@ export function handterFeil(dispatch: Dispatch<any>, action: string) {
     };
 }
 
-export const getCookie = (name : string) => {
+export const getCookie = (name: string) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
 };
 
 export function fetchToJson(url: string, config = {}) {
-    return fetch(url, config)
-        .then(sjekkStatuskode)
-        .then(toJson);
+    return fetch(url, config).then(sjekkStatuskode).then(toJson);
 }
 
 export type AsyncActions = {
     OK: string;
     PENDING?: string;
     FEILET: string;
-}
-export function doThenDispatch(fn: () => Promise<any>, { OK , FEILET, PENDING }: AsyncActions ) {
+};
+export function doThenDispatch(fn: () => Promise<any>, { OK, FEILET, PENDING }: AsyncActions) {
     return (dispatch: Dispatch<any>) => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }
-        return fn()
-            .then(sendResultatTilDispatch(dispatch, OK))
-            .catch(handterFeil(dispatch, FEILET));
+        return fn().then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
     };
 }

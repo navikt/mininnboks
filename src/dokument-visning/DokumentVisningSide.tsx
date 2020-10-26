@@ -11,7 +11,6 @@ import { useAppState } from '../utils/custom-hooks';
 import Innholdslaster from '../innholdslaster/Innholdslaster';
 
 function DokumentVisningSide() {
-
     const params = useParams<{ id: string }>();
     const dispatch = useDispatch();
     const traaderResource = useAppState((state) => state.traader);
@@ -41,19 +40,14 @@ function DokumentVisningSide() {
 
     const traad = traader.find((t) => t.traadId === params.id);
     if (!traad) {
-        return (
-            <Feilmelding>Fant ikke dokumentet</Feilmelding>
-        );
+        return <Feilmelding>Fant ikke dokumentet</Feilmelding>;
     }
 
     return (
-        <Innholdslaster
-            avhengigheter={[dokumenter]}
-            feilmeldingKey="innlastning.dokument.feil"
-        >
+        <Innholdslaster avhengigheter={[dokumenter]} feilmeldingKey="innlastning.dokument.feil">
             {(lastetDokumenter: OkState) => (
                 <>
-                    <LastNedPdfModal/>
+                    <LastNedPdfModal />
                     <Dokumentvisning
                         {...lastetDokumenter.data}
                         lastNedPdfOnClick={onLastNedPdfClick}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 
-function AntallMeldinger( { antall } : {antall: number }) {
+function AntallMeldinger({ antall }: { antall: number }) {
     const antallCls = classNames('antall-ikon', {
         'antall-en': antall === 1,
         'antall-flere': antall > 1
@@ -17,9 +17,7 @@ function AntallMeldinger( { antall } : {antall: number }) {
             antallTekst = '9+';
         }
 
-        flereMeldingerAriaLabel = (
-            <FormattedMessage id="meldinger.flere.aria.label" values={{ antall }} />
-        );
+        flereMeldingerAriaLabel = <FormattedMessage id="meldinger.flere.aria.label" values={{ antall }} />;
     }
 
     return (
@@ -28,6 +26,6 @@ function AntallMeldinger( { antall } : {antall: number }) {
             <span className="vekk">{flereMeldingerAriaLabel}</span>
         </div>
     );
-};
+}
 
 export default AntallMeldinger;

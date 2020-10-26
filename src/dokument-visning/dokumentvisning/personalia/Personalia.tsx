@@ -1,30 +1,29 @@
 import * as React from 'react';
 import { FormattedDate } from 'react-intl';
 import AvsenderMottaker from './AvsenderMottaker';
-import {Undertittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import * as moment from 'moment';
 import { Journalpostmetadata } from '../../../dokument';
 
-
 interface Props {
-    hode: boolean,
-    journalpostmetadata: Journalpostmetadata
-    className : string
+    hode: boolean;
+    journalpostmetadata: Journalpostmetadata;
+    className: string;
 }
 
 const UKJENT_JOURNALPOSTID = 'x';
-const toDate = (dato : string) => {
+const toDate = (dato: string) => {
     // @ts-ignore
-    const res =  moment(dato).toDate();
+    const res = moment(dato).toDate();
     console.log('moment bruk Personalia', res);
     return res;
 };
 
-const erGyldigJournalpost = (journalPostId : string) => {
+const erGyldigJournalpost = (journalPostId: string) => {
     return journalPostId && journalPostId !== UKJENT_JOURNALPOSTID;
 };
 
-function Personalia(props : Props) {
+function Personalia(props: Props) {
     if (!erGyldigJournalpost(props.journalpostmetadata.journalPostId)) {
         return null;
     }

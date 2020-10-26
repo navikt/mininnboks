@@ -9,4 +9,4 @@ if (process.env.REACT_APP_MOCK_ENABLED === 'true') {
     require('./mock');
 }
 
-render(<MainApp/>, document.getElementById('app-root'));
+render(<MainApp />, document.getElementById('app-root'));

@@ -9,19 +9,23 @@
     "build": "craco build",
     "test": "craco test",
     "lint": "tslint ./src/**/*.ts*",
-    "lint:fix": "tslint ./src/**/*.ts* --fix"
+    "lint:fix": "tslint ./src/**/*.ts* --fix",
+    "pretty-quick": "pretty-quick --pattern \"src/**/*.{ts,tsx,js,jsx,css,less,html}\""
   },
   "devDependencies": {
     "@craco/craco": "^5.6.4",
-    "craco-less": "^1.17.0",
     "@types/react": "16.8.3",
     "@types/react-dom": "16.8.2",
     "@types/react-modal": "^3.8.0",
     "@types/react-router-dom": "4.3.1",
+    "craco-less": "^1.17.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "fetch-mock": "5.1.5",
+    "husky": "^4.3.0",
     "less": "3.8.1",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.1.0",
     "redux-mock-store": "1.2.1",
     "typescript": "^3.9.6",
     "yet-another-fetch-mock": "^4.0.0"
@@ -102,5 +106,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

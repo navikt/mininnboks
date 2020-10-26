@@ -1,6 +1,6 @@
-import {doThenDispatch, DucksData, STATUS} from "./ducks-utils";
-import * as Api from "../utils/api";
-import {Action} from "redux";
+import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
+import * as Api from '../utils/api';
+import { Action } from 'redux';
 import { TilgangsDTO } from '../utils/api';
 import {
     OkState as AvhengigheterOkState,
@@ -11,7 +11,7 @@ import {
 enum TypeKeys {
     INNSENDING_KOMMUNALE_SJEKK_OK = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_OK',
     INNSENDING_KOMMUNALE_SJEKK_PENDING = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_PENDING',
-    INNSENDING_KOMMUNALE_SJEKK_FEILET = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_FEILET',
+    INNSENDING_KOMMUNALE_SJEKK_FEILET = 'mininnboks/traader/INNSENDING_KOMMUNALE_SJEKK_FEILET'
 }
 
 type InnsendingKommunaleSjekkOk = Action<TypeKeys.INNSENDING_KOMMUNALE_SJEKK_OK> & DucksData<TilgangsDTO>;
@@ -30,7 +30,7 @@ const initialState = {
     data: []
 };
 
-export default function reducer(state = initialState, action : Actions) {
+export default function reducer(state = initialState, action: Actions) {
     switch (action.type) {
         case TypeKeys.INNSENDING_KOMMUNALE_SJEKK_PENDING:
             return { ...state, status: STATUS.PENDING };

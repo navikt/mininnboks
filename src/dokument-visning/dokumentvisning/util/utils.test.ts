@@ -37,7 +37,7 @@ describe('Utils', () => {
     });
     describe('zip', () => {
         it('skal slå sammen listene', () => {
-            const liste1 = [{ a: 1}, { a: 2}];
+            const liste1 = [{ a: 1 }, { a: 2 }];
             const liste2 = ['a', 'b'];
 
             const result = Utils.zip(liste1, liste2, 'b');

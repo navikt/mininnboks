@@ -10,21 +10,19 @@ import { useParams } from 'react-router';
 
 function OppgaveVisning() {
     const dispatch = useThunkDispatch();
-    const params = useParams<{traadId: string }>();
-    const traaderResources = useSelector((state : AppState) => state.traader);
+    const params = useParams<{ traadId: string }>();
+    const traaderResources = useSelector((state: AppState) => state.traader);
     const traader = getTraaderSafe(traaderResources);
     useEffect(() => {
         const traadId = params.traadId;
-        const traad = traader.find((trad : Traad) => trad.traadId === traadId);
-        const oppgaveUrl = traad && traad.nyeste.oppgaveUrl ? traad.nyeste.oppgaveUrl : ''
-        dispatch(markerTraadSomLest(traadId))
-            .then(() => {
-                window.location.replace(oppgaveUrl);
-            });
-    }, [])
+        const traad = traader.find((trad: Traad) => trad.traadId === traadId);
+        const oppgaveUrl = traad && traad.nyeste.oppgaveUrl ? traad.nyeste.oppgaveUrl : '';
+        dispatch(markerTraadSomLest(traadId)).then(() => {
+            window.location.replace(oppgaveUrl);
+        });
+    }, []);
 
-    return <Spinner/>;
+    return <Spinner />;
 }
-
 
 export default OppgaveVisning;

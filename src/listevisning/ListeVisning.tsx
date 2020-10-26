@@ -5,18 +5,16 @@ import { nyesteTraadForst } from '../utils';
 import MeldingListe from './MeldingListe';
 import VisibleIf from '../utils/hocs/visible-if';
 import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
-import {Sidetittel} from 'nav-frontend-typografi'
+import { Sidetittel } from 'nav-frontend-typografi';
 import './listevisning.less';
-import {Melding, Traad} from "../Traad";
+import { Melding, Traad } from '../Traad';
 import { useLocation, useParams } from 'react-router';
-import {useAppState} from "../utils/custom-hooks";
+import { useAppState } from '../utils/custom-hooks';
 
-
-
-const getTraadLister = (traader : Traad[]) => {
+const getTraadLister = (traader: Traad[]) => {
     const sortert = traader.sort(nyesteTraadForst);
-    const uleste = sortert.filter(traad => !traad.nyeste.lest);
-    const leste = sortert.filter(traad => traad.nyeste.lest);
+    const uleste = sortert.filter((traad) => !traad.nyeste.lest);
+    const leste = sortert.filter((traad) => traad.nyeste.lest);
 
     return {
         uleste,
@@ -24,22 +22,25 @@ const getTraadLister = (traader : Traad[]) => {
     };
 };
 
-const erAktivRegel = (varselId?: string ) => ( melding : Melding) => melding.korrelasjonsId === varselId;
+const erAktivRegel = (varselId?: string) => (melding: Melding) => melding.korrelasjonsId === varselId;
 
 function ListeVisning() {
     const loc = useLocation();
     console.log('ListeVisning', loc);
     const params = useParams<{ varselId?: string }>();
-    const appState = useAppState(state => state);
+    const appState = useAppState((state) => state);
     const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
     const traaderGruppert = getTraadLister(traader);
     const erAktiv = erAktivRegel(params.varselId);
 
     const ulesteTraader = traaderGruppert.uleste.map((traad) => ({
-        data: traad, aktiv: erAktiv(traad.nyeste), ulestMeldingKlasse: 'uleste-meldinger'
+        data: traad,
+        aktiv: erAktiv(traad.nyeste),
+        ulestMeldingKlasse: 'uleste-meldinger'
     }));
     const lesteTraader = traaderGruppert.leste.map((traad) => ({
-        data: traad, aktiv: erAktiv(traad.nyeste)
+        data: traad,
+        aktiv: erAktiv(traad.nyeste)
     }));
 
     return (
@@ -64,7 +65,5 @@ function ListeVisning() {
         </>
     );
 }
-
-
 
 export default ListeVisning;

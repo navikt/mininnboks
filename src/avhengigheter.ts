@@ -1,7 +1,7 @@
 import { STATUS } from './ducks/ducks-utils';
 
 export interface OtherState {
-    status: STATUS.NOT_STARTED | STATUS.PENDING
+    status: STATUS.NOT_STARTED | STATUS.PENDING;
 }
 
 export interface OkState<T> {
