@@ -175,5 +175,5 @@
   "oppgave.nysykemelding.fritekst": "Du har mottatt en ny sykmelding som krever en handling fra deg.",
   "feilmelding.journalfortfeil.tittel": "Kan ikke vise dokumentet",
   "henvendelse.status.SAMTALEREFERAT_TELEFON.ulest": "Samtalereferat telefon, sendt",
-  "feilmelding.ratelimiter" : "Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere tidspunkt."
+  "feilmelding.ratelimiter": "Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere tidspunkt."
 }

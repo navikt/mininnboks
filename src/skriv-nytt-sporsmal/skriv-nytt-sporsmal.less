@@ -3,35 +3,35 @@
 @containerWidth: 600px;
 
 .send-sporsmal-side {
-    max-width: @containerWidth;
+  max-width: @containerWidth;
 
-    margin-bottom: 3rem;
+  margin-bottom: 3rem;
 
-    .meldingikon {
-        display: block;
-        height: 2rem;
-        margin: 0 auto 1.5rem;
-        background-image: url("@{imgDir}/melding_graa.svg");
-        background-repeat: no-repeat;
-        background-position: center;
+  .meldingikon {
+    display: block;
+    height: 2rem;
+    margin: 0 auto 1.5rem;
+    background-image: url("@{imgDir}/melding_graa.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .godtavilkaar-panel {
+    label {
+      display: inline-block;
     }
-
-    .godtavilkaar-panel {
-        label {
-            display: inline-block;
-        }
-        .betingelsevalg-checkbox {
-            span:not(:last-child) {
-                margin-right: 0.5rem;
-            }
-        }
+    .betingelsevalg-checkbox {
+      span:not(:last-child) {
+        margin-right: 0.5rem;
+      }
     }
+  }
 
-    .fritekst {
-        min-height: 8rem;
-    }
+  .fritekst {
+    min-height: 8rem;
+  }
 }
 
 .betingelser-panel {
-    padding: 3rem;
+  padding: 3rem;
 }

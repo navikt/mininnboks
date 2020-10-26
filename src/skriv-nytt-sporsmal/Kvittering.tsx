@@ -1,25 +1,25 @@
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 function Kvittering() {
-    return (
-        <article className="panel text-center">
-            <h1 className="hode hode-undertittel hode-dekorert hode-suksess">
-                <FormattedMessage id="send-sporsmal.bekreftelse.antall-dager" />
-            </h1>
+  return (
+    <article className="panel text-center">
+      <h1 className="hode hode-undertittel hode-dekorert hode-suksess">
+        <FormattedMessage id="send-sporsmal.bekreftelse.antall-dager" />
+      </h1>
 
-            <p className="blokk-m">
-                <FormattedMessage id="send-sporsmal.bekreftelse.varslingsinfo" />
-            </p>
+      <p className="blokk-m">
+        <FormattedMessage id="send-sporsmal.bekreftelse.varslingsinfo" />
+      </p>
 
-            <hr className="blokk-m" />
+      <hr className="blokk-m" />
 
-            <Link className="knapp-link-stor" to="/">
-                <FormattedMessage id="send-sporsmal.bekreftelse.til-meldingsboksen" />
-            </Link>
-        </article>
-    );
+      <Link className="knapp-link-stor" to="/">
+        <FormattedMessage id="send-sporsmal.bekreftelse.til-meldingsboksen" />
+      </Link>
+    </article>
+  );
 }
 
 export default Kvittering;

@@ -1,31 +1,31 @@
-@import '../variables';
+@import "../variables";
 
 .brodsmuler {
-    display: flex;
-    align-items: center;
-    padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
 
-    &__visning-type-tekst{
-        color: red;
+  &__visning-type-tekst {
+    color: red;
+  }
+
+  &__list {
+    list-style: none;
+    margin: inherit;
+    padding: 0.5rem;
+  }
+
+  &__item {
+    float: left;
+
+    &:not(:last-child)::after {
+      content: "/";
+      margin: 0 0.5rem;
     }
+  }
 
-    &__list {
-        list-style: none;
-        margin: inherit;
-        padding: 0.5rem;
-    }
-
-    &__item {
-        float: left;
-
-        &:not(:last-child)::after {
-            content: '/';
-            margin: 0 0.5rem;
-        }
-    }
-
-    &__illustrasjon {
-        max-width: 30px;
-        max-height: 30px;
-    }
+  &__illustrasjon {
+    max-width: 30px;
+    max-height: 30px;
+  }
 }

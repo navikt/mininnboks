@@ -1,15 +1,13 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import reducer from './reducer';
+import { createStore, applyMiddleware, compose } from "redux";
+import thunkMiddleware from "redux-thunk";
+import reducer from "./reducer";
 
 function getStoreCompose() {
-    return compose(
-        applyMiddleware(thunkMiddleware)
-    );
+  return compose(applyMiddleware(thunkMiddleware));
 }
 
 export default function create() {
-    const composed = getStoreCompose();
+  const composed = getStoreCompose();
 
-    return composed(createStore)(reducer, {});
+  return composed(createStore)(reducer, {});
 }

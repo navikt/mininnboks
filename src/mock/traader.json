@@ -435,9 +435,7 @@
         "temaKode": "AAP",
         "korrelasjonsId": "11eaf127-ea9a-4e46-a691-ce52509ea3a2",
         "journalpostId": "410959805",
-        "dokumentIdListe": [
-          "419361301"
-        ],
+        "dokumentIdListe": ["419361301"],
         "oppgaveType": null,
         "oppgaveUrl": null,
         "type": "DOKUMENT_VARSEL",
@@ -468,9 +466,7 @@
       "temaKode": "AAP",
       "korrelasjonsId": "11eaf127-ea9a-4e46-a691-ce52509ea3a2",
       "journalpostId": "410959805",
-      "dokumentIdListe": [
-        "419361301"
-      ],
+      "dokumentIdListe": ["419361301"],
       "oppgaveType": null,
       "oppgaveUrl": null,
       "type": "DOKUMENT_VARSEL",
@@ -500,9 +496,7 @@
       "temaKode": "AAP",
       "korrelasjonsId": "11eaf127-ea9a-4e46-a691-ce52509ea3a2",
       "journalpostId": "410959805",
-      "dokumentIdListe": [
-        "419361301"
-      ],
+      "dokumentIdListe": ["419361301"],
       "oppgaveType": null,
       "oppgaveUrl": null,
       "type": "DOKUMENT_VARSEL",
@@ -938,5 +932,4 @@
     "kanBesvares": true,
     "avsluttet": false
   }
-
 ]
