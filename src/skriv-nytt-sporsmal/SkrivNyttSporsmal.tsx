@@ -142,7 +142,7 @@ function SkrivNyttSporsmal(props: Props) {
                 <Normaltekst className="typo-normal blokk-xs">
                     <FormattedMessage id="textarea.infotekst"/>
                 </Normaltekst>
-                <TemagruppeEkstraInfo temagruppe={temagruppe}/>
+                <TemagruppeEkstraInfo temagruppe={temagruppe} key={temagruppe}/>
                 {fritekstFeilmelding}
                 <TextareaControlled
                     defaultValue={''}
@@ -158,6 +158,7 @@ function SkrivNyttSporsmal(props: Props) {
                     inputName="godkjennVilkaar"
                     skalViseFeilmelding={!!error.godkjennVilkaar}
                     setVilkaarGodtatt={setGodkjennVilkaar}
+                    villkaarGodtatt={godkjennVilkaar}
                 />
                 <Hovedknapp htmlType="submit" spinner={props.sendingStatus === STATUS.PENDING} aria-disabled={props.sendingStatus === STATUS.PENDING}>
                     <FormattedMessage id="send-sporsmal.still-sporsmal.send-inn"/>

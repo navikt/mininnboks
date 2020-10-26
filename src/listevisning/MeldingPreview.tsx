@@ -23,11 +23,12 @@ const cls = (props : Props) => classNames('dialog', props.ulestMeldingKlasse, {
 
 function MeldingPreview(props : Props) {
     const history = useHistory();
+
     useEffect(() => {
         if (props.aktiv) {
             history.push(`traad/${props.traad.nyeste.id}`);
         }
-    }, [])
+    }, []);
 
     const melding = props.traad.nyeste;
     const dato = shortDate(melding.opprettet);

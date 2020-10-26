@@ -19,10 +19,10 @@ interface Props{
     skalViseFeilmelding: boolean;
     inputName: string;
     setVilkaarGodtatt: (godtatt : boolean) => void
+    villkaarGodtatt: boolean
 }
 function GodtaVilkar(props: Props) {
 
-    const [vilkarGodtatt, setVilkarGodtatt] = useState(false)
 
     const godkjennVilkaar = () => {
         props.setVilkaarGodtatt(true);
@@ -30,7 +30,7 @@ function GodtaVilkar(props: Props) {
     };
 
     const avbryt = () => {
-        setVilkarGodtatt(false);
+        props.setVilkaarGodtatt(false);
         props.actions.skjulVilkarModal();
     };
 
@@ -42,8 +42,8 @@ function GodtaVilkar(props: Props) {
                         name={props.inputName}
                         className="checkbox"
                         aria-describedby="checkbox-feilmelding"
-                        checked={vilkarGodtatt}
-                        onChange={() => vilkarGodtatt ? avbryt() : godkjennVilkaar() }
+                        checked={props.villkaarGodtatt}
+                        onChange={() => props.villkaarGodtatt ? avbryt() : godkjennVilkaar() }
                         label={label}
                     />
                     <Lenke
@@ -59,7 +59,6 @@ function GodtaVilkar(props: Props) {
                         avbryt={avbryt}
                         lukkModal={props.actions.skjulVilkarModal}
                     />
-                    //TODO: fikse sånn at id blir håndert på en god måte i AlertstripeVisibleIf
                     <AlertstripeVisibleIf id="checkbox-feilmelding" visibleIf={props.skalViseFeilmelding}>
                         <FormattedMessage id="feilmelding.godkjennVilkaar.required"/>
                     </AlertstripeVisibleIf>
