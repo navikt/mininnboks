@@ -42,6 +42,8 @@ spec:
         mountPath: /var/run/secrets/nais.io/srvmininnboks
       - kvPath: /apikey/appdynamics/prod
         mountPath: /var/run/secrets/nais.io/vault
+  envFrom:
+    - configmap: loginservice-idporten
   env:
     - name: APP_NAME
       value: "mininnboks"
@@ -53,11 +55,11 @@ spec:
       value: "https://appres.nav.no"
     - name: SAKSOVERSIKT_LINK_URL
       value: "https://tjenester.nav.no/saksoversikt"
-    - name: AAD_B2C_CLIENTID_USERNAME
-      value: "45104d6a-f5bc-4e8c-b352-4bbfc9381f25"
     - name: LOGINSERVICE_URL
       value: "https://loginservice.nav.no/login"
-    - name: AAD_B2C_DISCOVERY_URL
-      value: "https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten"
     - name: MININNBOKS_URL
       value: "https://mininnboks.nav.no"
+    - name: AAD_B2C_CLIENTID_USERNAME
+      value: "45104d6a-f5bc-4e8c-b352-4bbfc9381f25"
+    - name: AAD_B2C_DISCOVERY_URL
+      value: "https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten"
