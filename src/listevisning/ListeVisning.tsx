@@ -1,5 +1,4 @@
 import * as React from 'react';
-import IntlLenke from '../utils/IntlLenke';
 import { nyesteTraadForst } from '../utils';
 import MeldingListe from './MeldingListe';
 import VisibleIf from '../utils/hocs/visible-if';
@@ -9,6 +8,7 @@ import './listevisning.less';
 import { Melding, Traad } from '../Traad';
 import { useParams } from 'react-router';
 import { useAppState } from '../utils/custom-hooks';
+import Lenke from 'nav-frontend-lenker';
 
 const getTraadLister = (traader: Traad[]) => {
     const sortert = traader.sort(nyesteTraadForst);
@@ -44,9 +44,12 @@ function ListeVisning() {
         <>
             <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
             <div className="text-center blokk-l">
-                <IntlLenke href="skriv.ny.link" className="knapp knapp--hoved">
+                <Lenke
+                    href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                    className="knapp knapp--hoved"
+                >
                     Skriv ny melding
-                </IntlLenke>
+                </Lenke>
             </div>
             <VisibleIf visibleIf={traader.length === 0}>
                 <h2 className="typo-undertittel text-center">Her kan du lese referater og beskjeder til og fra NAV.</h2>

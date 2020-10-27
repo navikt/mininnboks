@@ -5,7 +5,7 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
 import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { useParams } from 'react-router';
@@ -62,9 +62,13 @@ function TraadVisning() {
                 </AlertstripeVisibleIf>
                 <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks} onClick={skrivKnappOnClick} />
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
-                    <FormattedHTMLMessage id="skriv.ny.link">
-                        {(lenke) => <FormattedHTMLMessage id="traadvisning.kan-ikke-svare" values={{ lenke }} />}
-                    </FormattedHTMLMessage>
+                    <Normaltekst>
+                        Dialogen er avsluttet. Vil du{' '}
+                        <a href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/">
+                            sende en ny beskjed
+                        </a>
+                        , kan du gjøre det her.
+                    </Normaltekst>
                 </AlertstripeVisibleIf>
                 <BesvarBoks innsendingStatus={innsendingStatus} visibleIf={skalViseBesvarBoks} traadId={traadId} />
                 {meldingItems}

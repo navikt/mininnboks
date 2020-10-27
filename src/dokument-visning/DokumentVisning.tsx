@@ -2,7 +2,6 @@ import * as React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import Personalia from './dokumentvisning/personalia/Personalia';
 import Dokumenter from './dokumentvisning/dokument/Dokumenter';
-import IntlLenke from '../utils/IntlLenke';
 import './dokument-visning.less';
 import { useEffect } from 'react';
 import { DokumentMetadata, Journalpostmetadata } from '../dokument';
@@ -31,9 +30,12 @@ function DokumentVisning(props: Props) {
                         <Lenke href={`/saksoversikt/app/tema/${temakode}`}>Gå til saksoversikt</Lenke>
                     </li>
                     <li>
-                        <IntlLenke href="skriv.ny.link" className="lenke">
+                        <Lenke
+                            href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                            className="lenke"
+                        >
                             Kontakt NAV om dokumentet
-                        </IntlLenke>
+                        </Lenke>
                     </li>
                 </ul>
             </section>

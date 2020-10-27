@@ -10,11 +10,11 @@ import { useParams } from 'react-router';
 
 function OppgaveVisning() {
     const dispatch = useThunkDispatch();
-    const params = useParams<{ traadId: string }>();
+    const params = useParams<{ id: string }>();
     const traaderResources = useSelector((state: AppState) => state.traader);
     const traader = getTraaderSafe(traaderResources);
     useEffect(() => {
-        const traadId = params.traadId;
+        const traadId = params.id;
         const traad = traader.find((trad: Traad) => trad.traadId === traadId);
         const oppgaveUrl = traad && traad.nyeste.oppgaveUrl ? traad.nyeste.oppgaveUrl : '';
         dispatch(markerTraadSomLest(traadId)).then(() => {
