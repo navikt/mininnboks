@@ -26,6 +26,7 @@ import {useParams, useLocation} from "react-router";
 import {AppState} from "../reducer";
 import Spinner from "../utils/Spinner";
 import {harData} from "../avhengigheter";
+import useFormstate from "@nutgaard/use-formstate";
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -47,6 +48,23 @@ interface Errors {
     godkjennVilkaar?: string
 }
 
+type SkrivNyttSporsmalForm = {
+    fritekst: string;
+    godkjennVilkaar: boolean;
+}
+const validator = useFormstate<SkrivNyttSporsmalForm>(values => {
+    let fritekst = undefined;
+    if(values.fritekst.length === 0) {
+        fritekst = 'Tekstfeltet er tomt';
+    }
+    if(values.fritekst.length > 2500) {
+        fritekst = 'Teksten er for lang';
+    }
+    const godkjennVilkaar = values.godkjennVilkaar ?  undefined : 'Du må godta vilkårene for å sende beskjeden';
+
+    return { fritekst, godkjennVilkaar };
+});
+
 function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
     const [error, setError] = useState<Errors>({fritekst: undefined, godkjennVilkaar: undefined});
@@ -54,6 +72,13 @@ function SkrivNyttSporsmal(props: Props) {
     const [fritekst, setFritekst] = useState('');
     const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
     const dispatch = useDispatch();
+
+    const initialValues: SkrivNyttSporsmalForm = {
+        fritekst: '',
+        godkjennVilkaar: false
+    };
+
+    const state = validator(initialValues);
 
     useEffect(() => {
         const temagruppe = params.temagruppe.toLowerCase();
@@ -123,25 +148,23 @@ function SkrivNyttSporsmal(props: Props) {
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
             <Sidetittel className="text-center blokk-m">
-                <FormattedMessage id="send-sporsmal.still-sporsmal.ny-melding-overskrift"/>
+                Send beskjed til NAV
             </Sidetittel>
             <form className="panel text-center" onSubmit={submit}>
                 <i className="meldingikon"/>
                 <Innholdstittel className="blokk-xl">
-                    <FormattedMessage id="send-sporsmal.still-sporsmal.deloverskrift"/>
+                    Skriv melding
                 </Innholdstittel>
                 <Undertittel className="blokk-s">
                     <FormattedMessage id={temagruppe}/>
                 </Undertittel>
                 <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
-                    <FormattedMessage id="feilmelding.ratelimiter"/>
-                </AlertstripeVisibleIf>
+                    Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere tidspunkt.                </AlertstripeVisibleIf>
                 <AlertstripeVisibleIf type="advarsel" visibleIf={props.sendingStatus === STATUS.ERROR}>
-                    <FormattedMessage id="infoboks.advarsel"/>
+                    Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                 </AlertstripeVisibleIf>
                 <Normaltekst className="typo-normal blokk-xs">
-                    <FormattedMessage id="textarea.infotekst"/>
-                </Normaltekst>
+                    Send bare beskjeder som kan ha betydning for saken din. Husk å få med alle relevante opplysninger. Du kan skrive maksimalt 1000 tegn, det er cirka en halv A4-side.                </Normaltekst>
                 <TemagruppeEkstraInfo temagruppe={temagruppe} key={temagruppe}/>
                 {fritekstFeilmelding}
                 <TextareaControlled
@@ -161,7 +184,7 @@ function SkrivNyttSporsmal(props: Props) {
                     villkaarGodtatt={godkjennVilkaar}
                 />
                 <Hovedknapp htmlType="submit" spinner={props.sendingStatus === STATUS.PENDING} aria-disabled={props.sendingStatus === STATUS.PENDING}>
-                    <FormattedMessage id="send-sporsmal.still-sporsmal.send-inn"/>
+                    Send
                 </Hovedknapp>
             </form>
         </article>

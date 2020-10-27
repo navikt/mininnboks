@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {feilmelding} from '../utils/validationutil';
 import {STATUS} from '../ducks/ducks-utils';
-import {FormattedMessage} from 'react-intl';
 import { TextareaControlled} from 'nav-frontend-skjema';
 import {Hovedknapp, Flatknapp} from 'nav-frontend-knapper';
 import {visibleIfHOC} from "../utils/hocs/visible-if";
@@ -55,7 +54,6 @@ function BesvarBoks(props : Props) {
         <form className="besvar-boks text-center blokk-center blokk-l" onSubmit={state.onSubmit(submitHandler)}
         >
             <TextareaControlled
-                textareaClass="fritekst"
                 label={""}
                 maxLength={2500}
                 defaultValue={""}
@@ -64,11 +62,11 @@ function BesvarBoks(props : Props) {
             />
             <div className="blokk-xs">
                 <Hovedknapp htmlType="submit" spinner={props.innsendingStatus === STATUS.PENDING}>
-                    <FormattedMessage id="traadvisning.besvar.send"/>
+                    Send svar
                 </Hovedknapp>
             </div>
             <Flatknapp onClick={avbryt}>
-                <FormattedMessage id="traadvisning.besvar.avbryt"/>
+                Avbryt
             </Flatknapp>
         </form>
     );
