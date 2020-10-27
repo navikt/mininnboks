@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Lenke from 'nav-frontend-lenker';
-import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/Personalia';
 import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import IntlLenke from '../utils/IntlLenke';
@@ -29,13 +28,11 @@ function DokumentVisning(props: Props) {
                 <Personalia journalpostmetadata={props.journalpostmetadata} hode={false} className="blokk-m" />
                 <ul className="ustilet">
                     <li>
-                        <Lenke href={`/saksoversikt/app/tema/${temakode}`}>
-                            <FormattedMessage id="dokumentvisning.gatil.saksoversikt" />
-                        </Lenke>
+                        <Lenke href={`/saksoversikt/app/tema/${temakode}`}>Gå til saksoversikt</Lenke>
                     </li>
                     <li>
                         <IntlLenke href="skriv.ny.link" className="lenke">
-                            <FormattedMessage id="dokumentvisning.kontakt.nav" />
+                            Kontakt NAV om dokumentet
                         </IntlLenke>
                     </li>
                 </ul>

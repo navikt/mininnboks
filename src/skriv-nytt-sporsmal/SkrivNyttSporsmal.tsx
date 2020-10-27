@@ -3,34 +3,32 @@ import { Dispatch } from 'redux';
 import { visVilkarModal, skjulVilkarModal, TypeKeys } from '../ducks/ui';
 import { sendSporsmal } from '../ducks/traader';
 import { STATUS } from '../ducks/ducks-utils';
-import { TextareaControlled } from 'nav-frontend-skjema';
+import { Textarea } from 'nav-frontend-skjema';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';
 import TemagruppeEkstraInfo, { Temagruppe } from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/Feilmelding';
-import { FormattedMessage } from 'react-intl';
-import { connect, useDispatch } from 'react-redux';
-import Brodsmuler from '../brodsmuler/Brodsmuler';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Sidetittel, Innholdstittel, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
 
 import './skriv-nytt-sporsmal.less';
-import { validate } from '../utils/validationutil';
+import { feilmelding } from '../utils/validationutil';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { harTilgangTilKommunaleTemagrupper, TilgangState } from '../ducks/tilgang';
 import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router';
 import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import { harData } from '../avhengigheter';
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { Values } from '@nutgaard/use-formstate';
+import { useThunkDispatch } from '../useThunkDispatch';
+import { Temagrupper } from '../utils/constants';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
-
-const ukjentTemagruppeTittel = <FormattedMessage id="skriv-sporsmal.ukjent-temagruppe" />;
 const godkjenteTemagrupper = ['ARBD'];
 
 interface Props {
@@ -43,10 +41,6 @@ interface Props {
     godkjenteTemagrupper: string[];
     tilgang: TilgangState;
 }
-interface Errors {
-    fritekst?: string;
-    godkjennVilkaar?: string;
-}
 
 type SkrivNyttSporsmalForm = {
     fritekst: string;
@@ -57,7 +51,7 @@ const validator = useFormstate<SkrivNyttSporsmalForm>((values) => {
     if (values.fritekst.length === 0) {
         fritekst = 'Tekstfeltet er tomt';
     }
-    if (values.fritekst.length > 2500) {
+    if (values.fritekst.length > 1000) {
         fritekst = 'Teksten er for lang';
     }
     const godkjennVilkaar = values.godkjennVilkaar ? undefined : 'Du må godta vilkårene for å sende beskjeden';
@@ -65,16 +59,17 @@ const validator = useFormstate<SkrivNyttSporsmalForm>((values) => {
     return { fritekst, godkjennVilkaar };
 });
 
+enum FeilmeldingKommunalSjekk {
+    FEILET = 'Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.',
+    KODE6 = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.',
+    INGEN_ENHET = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.'
+}
 function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
-    const [error, setError] = useState<Errors>({
-        fritekst: undefined,
-        godkjennVilkaar: undefined
-    });
+
     const params = useParams<{ temagruppe: Temagruppe }>();
-    const [fritekst, setFritekst] = useState('');
     const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useThunkDispatch();
 
     const initialValues: SkrivNyttSporsmalForm = {
         fritekst: '',
@@ -100,59 +95,37 @@ function SkrivNyttSporsmal(props: Props) {
             return <Spinner />;
         } else if (props.tilgang.status === STATUS.ERROR) {
             return (
-                <Alertstripe type="advarsel">
-                    <FormattedMessage id={`feilmelding.kommunalsjekk.fetchfeilet`} />
-                </Alertstripe>
+                <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>
             );
         } else if (props.tilgang.status === STATUS.OK && props.tilgang.data.resultat !== 'OK') {
-            return (
-                <Alertstripe type="info">
-                    <FormattedMessage id={`feilmelding.kommunalsjekk.${props.tilgang.data.resultat}`} />
-                </Alertstripe>
-            );
+            return <Alertstripe type="info">{FeilmeldingKommunalSjekk[props.tilgang.data.resultat]}</Alertstripe>;
         }
     }
 
-    const submit = (event: FormEvent) => {
-        event.preventDefault();
-
-        if (props.sendingStatus === STATUS.PENDING) {
-            return;
-        }
-        setError(validate({ fritekst, godkjennVilkaar }));
-        sjekkOgOppdaterRatelimiter().then((isOK) => {
+    function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
+        return sjekkOgOppdaterRatelimiter().then((isOK) => {
             if (isOK) {
-                if (!Object.entries(error).length) {
-                    dispatch(sendSporsmal(temagruppe, fritekst, isDirekte));
-                }
+                return dispatch(sendSporsmal(temagruppe, values.fritekst, isDirekte));
             } else {
                 setRateLimiter(isOK);
             }
         });
-    };
+    }
 
     if (!godkjenteTemagrupper.includes(temagruppe)) {
-        return <Feilmelding>{ukjentTemagruppeTittel}</Feilmelding>;
+        return <Feilmelding>Ikke gjenkjent temagruppe</Feilmelding>;
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
     }
 
-    const fritekstError = error.fritekst;
-    const fritekstFeilmelding = fritekstError && (
-        <Feilmelding className="blokk-m">
-            <FormattedMessage id={`feilmelding.fritekst.${fritekstError}`} />
-        </Feilmelding>
-    );
-
+    const valgtTemagruppe = Temagrupper[temagruppe];
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
             <Sidetittel className="text-center blokk-m">Send beskjed til NAV</Sidetittel>
-            <form className="panel text-center" onSubmit={submit}>
+            <form className="panel text-center" onSubmit={state.onSubmit(submitHandler)}>
                 <i className="meldingikon" />
                 <Innholdstittel className="blokk-xl">Skriv melding</Innholdstittel>
-                <Undertittel className="blokk-s">
-                    <FormattedMessage id={temagruppe} />
-                </Undertittel>
+                <Undertittel className="blokk-s">{valgtTemagruppe}</Undertittel>
                 <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
                     Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                     tidspunkt.{' '}
@@ -165,20 +138,18 @@ function SkrivNyttSporsmal(props: Props) {
                     Du kan skrive maksimalt 1000 tegn, det er cirka en halv A4-side.{' '}
                 </Normaltekst>
                 <TemagruppeEkstraInfo temagruppe={temagruppe} key={temagruppe} />
-                {fritekstFeilmelding}
-                <TextareaControlled
-                    defaultValue={''}
-                    name="fritekst"
+                <Textarea
                     textareaClass="fritekst"
                     label={''}
                     maxLength={1000}
-                    onChange={(e) => setFritekst(e.currentTarget.value)}
+                    {...state.fields.fritekst.input}
+                    feil={feilmelding(state.fields.fritekst)}
                 />
                 <GodtaVilkar
                     visModal={props.skalViseVilkarModal}
                     actions={props.actions}
                     inputName="godkjennVilkaar"
-                    skalViseFeilmelding={!!error.godkjennVilkaar}
+                    skalViseFeilmelding={!!state.fields.godkjennVilkaar.error}
                     setVilkaarGodtatt={setGodkjennVilkaar}
                     villkaarGodtatt={godkjennVilkaar}
                 />

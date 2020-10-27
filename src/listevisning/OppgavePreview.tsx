@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { shortDate } from '../utils';
 import Lenkepanel from '../utils/Lenkepanel';
@@ -33,19 +32,14 @@ function OppgavePreview(props: Props) {
 
     const avsender = props.traad.nyeste.fraNav ? (
         <span>
-            / Fra{' '}
-            <span className="avsender-fra-nav">
-                <FormattedMessage id="avsender.tekst.NAV" />
-            </span>
+            / Fra <span className="avsender-fra-nav">NAV</span>
         </span>
     ) : null;
 
     return (
         <li className="traad blokk-xxxs" key={melding.traadId}>
             <Lenkepanel href={`/oppgave/${melding.traadId}`} className={cls(props)}>
-                <p className="vekk">
-                    <FormattedMessage id="oppgavemelding.ikon" />
-                </p>
+                <p className="vekk">Sykmeldings-ikon</p>
                 <Normaltekst>
                     <span>{dato}</span>
                     {avsender}

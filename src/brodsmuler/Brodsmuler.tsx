@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { useParams } from 'react-router';
 import Brodsmule from './Brodsmule';
 import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
@@ -27,15 +26,8 @@ function TraadSmule() {
         return null;
     }
     const nyeste = valgttraad.nyeste;
-    return (
-        <FormattedMessage
-            id="traadvisning.overskrift"
-            values={{
-                kassert: nyeste.kassert,
-                temagruppeNavn: nyeste.temagruppeNavn
-            }}
-        />
-    );
+    const melding = nyeste.kassert ? 'Kassert dialog' : `Dialog om ${nyeste.temagruppeNavn}`;
+    return <>{melding}</>;
 }
 
 function NyMeldingSmule() {
@@ -43,16 +35,11 @@ function NyMeldingSmule() {
 }
 
 function Brodsmuler() {
-    const intl = useIntl();
-    const dittnavTekst = intl.formatMessage({
-        id: 'brodsmulesti.dittnav.lenketekst'
-    });
-    const dittnavUrl = intl.formatMessage({ id: 'dittnav.url' });
     return (
         <div className="brodsmuler">
             <img src={personSvg} alt="person-illustrasjon" className="brodsmuler__illustrasjon" />
             <ol className="brodsmuler__list">
-                <Brodsmule tekst={dittnavTekst} path={dittnavUrl} />
+                <Brodsmule tekst="Ditt NAV" path="https://tjenester.nav.no/dittnav" />
                 <Brodsmule tekst="Min innboks" path="/" />
                 <span className="brodsmuler__item typo-normal">
                     <Switch>

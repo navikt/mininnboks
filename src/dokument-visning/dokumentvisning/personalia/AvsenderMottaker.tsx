@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 interface Props {
     retning: string;
@@ -10,25 +9,15 @@ interface Props {
 
 function AvsenderMottaker(props: Props) {
     if (props.retning === 'INN' && props.avsender === 'SLUTTBRUKER') {
-        return <FormattedMessage id={'dokumentvisning.mottatt.fra.bruker'} />;
+        return <span>Mottatt fra deg</span>;
     } else if (props.retning === 'UT' && props.mottaker === 'SLUTTBRUKER') {
-        return <FormattedMessage id={'dokumentvisning.mottatt.sendt.til.bruker'} />;
+        return <span>Sendt fra NAV til deg</span>;
     } else if (props.retning === 'UT' && props.mottaker === 'EKSTERN_PART') {
-        return (
-            <FormattedMessage
-                id={'dokumentvisning.mottatt.sendt.til.eksternpart'}
-                values={{ eksternpart: props.navn }}
-            />
-        );
+        return <span>Sendt fra NAV til {props.navn}</span>;
     } else if (props.retning === 'INN' && props.avsender === 'EKSTERN_PART') {
-        return (
-            <FormattedMessage
-                id={'dokumentvisning.mottatt.sendt.fra.eksternpart'}
-                values={{ eksternpart: props.navn }}
-            />
-        );
+        return <span>Sendt fra {props.navn} til NAV</span>;
     } else if (props.retning === 'INTERN') {
-        return <FormattedMessage id="dokumentvisning.mottatt.samtalereferat" />;
+        return <span>Samtalereferat</span>;
     }
     return null;
 }

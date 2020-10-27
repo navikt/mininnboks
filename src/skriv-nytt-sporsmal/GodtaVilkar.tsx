@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Betingelser from './Betingelser';
 import { Checkbox } from 'nav-frontend-skjema';
 import Lenke from 'nav-frontend-lenker';
@@ -32,7 +30,7 @@ function GodtaVilkar(props: Props) {
         props.actions.skjulVilkarModal();
     };
 
-    const label = <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.sjekkboks" />;
+    const label = 'Jeg godtar vilkårene for bruk av tjenesten.';
     return (
         <div className="godtavilkaar-panel blokk-m">
             <div className="nav-input">
@@ -45,7 +43,7 @@ function GodtaVilkar(props: Props) {
                     label={label}
                 />
                 <Lenke href="javascript:void(0)" className="vilkar-link" onClick={props.actions.visVilkarModal}>
-                    <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.vis" />
+                    Vis vilkår
                 </Lenke>
                 <Betingelser
                     visModal={props.visModal}
@@ -54,7 +52,7 @@ function GodtaVilkar(props: Props) {
                     lukkModal={props.actions.skjulVilkarModal}
                 />
                 <AlertstripeVisibleIf id="checkbox-feilmelding" visibleIf={props.skalViseFeilmelding}>
-                    <FormattedMessage id="feilmelding.godkjennVilkaar.required" />
+                    Du må godta vilkårene for å sende beskjeden
                 </AlertstripeVisibleIf>
             </div>
         </div>

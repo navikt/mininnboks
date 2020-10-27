@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import Lenkepanel from '../utils/Lenkepanel';
 import { shortDate } from '../utils';
 import AntallMeldinger from './AntallMeldinger';
@@ -39,19 +38,13 @@ function MeldingPreview(props: Props) {
     const maBesvares =
         melding.type === 'SPORSMAL_MODIA_UTGAAENDE' && !melding.kassert ? (
             <span>
-                /{' '}
-                <strong className="purring">
-                    <FormattedMessage id="purre.svar" />
-                </strong>
+                / <strong className="purring">Må besvares</strong>
             </span>
         ) : null;
 
     const avsender = props.traad.nyeste.fraNav ? (
         <span>
-            / Fra{' '}
-            <span className="avsender-fra-nav">
-                <FormattedMessage id="avsender.tekst.NAV" />
-            </span>
+            / Fra <span className="avsender-fra-nav">NAV</span>
         </span>
     ) : null;
     const flereMeldinger = antallMeldinger > 1 ? `(${antallMeldinger})` : null;
@@ -59,9 +52,7 @@ function MeldingPreview(props: Props) {
     return (
         <li className="traad blokk-xxxs" key={melding.traadId}>
             <Lenkepanel href={`/traad/${melding.traadId}`} className={cls(props)}>
-                <p className="vekk">
-                    <FormattedMessage id="meldinger.ikon" />
-                </p>
+                <p className="vekk">Samtale-ikon</p>
                 <AntallMeldinger antall={antallMeldinger} />
                 <Normaltekst className="blokk-xxxs">
                     <span>{dato}</span>

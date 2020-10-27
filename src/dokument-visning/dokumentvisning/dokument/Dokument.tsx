@@ -1,6 +1,5 @@
 import * as React from 'react';
 import DokumentSide from './DokumentSide';
-import { FormattedMessage } from 'react-intl';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
 import { DokumentMetadata } from '../../../dokument';
@@ -38,12 +37,12 @@ function Dokument(props: Props) {
 
     const pdfLink = (
         <Lenke target="_blank" href={openPdfUrl} onClick={onLastNedClick}>
-            <FormattedMessage id={'dokumentvisning.openpdf'} />
+            Last ned som PDF
         </Lenke>
     );
     const skrivUtLink = (
         <Lenke target="_blank" href={printUrl} onClick={onPrintClick}>
-            <FormattedMessage id={'dokumentvisning.skrivut'} />
+            Last ned og skriv ut
         </Lenke>
     );
     const linker =

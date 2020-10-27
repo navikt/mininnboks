@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { feilmelding } from '../utils/validationutil';
 import { STATUS } from '../ducks/ducks-utils';
-import { TextareaControlled } from 'nav-frontend-skjema';
+import { Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 
 import './besvar-boks.less';
 import { skjulBesvarBoks } from '../ducks/ui';
-import { sendSvar } from '../ducks/traader';
+import { sendSvar2 } from '../ducks/traader';
 import useFormstate, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
 
@@ -32,15 +32,15 @@ const validator = useFormstate<BesvarForm>((values) => {
 });
 
 function BesvarBoks(props: Props) {
+    const dispatch = useThunkDispatch();
     const initialValues: BesvarForm = {
         fritekst: ''
     };
 
     const state = validator(initialValues);
-    const dispatch = useThunkDispatch();
 
     function submitHandler<S>(values: Values<BesvarForm>): Promise<any> {
-        return dispatch(sendSvar(props.traadId, values.fritekst));
+        return dispatch(sendSvar2(props.traadId, values.fritekst));
     }
 
     const avbryt = () => {
@@ -49,11 +49,10 @@ function BesvarBoks(props: Props) {
 
     return (
         <form className="besvar-boks text-center blokk-center blokk-l" onSubmit={state.onSubmit(submitHandler)}>
-            <TextareaControlled
+            <Textarea
                 textareaClass="fritekst"
                 label={''}
                 maxLength={2500}
-                defaultValue={''}
                 {...state.fields.fritekst.input}
                 feil={feilmelding(state.fields.fritekst)}
             />

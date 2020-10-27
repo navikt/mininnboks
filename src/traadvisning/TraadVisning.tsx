@@ -4,7 +4,6 @@ import BesvarBoks from './BesvarBoks';
 import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
-import { FormattedMessage } from 'react-intl';
 import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi';
 import Alertstripe from 'nav-frontend-alertstriper';
@@ -15,6 +14,7 @@ import { visBesvarBoks } from '../ducks/ui';
 import { markerSomLest } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
 import { useAppState } from '../utils/custom-hooks';
+import FormattedHTMLMessage from '../utils/FormattedHTMLMessage';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -43,7 +43,7 @@ function TraadVisning() {
     return (
         <div>
             <Sidetittel className="text-center blokk-l">
-                <FormattedMessage
+                <FormattedHTMLMessage
                     id="traadvisning.overskrift"
                     values={{
                         kassert: valgttraad.nyeste.kassert,
@@ -58,13 +58,13 @@ function TraadVisning() {
                     visibleIf={innsendingStatus && innsendingStatus === STATUS.ERROR}
                     className="blokk-m"
                 >
-                    <FormattedMessage id="infoboks.advarsel" />
+                    Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                 </AlertstripeVisibleIf>
                 <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks} onClick={skrivKnappOnClick} />
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
-                    <FormattedMessage id="skriv.ny.link">
-                        {(lenke) => <FormattedMessage id="traadvisning.kan-ikke-svare" values={{ lenke }} />}
-                    </FormattedMessage>
+                    <FormattedHTMLMessage id="skriv.ny.link">
+                        {(lenke) => <FormattedHTMLMessage id="traadvisning.kan-ikke-svare" values={{ lenke }} />}
+                    </FormattedHTMLMessage>
                 </AlertstripeVisibleIf>
                 <BesvarBoks innsendingStatus={innsendingStatus} visibleIf={skalViseBesvarBoks} traadId={traadId} />
                 {meldingItems}

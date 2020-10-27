@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import IntlLenke from '../utils/IntlLenke';
 import { nyesteTraadForst } from '../utils';
 import MeldingListe from './MeldingListe';
@@ -8,7 +7,7 @@ import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi';
 import './listevisning.less';
 import { Melding, Traad } from '../Traad';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { useAppState } from '../utils/custom-hooks';
 
 const getTraadLister = (traader: Traad[]) => {
@@ -25,8 +24,6 @@ const getTraadLister = (traader: Traad[]) => {
 const erAktivRegel = (varselId?: string) => (melding: Melding) => melding.korrelasjonsId === varselId;
 
 function ListeVisning() {
-    const loc = useLocation();
-    console.log('ListeVisning', loc);
     const params = useParams<{ varselId?: string }>();
     const appState = useAppState((state) => state);
     const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
@@ -45,18 +42,14 @@ function ListeVisning() {
 
     return (
         <>
-            <Sidetittel className="text-center blokk-l">
-                <FormattedMessage id="innboks.overskrift" />
-            </Sidetittel>
+            <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
             <div className="text-center blokk-l">
                 <IntlLenke href="skriv.ny.link" className="knapp knapp--hoved">
-                    <FormattedMessage id="innboks.skriv.ny.link" />
+                    Skriv ny melding
                 </IntlLenke>
             </div>
             <VisibleIf visibleIf={traader.length === 0}>
-                <h2 className="typo-undertittel text-center">
-                    <FormattedMessage id="innboks.tom-innboks-melding" />
-                </h2>
+                <h2 className="typo-undertittel text-center">Her kan du lese referater og beskjeder til og fra NAV.</h2>
             </VisibleIf>
             <VisibleIf visibleIf={traader.length > 0}>
                 <MeldingListe meldinger={ulesteTraader} overskrift="innboks.uleste" />

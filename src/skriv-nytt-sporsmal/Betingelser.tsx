@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FormEvent } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import './betingelser.less';
+import FormattedHTMLMessage from '../utils/FormattedHTMLMessage';
 
 interface Props {
     godkjennVilkaar: () => void;
@@ -27,20 +27,20 @@ function Betingelser(props: Props) {
         >
             <form onSubmit={submit} className="betingelser-panel panel side-innhold">
                 <Sidetittel className="text-center blokk-l" tabIndex={0}>
-                    <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.overskrift" />
+                    Vilkårene for å bruke denne tjenesten
                 </Sidetittel>
                 <div className="blokk-m">
-                    <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.tekst" />
+                    <FormattedHTMLMessage id="send-sporsmal.still-sporsmal.betingelser.tekst" />
                 </div>
                 <hr className="blokk-m" />
                 <div className="svar-godta text-center blokk-m">
                     <Hovedknapp htmlType="submit" aria-controls="betingelser" onClick={props.godkjennVilkaar}>
-                        <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.godta" />
+                        Jeg godtar vilkårene
                     </Hovedknapp>
                 </div>
                 <div className="text-center">
                     <a href="javascript:void(0)" onClick={props.avbryt} aria-controls="betingelser" role="button">
-                        <FormattedMessage id="send-sporsmal.still-sporsmal.betingelser.ikke-godta" />
+                        Jeg godtar ikke vilkårene
                     </a>
                 </div>
             </form>

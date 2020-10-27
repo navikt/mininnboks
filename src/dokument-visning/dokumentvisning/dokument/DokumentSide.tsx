@@ -1,7 +1,5 @@
 import * as React from 'react';
 import DokumentFeilmelding from './DokumentFeilmelding';
-import { FormattedMessage, useIntl } from 'react-intl';
-
 // @ts-ignore
 import ImageLoader from 'react-imageloader';
 import BlurretDokument from './BlurretDokument';
@@ -28,11 +26,9 @@ const renderPreloader = () => (
 const renderFeilkomponent = (openPdfUrl: string) => (
     <BlurretDokument>
         <Alertstripe type="advarsel" className="feilmelding">
-            <FormattedMessage id="dokumentvisning.bildelasting.feilet" />
+            Det skjedde en feil under lasting av denne siden. Prøv heller å laste ned som
             <span>&nbsp;</span>
-            <a href={openPdfUrl}>
-                <FormattedMessage id="dokumentvisning.bildelasting.feilet.lenketekst" />
-            </a>
+            <a href={openPdfUrl}>PDF</a>
         </Alertstripe>
     </BlurretDokument>
 );
@@ -56,9 +52,7 @@ const robustImg = (src: string, imgProps: ImgProps, feilkomponent: React.ReactNo
     </ImageLoader>
 );
 function DokumentSide(props: Props) {
-    const intl = useIntl();
-    const tittel = props.tittel;
-    const bildetekst = intl.formatMessage({ id: 'dokumentinnsyn.side.alttekst' }, { sidetall: props.side, tittel });
+    const bildetekst = `Side ${props.side} i ${props.tittel}`;
     return props.kanVises ? (
         robustImg(props.url, { alt: bildetekst, tabIndex: '0' }, renderFeilkomponent(props.openPdfUrl))
     ) : (

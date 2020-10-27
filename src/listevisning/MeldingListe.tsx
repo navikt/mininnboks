@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Traad } from '../Traad';
+import FormattedHTMLMessage from '../utils/FormattedHTMLMessage';
 
 interface MeldingsListeElement {
     data: Traad;
@@ -41,7 +42,7 @@ function MeldingListe(props: Props) {
         <section className="traad-liste">
             <Panel className="blokk-xxxs">
                 <Undertittel tag="h2">
-                    <FormattedMessage id={props.overskrift} values={{ antallMeldinger: props.meldinger.length }} />
+                    <FormattedHTMLMessage id={props.overskrift} values={{ antallMeldinger: props.meldinger.length }} />
                     <span className="vekk">({props.meldinger.length})</span>
                 </Undertittel>
             </Panel>
