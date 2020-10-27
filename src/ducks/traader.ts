@@ -5,12 +5,13 @@ import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
 import { Action, Dispatch } from 'redux';
 import { AppState } from '../reducer';
 import {
+    ErrorState as AvhengigheterErrorState,
     harData,
     OkState as AvhengigheterOkState,
-    ErrorState as AvhengigheterErrorState,
     OtherState as AvhengigheterOtherState
 } from '../avhengigheter';
 import { Melding, Traad } from '../Traad';
+import { ThunkAction } from 'redux-thunk';
 
 // Actions
 export enum TypeKeys {
@@ -47,9 +48,7 @@ type Actions =
     | InnsendingPending;
 type OkInnsendingState = { innsendingStatus: STATUS.OK };
 type ErrorInnsendingState = { innsendingStatus: STATUS.ERROR };
-type OtherInnsendingState = {
-    innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING;
-};
+type OtherInnsendingState = { innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING };
 type InnsendingState = OkInnsendingState | ErrorInnsendingState | OtherInnsendingState;
 
 type OkState = AvhengigheterOkState<Traad[]> & InnsendingState;
@@ -83,10 +82,7 @@ export default function reducer(state: TraaderState = initalState, action: Actio
         case TypeKeys.HENT_ALLE_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case TypeKeys.HENT_ALLE_RELOAD:
-            return {
-                ...(state as AvhengigheterOkState<Traad[]> & InnsendingState),
-                status: STATUS.RELOADING
-            };
+            return { ...(state as AvhengigheterOkState<Traad[]> & InnsendingState), status: STATUS.RELOADING };
         case TypeKeys.MARKERT_SOM_LEST_FEILET:
             return { ...state, status: STATUS.ERROR, error: action.data };
         case TypeKeys.MARKERT_SOM_LEST_OK: {
@@ -139,7 +135,15 @@ export const sendSporsmal = (temagruppe: string, fritekst: string, isDirekte: bo
         innsendingActions
     )(dispatch);
 
-export const sendSvar = (traadId: string, fritekst: string) => (dispatch: Dispatch<any>) =>
+export function sendSvar(traadId: string, fritekst: string): ThunkAction<Promise<unknown>, AppState, null, Actions> {
+    return doThenDispatch(
+        (dispatch: Dispatch<any>) =>
+            Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
+        innsendingActions
+    );
+}
+
+export const sendSvar2 = (traadId: string, fritekst: string) => (dispatch: Dispatch<any>) =>
     doThenDispatch(
         () => Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
         innsendingActions
@@ -151,6 +155,7 @@ export function markerTraadSomLest(traadId: string) {
         FEILET: TypeKeys.MARKERT_SOM_LEST_FEILET
     });
 }
+
 export function markerBehandlingsIdSomLest(behandlingsId: string) {
     return doThenDispatch(() => Api.markerSomLest(behandlingsId), {
         OK: TypeKeys.MARKERT_SOM_LEST_OK,

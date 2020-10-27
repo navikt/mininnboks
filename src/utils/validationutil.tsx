@@ -1,5 +1,6 @@
-import { FieldState } from '@nutgaard/use-formstate';
 import * as React from 'react';
+import { FieldState } from '@nutgaard/use-formstate';
+import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 type ValidationRule = (verdi?: any, opts?: any) => string | undefined;
 type ValidationRuleMap = { [key: string]: ValidationRule };
@@ -40,6 +41,6 @@ export function validate(verdier?: any, opts = {}) {
     }, {});
 }
 
-export function feilmelding(field: FieldState): React.ReactNode | undefined {
-    return field.touched && field.error !== undefined ? <>{field.error}</> : undefined;
+export function feilmelding(field: FieldState): SkjemaelementFeil | undefined {
+    return field.touched && field.error !== undefined ? { feilmelding: <>{field.error}</> } : undefined;
 }

@@ -6,10 +6,10 @@ import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 
 import './besvar-boks.less';
-import { useDispatch } from 'react-redux';
 import { skjulBesvarBoks } from '../ducks/ui';
 import { sendSvar } from '../ducks/traader';
 import useFormstate, { Values } from '@nutgaard/use-formstate';
+import { useThunkDispatch } from '../useThunkDispatch';
 
 interface Props {
     innsendingStatus: STATUS;
@@ -37,12 +37,10 @@ function BesvarBoks(props: Props) {
     };
 
     const state = validator(initialValues);
-    const dispatch = useDispatch();
+    const dispatch = useThunkDispatch();
 
-    function submitHandler<S>(values: Values<BesvarForm>) {
-        if (!state.errors) {
-            dispatch(sendSvar(props.traadId, values.fritekst));
-        }
+    function submitHandler<S>(values: Values<BesvarForm>): Promise<any> {
+        return dispatch(sendSvar(props.traadId, values.fritekst));
     }
 
     const avbryt = () => {

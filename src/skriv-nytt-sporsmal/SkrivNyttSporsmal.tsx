@@ -50,7 +50,7 @@ interface Errors {
 
 type SkrivNyttSporsmalForm = {
     fritekst: string;
-    godkjennVilkaar: boolean;
+    godkjennVilkaar: string;
 };
 const validator = useFormstate<SkrivNyttSporsmalForm>((values) => {
     let fritekst = undefined;
@@ -78,7 +78,7 @@ function SkrivNyttSporsmal(props: Props) {
 
     const initialValues: SkrivNyttSporsmalForm = {
         fritekst: '',
-        godkjennVilkaar: false
+        godkjennVilkaar: 'false'
     };
 
     const state = validator(initialValues);
