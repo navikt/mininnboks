@@ -2,20 +2,20 @@ import * as React from 'react';
 import { prettyDate } from '../utils';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import {Normaltekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 import './melding-container.less';
-import {Melding} from "../Traad";
+import { Melding } from '../Traad';
 
 interface Props {
-    melding: Melding
+    melding: Melding;
 }
-function MeldingContainer(props : Props) {
+function MeldingContainer(props: Props) {
     const fraBruker = props.melding.fraBruker;
-    const imgSrc = "ikon " + (fraBruker ? 'person-ikon' : 'nav-ikon');
+    const imgSrc = 'ikon ' + (fraBruker ? 'person-ikon' : 'nav-ikon');
     const dato = prettyDate(props.melding.opprettet);
 
-    const fritekst = props.melding.fritekst || "";
+    const fritekst = props.melding.fritekst || '';
 
     return (
         <Snakkeboble ikonClass={imgSrc} pilHoyre={fraBruker}>
@@ -24,7 +24,6 @@ function MeldingContainer(props : Props) {
             <Tekstomrade>{fritekst}</Tekstomrade>
         </Snakkeboble>
     );
-
 }
 
 export default MeldingContainer;

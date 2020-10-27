@@ -3,24 +3,23 @@ import Lenke from 'nav-frontend-lenker';
 import { FormattedMessage } from 'react-intl';
 import Personalia from './dokumentvisning/personalia/Personalia';
 import Dokumenter from './dokumentvisning/dokument/Dokumenter';
-import IntlLenke from "../utils/IntlLenke";
+import IntlLenke from '../utils/IntlLenke';
 import './dokument-visning.less';
-import {useEffect} from "react";
-import {DokumentMetadata, Journalpostmetadata} from "../dokument";
-
+import { useEffect } from 'react';
+import { DokumentMetadata, Journalpostmetadata } from '../dokument';
 
 interface Props {
-    dokumentmetadata: DokumentMetadata[],
-    lastNedPdfOnClick: (url : string, event : React.MouseEvent) => void,
-    printPdfOnClick: (url : string, event : React.MouseEvent) => void,
-    journalpostmetadata: Journalpostmetadata
+    dokumentmetadata: DokumentMetadata[];
+    lastNedPdfOnClick: (url: string, event: React.MouseEvent) => void;
+    printPdfOnClick: (url: string, event: React.MouseEvent) => void;
+    journalpostmetadata: Journalpostmetadata;
 }
 
-function DokumentVisning(props : Props) {
+function DokumentVisning(props: Props) {
     useEffect(() => {
         document.body.scrollTop = 1;
         document.documentElement.scrollTop = 1;
-    }, [])
+    }, []);
 
     const { temakode } = props.journalpostmetadata.resultat;
 

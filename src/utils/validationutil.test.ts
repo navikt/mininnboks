@@ -50,7 +50,7 @@ describe('validate', () => {
         const formState = {
             fritekst: langTekst
         };
-        const formStatus = Validationutils.validate(formState, {maxLength: 2500});
+        const formStatus = Validationutils.validate(formState, { maxLength: 2500 });
 
         expect(formStatus).toEqual({});
     });
@@ -61,9 +61,9 @@ describe('validate', () => {
         const formState = {
             fritekst: langTekst
         };
-        const formStatus = Validationutils.validate(formState, {maxLength: 2500});
+        const formStatus = Validationutils.validate(formState, { maxLength: 2500 });
 
-        expect(formStatus).toEqual({fritekst: 'max-len'});
+        expect(formStatus).toEqual({ fritekst: 'max-len' });
     });
 
     it('skal gi true på tegn over under 1000 ', () => {
@@ -83,7 +83,6 @@ describe('validate', () => {
         };
         const formStatus = Validationutils.validate(formState);
 
-        expect(formStatus).toEqual({ fritekst: 'max-len'});
+        expect(formStatus).toEqual({ fritekst: 'max-len' });
     });
 });
-

@@ -9,7 +9,6 @@ describe('Vedleggliste', () => {
             dokumentmetadata: [],
             lastNedPdfOnClick: () => {},
             printPdfOnClick: () => {}
-
         };
 
         const wrapper = render(<Dokumenter {...props} />);
@@ -38,7 +37,7 @@ describe('Vedleggliste', () => {
             printPdfOnClick: () => {}
         };
 
-        const wrapper = render(<Dokumenter {...props}/>);
+        const wrapper = render(<Dokumenter {...props} />);
 
         const renderedVedleggListe = wrapper.find('.dokumentliste');
         expect(renderedVedleggListe.length).toEqual(1);

@@ -7,13 +7,19 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 // @ts-ignore
 import fetchMock from 'fetch-mock';
 import { AnyAction, Store } from 'redux';
-import {DokumentState, hentDokumentVisningData, skjulLastNedPdfModal, TypeKeys, visLastNedPdfModal} from './dokumenter';
+import {
+    DokumentState,
+    hentDokumentVisningData,
+    skjulLastNedPdfModal,
+    TypeKeys,
+    visLastNedPdfModal
+} from './dokumenter';
 
 function dataAction<T>(type: any, data?: T) {
     if (data) {
-        return {type, data};
+        return { type, data };
     }
-    return {type};
+    return { type };
 }
 type ThunkStore = Store & { dispatch: ThunkDispatch<any, any, AnyAction> };
 type MockStore = { getActions(): Array<AnyAction> } & ((initialState?: any) => ThunkStore);
@@ -25,46 +31,43 @@ const array = (value: any) => (Array.isArray(value) ? value : [value]);
 declare global {
     namespace jest {
         interface Matchers<R> {
-            toHaveReceived<E extends AnyAction | Array<AnyAction>>(expectedActions: E): R
+            toHaveReceived<E extends AnyAction | Array<AnyAction>>(expectedActions: E): R;
         }
     }
 }
 
-expect.extend(
-    {
-        toHaveReceived(store: MockStore, expectedActions: Array<AnyAction>) {
-            const receivedActions = store.getActions();
-            const errorMessage: Array<string> = [];
+expect.extend({
+    toHaveReceived(store: MockStore, expectedActions: Array<AnyAction>) {
+        const receivedActions = store.getActions();
+        const errorMessage: Array<string> = [];
 
-            for (const action of array(expectedActions)) {
-                const received = receivedActions.find((receivedAction) => action.type === receivedAction.type);
-                const receivedJson = JSON.stringify(received);
-                const actionJson = JSON.stringify(action);
-                if (received === null || received === undefined) {
-                    errorMessage.push(`expected store to have received ${actionJson}, but didn't find matching type.`)
-                } else {
-                    const nonMatchingProperties = Object.keys(action)
-                        .some((key: string) => {
-                            const expectedValue = JSON.stringify(action[key]);
-                            const receivedValue = JSON.stringify(received[key]);
-                            if (receivedValue !== expectedValue) {
-                                return true;
-                            }
-                            return false;
-                        })
-                    if (nonMatchingProperties) {
-                        errorMessage.push(`expected store to have received ${actionJson}, but got ${receivedJson}.`)
+        for (const action of array(expectedActions)) {
+            const received = receivedActions.find((receivedAction) => action.type === receivedAction.type);
+            const receivedJson = JSON.stringify(received);
+            const actionJson = JSON.stringify(action);
+            if (received === null || received === undefined) {
+                errorMessage.push(`expected store to have received ${actionJson}, but didn't find matching type.`);
+            } else {
+                const nonMatchingProperties = Object.keys(action).some((key: string) => {
+                    const expectedValue = JSON.stringify(action[key]);
+                    const receivedValue = JSON.stringify(received[key]);
+                    if (receivedValue !== expectedValue) {
+                        return true;
                     }
+                    return false;
+                });
+                if (nonMatchingProperties) {
+                    errorMessage.push(`expected store to have received ${actionJson}, but got ${receivedJson}.`);
                 }
             }
-
-            return {
-                pass: errorMessage.length === 0,
-                message: () => errorMessage.join('\n')
-            };
         }
+
+        return {
+            pass: errorMessage.length === 0,
+            message: () => errorMessage.join('\n')
+        };
     }
-);
+});
 function getInitialState(): DokumentState {
     return {
         status: STATUS.NOT_STARTED,
@@ -78,7 +81,7 @@ function getInitialState(): DokumentState {
 describe('dokumenter-ducks', () => {
     describe('reducer', () => {
         it('skal oppdatere data-status korrekt', () => {
-            const initalState = getInitialState()
+            const initalState = getInitialState();
 
             const pendingState = reducer(initalState, dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING));
             const feiletState = reducer(initalState, dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET));
@@ -121,55 +124,53 @@ describe('dokumenter-ducks', () => {
 
         describe('hentDokumentVisningData', () => {
             it('Skal sende pending, og ok med korrekte data', () => {
-                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', {test: 'asda'});
-                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', {data: 'asda'});
-                const store = mockStore({status: STATUS.NOT_STARTED});
+                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', { test: 'asda' });
+                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', { data: 'asda' });
+                const store = mockStore({ status: STATUS.NOT_STARTED });
 
-                return store.dispatch(hentDokumentVisningData('', ''))
-                    .then(() => {
-                        expect(store).toHaveReceived([
-                                                  dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
-                                                  dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK, [
-                                                      [{test: 'asda'}],
-                                                      {data: 'asda'}
-                                                  ])
-                                              ]);
-                    });
+                return store.dispatch(hentDokumentVisningData('', '')).then(() => {
+                    expect(store).toHaveReceived([
+                        dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
+                        dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK, [[{ test: 'asda' }], { data: 'asda' }])
+                    ]);
+                });
             });
 
             it('skal sende pending, og error om dokumentmetadata feiler', (done) => {
                 fetchMock.mock('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', {
-                    body: JSON.stringify({test: 'asda'}),
+                    body: JSON.stringify({ test: 'asda' }),
                     status: 500
                 });
-                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', {data: 'asda'});
-                const store = mockStore({status: STATUS.NOT_STARTED});
+                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', { data: 'asda' });
+                const store = mockStore({ status: STATUS.NOT_STARTED });
 
                 const res = store.dispatch(hentDokumentVisningData('', ''));
 
-                setTimeout(() => { // Må vente litt pga masse async/promise og dispatching.
+                setTimeout(() => {
+                    // Må vente litt pga masse async/promise og dispatching.
                     res.then(() => {
-                        expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK))
+                        expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK));
                         expect(store).toHaveReceived([
-                                                           dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
-                                                           dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET)
-                                                       ]);
+                            dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
+                            dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET)
+                        ]);
                     });
                     done();
                 }, 0);
             });
 
             it('skal sende pending, og error om dokumentmetadata feiler', (done) => {
-                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', {test: 'asda'});
+                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', { test: 'asda' });
                 fetchMock.mock('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', {
-                    body: {data: 'asda'},
+                    body: { data: 'asda' },
                     status: 500
                 });
-                const store = mockStore({status: STATUS.NOT_STARTED});
+                const store = mockStore({ status: STATUS.NOT_STARTED });
 
                 const res = store.dispatch(hentDokumentVisningData('', ''));
 
-                setTimeout(() => { // Må vente litt pga masse async/promise og dispatching.
+                setTimeout(() => {
+                    // Må vente litt pga masse async/promise og dispatching.
                     res.then(() => {
                         expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK));
                         expect(store).toHaveReceived([
@@ -188,14 +189,13 @@ describe('dokumenter-ducks', () => {
 
             store.dispatch(visLastNedPdfModal(dokumentUrl));
 
-            expect(store).toHaveReceived(
-                {
-                    type: TypeKeys.STATUS_PDF_MODAL,
-                    pdfModal: {
-                        skalVises: true,
-                        dokumentUrl
-                    }
-                });
+            expect(store).toHaveReceived({
+                type: TypeKeys.STATUS_PDF_MODAL,
+                pdfModal: {
+                    skalVises: true,
+                    dokumentUrl
+                }
+            });
         });
         it('skjulLastNedPdfModal', () => {
             const store = mockStore();
@@ -203,12 +203,12 @@ describe('dokumenter-ducks', () => {
             store.dispatch(skjulLastNedPdfModal());
 
             expect(store).toHaveReceived({
-                                       type: TypeKeys.STATUS_PDF_MODAL,
-                                       pdfModal: {
-                                           skalVises: false,
-                                           dokumentUrl: null
-                                       }
-                                   });
+                type: TypeKeys.STATUS_PDF_MODAL,
+                pdfModal: {
+                    skalVises: false,
+                    dokumentUrl: null
+                }
+            });
         });
     });
 });

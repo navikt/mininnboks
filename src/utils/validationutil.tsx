@@ -1,11 +1,11 @@
-import { FieldState } from "@nutgaard/use-formstate";
-import {ReactNode} from "react";
+import { FieldState } from '@nutgaard/use-formstate';
+import * as React from 'react';
 
 type ValidationRule = (verdi?: any, opts?: any) => string | undefined;
-type ValidationRuleMap = { [key: string]: ValidationRule; };
+type ValidationRuleMap = { [key: string]: ValidationRule };
 
 export const validationRules: ValidationRuleMap = {
-    fritekst: (verdi? : any, opts? : any) => {
+    fritekst: (verdi?: any, opts?: any) => {
         if (!verdi || verdi.length === 0) {
             return 'required';
         }
@@ -25,7 +25,7 @@ const defaultOpts = {
     maxLength: 1000
 };
 
-export function validate(verdier? : any, opts = {}) {
+export function validate(verdier?: any, opts = {}) {
     const mergedOpts = { ...defaultOpts, ...opts };
     return Object.entries(verdier).reduce((errors, [felt, verdi]) => {
         if (!validationRules.hasOwnProperty(felt)) {
@@ -40,7 +40,6 @@ export function validate(verdier? : any, opts = {}) {
     }, {});
 }
 
-export function feilmelding(field: FieldState): ReactNode | undefined {
+export function feilmelding(field: FieldState): React.ReactNode | undefined {
     return field.touched && field.error !== undefined ? <>{field.error}</> : undefined;
 }
-

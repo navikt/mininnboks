@@ -29,24 +29,27 @@ type HentAlleOk = Action<TypeKeys.HENT_ALLE_OK> & DucksData<Traad[]>;
 type HentAlleFeilet = Action<TypeKeys.HENT_ALLE_FEILET> & DucksData<Error>;
 type HentAllePending = Action<TypeKeys.HENT_ALLE_PENDING>;
 type HentAlleReloading = Action<TypeKeys.HENT_ALLE_RELOAD>;
-type MarkertSomLestOk = Action<TypeKeys.MARKERT_SOM_LEST_OK> & DucksData<{ traadId: string; }>;
+type MarkertSomLestOk = Action<TypeKeys.MARKERT_SOM_LEST_OK> & DucksData<{ traadId: string }>;
 type MarkertSomLestFeilet = Action<TypeKeys.MARKERT_SOM_LEST_FEILET> & DucksData<Error>;
 type InnsendingOk = Action<TypeKeys.INNSENDING_OK>;
 type InnsendingFeilet = Action<TypeKeys.INNSENDING_FEILET>;
 type InnsendingPending = Action<TypeKeys.INNSENDING_PENDING>;
 
-type Actions = HentAlleOk |
-               HentAlleFeilet |
-               HentAllePending |
-               HentAlleReloading |
-               MarkertSomLestOk |
-               MarkertSomLestFeilet |
-               InnsendingOk |
-               InnsendingFeilet |
-               InnsendingPending;
-type OkInnsendingState = { innsendingStatus: STATUS.OK; }
-type ErrorInnsendingState = { innsendingStatus: STATUS.ERROR; }
-type OtherInnsendingState = { innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING; }
+type Actions =
+    | HentAlleOk
+    | HentAlleFeilet
+    | HentAllePending
+    | HentAlleReloading
+    | MarkertSomLestOk
+    | MarkertSomLestFeilet
+    | InnsendingOk
+    | InnsendingFeilet
+    | InnsendingPending;
+type OkInnsendingState = { innsendingStatus: STATUS.OK };
+type ErrorInnsendingState = { innsendingStatus: STATUS.ERROR };
+type OtherInnsendingState = {
+    innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING;
+};
 type InnsendingState = OkInnsendingState | ErrorInnsendingState | OtherInnsendingState;
 
 type OkState = AvhengigheterOkState<Traad[]> & InnsendingState;
@@ -62,17 +65,16 @@ export function getTraaderSafe(state: TraaderState): Array<Traad> {
     return [];
 }
 
-
 const initalState: TraaderState = {
     status: STATUS.NOT_STARTED,
     innsendingStatus: STATUS.NOT_STARTED
 };
 
 // Utils
-const markerMeldingSomLest = (melding : Melding) => ({ ...melding, lest: true });
+const markerMeldingSomLest = (melding: Melding) => ({ ...melding, lest: true });
 
 // Reducer
-export default function reducer(state: TraaderState  = initalState, action: Actions): TraaderState {
+export default function reducer(state: TraaderState = initalState, action: Actions): TraaderState {
     switch (action.type) {
         case TypeKeys.HENT_ALLE_PENDING:
             return { ...state, status: STATUS.PENDING };
@@ -81,7 +83,10 @@ export default function reducer(state: TraaderState  = initalState, action: Acti
         case TypeKeys.HENT_ALLE_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case TypeKeys.HENT_ALLE_RELOAD:
-            return { ...(state as AvhengigheterOkState<Traad[]> & InnsendingState), status: STATUS.RELOADING };
+            return {
+                ...(state as AvhengigheterOkState<Traad[]> & InnsendingState),
+                status: STATUS.RELOADING
+            };
         case TypeKeys.MARKERT_SOM_LEST_FEILET:
             return { ...state, status: STATUS.ERROR, error: action.data };
         case TypeKeys.MARKERT_SOM_LEST_OK: {
@@ -117,7 +122,7 @@ const innsendingActions = {
 };
 
 // Action Creators
-export function hentTraader(pendingType : string = TypeKeys.HENT_ALLE_PENDING) {
+export function hentTraader(pendingType: string = TypeKeys.HENT_ALLE_PENDING) {
     return doThenDispatch(() => Api.hentTraader(), {
         OK: TypeKeys.HENT_ALLE_OK,
         FEILET: TypeKeys.HENT_ALLE_FEILET,
@@ -125,67 +130,69 @@ export function hentTraader(pendingType : string = TypeKeys.HENT_ALLE_PENDING) {
     });
 }
 
-export const sendSporsmal = (temagruppe : string, fritekst: string, isDirekte: boolean) => (dispatch : Dispatch<any>) =>
+export const sendSporsmal = (temagruppe: string, fritekst: string, isDirekte: boolean) => (dispatch: Dispatch<any>) =>
     doThenDispatch(
-        () => Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
+        () =>
+            Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() =>
+                dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))
+            ),
         innsendingActions
     )(dispatch);
 
-export const sendSvar = (traadId : string, fritekst : string) => (dispatch: Dispatch<any>) =>
+export const sendSvar = (traadId: string, fritekst: string) => (dispatch: Dispatch<any>) =>
     doThenDispatch(
         () => Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
         innsendingActions
     )(dispatch);
 
-
-export function markerTraadSomLest(traadId : string) {
+export function markerTraadSomLest(traadId: string) {
     return doThenDispatch(() => Api.markerTraadSomLest(traadId), {
         OK: TypeKeys.MARKERT_SOM_LEST_OK,
         FEILET: TypeKeys.MARKERT_SOM_LEST_FEILET
     });
 }
-export function markerBehandlingsIdSomLest(behandlingsId : string) {
+export function markerBehandlingsIdSomLest(behandlingsId: string) {
     return doThenDispatch(() => Api.markerSomLest(behandlingsId), {
         OK: TypeKeys.MARKERT_SOM_LEST_OK,
         FEILET: TypeKeys.MARKERT_SOM_LEST_FEILET
     });
 }
 
-
 // Selectors
-function erSkriftligSvar(melding : Melding) {
+function erSkriftligSvar(melding: Melding) {
     return melding.type === MeldingsTyper.SVAR_SKRIFTLIG;
 }
 
-function erDelvisSvar(melding : Melding) {
+function erDelvisSvar(melding: Melding) {
     return melding.type === MeldingsTyper.DELVIS_SVAR;
 }
 
-function flettDelviseSvarInnISkriftligSvar(traad : Traad, delviseSvar : Melding[]) {
+function flettDelviseSvarInnISkriftligSvar(traad: Traad, delviseSvar: Melding[]) {
     const skriftligeSvar = traad.meldinger.filter(erSkriftligSvar);
     if (skriftligeSvar.length > 0) {
         const avsluttendeSvar = skriftligeSvar.sort(eldsteMeldingForst)[0];
         const dobbeltLinjeskift = '\n\u00A0\n';
 
         const sorterteDelsvar = delviseSvar.sort(eldsteMeldingForst);
-        avsluttendeSvar.fritekst = sorterteDelsvar.concat(avsluttendeSvar)
-            .map(melding => melding.fritekst)
+        avsluttendeSvar.fritekst = sorterteDelsvar
+            .concat(avsluttendeSvar)
+            .map((melding) => melding.fritekst)
             .join(dobbeltLinjeskift);
     }
 }
 
-function flettMeldingerITraad(traad : Traad): Traad {
+function flettMeldingerITraad(traad: Traad): Traad {
     const delviseSvar = traad.meldinger.filter(erDelvisSvar);
     if (delviseSvar.length > 0) {
         flettDelviseSvarInnISkriftligSvar(traad, delviseSvar);
     }
 
     const sammenslaatTraad = traad;
-    sammenslaatTraad.meldinger = traad.meldinger.filter(melding => !erDelvisSvar(melding));
+    sammenslaatTraad.meldinger = traad.meldinger.filter((melding) => !erDelvisSvar(melding));
     return sammenslaatTraad;
 }
 
-export function selectTraaderMedSammenslatteMeldinger(store : AppState): { data: Traad[] } {
+export function selectTraaderMedSammenslatteMeldinger(store: AppState): { data: Traad[] } {
     if (harData(store.traader)) {
         return { data: store.traader.data.map(flettMeldingerITraad) };
     }

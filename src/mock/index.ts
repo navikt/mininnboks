@@ -15,9 +15,11 @@ const fetchMock = FetchMock.configure({
     )
 });
 
-fetchMock.get(TRAADER_PATH, (req, res, ctx) => res(ctx.json( traader )));
-fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json( resources )));
-fetchMock.get('/mininnboks-api/tilgang/oksos', (req, res, ctx) => res(ctx.json({ resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' })));
+fetchMock.get(TRAADER_PATH, (req, res, ctx) => res(ctx.json(traader)));
+fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json(resources)));
+fetchMock.get('/mininnboks-api/tilgang/oksos', (req, res, ctx) =>
+    res(ctx.json({ resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' }))
+);
 fetchMock.get(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(true)));
 
 fetchMock.post(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(true)));

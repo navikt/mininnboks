@@ -1,5 +1,5 @@
 import DokumentSide from './DokumentSide';
-import * as React from "react";
+import * as React from 'react';
 import { render } from '../../../test-config';
 
 describe('DokumentBilde', () => {
@@ -11,11 +11,10 @@ describe('DokumentBilde', () => {
             feilmelding: 'feilmelding',
             openPdfUrl: 'string',
             side: 1,
-            tittel: 'tittel',
+            tittel: 'tittel'
         };
 
-        const wrapper = render(
-            <DokumentSide {...props} />);
+        const wrapper = render(<DokumentSide {...props} />);
 
         const renderedFeilmelding = wrapper.find('.feilmelding-container');
         expect(renderedFeilmelding.length).toEqual(1);
@@ -32,7 +31,7 @@ describe('DokumentBilde', () => {
             feilmelding: 'feilmelding',
             openPdfUrl: 'string',
             side: 1,
-            tittel: 'tittel',
+            tittel: 'tittel'
         };
 
         const wrapper = render(<DokumentSide {...props} />);

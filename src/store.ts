@@ -3,9 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import reducer from './reducer';
 
 function getStoreCompose() {
-    return compose(
-        applyMiddleware(thunkMiddleware)
-    );
+    return compose(applyMiddleware(thunkMiddleware));
 }
 
 export default function create() {
