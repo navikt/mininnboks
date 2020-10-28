@@ -55,8 +55,8 @@ function ListeVisning() {
                 <h2 className="typo-undertittel text-center">Her kan du lese referater og beskjeder til og fra NAV.</h2>
             </VisibleIf>
             <VisibleIf visibleIf={traader.length > 0}>
-                <MeldingListe meldinger={ulesteTraader} overskrift="innboks.uleste" />
-                <MeldingListe meldinger={lesteTraader} overskrift="innboks.leste" />
+                <MeldingListe meldinger={ulesteTraader} uleste={true} />
+                <MeldingListe meldinger={lesteTraader} uleste={false} />
             </VisibleIf>
         </>
     );

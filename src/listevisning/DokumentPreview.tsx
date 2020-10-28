@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { shortDate } from '../utils';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
@@ -19,20 +18,14 @@ const cls = (props: Props) =>
 
 function DokumentPreview(props: Props) {
     const dokument = props.traad.nyeste;
-    const avsender = (
-        <span className="avsender-fra-nav">
-            <FormattedMessage id="avsender.tekst.NAV" />
-        </span>
-    );
+    const avsender = <span className="avsender-fra-nav">Dokument-ikon</span>;
     const dato = shortDate(dokument.opprettet);
     const temanavn = dokument.temaNavn;
 
     return (
         <li className="traad">
             <Lenkepanel href={`/dokument/${dokument.id}`} className={cls(props)}>
-                <p className="vekk">
-                    <FormattedMessage id="dokumentmelding.ikon" />
-                </p>
+                <p className="vekk">Dokument-ikon</p>
                 <Normaltekst>
                     {dato} / Fra {avsender}{' '}
                 </Normaltekst>

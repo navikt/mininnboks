@@ -17,5 +17,6 @@ export enum Temagrupper {
     OVRG = 'Øvrig',
     ANSOS = 'Økonomisk sosialhjelp',
     FMLI = 'Familie',
-    UFRT = 'Uføretrygd'
+    UFRT = 'Uføretrygd',
+    HELSE = 'Helse'
 }

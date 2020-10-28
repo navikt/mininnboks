@@ -31,6 +31,9 @@ function GodtaVilkar(props: Props) {
     };
 
     const label = 'Jeg godtar vilkårene for bruk av tjenesten.';
+    const feilmelding = !props.villkaarGodtatt
+        ? { feilmelding: <>Du må godta vilkårene for å sende beskjeden</> }
+        : undefined;
     return (
         <div className="godtavilkaar-panel blokk-m">
             <div className="nav-input">
@@ -41,6 +44,7 @@ function GodtaVilkar(props: Props) {
                     checked={props.villkaarGodtatt}
                     onChange={() => (props.villkaarGodtatt ? avbryt() : godkjennVilkaar())}
                     label={label}
+                    feil={feilmelding}
                 />
                 <Lenke href="javascript:void(0)" className="vilkar-link" onClick={props.actions.visVilkarModal}>
                     Vis vilkår

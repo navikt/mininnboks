@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 
 function AntallMeldinger({ antall }: { antall: number }) {
@@ -17,7 +16,7 @@ function AntallMeldinger({ antall }: { antall: number }) {
             antallTekst = '9+';
         }
 
-        flereMeldingerAriaLabel = <FormattedMessage id="meldinger.flere.aria.label" values={{ antall }} />;
+        flereMeldingerAriaLabel = antall === 1 ? `${antall} melding i tråden` : `${antall} meldinger i tråden`;
     }
 
     return (

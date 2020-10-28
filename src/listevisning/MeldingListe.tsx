@@ -2,11 +2,9 @@ import * as React from 'react';
 import MeldingPreview from './MeldingPreview';
 import DokumentPreview from './DokumentPreview';
 import OppgavePreview from './OppgavePreview';
-import { FormattedMessage } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Traad } from '../Traad';
-import FormattedHTMLMessage from '../utils/FormattedHTMLMessage';
 
 interface MeldingsListeElement {
     data: Traad;
@@ -15,7 +13,7 @@ interface MeldingsListeElement {
 }
 interface Props {
     meldinger: MeldingsListeElement[];
-    overskrift: string;
+    uleste: boolean;
 }
 
 const previewMap: { [key: string]: React.ComponentType<any> } = {
@@ -37,12 +35,20 @@ function MeldingListe(props: Props) {
         const previewComponent = previewMap[type] || previewMap.defaultVisning;
         return React.createElement(previewComponent, props);
     });
+    const antallMeldinger = props.meldinger.length;
+    const overskrift = props.uleste
+        ? antallMeldinger === 0
+            ? 'Du har ingen uleste meldinger'
+            : 'Uleste meldinger'
+        : antallMeldinger === 0
+        ? 'Du har ingen leste meldinger'
+        : 'Leste meldinger';
 
     return (
         <section className="traad-liste">
             <Panel className="blokk-xxxs">
                 <Undertittel tag="h2">
-                    <FormattedHTMLMessage id={props.overskrift} values={{ antallMeldinger: props.meldinger.length }} />
+                    {overskrift}
                     <span className="vekk">({props.meldinger.length})</span>
                 </Undertittel>
             </Panel>

@@ -14,7 +14,6 @@ import { visBesvarBoks } from '../ducks/ui';
 import { markerSomLest } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
 import { useAppState } from '../utils/custom-hooks';
-import FormattedHTMLMessage from '../utils/FormattedHTMLMessage';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -40,17 +39,11 @@ function TraadVisning() {
     const skrivKnappOnClick = () => {
         dispatch(visBesvarBoks());
     };
+
+    const sidetittel = valgttraad.nyeste.kassert ? 'Kassert dialog' : `Dialog om ${valgttraad.nyeste.temagruppeNavn}`;
     return (
         <div>
-            <Sidetittel className="text-center blokk-l">
-                <FormattedHTMLMessage
-                    id="traadvisning.overskrift"
-                    values={{
-                        kassert: valgttraad.nyeste.kassert,
-                        temagruppeNavn: valgttraad.nyeste.temagruppeNavn
-                    }}
-                />
-            </Sidetittel>
+            <Sidetittel className="text-center blokk-l">{sidetittel}</Sidetittel>
 
             <div className="traad-container">
                 <AlertstripeVisibleIf
