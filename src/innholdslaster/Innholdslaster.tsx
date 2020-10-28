@@ -19,7 +19,6 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 function Innholdslaster(props: Props) {
-    console.log('Innholdslaster', props.avhengigheter, alleLastet(props.avhengigheter));
     if (alleLastet(props.avhengigheter)) {
         if (typeof props.children === 'function') {
             return <>{props.children(props.avhengigheter)}</>;

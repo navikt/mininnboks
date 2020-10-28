@@ -9,7 +9,6 @@ function Traader(props: React.HtmlHTMLAttributes<HTMLElement>) {
     const traaderState = useAppState((state) => state.traader);
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log('fetching data');
         dispatch(hentTraader());
     }, []);
 
