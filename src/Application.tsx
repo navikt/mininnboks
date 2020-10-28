@@ -1,5 +1,4 @@
 import React from 'react';
-import { IntlProvider } from 'react-intl';
 import useFetch, { isPending, hasError } from '@nutgaard/use-fetch';
 import Routes from './routes';
 import { RESOURCES_PATH, MED_CREDENTIALS } from './utils/api';
@@ -15,10 +14,6 @@ function Application() {
         return <Spinner />;
     }
 
-    return (
-        <IntlProvider defaultLocale="nb" locale="nb" messages={ledetekster.data}>
-            <Routes />
-        </IntlProvider>
-    );
+    return <Routes />;
 }
 export default Application;

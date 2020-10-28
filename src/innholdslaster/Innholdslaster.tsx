@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Spinner from '../utils/Spinner';
 import { STATUS } from '../ducks/ducks-utils';
