@@ -1,12 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { shortDate } from '../utils';
 import Lenkepanel from '../utils/Lenkepanel';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Traad } from '../Traad';
 import { useEffect } from 'react';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { useHistory } from 'react-router';
+import { formaterDato } from '../utils/date-utils';
 
 interface Props {
     traad: Traad;
@@ -28,7 +28,7 @@ function OppgavePreview(props: Props) {
     }, []);
 
     const melding = props.traad.nyeste;
-    const dato = shortDate(melding.opprettet);
+    const dato = formaterDato(melding.opprettet);
 
     const avsender = props.traad.nyeste.fraNav ? (
         <span>

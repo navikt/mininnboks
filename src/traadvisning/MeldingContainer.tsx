@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { prettyDate } from '../utils';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 import './melding-container.less';
 import { Melding } from '../Traad';
+import { formaterDatoTidMedMaanedsnavn } from '../utils/date-utils';
 
 interface Props {
     melding: Melding;
@@ -13,7 +13,7 @@ interface Props {
 function MeldingContainer(props: Props) {
     const fraBruker = props.melding.fraBruker;
     const imgSrc = 'ikon ' + (fraBruker ? 'person-ikon' : 'nav-ikon');
-    const dato = prettyDate(props.melding.opprettet);
+    const dato = formaterDatoTidMedMaanedsnavn(props.melding.opprettet);
 
     const fritekst = props.melding.fritekst || '';
 

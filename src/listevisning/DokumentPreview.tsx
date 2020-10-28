@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { shortDate } from '../utils';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import { Traad } from '../Traad';
 import Lenkepanel from '../utils/Lenkepanel';
+import { formaterDato } from '../utils/date-utils';
 
 interface Props {
     traad: Traad;
@@ -19,7 +19,7 @@ const cls = (props: Props) =>
 function DokumentPreview(props: Props) {
     const dokument = props.traad.nyeste;
     const avsender = <span className="avsender-fra-nav">Dokument-ikon</span>;
-    const dato = shortDate(dokument.opprettet);
+    const dato = formaterDato(dokument.opprettet);
     const temanavn = dokument.temaNavn;
 
     return (

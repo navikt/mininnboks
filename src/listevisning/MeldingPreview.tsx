@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Lenkepanel from '../utils/Lenkepanel';
-import { shortDate } from '../utils';
 import AntallMeldinger from './AntallMeldinger';
 import classNames from 'classnames';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -8,6 +7,7 @@ import { Traad } from '../Traad';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import Tekstomrade, { defaultRules } from 'nav-frontend-tekstomrade';
+import { formaterDato } from '../utils/date-utils';
 
 interface Props {
     traad: Traad;
@@ -31,7 +31,7 @@ function MeldingPreview(props: Props) {
     }, []);
 
     const melding = props.traad.nyeste;
-    const dato = shortDate(melding.opprettet);
+    const dato = formaterDato(melding.opprettet);
 
     const antallMeldinger = props.traad.meldinger.length;
 
