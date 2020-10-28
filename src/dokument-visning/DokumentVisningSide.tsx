@@ -42,9 +42,10 @@ function DokumentVisningSide() {
     if (!traad) {
         return <Feilmelding>Fant ikke dokumentet</Feilmelding>;
     }
+    const feilmelding = 'Kunne ikke laste inn dokumentet';
 
     return (
-        <Innholdslaster avhengigheter={[dokumenter]} feilmeldingKey="innlastning.dokument.feil">
+        <Innholdslaster avhengigheter={[dokumenter]} feilmelding={feilmelding}>
             {(lastetDokumenter: OkState) => (
                 <>
                     <LastNedPdfModal />

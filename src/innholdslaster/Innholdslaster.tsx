@@ -16,11 +16,10 @@ const medFeil = (avhengigheter: Avhengighet<unknown>[]) => avhengigheter.filter(
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
     avhengigheter: Array<Avhengighet<unknown>>;
-    feilmeldingKey?: string;
+    feilmelding?: string;
 }
 
 function Innholdslaster(props: Props) {
-    const intl = useIntl();
     console.log('Innholdslaster', props.avhengigheter, alleLastet(props.avhengigheter));
     if (alleLastet(props.avhengigheter)) {
         if (typeof props.children === 'function') {
@@ -33,9 +32,7 @@ function Innholdslaster(props: Props) {
         const feilendeReducer = medFeil(props.avhengigheter);
         console.log(feilendeReducer); // eslint-disable-line no-console
 
-        const feilmelding =
-            (props.feilmeldingKey && intl.messages[props.feilmeldingKey]) ||
-            'Det skjedde en feil ved innlastningen av data';
+        const feilmelding = props.feilmelding || 'Det skjedde en feil ved innlastningen av data';
 
         getLogger().error(`${feilmelding}: ${JSON.stringify(feilendeReducer)}`);
 
