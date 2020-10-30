@@ -18,7 +18,7 @@ export interface Journalpostmetadata {
     avsender: string;
     mottaker: string;
     dato: string;
-    journalPostId: string;
+    journalpostId: string;
     resultat: {
         temakode: string;
         journalpostId: string;

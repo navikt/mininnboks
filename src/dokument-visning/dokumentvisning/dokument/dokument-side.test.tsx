@@ -8,7 +8,7 @@ describe('DokumentBilde', () => {
             kanVises: false,
             url: '/saksoversikt/img/dokumenter/mockside/1',
             ekstrafeilinfo: {},
-            feilmelding: 'feilmelding',
+            feilmelding: 'feilmelding.journalfortannettema',
             openPdfUrl: 'string',
             side: 1,
             tittel: 'tittel'

@@ -27,10 +27,12 @@ const dokumentFeilTittel: DokumentFeilTittel = {
 };
 
 const dokumentFeilTekst: DokumentFeilTekst = {
-    'feilmelding.journalfortannettema.tekst': (extra) => (
+    'feilmelding.journalfortannettema.tekst': (extra: any) => (
         <>
             Dokumentet ligger på {extra.temanavn}. Gå til dokumentet på teamet
-            <a href="https://tjenester.nav.no/saksoversikt/app/dokument/{extra.journalpostid}/{extra.dokumentreferanse}">
+            <a
+                href={`https://tjenester.nav.no/saksoversikt/app/dokument/${extra.journalpostId}/${extra.dokumentreferanse}`}
+            >
                 {extra.temanavn}
             </a>
         </>

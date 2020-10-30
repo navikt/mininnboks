@@ -18,7 +18,7 @@ const cls = (props: Props) =>
 
 function DokumentPreview(props: Props) {
     const dokument = props.traad.nyeste;
-    const avsender = <span className="avsender-fra-nav">Dokument-ikon</span>;
+    const avsender = <span className="avsender-fra-nav">NAV</span>;
     const dato = formaterDato(dokument.opprettet);
     const temanavn = dokument.temaNavn;
 

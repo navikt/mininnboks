@@ -17,7 +17,7 @@ const erGyldigJournalpost = (journalPostId: string) => {
 };
 
 function Personalia(props: Props) {
-    if (!erGyldigJournalpost(props.journalpostmetadata.journalPostId)) {
+    if (!erGyldigJournalpost(props.journalpostmetadata.journalpostId)) {
         return null;
     }
     const dato = formaterDato(props.journalpostmetadata.dato);

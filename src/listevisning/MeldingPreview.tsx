@@ -6,7 +6,6 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Traad } from '../Traad';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import Tekstomrade, { defaultRules } from 'nav-frontend-tekstomrade';
 import { formaterDato } from '../utils/date-utils';
 
 interface Props {
@@ -66,9 +65,7 @@ function MeldingPreview(props: Props) {
                         {maBesvares}
                     </span>
                 </Undertittel>
-                <Tekstomrade rules={[...defaultRules]} className="tema-avsnitt">
-                    {melding.fritekst}
-                </Tekstomrade>
+                <Normaltekst className="tema-avsnitt">{melding.fritekst}</Normaltekst>
             </Lenkepanel>
         </li>
     );
