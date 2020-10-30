@@ -84,6 +84,7 @@ export function sjekkRatelimiter() {
 export function sjekkOgOppdaterRatelimiter() {
     return (
         fetchToJson(RATE_LIMITER_URL, somPostConfig())
+            .then()
             // Ved feil sier vi at alt er greit slik at det ikke hindrer innsending
             .catch(() => true)
     );

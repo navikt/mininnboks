@@ -108,6 +108,7 @@ function SkrivNyttSporsmal(props: Props) {
                 return dispatch(sendSporsmal(temagruppe, values.fritekst, isDirekte));
             } else {
                 setRateLimiter(isOK);
+                return new Promise((resolve, reject) => reject('rate-limiter feilmelding'));
             }
         });
     }
