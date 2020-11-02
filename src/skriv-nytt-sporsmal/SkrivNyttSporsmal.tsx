@@ -54,7 +54,7 @@ const validator = useFormstate<SkrivNyttSporsmalForm>((values) => {
     if (values.fritekst.length > 1000) {
         fritekst = 'Teksten er for lang';
     }
-    const godkjennVilkaar = values.godkjennVilkaar ? undefined : 'Du må godta vilkårene for å sende beskjeden';
+    const godkjennVilkaar = values.godkjennVilkaar === '' ? 'Du må godta vilkårene for å sende beskjeden' : undefined;
 
     return { fritekst, godkjennVilkaar };
 });
@@ -73,7 +73,7 @@ function SkrivNyttSporsmal(props: Props) {
 
     const initialValues: SkrivNyttSporsmalForm = {
         fritekst: '',
-        godkjennVilkaar: 'false'
+        godkjennVilkaar: ''
     };
 
     const state = validator(initialValues);
@@ -150,9 +150,11 @@ function SkrivNyttSporsmal(props: Props) {
                     visModal={props.skalViseVilkarModal}
                     actions={props.actions}
                     inputName="godkjennVilkaar"
-                    skalViseFeilmelding={!!state.fields.godkjennVilkaar.error}
                     setVilkaarGodtatt={setGodkjennVilkaar}
                     villkaarGodtatt={godkjennVilkaar}
+                    label={'Jeg godtar vilkårene for bruk av tjenesten.'}
+                    {...state.fields.godkjennVilkaar.input}
+                    feil={feilmelding(state.fields.godkjennVilkaar)}
                 />
                 <Hovedknapp
                     htmlType="submit"
