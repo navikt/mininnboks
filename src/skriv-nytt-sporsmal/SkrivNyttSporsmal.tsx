@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Dispatch } from 'redux';
-import { visVilkarModal, skjulVilkarModal, TypeKeys } from '../ducks/ui';
+import { skjulVilkarModal, TypeKeys, visVilkarModal } from '../ducks/ui';
 import { sendSporsmal } from '../ducks/traader';
 import { STATUS } from '../ducks/ducks-utils';
 import { Textarea } from 'nav-frontend-skjema';
@@ -10,7 +11,7 @@ import TemagruppeEkstraInfo, { Temagruppe } from './TemagruppeEkstraInfo';
 import Feilmelding from '../feilmelding/Feilmelding';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Sidetittel, Innholdstittel, Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst, Sidetittel, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
 
@@ -19,12 +20,11 @@ import { feilmelding } from '../utils/validationutil';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { harTilgangTilKommunaleTemagrupper, TilgangState } from '../ducks/tilgang';
 import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
-import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import { harData } from '../avhengigheter';
-import useFormstate, { Values } from '@nutgaard/use-formstate';
+import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
 import { Temagrupper } from '../utils/constants';
 
@@ -46,17 +46,19 @@ type SkrivNyttSporsmalForm = {
     fritekst: string;
     godkjennVilkaar: string;
 };
-const validator = useFormstate<SkrivNyttSporsmalForm>((values) => {
-    let fritekst = undefined;
-    if (values.fritekst.length === 0) {
-        fritekst = 'Tekstfeltet er tomt';
-    }
-    if (values.fritekst.length > 1000) {
-        fritekst = 'Teksten er for lang';
-    }
-    const godkjennVilkaar = values.godkjennVilkaar === '' ? 'Du må godta vilkårene for å sende beskjeden' : undefined;
 
-    return { fritekst, godkjennVilkaar };
+const useFormstate = useFormstateFactory<SkrivNyttSporsmalForm>({
+    godkjennVilkaar(value) {
+        return value === 'true' ? undefined : 'Du må godta vilkårene for å sende beskjeden';
+    },
+    fritekst(value: string) {
+        if (value.length === 0) {
+            return 'Tekstfeltet er tomt';
+        } else if (value.length > 1000) {
+            return 'Teksten er for lang';
+        }
+        return undefined;
+    }
 });
 
 enum FeilmeldingKommunalSjekk {
@@ -64,19 +66,15 @@ enum FeilmeldingKommunalSjekk {
     KODE6 = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.',
     INGEN_ENHET = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.'
 }
+
 function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
-    const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
-
     const params = useParams<{ temagruppe: Temagruppe }>();
     const dispatch = useThunkDispatch();
-
-    const initialValues: SkrivNyttSporsmalForm = {
+    const state = useFormstate({
         fritekst: '',
-        godkjennVilkaar: ''
-    };
-
-    const state = validator(initialValues);
+        godkjennVilkaar: 'false'
+    });
 
     useEffect(() => {
         const temagruppe = params.temagruppe.toLowerCase();
@@ -147,13 +145,10 @@ function SkrivNyttSporsmal(props: Props) {
                     feil={feilmelding(state.fields.fritekst)}
                 />
                 <GodtaVilkar
+                    label="Jeg godtar vilkårene for bruk av tjenesten."
                     visModal={props.skalViseVilkarModal}
                     actions={props.actions}
-                    inputName="godkjennVilkaar"
-                    setVilkaarGodtatt={setGodkjennVilkaar}
-                    villkaarGodtatt={godkjennVilkaar}
-                    label={'Jeg godtar vilkårene for bruk av tjenesten.'}
-                    {...state.fields.godkjennVilkaar.input}
+                    fieldstate={state.fields.godkjennVilkaar}
                     feil={feilmelding(state.fields.godkjennVilkaar)}
                 />
                 <Hovedknapp
