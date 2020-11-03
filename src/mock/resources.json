@@ -9,6 +9,7 @@
     "ANSOS": "Økonomisk sosialhjelp",
     "FMLI": "Familie",
     "UFRT": "Uføretrygd",
+  "HELSE": "Helse",
     "feilmelding.fritekst.required": "Tekstfeltet er tomt",
     "feilmelding.korruptpdf.tittel": "Korrupt PDF",
     "feilmelding.korruptpdf.tekst": "Vi klarte ikke å vise PDF&apos;en.",

@@ -66,9 +66,9 @@ enum FeilmeldingKommunalSjekk {
 }
 function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
+    const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
 
     const params = useParams<{ temagruppe: Temagruppe }>();
-    const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
     const dispatch = useThunkDispatch();
 
     const initialValues: SkrivNyttSporsmalForm = {
