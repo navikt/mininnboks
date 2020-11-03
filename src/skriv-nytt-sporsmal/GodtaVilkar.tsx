@@ -1,71 +1,50 @@
 import * as React from 'react';
-import Betingelser from './Betingelser';
+import { FieldState, checkboxAdapter } from '@nutgaard/use-formstate';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
 import Lenke from 'nav-frontend-lenker';
-
+import Betingelser from './Betingelser';
+import { feilmelding } from '../utils/validationutil';
 import './godta-vilkar.less';
-import useFormstate from "@nutgaard/use-formstate";
-import {feilmelding} from "../utils/validationutil";
 
 interface Props extends CheckboxProps {
+    visModal: boolean;
     actions: {
         visVilkarModal: () => void;
         skjulVilkarModal: () => void;
     };
-    visModal: boolean;
-    inputName: string;
-    setVilkaarGodtatt: (godtatt: boolean) => void;
-    villkaarGodtatt: boolean;
+    fieldstate: FieldState;
 }
-type Vilkaar = {
-    godkjennVilkaar: string;
-};
-const validator = useFormstate<Vilkaar>((values) => {
-    console.log(values);
-    const godkjennVilkaar = values.godkjennVilkaar === '' ? 'Du må godta vilkårene for å sende beskjeden' : undefined;
-
-    return {godkjennVilkaar };
-});
-
-const initialValues : Vilkaar= {
-    godkjennVilkaar: ''
-};
 
 function GodtaVilkar(props: Props) {
+    const { visModal, actions, fieldstate, ...rest } = props;
     const godkjennVilkaar = () => {
-        props.setVilkaarGodtatt(true);
-        props.actions.skjulVilkarModal();
+        fieldstate.setValue('true');
+        actions.skjulVilkarModal();
     };
 
     const avbryt = () => {
-        props.setVilkaarGodtatt(false);
-        props.actions.skjulVilkarModal();
+        fieldstate.setValue('false');
+        actions.skjulVilkarModal();
     };
-
-    const initialValues : Vilkaar= {
-        godkjennVilkaar: ''
-    };
-
-    const state = validator(initialValues);
 
     return (
         <div className="godtavilkaar-panel blokk-m">
             <div className="nav-input">
                 <Checkbox
+                    {...rest}
+                    {...checkboxAdapter(fieldstate)}
+                    feil={feilmelding(fieldstate)}
                     className="checkbox"
                     aria-describedby="checkbox-feilmelding"
-                    label={props.label}
-                    {...state.fields.godkjennVilkaar.input}
-                    feil={feilmelding(state.fields.godkjennVilkaar)}
                 />
-                <Lenke href="javascript:void(0)" className="vilkar-link" onClick={props.actions.visVilkarModal}>
+                <Lenke href="javascript:void(0)" className="vilkar-link" onClick={actions.visVilkarModal}>
                     Vis vilkår
                 </Lenke>
                 <Betingelser
-                    visModal={props.visModal}
+                    visModal={visModal}
                     godkjennVilkaar={godkjennVilkaar}
                     avbryt={avbryt}
-                    lukkModal={props.actions.skjulVilkarModal}
+                    lukkModal={actions.skjulVilkarModal}
                 />
             </div>
         </div>

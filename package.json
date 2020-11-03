@@ -34,7 +34,7 @@
         "@formatjs/intl-pluralrules": "^3.4.10",
         "@formatjs/intl-relativetimeformat": "^7.2.10",
         "@nutgaard/use-fetch": "^2.3.1",
-        "@nutgaard/use-formstate": "^2.3.3",
+        "@nutgaard/use-formstate": "^2.4.2",
         "@types/classnames": "^2.2.6",
         "@types/enzyme": "^3.10.7",
         "@types/enzyme-adapter-react-16": "^1.0.6",
