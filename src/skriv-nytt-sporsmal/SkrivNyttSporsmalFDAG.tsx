@@ -1,4 +1,3 @@
-import PT from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Dispatch } from 'redux';
 import { visVilkarModal, skjulVilkarModal, TypeKeys } from './../ducks/ui';
