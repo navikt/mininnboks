@@ -23,7 +23,6 @@ import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
 import { useLocation, useParams } from 'react-router';
 import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
-import { harData } from '../avhengigheter';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
 import { Temagrupper } from '../utils/constants';
@@ -38,7 +37,6 @@ interface Props {
     };
     skalViseVilkarModal: boolean;
     sendingStatus: string;
-    godkjenteTemagrupper: string[];
     tilgang: TilgangState;
 }
 
@@ -47,7 +45,7 @@ type SkrivNyttSporsmalForm = {
     godkjennVilkaar: string;
 };
 
-const useFormstate = useFormstateFactory<SkrivNyttSporsmalForm>({
+export const useFormstate = useFormstateFactory<SkrivNyttSporsmalForm>({
     godkjennVilkaar(value) {
         return value === 'true' ? undefined : 'Du må godta vilkårene for å sende beskjeden';
     },
@@ -163,9 +161,8 @@ function SkrivNyttSporsmal(props: Props) {
     );
 }
 
-const mapStateToProps = ({ ledetekster, traader, ui, tilgang }: AppState) => ({
+const mapStateToProps = ({ traader, ui, tilgang }: AppState) => ({
     skalViseVilkarModal: ui.visVilkarModal,
-    godkjenteTemagrupper: harData(ledetekster) ? ledetekster.godkjenteTemagrupper : [],
     sendingStatus: traader.innsendingStatus,
     tilgang: tilgang
 });

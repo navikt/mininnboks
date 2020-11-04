@@ -6,7 +6,6 @@ import { Textarea } from 'nav-frontend-skjema';
 import Kvittering from './Kvittering';
 import Feilmelding from '../feilmelding/Feilmelding';
 import { connect } from 'react-redux';
-import Brodsmuler from '../brodsmuler/Brodsmuler';
 import { withRouter } from 'react-router-dom';
 import { Sidetittel, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -19,16 +18,18 @@ import { TilgangState } from '../ducks/tilgang';
 import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { AppState } from '../reducer';
-import { harData } from '../avhengigheter';
-import useFormstate, { Values } from '@nutgaard/use-formstate';
+import { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
 import Lenke from 'nav-frontend-lenker';
 import GodtaVilkar from './GodtaVilkar';
 import { STATUS } from '../ducks/ducks-utils';
+import { useFormstate } from './SkrivNyttSporsmal';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
 const ukjentTemagruppeTittel = 'Ikke gjenkjent temagruppe';
+
+const godkjenteTemagrupper = ['ARBD', 'FDAG'];
 
 const temagruppe = 'FDAG';
 
@@ -44,35 +45,18 @@ interface Props {
     };
     skalViseVilkarModal: boolean;
     sendingStatus: string;
-    godkjenteTemagrupper: string[];
     tilgang: TilgangState;
 }
 
-const validator = useFormstate<SkrivNyttSporsmalFDAGForm>((values) => {
-    let fritekst = undefined;
-    if (values.fritekst.length === 0) {
-        fritekst = 'Tekstfeltet er tomt';
-    }
-    if (values.fritekst.length > 1000) {
-        fritekst = 'Teksten er for lang';
-    }
-    const godkjennVilkaar = values.godkjennVilkaar === '' ? 'Du må godta vilkårene for å sende beskjeden' : undefined;
-
-    return { fritekst, godkjennVilkaar };
-});
-
 function SkrivNyttSporsmalFDAG(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
-    const [godkjennVilkaar, setGodkjennVilkaar] = useState(false);
 
     const dispatch = useThunkDispatch();
 
-    const initialValues: SkrivNyttSporsmalFDAGForm = {
+    const state = useFormstate({
         fritekst: '',
-        godkjennVilkaar: ''
-    };
-
-    const state = validator(initialValues);
+        godkjennVilkaar: 'false'
+    });
 
     useEffect(() => {
         sjekkRatelimiter().then((res) => setRateLimiter(res));
@@ -89,7 +73,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
         });
     }
 
-    if (!props.godkjenteTemagrupper.includes(temagruppe)) {
+    if (!godkjenteTemagrupper.includes(temagruppe)) {
         return <Feilmelding>{ukjentTemagruppeTittel}</Feilmelding>;
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
@@ -97,7 +81,6 @@ function SkrivNyttSporsmalFDAG(props: Props) {
 
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
-            <Brodsmuler />
             <Sidetittel className="text-center blokk-m">Tilbakebetaling av forskudd på dagpenger</Sidetittel>
             <form className="panel" onSubmit={state.onSubmit(submitHandler)}>
                 <i className="meldingikon" />
@@ -113,7 +96,10 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                 </AlertstripeVisibleIf>
                 <AlertStripeInfoSolid className="blokk-xs">
                     Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
-                    <Lenke href="skriv.ny.link" className="Lenke">
+                    <Lenke
+                        href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                        className="Lenke"
+                    >
                         {' '}
                         Skriv til Oss
                     </Lenke>
@@ -123,7 +109,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                     kan du skrive til oss i feltet under.
                 </Normaltekst>
                 <Normaltekst className="typo-normal blokk-xs">
-                    Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til Ditt Nav og&nbsp;
+                    Hvis du vil endre nedbetalingsplanen på trekket ditt, går du til Ditt Nav og{' '}
                     <Lenke href="https://www.nav.no/dagpenger/forskudd/oversikt" className="Lenke">
                         endrer nedbetalingsplanen
                     </Lenke>{' '}
@@ -135,25 +121,24 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                         href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/kampanje-korona/tilbakebetaling-og-trekk-av-forskudd-pa-dagpenger"
                         className="Lenke"
                     >
+                        {' '}
                         lese om tilbakebetaling av forskudd.
                     </Lenke>
                 </Normaltekst>
-                <Textarea
-                    textareaClass="fritekst"
-                    label={''}
-                    maxLength={1000}
-                    {...state.fields.fritekst.input}
-                    feil={feilmelding(state.fields.fritekst)}
-                />
                 <div className="text-center">
+                    <Textarea
+                        textareaClass="fritekst"
+                        label={''}
+                        maxLength={1000}
+                        {...state.fields.fritekst.input}
+                        feil={feilmelding(state.fields.fritekst)}
+                    />
                     <GodtaVilkar
                         visModal={props.skalViseVilkarModal}
                         actions={props.actions}
-                        setVilkaarGodtatt={setGodkjennVilkaar}
-                        villkaarGodtatt={godkjennVilkaar}
-                        inputName="godkjennVilkaar"
                         label={'Jeg godtar vilkårene for bruk av tjenesten.'}
-                        {...state.fields.godkjennVilkaar.input}
+                        fieldstate={state.fields.godkjennVilkaar}
+                        feil={feilmelding(state.fields.godkjennVilkaar)}
                     />
                     <Hovedknapp
                         spinner={props.sendingStatus === STATUS.PENDING}
@@ -166,9 +151,8 @@ function SkrivNyttSporsmalFDAG(props: Props) {
         </article>
     );
 }
-const mapStateToProps = ({ ledetekster, traader, ui, tilgang }: AppState) => ({
+const mapStateToProps = ({ traader, ui, tilgang }: AppState) => ({
     skalViseVilkarModal: ui.visVilkarModal,
-    godkjenteTemagrupper: harData(ledetekster) ? ledetekster.godkjenteTemagrupper : [],
     sendingStatus: traader.innsendingStatus,
     tilgang: tilgang
 });
