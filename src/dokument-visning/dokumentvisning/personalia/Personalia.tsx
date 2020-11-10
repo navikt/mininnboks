@@ -5,7 +5,6 @@ import { Journalpostmetadata } from '../../../dokument';
 import { formaterDato } from '../../../utils/date-utils';
 
 interface Props {
-    hode: boolean;
     journalpostmetadata: Journalpostmetadata;
     className: string;
 }
@@ -36,9 +35,5 @@ function Personalia(props: Props) {
         </section>
     );
 }
-
-Personalia.defaultProps = {
-    hode: true
-};
 
 export default Personalia;

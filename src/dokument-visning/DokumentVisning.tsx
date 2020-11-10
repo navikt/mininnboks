@@ -24,7 +24,7 @@ function DokumentVisning(props: Props) {
     return (
         <div className="dokinnsyn">
             <section className="dokumentvisning-header blokk-m">
-                <Personalia journalpostmetadata={props.journalpostmetadata} hode={false} className="blokk-m" />
+                <Personalia journalpostmetadata={props.journalpostmetadata} className="blokk-m" />
                 <ul className="ustilet">
                     <li>
                         <Lenke href={`/saksoversikt/app/tema/${temakode}`}>Gå til saksoversikt</Lenke>
