@@ -18,5 +18,6 @@ export enum Temagrupper {
     ANSOS = 'Økonomisk sosialhjelp',
     FMLI = 'Familie',
     UFRT = 'Uføretrygd',
-    HELSE = 'Helse'
+    HELSE = 'Helse',
+    FDAG = 'Forskudd på dagpenger'
 }
