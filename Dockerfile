@@ -12,6 +12,6 @@ RUN npm test
 ENV NODE_ENV=production
 RUN npm run build
 
-FROM docker.pkg.github.com/navikt/pus-decorator/pus-decorator:59f8eec3af5959eb2932b4155f9dc6c0e63b78e0
+FROM docker.pkg.github.com/navikt/pus-decorator/pus-decorator:bb933fdabee97947acfab903ef25ccc02a11cd9d
 COPY --from=builder /source/build /app
 ADD decorator.yaml /decorator.yaml
