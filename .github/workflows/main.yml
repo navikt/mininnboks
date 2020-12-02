@@ -43,6 +43,25 @@ jobs:
                   docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
                   docker build --tag ${IMAGE} .
                   docker push ${IMAGE}
+    deploy-q1:
+        name: Deploy to preprod
+        needs: build-and-push
+        if: github.ref == 'refs/heads/feat/typescript'
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                namespace: [q1]
+        steps:
+            - uses: actions/checkout@v1
+            - uses: nais/deploy/actions/deploy@v1
+              env:
+                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                  PRINT_PAYLOAD: true
+                  CLUSTER: dev-sbs
+                  RESOURCE: .nais/qa-template.yaml
+                  VAR: namespace=${{matrix.namespace}},version=${{github.sha}}
+                  VARS: .nais/${{ matrix.namespace }}.yaml
+
     deploy-qa:
         name: Deploy to preprod
         needs: build-and-push
@@ -50,7 +69,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                namespace: [q0, q1, q6]
+                namespace: [q0, q6]
         steps:
             - uses: actions/checkout@v1
             - uses: nais/deploy/actions/deploy@v1
