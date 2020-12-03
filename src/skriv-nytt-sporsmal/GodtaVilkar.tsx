@@ -37,7 +37,7 @@ function GodtaVilkar(props: Props) {
                     className="checkbox"
                     aria-describedby="checkbox-feilmelding"
                 />
-                <Lenke href="javascript:void(0)" className="vilkar-link" onClick={actions.visVilkarModal}>
+                <Lenke href="#" className="vilkar-link" onClick={actions.visVilkarModal}>
                     Vis vilkår
                 </Lenke>
                 <Betingelser

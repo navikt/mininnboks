@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormEvent } from 'react';
 import Modal from 'nav-frontend-modal';
 import { Sidetittel } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 
 import './betingelser.less';
 
@@ -55,9 +55,9 @@ function Betingelser(props: Props) {
                     </Hovedknapp>
                 </div>
                 <div className="text-center">
-                    <a href="javascript:void(0)" onClick={props.avbryt} aria-controls="betingelser" role="button">
+                    <Flatknapp onClick={props.avbryt} aria-controls="betingelser" role="button">
                         Jeg godtar ikke vilkårene
-                    </a>
+                    </Flatknapp>
                 </div>
             </form>
         </Modal>

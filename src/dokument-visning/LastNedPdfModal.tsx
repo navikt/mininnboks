@@ -36,7 +36,7 @@ function LastNedPdfModal() {
                                 Fortsett
                             </a>
                         </div>
-                        <Lenke role="button" href="javascript:void(0)" onClick={deactivateModal}>
+                        <Lenke role="button" href="#" onClick={deactivateModal}>
                             Avbryt
                         </Lenke>
                     </div>
