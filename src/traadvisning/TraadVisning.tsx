@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import BesvarBoks from './BesvarBoks';
 import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
@@ -13,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { visBesvarBoks } from '../ducks/ui';
 import { markerSomLest } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
-import { useAppState } from '../utils/custom-hooks';
+import { useAppState, useOnMount } from '../utils/custom-hooks';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -24,9 +23,9 @@ function TraadVisning() {
     const dispatch = useDispatch();
     const traader = useAppState(selectTraaderMedSammenslatteMeldinger);
 
-    useEffect(() => {
+    useOnMount(() => {
         markerSomLest(params.traadId);
-    }, []);
+    });
 
     const traadId = params.traadId;
     const valgttraad = traader.data.find((traad) => traad.traadId === traadId);

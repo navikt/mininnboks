@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Dispatch } from 'redux';
 import { skjulVilkarModal, TypeKeys, visVilkarModal } from '../ducks/ui';
 import { sendSporsmal } from '../ducks/traader';
@@ -26,6 +26,7 @@ import Spinner from '../utils/Spinner';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
 import { Temagrupper } from '../utils/constants';
+import { useOnMount } from '../utils/custom-hooks';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 const godkjenteTemagrupper = ['ARBD'];
@@ -74,13 +75,13 @@ function SkrivNyttSporsmal(props: Props) {
         godkjennVilkaar: 'false'
     });
 
-    useEffect(() => {
+    useOnMount(() => {
         const temagruppe = params.temagruppe.toLowerCase();
         if (temagruppe === 'oksos') {
             dispatch(harTilgangTilKommunaleTemagrupper());
         }
         sjekkRatelimiter().then((res) => setRateLimiter(res));
-    }, []);
+    });
 
     const location = useLocation();
     const temagruppe = params.temagruppe;

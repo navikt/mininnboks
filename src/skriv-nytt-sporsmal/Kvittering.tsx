@@ -12,6 +12,7 @@ function Kvittering() {
                 <a
                     href="https://brukerprofil.difi.no/minprofil"
                     target="_blank"
+                    rel="noopener noreferrer"
                     title="Lenke som åpner din brukerprofil hos DIFI"
                 >
                     Difis sentrale kontaktregister

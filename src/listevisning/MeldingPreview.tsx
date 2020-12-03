@@ -4,9 +4,9 @@ import AntallMeldinger from './AntallMeldinger';
 import classNames from 'classnames';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Traad } from '../Traad';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { formaterDato } from '../utils/date-utils';
+import { useOnMount } from '../utils/custom-hooks';
 
 interface Props {
     traad: Traad;
@@ -23,11 +23,11 @@ const cls = (props: Props) =>
 function MeldingPreview(props: Props) {
     const history = useHistory();
 
-    useEffect(() => {
+    useOnMount(() => {
         if (props.aktiv) {
             history.push(`traad/${props.traad.nyeste.id}`);
         }
-    }, []);
+    });
 
     const melding = props.traad.nyeste;
     const dato = formaterDato(melding.opprettet);

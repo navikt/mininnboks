@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../ducks/traader';
 import { hentDokumentVisningData, OkState, visLastNedPdfModal } from '../ducks/dokumenter';
@@ -7,7 +6,7 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedPdfModal from './LastNedPdfModal';
 import { useParams } from 'react-router';
-import { useAppState } from '../utils/custom-hooks';
+import { useAppState, useOnMount } from '../utils/custom-hooks';
 import Innholdslaster from '../innholdslaster/Innholdslaster';
 
 function DokumentVisningSide() {
@@ -17,7 +16,7 @@ function DokumentVisningSide() {
     const dokumenter = useAppState((state) => state.dokumenter);
     const traader = getTraaderSafe(traaderResource);
 
-    useEffect(() => {
+    useOnMount(() => {
         const traad = traader.find((traad) => traad.traadId === params.id);
         if (traad && !traad.meldinger[0].lest) {
             dispatch(markerBehandlingsIdSomLest(params.id));
@@ -26,7 +25,7 @@ function DokumentVisningSide() {
             const varsel = traad.meldinger[0];
             dispatch(hentDokumentVisningData(varsel.journalpostId, varsel.dokumentIdListe.join('-')));
         }
-    }, []);
+    });
 
     const onLastNedPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();

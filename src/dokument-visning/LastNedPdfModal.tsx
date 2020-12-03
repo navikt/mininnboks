@@ -28,6 +28,7 @@ function LastNedPdfModal() {
                         <div className="blokk-s">
                             <a
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 href={pdfModal.dokumentUrl as string}
                                 className="knapp knapp--hoved"
                                 onClick={deactivateModal}
