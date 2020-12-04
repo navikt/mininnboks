@@ -2,12 +2,6 @@ import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import 'whatwg-fetch';
 
-import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-pluralrules/locale-data/nb';
-
-import '@formatjs/intl-relativetimeformat/polyfill';
-import '@formatjs/intl-relativetimeformat/locale-data/nb';
-
 if (!global.Intl) {
     require('intl');
     require('intl/locale-data/jsonp/nb-NO.js');

@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { Action } from 'redux';
+import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { AppState } from './reducer';
 
-export function useThunkDispatch<STATE, EXTRA, ACTION extends Action>(): ThunkDispatch<STATE, EXTRA, ACTION> {
+export function useThunkDispatch(): ThunkDispatch<AppState, any, AnyAction> {
     return useDispatch();
 }

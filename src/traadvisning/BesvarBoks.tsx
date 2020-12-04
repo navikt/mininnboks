@@ -7,9 +7,9 @@ import { visibleIfHOC } from '../utils/hocs/visible-if';
 
 import './besvar-boks.less';
 import { skjulBesvarBoks } from '../ducks/ui';
-import { sendSvar2 } from '../ducks/traader';
 import useFormstate, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
+import { sendSvar } from '../ducks/traader';
 
 interface Props {
     innsendingStatus: STATUS;
@@ -40,7 +40,7 @@ function BesvarBoks(props: Props) {
     const state = validator(initialValues);
 
     function submitHandler<S>(values: Values<BesvarForm>): Promise<any> {
-        return dispatch(sendSvar2(props.traadId, values.fritekst));
+        return dispatch(sendSvar(props.traadId, values.fritekst));
     }
 
     const avbryt = () => {
