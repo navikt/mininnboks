@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import NavFrontendModal from 'nav-frontend-modal';
-import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper';
 import './last-ned-pdf-modal.less';
 import { skjulLastNedPdfModal } from '../ducks/dokumenter';
 import { useAppState } from '../utils/custom-hooks';
+import { Flatknapp } from 'nav-frontend-knapper';
 
 function LastNedPdfModal() {
     const dispatch = useDispatch();
@@ -36,9 +36,9 @@ function LastNedPdfModal() {
                                 Fortsett
                             </a>
                         </div>
-                        <Lenke role="button" href="#" onClick={deactivateModal}>
+                        <Flatknapp role="button" onClick={deactivateModal}>
                             Avbryt
-                        </Lenke>
+                        </Flatknapp>
                     </div>
                 </div>
             </Alertstripe>

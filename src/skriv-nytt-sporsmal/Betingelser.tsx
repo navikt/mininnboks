@@ -36,21 +36,26 @@ function Betingelser(props: Props) {
                     </p>
                     <p>
                         Skal du sende inn en søknad, dokumenter eller klage på vedtak, må du bruke{' '}
-                        <a className="lopendetekst" href="https://www.nav.no/no/skjema/skjemaer">
+                        <a className="lopendetekst" href="https://www.nav.no/soknader/nb/person">
                             skjemaveilederen
                         </a>
                         .
                     </p>
                     <p>
-                        {' '}
-                        <strong>Opplysningene blir holdt konfidensielt</strong> Opplysningene vil bli behandlet på en
-                        sikker måte. De er bare tilgjengelige for ansatte i NAV som skal svare på henvendelsen din, og
-                        som skal hjelpe deg hvis du kontakter oss en annen gang.
+                        For søknader eller informasjon om økonomisk sosialhjelp kan du bruke{' '}
+                        <a className="lopendetekst" href="https://www.nav.no/no/person/flere-tema/sosiale-tjenester">
+                            veileder sosialhjelp
+                        </a>
+                        .
+                    </p>
+                    <p>
+                        Opplysningene er bare tilgjengelige for ansatte i NAV som skal svare på henvendelsen din, og som
+                        skal hjelpe deg hvis du kontakter oss en annen gang.
                     </p>
                 </div>
                 <hr className="blokk-m" />
                 <div className="svar-godta text-center blokk-m">
-                    <Hovedknapp htmlType="submit" aria-controls="betingelser" onClick={props.godkjennVilkaar}>
+                    <Hovedknapp mini htmlType="submit" aria-controls="betingelser" onClick={props.godkjennVilkaar}>
                         Jeg godtar vilkårene
                     </Hovedknapp>
                 </div>

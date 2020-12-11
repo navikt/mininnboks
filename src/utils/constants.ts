@@ -21,3 +21,5 @@ export enum Temagrupper {
     HELSE = 'Helse',
     FDAG = 'Forskudd på dagpenger'
 }
+
+export const GodkjenteTemagrupper = ['ARBD', 'HELSE', 'FMLI', 'FDAG', 'HJLPM', 'BIL', 'ORT_HJE', 'PENS', 'UFRT'];

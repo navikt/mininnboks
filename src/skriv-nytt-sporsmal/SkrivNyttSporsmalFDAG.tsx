@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Sidetittel, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import Alertstripe from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
 
 import './skriv-nytt-sporsmal.less';
 import { feilmelding } from '../utils/validationutil';
@@ -25,7 +25,7 @@ import GodtaVilkar from './GodtaVilkar';
 import { STATUS } from '../ducks/ducks-utils';
 import { useFormstate } from './SkrivNyttSporsmal';
 
-const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
+const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarselSolid);
 
 const ukjentTemagruppeTittel = 'Ikke gjenkjent temagruppe';
 
@@ -87,23 +87,25 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                 <Innholdstittel tag="h2" className="blokk-xl text-center">
                     Skriv melding
                 </Innholdstittel>
-                <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
-                    Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
-                    tidspunkt.
-                </AlertstripeVisibleIf>
-                <AlertstripeVisibleIf type="advarsel" visibleIf={props.sendingStatus === STATUS.ERROR}>
-                    Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
-                </AlertstripeVisibleIf>
-                <AlertStripeInfoSolid className="blokk-xs">
-                    Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
-                    <Lenke
-                        href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
-                        className="Lenke"
-                    >
-                        {' '}
-                        Skriv til Oss
-                    </Lenke>
-                </AlertStripeInfoSolid>
+                <div className="alertstripe-margin">
+                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter}>
+                        Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
+                        tidspunkt.
+                    </AlertstripeAdvarselVisibleIf>
+                    <AlertstripeAdvarselVisibleIf visibleIf={props.sendingStatus === STATUS.ERROR}>
+                        Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
+                    </AlertstripeAdvarselVisibleIf>
+                    <AlertStripeInfoSolid className="blokk-xs">
+                        Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
+                        <Lenke
+                            href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                            className="Lenke"
+                        >
+                            {' '}
+                            Skriv til oss
+                        </Lenke>
+                    </AlertStripeInfoSolid>
+                </div>
                 <Normaltekst className="typo-normal blokk-xs">
                     Fra 1.september startet NAV med å kreve tilbake forskudd på dagpenger. Har du spørsmål om ordningen
                     kan du skrive til oss i feltet under.
@@ -141,6 +143,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                         feil={feilmelding(state.fields.godkjennVilkaar)}
                     />
                     <Hovedknapp
+                        mini
                         spinner={props.sendingStatus === STATUS.PENDING}
                         aria-disabled={props.sendingStatus === STATUS.PENDING}
                     >

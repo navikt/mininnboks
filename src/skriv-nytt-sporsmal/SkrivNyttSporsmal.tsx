@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Innholdstittel, Normaltekst, Sidetittel, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import Alertstripe from 'nav-frontend-alertstriper';
+import Alertstripe, { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
 
 import './skriv-nytt-sporsmal.less';
 import { feilmelding } from '../utils/validationutil';
@@ -25,11 +25,10 @@ import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
-import { Temagrupper } from '../utils/constants';
+import { GodkjenteTemagrupper, Temagrupper } from '../utils/constants';
 import { useOnMount } from '../utils/custom-hooks';
 
-const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
-const godkjenteTemagrupper = ['ARBD'];
+const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarselSolid);
 
 interface Props {
     actions: {
@@ -110,7 +109,7 @@ function SkrivNyttSporsmal(props: Props) {
         });
     }
 
-    if (!godkjenteTemagrupper.includes(temagruppe)) {
+    if (!GodkjenteTemagrupper.includes(temagruppe)) {
         return <Feilmelding>Ikke gjenkjent temagruppe</Feilmelding>;
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
@@ -124,13 +123,15 @@ function SkrivNyttSporsmal(props: Props) {
                 <i className="meldingikon" />
                 <Innholdstittel className="blokk-xl">Skriv melding</Innholdstittel>
                 <Undertittel className="blokk-s">{valgtTemagruppe}</Undertittel>
-                <AlertstripeVisibleIf type="advarsel" visibleIf={!rateLimiter}>
-                    Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
-                    tidspunkt.{' '}
-                </AlertstripeVisibleIf>
-                <AlertstripeVisibleIf type="advarsel" visibleIf={props.sendingStatus === STATUS.ERROR}>
-                    Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
-                </AlertstripeVisibleIf>
+                <div className="alertstripe-margin">
+                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter}>
+                        Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
+                        tidspunkt.{' '}
+                    </AlertstripeAdvarselVisibleIf>
+                    <AlertstripeAdvarselVisibleIf visibleIf={props.sendingStatus === STATUS.ERROR}>
+                        Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
+                    </AlertstripeAdvarselVisibleIf>
+                </div>
                 <Normaltekst className="typo-normal blokk-xs">
                     Send bare beskjeder som kan ha betydning for saken din. Husk å få med alle relevante opplysninger.
                     Du kan skrive maksimalt 1000 tegn, det er cirka en halv A4-side.{' '}
@@ -152,6 +153,8 @@ function SkrivNyttSporsmal(props: Props) {
                 />
                 <Hovedknapp
                     htmlType="submit"
+                    type="hoved"
+                    mini
                     spinner={props.sendingStatus === STATUS.PENDING}
                     aria-disabled={props.sendingStatus === STATUS.PENDING}
                 >
