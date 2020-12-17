@@ -5,9 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 function SkrivKnapp(props: React.HTMLAttributes<HTMLElement>) {
     return (
         <div className="text-center blokk-l">
-            <Hovedknapp onClick={props.onClick} mini>
-                Skriv svar
-            </Hovedknapp>
+            <Hovedknapp onClick={props.onClick}>Skriv svar</Hovedknapp>
         </div>
     );
 }

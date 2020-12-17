@@ -41,7 +41,7 @@ function TraadVisning() {
 
     const sidetittel = valgttraad.nyeste.kassert ? 'Kassert dialog' : `Dialog om ${valgttraad.nyeste.temagruppeNavn}`;
     return (
-        <div>
+        <article className="blokk-center">
             <Sidetittel className="text-center blokk-l">{sidetittel}</Sidetittel>
 
             <div className="traad-container">
@@ -65,7 +65,7 @@ function TraadVisning() {
                 <BesvarBoks innsendingStatus={innsendingStatus} visibleIf={skalViseBesvarBoks} traadId={traadId} />
                 {meldingItems}
             </div>
-        </div>
+        </article>
     );
 }
 

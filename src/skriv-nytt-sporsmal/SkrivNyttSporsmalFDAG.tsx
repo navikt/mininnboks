@@ -9,14 +9,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Sidetittel, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import './skriv-nytt-sporsmal.less';
 import { feilmelding } from '../utils/validationutil';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { TilgangState } from '../ducks/tilgang';
 import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { AppState } from '../reducer';
 import { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
@@ -25,7 +24,7 @@ import GodtaVilkar from './GodtaVilkar';
 import { STATUS } from '../ducks/ducks-utils';
 import { useFormstate } from './SkrivNyttSporsmal';
 
-const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarselSolid);
+const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
 const ukjentTemagruppeTittel = 'Ikke gjenkjent temagruppe';
 
@@ -95,7 +94,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                     <AlertstripeAdvarselVisibleIf visibleIf={props.sendingStatus === STATUS.ERROR}>
                         Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                     </AlertstripeAdvarselVisibleIf>
-                    <AlertStripeInfoSolid className="blokk-xs">
+                    <AlertStripeInfo className="blokk-xs">
                         Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
                         <Lenke
                             href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
@@ -104,7 +103,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                             {' '}
                             Skriv til oss
                         </Lenke>
-                    </AlertStripeInfoSolid>
+                    </AlertStripeInfo>
                 </div>
                 <Normaltekst className="typo-normal blokk-xs">
                     Fra 1.september startet NAV med å kreve tilbake forskudd på dagpenger. Har du spørsmål om ordningen
@@ -127,7 +126,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                         lese om tilbakebetaling av forskudd.
                     </Lenke>
                 </Normaltekst>
-                <div className="text-center">
+                <div className="text-center margin">
                     <Textarea
                         textareaClass="fritekst"
                         label={''}
@@ -143,7 +142,6 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                         feil={feilmelding(state.fields.godkjennVilkaar)}
                     />
                     <Hovedknapp
-                        mini
                         spinner={props.sendingStatus === STATUS.PENDING}
                         aria-disabled={props.sendingStatus === STATUS.PENDING}
                     >

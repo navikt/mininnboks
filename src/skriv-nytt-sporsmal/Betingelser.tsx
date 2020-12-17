@@ -55,7 +55,7 @@ function Betingelser(props: Props) {
                 </div>
                 <hr className="blokk-m" />
                 <div className="svar-godta text-center blokk-m">
-                    <Hovedknapp mini htmlType="submit" aria-controls="betingelser" onClick={props.godkjennVilkaar}>
+                    <Hovedknapp htmlType="submit" aria-controls="betingelser" onClick={props.godkjennVilkaar}>
                         Jeg godtar vilkårene
                     </Hovedknapp>
                 </div>

@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Innholdstittel, Normaltekst, Sidetittel, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import Alertstripe, { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
+import Alertstripe, { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 import './skriv-nytt-sporsmal.less';
 import { feilmelding } from '../utils/validationutil';
@@ -28,7 +28,7 @@ import { useThunkDispatch } from '../useThunkDispatch';
 import { GodkjenteTemagrupper, Temagrupper } from '../utils/constants';
 import { useOnMount } from '../utils/custom-hooks';
 
-const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarselSolid);
+const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
 interface Props {
     actions: {
@@ -137,29 +137,30 @@ function SkrivNyttSporsmal(props: Props) {
                     Du kan skrive maksimalt 1000 tegn, det er cirka en halv A4-side.{' '}
                 </Normaltekst>
                 <TemagruppeEkstraInfo temagruppe={temagruppe} key={temagruppe} />
-                <Textarea
-                    textareaClass="fritekst"
-                    label={''}
-                    maxLength={1000}
-                    {...state.fields.fritekst.input}
-                    feil={feilmelding(state.fields.fritekst)}
-                />
-                <GodtaVilkar
-                    label="Jeg godtar vilkårene for bruk av tjenesten."
-                    visModal={props.skalViseVilkarModal}
-                    actions={props.actions}
-                    fieldstate={state.fields.godkjennVilkaar}
-                    feil={feilmelding(state.fields.godkjennVilkaar)}
-                />
-                <Hovedknapp
-                    htmlType="submit"
-                    type="hoved"
-                    mini
-                    spinner={props.sendingStatus === STATUS.PENDING}
-                    aria-disabled={props.sendingStatus === STATUS.PENDING}
-                >
-                    Send
-                </Hovedknapp>
+                <div className="text-center margin">
+                    <Textarea
+                        textareaClass="fritekst"
+                        label={''}
+                        maxLength={1000}
+                        {...state.fields.fritekst.input}
+                        feil={feilmelding(state.fields.fritekst)}
+                    />
+                    <GodtaVilkar
+                        label="Jeg godtar vilkårene for bruk av tjenesten."
+                        visModal={props.skalViseVilkarModal}
+                        actions={props.actions}
+                        fieldstate={state.fields.godkjennVilkaar}
+                        feil={feilmelding(state.fields.godkjennVilkaar)}
+                    />
+                    <Hovedknapp
+                        htmlType="submit"
+                        type="hoved"
+                        spinner={props.sendingStatus === STATUS.PENDING}
+                        aria-disabled={props.sendingStatus === STATUS.PENDING}
+                    >
+                        Send
+                    </Hovedknapp>
+                </div>
             </form>
         </article>
     );

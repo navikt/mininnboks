@@ -2,9 +2,9 @@ import * as React from 'react';
 import MeldingPreview from './MeldingPreview';
 import DokumentPreview from './DokumentPreview';
 import OppgavePreview from './OppgavePreview';
-import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Traad } from '../Traad';
+import Panel from 'nav-frontend-paneler';
 
 interface MeldingsListeElement {
     data: Traad;

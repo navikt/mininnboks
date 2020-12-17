@@ -57,7 +57,7 @@ function BesvarBoks(props: Props) {
                 feil={feilmelding(state.fields.fritekst)}
             />
             <div className="blokk-xs">
-                <Hovedknapp htmlType="submit" spinner={props.innsendingStatus === STATUS.PENDING} mini>
+                <Hovedknapp htmlType="submit" spinner={props.innsendingStatus === STATUS.PENDING}>
                     Send svar
                 </Hovedknapp>
             </div>
