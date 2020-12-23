@@ -25,7 +25,7 @@ import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
-import { GodkjenteTemagrupper, Temagrupper } from '../utils/constants';
+import { Temagrupper } from '../utils/constants';
 import { useOnMount } from '../utils/custom-hooks';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
@@ -38,6 +38,7 @@ interface Props {
     skalViseVilkarModal: boolean;
     sendingStatus: string;
     tilgang: TilgangState;
+    godkjenteTemagrupper: Temagruppe[];
 }
 
 type SkrivNyttSporsmalForm = {
@@ -69,6 +70,7 @@ function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
     const params = useParams<{ temagruppe: Temagruppe }>();
     const dispatch = useThunkDispatch();
+
     const state = useFormstate({
         fritekst: '',
         godkjennVilkaar: 'false'
@@ -109,7 +111,7 @@ function SkrivNyttSporsmal(props: Props) {
         });
     }
 
-    if (!GodkjenteTemagrupper.includes(temagruppe)) {
+    if (!props.godkjenteTemagrupper.includes(temagruppe)) {
         return <Feilmelding>Ikke gjenkjent temagruppe</Feilmelding>;
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
@@ -166,10 +168,11 @@ function SkrivNyttSporsmal(props: Props) {
     );
 }
 
-const mapStateToProps = ({ traader, ui, tilgang }: AppState) => ({
+const mapStateToProps = ({ traader, ui, tilgang, ledetekster }: AppState) => ({
     skalViseVilkarModal: ui.visVilkarModal,
     sendingStatus: traader.innsendingStatus,
-    tilgang: tilgang
+    tilgang: tilgang,
+    godkjenteTemagrupper: ledetekster.status === STATUS.OK ? ledetekster.godkjenteTemagrupper : []
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     actions: {
