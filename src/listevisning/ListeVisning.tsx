@@ -41,15 +41,15 @@ function ListeVisning() {
     }));
 
     return (
-        <>
+        <article className="blokk-center">
             <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
             <div className="text-center blokk-l">
-                <Lenke
-                    href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                <a
+                    href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
                     className="knapp knapp--hoved"
                 >
                     Skriv ny melding
-                </Lenke>
+                </a>
             </div>
             <VisibleIf visibleIf={traader.length === 0}>
                 <h2 className="typo-undertittel text-center">Her kan du lese referater og beskjeder til og fra NAV.</h2>
@@ -58,7 +58,7 @@ function ListeVisning() {
                 <MeldingListe meldinger={ulesteTraader} uleste={true} />
                 <MeldingListe meldinger={lesteTraader} uleste={false} />
             </VisibleIf>
-        </>
+        </article>
     );
 }
 

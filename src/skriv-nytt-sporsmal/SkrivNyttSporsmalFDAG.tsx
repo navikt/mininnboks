@@ -86,7 +86,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                 <Innholdstittel tag="h2" className="blokk-xl text-center">
                     Skriv melding
                 </Innholdstittel>
-                <div className="alertstripe-margin">
+                <div className="blokk-xs">
                     <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.

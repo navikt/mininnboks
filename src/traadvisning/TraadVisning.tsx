@@ -3,16 +3,15 @@ import BesvarBoks from './BesvarBoks';
 import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
-import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
+import { markerBehandlingsIdSomLest, selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { useParams } from 'react-router';
-import { useDispatch } from 'react-redux';
 import { visBesvarBoks } from '../ducks/ui';
-import { markerSomLest } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
-import { useAppState, useOnMount } from '../utils/custom-hooks';
+import { useAppState, useOnMount, useScrollToTop } from '../utils/custom-hooks';
+import { useThunkDispatch } from '../useThunkDispatch';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -20,12 +19,13 @@ function TraadVisning() {
     const params = useParams<{ traadId: string }>();
     const skalViseBesvarBoks = useAppState((state) => state.ui.visBesvarBoks);
     const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
-    const dispatch = useDispatch();
+    const dispatch = useThunkDispatch();
     const traader = useAppState(selectTraaderMedSammenslatteMeldinger);
 
     useOnMount(() => {
-        markerSomLest(params.traadId);
+        dispatch(markerBehandlingsIdSomLest(params.traadId));
     });
+    useScrollToTop();
 
     const traadId = params.traadId;
     const valgttraad = traader.data.find((traad) => traad.traadId === traadId);

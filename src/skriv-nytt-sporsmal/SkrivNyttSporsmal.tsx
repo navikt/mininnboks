@@ -123,7 +123,7 @@ function SkrivNyttSporsmal(props: Props) {
                 <i className="meldingikon" />
                 <Innholdstittel className="blokk-xl">Skriv melding</Innholdstittel>
                 <Undertittel className="blokk-s">{valgtTemagruppe}</Undertittel>
-                <div className="alertstripe-margin">
+                <div className="blokk-xs">
                     <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.{' '}

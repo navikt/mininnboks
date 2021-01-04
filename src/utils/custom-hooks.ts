@@ -9,3 +9,10 @@ export function useAppState<T>(selector: (state: AppState) => T) {
 export function useOnMount(effect: EffectCallback) {
     useEffect(effect, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 }
+
+export function useScrollToTop() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    return null;
+}
