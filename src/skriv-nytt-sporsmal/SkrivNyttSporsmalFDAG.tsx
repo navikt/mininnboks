@@ -28,7 +28,7 @@ const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
 const ukjentTemagruppeTittel = 'Ikke gjenkjent temagruppe';
 
-const godkjenteTemagrupper = ['ARBD', 'FDAG'];
+const godkjenteTemagrupper = ['FDAG'];
 
 const temagruppe = 'FDAG';
 

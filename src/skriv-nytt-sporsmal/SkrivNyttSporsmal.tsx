@@ -69,6 +69,7 @@ function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
     const params = useParams<{ temagruppe: Temagruppe }>();
     const dispatch = useThunkDispatch();
+
     const state = useFormstate({
         fritekst: '',
         godkjennVilkaar: 'false'
