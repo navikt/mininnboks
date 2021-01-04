@@ -3,7 +3,7 @@ import BesvarBoks from './BesvarBoks';
 import Feilmelding from '../feilmelding/Feilmelding';
 import MeldingContainer from './MeldingContainer';
 import SkrivKnapp from './SkrivKnapp';
-import { markerBehandlingsIdSomLest, selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
+import { markerTraadSomLest, selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
@@ -23,7 +23,7 @@ function TraadVisning() {
     const traader = useAppState(selectTraaderMedSammenslatteMeldinger);
 
     useOnMount(() => {
-        dispatch(markerBehandlingsIdSomLest(params.traadId));
+        dispatch(markerTraadSomLest(params.traadId));
     });
     useScrollToTop();
 
