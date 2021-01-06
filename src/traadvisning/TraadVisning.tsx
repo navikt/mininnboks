@@ -21,15 +21,14 @@ function TraadVisning() {
     const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
     const dispatch = useThunkDispatch();
     const traader = useAppState(selectTraaderMedSammenslatteMeldinger);
+    const traadId = params.traadId;
 
     useOnMount(() => {
-        dispatch(markerTraadSomLest(params.traadId));
+        dispatch(markerTraadSomLest(traadId));
     });
     useScrollToTop();
 
-    const traadId = params.traadId;
     const valgttraad = traader.data.find((traad) => traad.traadId === traadId);
-
     if (!valgttraad) {
         return <Feilmelding>Fant ikke tråden du var ute etter</Feilmelding>;
     }
@@ -56,7 +55,7 @@ function TraadVisning() {
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
                     <Normaltekst>
                         Dialogen er avsluttet. Vil du{' '}
-                        <a href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/">
+                        <a href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/">
                             sende en ny beskjed
                         </a>
                         , kan du gjøre det her.

@@ -31,7 +31,7 @@ function DokumentVisning(props: Props) {
                     </li>
                     <li>
                         <Lenke
-                            href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                            href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
                             className="lenke"
                         >
                             Kontakt NAV om dokumentet

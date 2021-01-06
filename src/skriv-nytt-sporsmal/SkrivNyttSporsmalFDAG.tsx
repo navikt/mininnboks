@@ -97,7 +97,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                     <AlertStripeInfo className="blokk-xs">
                         Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
                         <Lenke
-                            href="https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
+                            href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
                             className="Lenke"
                         >
                             {' '}
