@@ -8,7 +8,6 @@ import './listevisning.less';
 import { Melding, Traad } from '../Traad';
 import { useParams } from 'react-router';
 import { useAppState } from '../utils/custom-hooks';
-import Lenke from 'nav-frontend-lenker';
 
 const getTraadLister = (traader: Traad[]) => {
     const sortert = traader.sort(nyesteTraadForst);
