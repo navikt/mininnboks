@@ -12,6 +12,7 @@ import { visBesvarBoks } from '../ducks/ui';
 import { STATUS } from '../ducks/ducks-utils';
 import { useAppState, useOnMount, useScrollToTop } from '../utils/custom-hooks';
 import { useThunkDispatch } from '../useThunkDispatch';
+import { isProd } from '../environment';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -38,6 +39,9 @@ function TraadVisning() {
         dispatch(visBesvarBoks());
     };
 
+    const url = isProd()
+        ? 'https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/'
+        : 'https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/';
     const sidetittel = valgttraad.nyeste.kassert ? 'Kassert dialog' : `Dialog om ${valgttraad.nyeste.temagruppeNavn}`;
     return (
         <article className="blokk-center">
@@ -54,11 +58,7 @@ function TraadVisning() {
                 <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks} onClick={skrivKnappOnClick} />
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
                     <Normaltekst>
-                        Dialogen er avsluttet. Vil du{' '}
-                        <a href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/">
-                            sende en ny beskjed
-                        </a>
-                        , kan du gjøre det her.
+                        Dialogen er avsluttet. Vil du <a href={url}>sende en ny beskjed</a>, kan du gjøre det her.
                     </Normaltekst>
                 </AlertstripeVisibleIf>
                 <BesvarBoks innsendingStatus={innsendingStatus} visibleIf={skalViseBesvarBoks} traadId={traadId} />
