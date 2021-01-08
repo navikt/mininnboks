@@ -12,7 +12,7 @@ import { visBesvarBoks } from '../ducks/ui';
 import { STATUS } from '../ducks/ducks-utils';
 import { useAppState, useOnMount, useScrollToTop } from '../utils/custom-hooks';
 import { useThunkDispatch } from '../useThunkDispatch';
-import { getNAVBaseUrl, isProd } from '../environment';
+import { getNAVBaseUrl } from '../environment';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 

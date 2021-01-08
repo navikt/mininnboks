@@ -4,11 +4,6 @@ declare global {
     }
 }
 
-export function isProd(): Boolean {
-    const environment = window.mininnboks.namespace;
-    return environment === 'p';
-}
-
 export function getNAVBaseUrl(): String {
     const environment = window.mininnboks.namespace;
     if (environment === 'p') {
