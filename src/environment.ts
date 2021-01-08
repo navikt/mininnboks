@@ -6,6 +6,5 @@ declare global {
 
 export function isProd(): Boolean {
     const environment = window.mininnboks.namespace;
-    console.log(environment);
     return environment === 'p';
 }

@@ -42,6 +42,7 @@ function TraadVisning() {
     const url = isProd()
         ? 'https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/'
         : 'https://www-q1.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/';
+    console.log(isProd());
     const sidetittel = valgttraad.nyeste.kassert ? 'Kassert dialog' : `Dialog om ${valgttraad.nyeste.temagruppeNavn}`;
     return (
         <article className="blokk-center">
