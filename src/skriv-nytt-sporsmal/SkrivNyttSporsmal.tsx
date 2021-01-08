@@ -87,7 +87,7 @@ function SkrivNyttSporsmal(props: Props) {
     });
 
     const godkjenteTemagrupper = ledetekster.status === STATUS.OK ? ledetekster.godkjenteTemagrupper : [];
-    console.log(godkjenteTemagrupper);
+    console.log(godkjenteTemagrupper, GodkjenteTemagrupper);
 
     const location = useLocation();
     const temagruppe = params.temagruppe;
