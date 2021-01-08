@@ -49,14 +49,16 @@ function BesvarBoks(props: Props) {
 
     return (
         <form className="besvar-boks text-center blokk-center blokk-l" onSubmit={state.onSubmit(submitHandler)}>
-            <Textarea
-                textareaClass="fritekst"
-                label={''}
-                maxLength={2500}
-                {...state.fields.fritekst.input}
-                feil={feilmelding(state.fields.fritekst)}
-            />
-            <div className="blokk-xs margin">
+            <div className="blokk-xs">
+                <Textarea
+                    textareaClass="fritekst"
+                    label={''}
+                    maxLength={2500}
+                    {...state.fields.fritekst.input}
+                    feil={feilmelding(state.fields.fritekst)}
+                />
+            </div>
+            <div className="blokk-xs">
                 <Hovedknapp htmlType="submit" spinner={props.innsendingStatus === STATUS.PENDING}>
                     Send svar
                 </Hovedknapp>
