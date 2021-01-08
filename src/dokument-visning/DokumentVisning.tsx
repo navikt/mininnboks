@@ -5,6 +5,7 @@ import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import './dokument-visning.less';
 import { useEffect } from 'react';
 import { DokumentMetadata, Journalpostmetadata } from '../dokument';
+import { getNAVBaseUrl } from '../environment';
 
 interface Props {
     dokumentmetadata: DokumentMetadata[];
@@ -20,6 +21,7 @@ function DokumentVisning(props: Props) {
     }, []);
 
     const { temakode } = props.journalpostmetadata.resultat;
+    const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
 
     return (
         <div className="dokinnsyn">
@@ -30,10 +32,7 @@ function DokumentVisning(props: Props) {
                         <Lenke href={`/saksoversikt/app/tema/${temakode}`}>Gå til saksoversikt</Lenke>
                     </li>
                     <li>
-                        <Lenke
-                            href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
-                            className="lenke"
-                        >
+                        <Lenke href={sendNyMeldingURL} className="lenke">
                             Kontakt NAV om dokumentet
                         </Lenke>
                     </li>

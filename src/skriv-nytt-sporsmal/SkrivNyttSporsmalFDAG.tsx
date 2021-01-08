@@ -23,6 +23,7 @@ import Lenke from 'nav-frontend-lenker';
 import GodtaVilkar from './GodtaVilkar';
 import { STATUS } from '../ducks/ducks-utils';
 import { useFormstate } from './SkrivNyttSporsmal';
+import { getNAVBaseUrl } from '../environment';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
@@ -77,6 +78,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
     }
+    const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
 
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
@@ -96,10 +98,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                     </AlertstripeAdvarselVisibleIf>
                     <AlertStripeInfo className="blokk-xs">
                         Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
-                        <Lenke
-                            href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
-                            className="Lenke"
-                        >
+                        <Lenke href={sendNyMeldingURL} className="Lenke">
                             {' '}
                             Skriv til oss
                         </Lenke>

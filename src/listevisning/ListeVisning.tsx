@@ -8,6 +8,7 @@ import './listevisning.less';
 import { Melding, Traad } from '../Traad';
 import { useParams } from 'react-router';
 import { useAppState } from '../utils/custom-hooks';
+import { getNAVBaseUrl } from '../environment';
 
 const getTraadLister = (traader: Traad[]) => {
     const sortert = traader.sort(nyesteTraadForst);
@@ -39,14 +40,13 @@ function ListeVisning() {
         aktiv: erAktiv(traad.nyeste)
     }));
 
+    const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
+
     return (
         <article className="blokk-center">
             <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
             <div className="text-center blokk-l">
-                <a
-                    href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/"
-                    className="knapp knapp--hoved"
-                >
+                <a href={sendNyMeldingURL} className="knapp knapp--hoved">
                     Skriv ny melding
                 </a>
             </div>
