@@ -26,7 +26,8 @@ import Spinner from '../utils/Spinner';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
 import { GodkjenteTemagrupper, Temagrupper } from '../utils/constants';
-import { useOnMount } from '../utils/custom-hooks';
+import { useAppState, useOnMount } from '../utils/custom-hooks';
+import { hentLedetekster } from '../ducks/ledetekster';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
@@ -75,13 +76,18 @@ function SkrivNyttSporsmal(props: Props) {
         godkjennVilkaar: 'false'
     });
 
+    const ledetekster = useAppState((state) => state.ledetekster);
     useOnMount(() => {
         const temagruppe = params.temagruppe.toLowerCase();
         if (temagruppe === 'oksos') {
             dispatch(harTilgangTilKommunaleTemagrupper());
+            dispatch(hentLedetekster());
         }
         sjekkRatelimiter().then((res) => setRateLimiter(res));
     });
+
+    const godkjenteTemagrupper = ledetekster.status === STATUS.OK ? ledetekster.godkjenteTemagrupper : [];
+    console.log(godkjenteTemagrupper);
 
     const location = useLocation();
     const temagruppe = params.temagruppe;
@@ -110,7 +116,7 @@ function SkrivNyttSporsmal(props: Props) {
         });
     }
 
-    if (!GodkjenteTemagrupper.includes(temagruppe)) {
+    if (!godkjenteTemagrupper.includes(temagruppe)) {
         return <Feilmelding>Ikke gjenkjent temagruppe</Feilmelding>;
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
