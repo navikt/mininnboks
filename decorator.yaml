@@ -21,7 +21,7 @@ proxy:
     validateOidcToken: false
 
   - contextPath: /saksoversikt-api
-    baseUrl: http://saksoversikt-api.{{ NAIS_NAMESPACE }}.svc.nais.local
+    baseUrl: http://saksoversikt-api.personbruker.svc.nais.local
     pingRequestPath: /saksoversikt-api/internal/isAlive
 
   - contextPath: /rate-limiter
