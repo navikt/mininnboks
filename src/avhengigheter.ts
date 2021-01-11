@@ -14,6 +14,10 @@ export interface ErrorState {
     error: Error;
 }
 
+export function laster<T>(state: Avhengighet<T>): state is OtherState {
+    return [STATUS.NOT_STARTED, STATUS.PENDING].includes(state.status);
+}
+
 export function harData<T>(state: Avhengighet<T>): state is OkState<T> {
     return [STATUS.OK, STATUS.RELOADING].includes(state.status);
 }
