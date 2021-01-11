@@ -15,9 +15,7 @@ interface Props {
 }
 
 function DokumentVisning(props: Props) {
-    useOnMount(() => {
-        useScrollToTop();
-    });
+    useScrollToTop();
 
     const { temakode } = props.journalpostmetadata.resultat;
     const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
