@@ -18,12 +18,12 @@ import { TilgangState } from '../ducks/tilgang';
 import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
 import { AppState } from '../reducer';
 import { Values } from '@nutgaard/use-formstate';
-import { useThunkDispatch } from '../useThunkDispatch';
 import Lenke from 'nav-frontend-lenker';
 import GodtaVilkar from './GodtaVilkar';
 import { STATUS } from '../ducks/ducks-utils';
 import { useFormstate } from './SkrivNyttSporsmal';
 import { getNAVBaseUrl } from '../environment';
+import { useThunkDispatch } from '../utils/custom-hooks';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 

@@ -10,8 +10,7 @@ import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { useParams } from 'react-router';
 import { visBesvarBoks } from '../ducks/ui';
 import { STATUS } from '../ducks/ducks-utils';
-import { useAppState, useOnMount, useScrollToTop } from '../utils/custom-hooks';
-import { useThunkDispatch } from '../useThunkDispatch';
+import { useAppState, useOnMount, useScrollToTop, useThunkDispatch } from '../utils/custom-hooks';
 import { getNAVBaseUrl } from '../environment';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);

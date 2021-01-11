@@ -8,8 +8,8 @@ import { visibleIfHOC } from '../utils/hocs/visible-if';
 import './besvar-boks.less';
 import { skjulBesvarBoks } from '../ducks/ui';
 import useFormstate, { Values } from '@nutgaard/use-formstate';
-import { useThunkDispatch } from '../useThunkDispatch';
 import { sendSvar } from '../ducks/traader';
+import { useThunkDispatch } from '../utils/custom-hooks';
 
 interface Props {
     innsendingStatus: STATUS;

@@ -3,9 +3,9 @@ import Lenke from 'nav-frontend-lenker';
 import Personalia from './dokumentvisning/personalia/Personalia';
 import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import './dokument-visning.less';
-import { useEffect } from 'react';
 import { DokumentMetadata, Journalpostmetadata } from '../dokument';
 import { getNAVBaseUrl } from '../environment';
+import { useOnMount, useScrollToTop } from '../utils/custom-hooks';
 
 interface Props {
     dokumentmetadata: DokumentMetadata[];
@@ -15,10 +15,9 @@ interface Props {
 }
 
 function DokumentVisning(props: Props) {
-    useEffect(() => {
-        document.body.scrollTop = 1;
-        document.documentElement.scrollTop = 1;
-    }, []);
+    useOnMount(() => {
+        useScrollToTop();
+    });
 
     const { temakode } = props.journalpostmetadata.resultat;
     const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;

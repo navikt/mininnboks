@@ -4,9 +4,8 @@ import { Traad } from '../Traad';
 import { useSelector } from 'react-redux';
 import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
-import { useThunkDispatch } from '../useThunkDispatch';
 import { useParams } from 'react-router';
-import { useOnMount } from '../utils/custom-hooks';
+import { useOnMount, useThunkDispatch } from '../utils/custom-hooks';
 
 function OppgaveVisning() {
     const dispatch = useThunkDispatch();

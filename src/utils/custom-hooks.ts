@@ -1,6 +1,8 @@
 import { AppState } from '../reducer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { EffectCallback, useEffect } from 'react';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
 export function useAppState<T>(selector: (state: AppState) => T) {
     return useSelector((state: AppState) => selector(state));
@@ -17,3 +19,6 @@ export function useScrollToTop() {
     return null;
 }
 
+export function useThunkDispatch(): ThunkDispatch<AppState, any, AnyAction> {
+    return useDispatch();
+}

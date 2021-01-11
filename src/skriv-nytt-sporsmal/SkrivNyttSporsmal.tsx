@@ -24,9 +24,8 @@ import { useLocation, useParams } from 'react-router';
 import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
-import { useThunkDispatch } from '../useThunkDispatch';
 import { Temagrupper } from '../utils/constants';
-import { useAppState, useOnMount } from '../utils/custom-hooks';
+import { useAppState, useOnMount, useThunkDispatch } from '../utils/custom-hooks';
 import { hentLedetekster } from '../ducks/ledetekster';
 import { laster, harFeil } from '../avhengigheter';
 
