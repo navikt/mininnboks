@@ -5,7 +5,7 @@ import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import './dokument-visning.less';
 import { DokumentMetadata, Journalpostmetadata } from '../dokument';
 import { getNAVBaseUrl } from '../environment';
-import { useOnMount, useScrollToTop } from '../utils/custom-hooks';
+import { useScrollToTop } from '../utils/custom-hooks';
 
 interface Props {
     dokumentmetadata: DokumentMetadata[];
