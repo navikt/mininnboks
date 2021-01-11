@@ -25,9 +25,10 @@ import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import useFormstateFactory, { Values } from '@nutgaard/use-formstate';
 import { useThunkDispatch } from '../useThunkDispatch';
-import { GodkjenteTemagrupper, Temagrupper } from '../utils/constants';
+import { Temagrupper } from '../utils/constants';
 import { useAppState, useOnMount } from '../utils/custom-hooks';
 import { hentLedetekster } from '../ducks/ledetekster';
+import { laster, harFeil } from '../avhengigheter';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
@@ -79,19 +80,23 @@ function SkrivNyttSporsmal(props: Props) {
     const ledetekster = useAppState((state) => state.ledetekster);
     useOnMount(() => {
         const temagruppe = params.temagruppe.toLowerCase();
+        dispatch(hentLedetekster());
         if (temagruppe === 'oksos') {
             dispatch(harTilgangTilKommunaleTemagrupper());
-            dispatch(hentLedetekster());
         }
         sjekkRatelimiter().then((res) => setRateLimiter(res));
     });
 
-    const godkjenteTemagrupper = ledetekster.status === STATUS.OK ? ledetekster.godkjenteTemagrupper : [];
-    console.log(godkjenteTemagrupper, GodkjenteTemagrupper);
-
     const location = useLocation();
     const temagruppe = params.temagruppe;
     const isDirekte = location.pathname.includes('/direkte');
+
+    if (laster(ledetekster)) {
+        return <Spinner />;
+    } else if (harFeil(ledetekster)) {
+        return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
+    }
+    const godkjenteTemagrupper = ledetekster.godkjenteTemagrupper;
 
     if (temagruppe.toLowerCase() === 'oksos') {
         if (props.tilgang.status === STATUS.PENDING) {
