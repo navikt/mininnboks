@@ -1,11 +1,11 @@
 import * as React from 'react';
 import AvsenderMottaker from './AvsenderMottaker';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Journalpostmetadata } from '../../../dokument';
+import { NyJournalpostMetadata } from '../../../dokument';
 import { formaterDato } from '../../../utils/date-utils';
 
 interface Props {
-    journalpostmetadata: Journalpostmetadata;
+    journalpostmetadata: NyJournalpostMetadata;
     className: string;
 }
 
@@ -16,19 +16,19 @@ const erGyldigJournalpost = (journalPostId: string) => {
 };
 
 function Personalia(props: Props) {
-    if (!erGyldigJournalpost(props.journalpostmetadata.journalpostId)) {
+    if (!erGyldigJournalpost(props.journalpostmetadata.resultat.journalpostId)) {
         return null;
     }
-    const dato = formaterDato(props.journalpostmetadata.dato);
+    const dato = formaterDato(props.journalpostmetadata.resultat.dato);
 
     return (
         <section className={props.className}>
             <Undertittel tag="h1">
                 <AvsenderMottaker
-                    retning={props.journalpostmetadata.retning}
-                    mottaker={props.journalpostmetadata.mottaker}
-                    avsender={props.journalpostmetadata.avsender}
-                    navn={props.journalpostmetadata.navn}
+                    retning={props.journalpostmetadata.resultat.retning}
+                    mottaker={props.journalpostmetadata.resultat.mottaker}
+                    avsender={props.journalpostmetadata.resultat.avsender}
+                    navn={props.journalpostmetadata.resultat.navn}
                 />
             </Undertittel>
             <p className="typo-undertittel text-center">{dato}</p>

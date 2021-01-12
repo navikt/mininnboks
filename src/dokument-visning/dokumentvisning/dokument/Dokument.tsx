@@ -23,7 +23,8 @@ interface Props {
 }
 
 function Dokument(props: Props) {
-    const { bildeurler, kanVises, tittel, feilmelding, ekstrafeilinfo } = props.dokumentmetadata;
+    const { bildeurler, kanVises, feilmelding, ekstrafeilinfo } = props.dokumentmetadata;
+    const tittel = 'TITTEL SOM MÅ ENDRES PÅ';
     const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostId}/${props.dokref}`;
     const printUrl = `/saksoversikt/app/print/${props.journalpostId}/${props.dokref}`;
 

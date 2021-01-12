@@ -2,6 +2,7 @@ import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import { TRAADER_PATH, RESOURCES_PATH, RATE_LIMITER_URL } from '../utils/api';
 import traader from './traader.json';
 import resources from './resources.json';
+import { dokumentMock } from './dokument-mock';
 
 console.log('==========================');
 console.log('======== MED MOCK ========');
@@ -27,3 +28,20 @@ fetchMock.post('/mininnboks-api/traader/svar', (req, res, ctx) => res(ctx.json({
 fetchMock.post('/mininnboks-api/traader/sporsmal', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
+
+fetchMock.get(
+    '/saksoversikt-api/tjenester/dokumenter/dokumentmetadata/:journalpostId/:dokumentmetadata',
+    (req, res, ctx) =>
+        res(
+            ctx.json({
+                bildeurler: ['/img/Dummy_dokument.png'],
+                kanVises: false,
+                feilmelding: 'feilmelding.dokumentikkefunnet',
+                ekstrafeilinfo: {},
+                dokumentreferanse: '419361301'
+            })
+        )
+);
+fetchMock.get('/saksoversikt-api/tjenester/dokumenter/journalpostmetadata/:journalpostId', (req, res, ctx) =>
+    res(ctx.json(dokumentMock))
+);

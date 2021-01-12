@@ -1,7 +1,6 @@
 export interface DokumentMetadata {
     bildeurler: string[];
     kanVises: boolean;
-    tittel: string;
     ekstrafeilinfo: { [key: string]: string };
     feilmelding: string;
     dokumentreferanse?: string;
@@ -9,18 +8,38 @@ export interface DokumentMetadata {
 
 export interface Dokument {
     dokumentmetadata: DokumentMetadata[];
-    journalpostmetadata: Journalpostmetadata;
+    journalpostmetadata: NyJournalpostMetadata;
 }
 
-export interface Journalpostmetadata {
-    retning: string;
-    navn: string;
-    avsender: string;
-    mottaker: string;
-    dato: string;
-    journalpostId: string;
+export interface NyJournalpostMetadata {
+    feilendeSystemer?: string[];
     resultat: {
-        temakode: string;
+        avsender: string;
+        baksystem: string[];
+        behandlingsId: string;
+        dato: string;
+        erJournalfort: boolean;
+        ettersending: boolean;
+        feilWrapper: {
+            feilmelding?: string;
+            innholderFeil?: boolean;
+        };
+        hoveddokument: {
+            kanVises: boolean;
+            tittel: string;
+            dokumentreferanse: string;
+            logiskDokument: boolean;
+        };
         journalpostId: string;
+        kategoriNotat?: string;
+        lenkeTilSoknad?: string;
+        mottaker: string;
+        navn: string;
+        retning: string;
+        temakode: string;
+        temakodeVisning: string;
+        tilhorebdeFagsakId?: string;
+        tilhorendeSakId?: string;
+        vedlegg: any[];
     };
 }
