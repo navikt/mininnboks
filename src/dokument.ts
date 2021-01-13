@@ -16,7 +16,7 @@ export interface JournalpostMetadata {
     resultat: {
         avsender: string;
         baksystem: string[];
-        behandlingsId: string;
+        behandlingsId?: string;
         dato: string;
         erJournalfort: boolean;
         ettersending: boolean;
