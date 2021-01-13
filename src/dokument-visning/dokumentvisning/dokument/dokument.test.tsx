@@ -2,13 +2,39 @@ import * as React from 'react';
 import Dokument from './Dokument';
 import { render } from '../../../test-config';
 
+const journalpostmetadata_test = {
+    resultat: {
+        retning: 'x',
+        dato: 'x',
+        navn: 'x',
+        journalpostId: '1234',
+        hoveddokument: {
+            tittel: 'x',
+            dokumentreferanse: 'x',
+            kanVises: true,
+            logiskDokument: false
+        },
+        vedlegg: [],
+        avsender: 'x',
+        mottaker: 'x',
+        tilhorendeSakid: 'x',
+        baksystem: ['x'],
+        temakode: 'x',
+        temakodeVisning: 'x',
+        ettersending: false,
+        erJournalfort: true,
+        feilWrapper: {
+            inneholderFeil: false
+        }
+    }
+};
 describe('Vedlegg', () => {
     it(
         'Viser ikke tittel og url til pdf hvis dokumentet ikke kan vises, ' +
             'og feilen ikke skyldes at Konverteringstjenesten ikke klarer å konvertere til bilder',
         () => {
             const props = {
-                journalpostId: '1234',
+                journalpostmetadata: journalpostmetadata_test,
                 dokref: '5678',
                 dokumentmetadata: {
                     bildeurler: [],
@@ -32,7 +58,7 @@ describe('Vedlegg', () => {
 
     it('Viser tittel og url til pdf hvis Konverteringstjenesten ikke klarer å konvertere til bilder', () => {
         const props = {
-            journalpostId: '1234',
+            journalpostmetadata: journalpostmetadata_test,
             dokref: '5678',
             dokumentmetadata: {
                 bildeurler: [],
