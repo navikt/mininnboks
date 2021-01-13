@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../ducks/traader';
-import { hentDokumentVisningData, OkState, visLastNedPdfModal } from '../ducks/dokumenter';
+import { hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedPdfModal from './LastNedPdfModal';
 import { useParams } from 'react-router';
 import { useAppState, useOnMount } from '../utils/custom-hooks';
-import Innholdslaster from '../innholdslaster/Innholdslaster';
+import { harFeil, laster } from '../avhengigheter';
+import Spinner from '../utils/Spinner';
+import Alertstripe from 'nav-frontend-alertstriper';
 
 function DokumentVisningSide() {
     const params = useParams<{ id: string }>();
@@ -41,21 +43,25 @@ function DokumentVisningSide() {
     if (!traad) {
         return <Feilmelding>Fant ikke dokumentet</Feilmelding>;
     }
-    const feilmelding = 'Kunne ikke laste inn dokumentet';
+
+    if (laster(dokumenter)) {
+        return <Spinner />;
+    } else if (harFeil(dokumenter)) {
+        return <Alertstripe type="advarsel">Kunne ikke laste inn dokumentet.</Alertstripe>;
+    }
+    const dokumentmetadata = dokumenter.data.dokumentmetadata;
+    const journalpostmetadata = dokumenter.data.journalpostmetadata;
 
     return (
-        <Innholdslaster avhengigheter={[dokumenter]} feilmelding={feilmelding}>
-            {(lastetDokumenter: OkState) => (
-                <>
-                    <LastNedPdfModal />
-                    <Dokumentvisning
-                        {...lastetDokumenter.data}
-                        lastNedPdfOnClick={onLastNedPdfClick}
-                        printPdfOnClick={onPrintPdfClick}
-                    />
-                </>
-            )}
-        </Innholdslaster>
+        <>
+            <LastNedPdfModal />
+            <Dokumentvisning
+                dokumentmetadata={dokumentmetadata}
+                journalpostmetadata={journalpostmetadata}
+                lastNedPdfOnClick={onLastNedPdfClick}
+                printPdfOnClick={onPrintPdfClick}
+            />
+        </>
     );
 }
 

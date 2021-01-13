@@ -2,7 +2,7 @@ import * as React from 'react';
 import DokumentSide from './DokumentSide';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
-import { DokumentMetadata } from '../../../dokument';
+import { DokumentMetadata, NyJournalpostMetadata } from '../../../dokument';
 
 const lagDokumentTittel = (kanVises: boolean, ekstrafeilinfo: { [key: string]: string }, tittel: string) => {
     if (kanVises) {
@@ -16,7 +16,7 @@ const lagDokumentTittel = (kanVises: boolean, ekstrafeilinfo: { [key: string]: s
 interface Props {
     dokref: string;
     first: boolean;
-    journalpostId: string;
+    journalpostmetadata: NyJournalpostMetadata;
     lastNedPdfOnClick?: (url: string, event: React.MouseEvent) => void;
     printPdfOnClick?: (url: string, event: React.MouseEvent) => void;
     dokumentmetadata: DokumentMetadata;
@@ -24,9 +24,9 @@ interface Props {
 
 function Dokument(props: Props) {
     const { bildeurler, kanVises, feilmelding, ekstrafeilinfo } = props.dokumentmetadata;
-    const tittel = 'TITTEL SOM MÅ ENDRES PÅ';
-    const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostId}/${props.dokref}`;
-    const printUrl = `/saksoversikt/app/print/${props.journalpostId}/${props.dokref}`;
+    const tittel = props.journalpostmetadata.resultat.hoveddokument.tittel;
+    const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostmetadata.resultat.journalpostId}/${props.dokref}`;
+    const printUrl = `/saksoversikt/app/print/${props.journalpostmetadata.resultat.journalpostId}/${props.dokref}`;
 
     const onLastNedClick = (e: React.MouseEvent) => {
         props.lastNedPdfOnClick && props.lastNedPdfOnClick(openPdfUrl, e);

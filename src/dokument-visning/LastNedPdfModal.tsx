@@ -12,12 +12,12 @@ function LastNedPdfModal() {
     const pdfModal = useAppState((state) => state.dokumenter.pdfModal);
 
     const deactivateModal = () => {
-        setTimeout(dispatch(skjulLastNedPdfModal), 0);
+        dispatch(skjulLastNedPdfModal());
     };
 
     return (
         <NavFrontendModal isOpen={pdfModal.skalVises} contentLabel={'Info'} onRequestClose={deactivateModal}>
-            <Alertstripe type="info" className="mininnboks-modal side-innhold last-ned-pdf-modal">
+            <Alertstripe type="info" form="inline" className="mininnboks-modal side-innhold last-ned-pdf-modal">
                 <div className="panel">
                     <h2 className="hode hode-innholdstittel hode-dekorert hode-advarsel blokk-s">
                         <span className="vekk">Info</span>

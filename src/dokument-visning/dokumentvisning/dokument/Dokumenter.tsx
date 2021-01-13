@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Dokument from './Dokument';
-import { DokumentMetadata } from '../../../dokument';
+import { DokumentMetadata, NyJournalpostMetadata } from '../../../dokument';
 
 interface Props {
-    journalpostId: string;
+    journalpostmetadata: NyJournalpostMetadata;
     dokumentmetadata: DokumentMetadata[];
     lastNedPdfOnClick: (url: string, event: React.MouseEvent) => void;
     printPdfOnClick: (url: string, event: React.MouseEvent) => void;
@@ -12,13 +12,13 @@ interface Props {
 function Dokumenter(props: Props) {
     const vedleggListe = props.dokumentmetadata.map((vedlegg, index) => (
         <Dokument
-            journalpostId={props.journalpostId}
             dokumentmetadata={vedlegg}
             dokref={vedlegg.dokumentreferanse ? vedlegg.dokumentreferanse : ''}
             key={vedlegg.dokumentreferanse}
             lastNedPdfOnClick={props.lastNedPdfOnClick}
             printPdfOnClick={props.printPdfOnClick}
             first={index === 0}
+            journalpostmetadata={props.journalpostmetadata}
         />
     ));
 

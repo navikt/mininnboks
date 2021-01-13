@@ -37,7 +37,7 @@ function DokumentVisning(props: Props) {
             </section>
             <section className="dokumenter">
                 <Dokumenter
-                    journalpostId={props.journalpostmetadata.resultat.journalpostId}
+                    journalpostmetadata={props.journalpostmetadata}
                     dokumentmetadata={props.dokumentmetadata}
                     lastNedPdfOnClick={props.lastNedPdfOnClick}
                     printPdfOnClick={props.printPdfOnClick}

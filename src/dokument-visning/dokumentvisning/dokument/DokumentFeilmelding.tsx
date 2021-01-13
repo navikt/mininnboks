@@ -59,8 +59,9 @@ const dokumentFeilTekst: DokumentFeilTekst = {
 function DokumentFeilmelding(props: Props) {
     const feilmeldingTittel = dokumentFeilTittel[props.feilmelding.concat('.tittel')];
     const feilmeldingTekst = dokumentFeilTekst[props.feilmelding.concat('.tekst')];
+
     return (
-        <div className="dokument-feilmelding feilmelding-container">
+        <div className="dokument-feilmelding feilmelding-container ">
             <img src={props.url} alt="" />
             <Feilmelding className="feilmelding">
                 <Undertittel tag="h1">{feilmeldingTittel()}</Undertittel>
