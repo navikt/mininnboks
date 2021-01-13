@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Dokument from './Dokument';
-import { DokumentMetadata, NyJournalpostMetadata } from '../../../dokument';
+import { DokumentMetadata, JournalpostMetadata } from '../../../dokument';
 
 interface Props {
-    journalpostmetadata: NyJournalpostMetadata;
+    journalpostmetadata: JournalpostMetadata;
     dokumentmetadata: DokumentMetadata[];
     lastNedPdfOnClick: (url: string, event: React.MouseEvent) => void;
     printPdfOnClick: (url: string, event: React.MouseEvent) => void;

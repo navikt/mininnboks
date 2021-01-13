@@ -8,10 +8,10 @@ export interface DokumentMetadata {
 
 export interface Dokument {
     dokumentmetadata: DokumentMetadata[];
-    journalpostmetadata: NyJournalpostMetadata;
+    journalpostmetadata: JournalpostMetadata;
 }
 
-export interface NyJournalpostMetadata {
+export interface JournalpostMetadata {
     feilendeSystemer?: string[];
     resultat: {
         avsender: string;

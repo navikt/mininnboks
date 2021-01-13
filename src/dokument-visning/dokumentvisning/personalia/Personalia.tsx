@@ -1,11 +1,11 @@
 import * as React from 'react';
 import AvsenderMottaker from './AvsenderMottaker';
 import { Undertittel } from 'nav-frontend-typografi';
-import { NyJournalpostMetadata } from '../../../dokument';
+import { JournalpostMetadata } from '../../../dokument';
 import { formaterDato } from '../../../utils/date-utils';
 
 interface Props {
-    journalpostmetadata: NyJournalpostMetadata;
+    journalpostmetadata: JournalpostMetadata;
     className: string;
 }
 

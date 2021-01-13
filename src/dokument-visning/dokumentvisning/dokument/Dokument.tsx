@@ -2,7 +2,7 @@ import * as React from 'react';
 import DokumentSide from './DokumentSide';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
-import { DokumentMetadata, NyJournalpostMetadata } from '../../../dokument';
+import { DokumentMetadata, JournalpostMetadata } from '../../../dokument';
 
 const lagDokumentTittel = (kanVises: boolean, ekstrafeilinfo: { [key: string]: string }, tittel: string) => {
     if (kanVises) {
@@ -16,7 +16,7 @@ const lagDokumentTittel = (kanVises: boolean, ekstrafeilinfo: { [key: string]: s
 interface Props {
     dokref: string;
     first: boolean;
-    journalpostmetadata: NyJournalpostMetadata;
+    journalpostmetadata: JournalpostMetadata;
     lastNedPdfOnClick?: (url: string, event: React.MouseEvent) => void;
     printPdfOnClick?: (url: string, event: React.MouseEvent) => void;
     dokumentmetadata: DokumentMetadata;
