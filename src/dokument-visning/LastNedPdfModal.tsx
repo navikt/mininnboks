@@ -12,7 +12,7 @@ function LastNedPdfModal() {
     const pdfModal = useAppState((state) => state.dokumenter.pdfModal);
 
     const lukkModal = () => {
-        setTimeout(dispatch(skjulLastNedPdfModal), 0);
+        dispatch(skjulLastNedPdfModal());
     };
 
     return (
