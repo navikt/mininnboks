@@ -37,6 +37,7 @@ const dokumentFeilTekst: DokumentFeilTekst = {
             </a>
         </>
     ),
+    'feilmelding.dokumentikkefunnet.tekst': () => 'Dokumentet ble ikke funnet',
     'feilmelding.ukjent': () => 'Det skjedde en uventet feil.',
     'feilmelding.dokumentikketilgjengelig.tekst': () => 'Dokumentet er ikke tilgjengelig. Vennligst prøv igjen senere.',
     'feilmelding.dokumentslettet.tekst': () => 'Vedlegget er slettet',
