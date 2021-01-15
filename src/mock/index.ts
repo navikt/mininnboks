@@ -35,7 +35,7 @@ fetchMock.get(
         res(
             ctx.json({
                 bildeurler: ['/img/Dummy_dokument.png'],
-                kanVises: false,
+                kanVises: true,
                 feilmelding: 'feilmelding.dokumentikkefunnet',
                 ekstrafeilinfo: {},
                 dokumentreferanse: '419361301'
