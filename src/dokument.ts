@@ -24,7 +24,7 @@ export interface JournalpostMetadata {
             feilmelding?: string;
             innholderFeil?: boolean;
         };
-        hoveddokument: {
+        hoveddokument?: {
             kanVises: boolean;
             tittel: string;
             dokumentreferanse: string;

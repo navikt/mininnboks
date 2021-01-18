@@ -3,6 +3,7 @@ import DokumentSide from './DokumentSide';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
 import { DokumentMetadata, JournalpostMetadata } from '../../../dokument';
+import { useScrollToTop } from '../../../utils/custom-hooks';
 
 const lagDokumentTittel = (kanVises: boolean, ekstrafeilinfo: { [key: string]: string }, tittel: string) => {
     if (kanVises) {
@@ -24,10 +25,11 @@ interface Props {
 
 function Dokument(props: Props) {
     const { bildeurler, kanVises, feilmelding, ekstrafeilinfo } = props.dokumentmetadata;
-    const tittel = props.journalpostmetadata.resultat.hoveddokument.tittel;
+    const tittel = props.journalpostmetadata.resultat.hoveddokument?.tittel ?? 'Kunne ikke finne tittel';
     const openPdfUrl = `/saksoversikt-api/tjenester/dokumenter/dokument/${props.journalpostmetadata.resultat.journalpostId}/${props.dokref}`;
     const printUrl = `/saksoversikt/app/print/${props.journalpostmetadata.resultat.journalpostId}/${props.dokref}`;
 
+    useScrollToTop();
     const onLastNedClick = (e: React.MouseEvent) => {
         props.lastNedPdfOnClick && props.lastNedPdfOnClick(openPdfUrl, e);
     };
