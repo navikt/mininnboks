@@ -186,7 +186,6 @@ describe('dokumenter-ducks', () => {
             expect(store).toHaveReceived({
                 type: TypeKeys.STATUS_PDF_MODAL,
                 pdfModal: {
-                    skalVises: true,
                     dokumentUrl
                 }
             });
@@ -199,7 +198,6 @@ describe('dokumenter-ducks', () => {
             expect(store).toHaveReceived({
                 type: TypeKeys.STATUS_PDF_MODAL,
                 pdfModal: {
-                    skalVises: false,
                     dokumentUrl: null
                 }
             });
