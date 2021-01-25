@@ -18,8 +18,8 @@ interface Props {
     dokref: string;
     first: boolean;
     journalpostmetadata: JournalpostMetadata;
-    lastNedPdfOnClick?: (url: string, event: React.MouseEvent) => void;
-    printPdfOnClick?: (url: string, event: React.MouseEvent) => void;
+    lastNedPdfOnClick?: (event: React.MouseEvent) => void;
+    printPdfOnClick?: (event: React.MouseEvent) => void;
     dokumentmetadata: DokumentMetadata;
 }
 
@@ -31,11 +31,11 @@ function Dokument(props: Props) {
 
     useScrollToTop();
     const onLastNedClick = (e: React.MouseEvent) => {
-        props.lastNedPdfOnClick && props.lastNedPdfOnClick(openPdfUrl, e);
+        props.lastNedPdfOnClick && props.lastNedPdfOnClick(e);
     };
 
     const onPrintClick = (e: React.MouseEvent) => {
-        props.printPdfOnClick && props.printPdfOnClick(printUrl, e);
+        props.printPdfOnClick && props.printPdfOnClick(e);
     };
 
     const pdfLink = (

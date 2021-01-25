@@ -10,6 +10,7 @@ import { useAppState, useOnMount } from '../utils/custom-hooks';
 import { harFeil, laster } from '../avhengigheter';
 import Spinner from '../utils/Spinner';
 import Alertstripe from 'nav-frontend-alertstriper';
+import { useState } from 'react';
 
 function DokumentVisningSide() {
     const params = useParams<{ id: string }>();
@@ -17,6 +18,8 @@ function DokumentVisningSide() {
     const traaderResource = useAppState((state) => state.traader);
     const dokumenter = useAppState((state) => state.dokumenter);
     const traader = getTraaderSafe(traaderResource);
+
+    const [apenPDFModal, setApenPDFModal] = useState(false);
 
     useOnMount(() => {
         const traad = traader.find((traad) => traad.traadId === params.id);
@@ -29,14 +32,14 @@ function DokumentVisningSide() {
         }
     });
 
-    const onLastNedPdfClick = (url: string, event: React.MouseEvent) => {
+    const onLastNedPdfClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        dispatch(visLastNedPdfModal(url));
+        setApenPDFModal(true);
     };
 
-    const onPrintPdfClick = (url: string, event: React.MouseEvent) => {
+    const onPrintPdfClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        dispatch(visLastNedPdfModal(url));
+        setApenPDFModal(true);
     };
 
     const traad = traader.find((t) => t.traadId === params.id);
@@ -54,7 +57,7 @@ function DokumentVisningSide() {
 
     return (
         <>
-            <LastNedPdfModal />
+            <LastNedPdfModal apen={apenPDFModal} setApen={setApenPDFModal} />
             <Dokumentvisning
                 dokumentmetadata={dokumentmetadata}
                 journalpostmetadata={journalpostmetadata}

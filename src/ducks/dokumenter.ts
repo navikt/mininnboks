@@ -10,8 +10,8 @@ import {
 export const API_BASE_URL = '/saksoversikt-api/tjenester';
 
 const MED_CREDENTIALS = { credentials: 'same-origin' };
-type VisPdfModal = { skalVises: true; dokumentUrl: string };
-type IkkeVisPdlModal = { skalVises: false; dokumentUrl: null | undefined };
+type VisPdfModal = { dokumentUrl: string };
+type IkkeVisPdlModal = { dokumentUrl: null | undefined };
 export type PdfModal = VisPdfModal | IkkeVisPdlModal;
 
 export enum TypeKeys {
@@ -43,7 +43,6 @@ export type DokumentState = OkState | ErrorState | OtherState;
 const initalState: DokumentState = {
     status: STATUS.NOT_STARTED,
     pdfModal: {
-        skalVises: false,
         dokumentUrl: undefined
     }
 };
@@ -98,13 +97,13 @@ export function hentDokumentVisningData(journalpostId: string, dokumentreferanse
 export function visLastNedPdfModal(dokumentUrl: string) {
     return {
         type: TypeKeys.STATUS_PDF_MODAL,
-        pdfModal: { skalVises: true, dokumentUrl }
+        pdfModal: { dokumentUrl }
     };
 }
 
 export function skjulLastNedPdfModal() {
     return {
         type: TypeKeys.STATUS_PDF_MODAL,
-        pdfModal: { skalVises: false, dokumentUrl: null }
+        pdfModal: { dokumentUrl: null }
     };
 }

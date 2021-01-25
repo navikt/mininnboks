@@ -9,8 +9,8 @@ import { useScrollToTop } from '../utils/custom-hooks';
 
 interface Props {
     dokumentmetadata: DokumentMetadata[];
-    lastNedPdfOnClick: (url: string, event: React.MouseEvent) => void;
-    printPdfOnClick: (url: string, event: React.MouseEvent) => void;
+    lastNedPdfOnClick: (event: React.MouseEvent) => void;
+    printPdfOnClick: (event: React.MouseEvent) => void;
     journalpostmetadata: JournalpostMetadata;
 }
 

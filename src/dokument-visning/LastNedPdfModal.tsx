@@ -1,22 +1,20 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import NavFrontendModal from 'nav-frontend-modal';
 import Alertstripe from 'nav-frontend-alertstriper';
 import './last-ned-pdf-modal.less';
-import { skjulLastNedPdfModal } from '../ducks/dokumenter';
 import { useAppState } from '../utils/custom-hooks';
 import { Flatknapp } from 'nav-frontend-knapper';
 
-function LastNedPdfModal() {
-    const dispatch = useDispatch();
+function LastNedPdfModal({ apen, setApen }: { apen: boolean; setApen: (apen: boolean) => void }) {
     const pdfModal = useAppState((state) => state.dokumenter.pdfModal);
+    const dokumentUrl = pdfModal.dokumentUrl;
 
     const lukkModal = () => {
-        setTimeout(dispatch(skjulLastNedPdfModal), 1);
+        setApen(false);
     };
 
     return (
-        <NavFrontendModal isOpen={pdfModal.skalVises} contentLabel={'Info'} onRequestClose={lukkModal}>
+        <NavFrontendModal isOpen={apen} contentLabel={'Info'} onRequestClose={lukkModal}>
             <Alertstripe type="info" form="inline" className="mininnboks-modal side-innhold last-ned-pdf-modal">
                 <div className="panel">
                     <h2 className="hode hode-innholdstittel hode-dekorert hode-advarsel blokk-s">
@@ -29,7 +27,7 @@ function LastNedPdfModal() {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href={pdfModal.dokumentUrl as string}
+                                href={dokumentUrl as string}
                                 className="knapp knapp--hoved"
                                 onClick={lukkModal}
                             >
