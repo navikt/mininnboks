@@ -51,6 +51,8 @@ spec:
       value: "{{version}}"
     - name: APP_ENVIRONMENT
       value: {{namespace}}
+    - name: PUBLIC_NAMESPACE
+      value: "{{namespace}}"
     - name: APPRES_CMS_URL
       value: "{{ appresurl }}"
     - name: SAKSOVERSIKT_LINK_URL

@@ -1,23 +1,18 @@
-@appPrefixUrl: "mininnboks";
-@imgDir: "./../img";
-
-@import "../node_modules/nav-frontend-core/less/core";
-
-@import "../node_modules/nav-frontend-knapper-style/src/index";
-@import "../node_modules/nav-frontend-paneler-style/src/index";
-@import "../node_modules/nav-frontend-lenker-style/src/lenker-style";
-@import "../node_modules/nav-frontend-spinner-style/src/spinner-style";
-
-@import "variables";
+@import '~nav-frontend-core';
+@import '~nav-frontend-knapper-style';
+@import '~nav-frontend-paneler-style';
+@import '~nav-frontend-lenker-style';
+@import '~nav-frontend-spinner-style';
+@import 'variables';
 
 .limit_width {
-  margin: 1rem auto 0 auto;
+    margin: 1rem auto 0 auto;
 }
 
 @media (min-width: @screen-md-min) {
-  .limit_width {
-    width: @desktopLimitWidth;
-  }
+    .limit_width {
+        width: @desktopLimitWidth;
+    }
 }
 
 // NB: denne kommer inn via decoratøren
