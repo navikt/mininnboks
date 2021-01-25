@@ -72,7 +72,6 @@ function getInitialState(): DokumentState {
     return {
         status: STATUS.NOT_STARTED,
         pdfModal: {
-            skalVises: false,
             dokumentUrl: undefined
         }
     };
@@ -92,29 +91,24 @@ describe('dokumenter-ducks', () => {
             expect(okState.status).toEqual(STATUS.OK);
         });
 
-        it('skal oppdatere pdfModal korrekt', () => {
+        it('skal oppdatere pdfModal med korrekt url', () => {
             const initalState = getInitialState();
             const dokumentUrl = 'http://vg.no';
 
             const visPdfModal = reducer(initalState, {
                 type: TypeKeys.STATUS_PDF_MODAL,
                 pdfModal: {
-                    skalVises: true,
                     dokumentUrl
                 }
             });
             const skjulPdfModal = reducer(initalState, {
                 type: TypeKeys.STATUS_PDF_MODAL,
                 pdfModal: {
-                    skalVises: false,
                     dokumentUrl: null
                 }
             });
 
-            expect(visPdfModal).toHaveProperty('pdfModal.skalVises', true);
             expect(visPdfModal).toHaveProperty('pdfModal.dokumentUrl', dokumentUrl);
-
-            expect(skjulPdfModal).toHaveProperty('pdfModal.skalVises', false);
             expect(skjulPdfModal).toHaveProperty('pdfModal.dokumentUrl', null);
         });
     });
