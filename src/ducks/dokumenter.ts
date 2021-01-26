@@ -94,14 +94,14 @@ export function hentDokumentVisningData(journalpostId: string, dokumentreferanse
     );
 }
 
-export function visLastNedPdfModal(dokumentUrl: string) {
+export function settDokumentUrl(dokumentUrl: string) {
     return {
         type: TypeKeys.STATUS_PDF_MODAL,
         pdfModal: { dokumentUrl }
     };
 }
 
-export function skjulLastNedPdfModal() {
+export function slettDokumentUrl() {
     return {
         type: TypeKeys.STATUS_PDF_MODAL,
         pdfModal: { dokumentUrl: null }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../ducks/traader';
-import { hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter';
+import { hentDokumentVisningData, settDokumentUrl } from '../ducks/dokumenter';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedPdfModal from './LastNedPdfModal';
@@ -31,12 +31,12 @@ function DokumentVisningSide() {
 
     const onLastNedPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();
-        dispatch(visLastNedPdfModal(url));
+        dispatch(settDokumentUrl(url));
     };
 
     const onPrintPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();
-        dispatch(visLastNedPdfModal(url));
+        dispatch(settDokumentUrl(url));
     };
 
     const traad = traader.find((t) => t.traadId === params.id);

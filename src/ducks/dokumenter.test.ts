@@ -7,13 +7,7 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 // @ts-ignore
 import fetchMock from 'fetch-mock';
 import { AnyAction, Store } from 'redux';
-import {
-    DokumentState,
-    hentDokumentVisningData,
-    skjulLastNedPdfModal,
-    TypeKeys,
-    visLastNedPdfModal
-} from './dokumenter';
+import { DokumentState, hentDokumentVisningData, slettDokumentUrl, TypeKeys, settDokumentUrl } from './dokumenter';
 
 function dataAction<T>(type: any, data?: T) {
     if (data) {
@@ -181,7 +175,7 @@ describe('dokumenter-ducks', () => {
             const store = mockStore();
             const dokumentUrl = 'http://vg.no';
 
-            store.dispatch(visLastNedPdfModal(dokumentUrl));
+            store.dispatch(settDokumentUrl(dokumentUrl));
 
             expect(store).toHaveReceived({
                 type: TypeKeys.STATUS_PDF_MODAL,
@@ -193,7 +187,7 @@ describe('dokumenter-ducks', () => {
         it('skjulLastNedPdfModal', () => {
             const store = mockStore();
 
-            store.dispatch(skjulLastNedPdfModal());
+            store.dispatch(slettDokumentUrl());
 
             expect(store).toHaveReceived({
                 type: TypeKeys.STATUS_PDF_MODAL,

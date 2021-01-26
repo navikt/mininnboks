@@ -7,7 +7,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import { useState } from 'react';
 
 function pdfModalIsOpen(dokumentUrl: string | undefined | null) {
-    return dokumentUrl !== undefined;
+    return dokumentUrl !== undefined && dokumentUrl !== null;
 }
 
 function LastNedPdfModal() {
