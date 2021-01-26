@@ -4,7 +4,8 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import './last-ned-pdf-modal.less';
 import { useAppState } from '../utils/custom-hooks';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { useState } from 'react';
+import { slettDokumentUrl } from '../ducks/dokumenter';
+import { useDispatch } from 'react-redux';
 
 function pdfModalIsOpen(dokumentUrl: string | undefined | null) {
     return dokumentUrl !== undefined && dokumentUrl !== null;
@@ -13,14 +14,14 @@ function pdfModalIsOpen(dokumentUrl: string | undefined | null) {
 function LastNedPdfModal() {
     const pdfModal = useAppState((state) => state.dokumenter.pdfModal);
     const isOpen = pdfModalIsOpen(pdfModal.dokumentUrl);
-    const [apenPDFModal, setApenPDFModal] = useState(isOpen);
+    const dispatch = useDispatch();
 
     const lukkModal = () => {
-        setApenPDFModal(false);
+        dispatch(slettDokumentUrl());
     };
 
     return (
-        <NavFrontendModal isOpen={apenPDFModal} contentLabel={'Info'} onRequestClose={lukkModal}>
+        <NavFrontendModal isOpen={isOpen} contentLabel={'Info'} onRequestClose={lukkModal}>
             <Alertstripe type="info" form="inline" className="mininnboks-modal side-innhold last-ned-pdf-modal">
                 <div className="panel">
                     <h2 className="hode hode-innholdstittel hode-dekorert hode-advarsel blokk-s">
