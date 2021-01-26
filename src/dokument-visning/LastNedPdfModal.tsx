@@ -4,17 +4,23 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import './last-ned-pdf-modal.less';
 import { useAppState } from '../utils/custom-hooks';
 import { Flatknapp } from 'nav-frontend-knapper';
+import { useState } from 'react';
 
-function LastNedPdfModal({ apen, setApen }: { apen: boolean; setApen: (apen: boolean) => void }) {
+function pdfModalIsOpen(dokumentUrl: string | undefined | null) {
+    return dokumentUrl !== undefined;
+}
+
+function LastNedPdfModal() {
     const pdfModal = useAppState((state) => state.dokumenter.pdfModal);
-    const dokumentUrl = pdfModal.dokumentUrl;
+    const isOpen = pdfModalIsOpen(pdfModal.dokumentUrl);
+    const [apenPDFModal, setApenPDFModal] = useState(isOpen);
 
     const lukkModal = () => {
-        setApen(false);
+        setApenPDFModal(false);
     };
 
     return (
-        <NavFrontendModal isOpen={apen} contentLabel={'Info'} onRequestClose={lukkModal}>
+        <NavFrontendModal isOpen={apenPDFModal} contentLabel={'Info'} onRequestClose={lukkModal}>
             <Alertstripe type="info" form="inline" className="mininnboks-modal side-innhold last-ned-pdf-modal">
                 <div className="panel">
                     <h2 className="hode hode-innholdstittel hode-dekorert hode-advarsel blokk-s">
@@ -27,7 +33,7 @@ function LastNedPdfModal({ apen, setApen }: { apen: boolean; setApen: (apen: boo
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href={dokumentUrl as string}
+                                href={pdfModal.dokumentUrl as string}
                                 className="knapp knapp--hoved"
                                 onClick={lukkModal}
                             >

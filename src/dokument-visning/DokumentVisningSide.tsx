@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../ducks/traader';
-import { hentDokumentVisningData } from '../ducks/dokumenter';
+import { hentDokumentVisningData, visLastNedPdfModal } from '../ducks/dokumenter';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedPdfModal from './LastNedPdfModal';
@@ -10,7 +10,6 @@ import { useAppState, useOnMount } from '../utils/custom-hooks';
 import { harFeil, laster } from '../avhengigheter';
 import Spinner from '../utils/Spinner';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { useState } from 'react';
 
 function DokumentVisningSide() {
     const params = useParams<{ id: string }>();
@@ -18,8 +17,6 @@ function DokumentVisningSide() {
     const traaderResource = useAppState((state) => state.traader);
     const dokumenter = useAppState((state) => state.dokumenter);
     const traader = getTraaderSafe(traaderResource);
-
-    const [apenPDFModal, setApenPDFModal] = useState(false);
 
     useOnMount(() => {
         const traad = traader.find((traad) => traad.traadId === params.id);
@@ -32,14 +29,14 @@ function DokumentVisningSide() {
         }
     });
 
-    const onLastNedPdfClick = (event: React.MouseEvent) => {
+    const onLastNedPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();
-        setApenPDFModal(true);
+        dispatch(visLastNedPdfModal(url));
     };
 
-    const onPrintPdfClick = (event: React.MouseEvent) => {
+    const onPrintPdfClick = (url: string, event: React.MouseEvent) => {
         event.preventDefault();
-        setApenPDFModal(true);
+        dispatch(visLastNedPdfModal(url));
     };
 
     const traad = traader.find((t) => t.traadId === params.id);
@@ -57,7 +54,7 @@ function DokumentVisningSide() {
 
     return (
         <>
-            <LastNedPdfModal apen={apenPDFModal} setApen={setApenPDFModal} />
+            <LastNedPdfModal />
             <Dokumentvisning
                 dokumentmetadata={dokumentmetadata}
                 journalpostmetadata={journalpostmetadata}
