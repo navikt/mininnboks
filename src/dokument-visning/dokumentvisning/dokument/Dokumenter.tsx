@@ -5,8 +5,8 @@ import { DokumentMetadata, JournalpostMetadata } from '../../../dokument';
 interface Props {
     journalpostmetadata: JournalpostMetadata;
     dokumentmetadata: DokumentMetadata[];
-    lastNedPdfOnClick: (event: React.MouseEvent) => void;
-    printPdfOnClick: (event: React.MouseEvent) => void;
+    lastNedPdfOnClick: (url: string, event: React.MouseEvent) => void;
+    printPdfOnClick: (url: string, event: React.MouseEvent) => void;
 }
 
 function Dokumenter(props: Props) {
