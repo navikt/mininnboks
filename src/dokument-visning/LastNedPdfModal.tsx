@@ -17,7 +17,9 @@ function LastNedPdfModal() {
     const dispatch = useDispatch();
 
     const lukkModal = () => {
-        setTimeout(dispatch(slettDokumentUrl), 0);
+        setTimeout(() => {
+            dispatch(slettDokumentUrl());
+        }, 0);
     };
 
     return (
