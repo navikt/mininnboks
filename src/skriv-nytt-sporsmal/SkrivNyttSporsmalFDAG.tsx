@@ -78,7 +78,7 @@ function SkrivNyttSporsmalFDAG(props: Props) {
     } else if (props.sendingStatus === STATUS.OK) {
         return <Kvittering />;
     }
-    const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
+    const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">

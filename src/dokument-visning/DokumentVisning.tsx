@@ -18,7 +18,7 @@ function DokumentVisning(props: Props) {
     useScrollToTop();
 
     const { temakode } = props.journalpostmetadata.resultat;
-    const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
+    const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
     return (
         <div className="dokinnsyn">
