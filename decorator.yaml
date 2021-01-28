@@ -24,6 +24,10 @@ proxy:
     baseUrl: http://saksoversikt-api.personbruker.svc.nais.local
     pingRequestPath: /saksoversikt-api/internal/isAlive
 
+  - contextPath: /sosialhjelp-soknad-api
+    baseUrl: http://sosialhjelp-soknad-api.teamdigisos.svc.nais.local
+    pingRequestPath: /sosialhjelp/soknad-api/internal/isAlive
+
   - contextPath: /rate-limiter
     baseUrl: http://rate-limiter.{{ NAIS_NAMESPACE }}.svc.nais.local
     pingRequestPath: /rate-limiter/internal/isAlive
