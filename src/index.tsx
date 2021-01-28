@@ -4,17 +4,9 @@ import './utils';
 import * as React from 'react';
 import MainApp from './mainapp';
 import { render } from 'react-dom';
-import setupMock from './mock/setup-mock';
 
-const KjorMotDevProxy = false;
-
-function erLocalhost() {
-    const host: string = window.location.host;
-    return host.includes('localhost') || host.includes('127.0.0.1');
+if (process.env.REACT_APP_MOCK_ENABLED === 'true') {
+    require('./mock');
 }
 
-if (erLocalhost() && !KjorMotDevProxy) {
-    setupMock();
-}
-
-render(<MainApp/>, document.getElementById('app-root'));
+render(<MainApp />, document.getElementById('app-root'));
