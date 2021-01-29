@@ -1,6 +1,6 @@
 import React from 'react';
 import { hasError, isPending } from '@nutgaard/use-fetch';
-import Routes from './routes';
+import Routes from './Routes';
 import { useLedetekster } from './utils/api';
 import Feilmelding from './feilmelding/Feilmelding';
 import Spinner from './utils/Spinner';
@@ -14,6 +14,6 @@ function Application() {
         return <Spinner />;
     }
 
-    return <Routes />;
+    return <Routes ledetekster={ledetekster.data} />;
 }
 export default Application;

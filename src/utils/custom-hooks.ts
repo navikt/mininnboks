@@ -1,8 +1,8 @@
-import { AppState } from '../reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { EffectCallback, useEffect } from 'react';
+import { EffectCallback, useEffect, useState } from 'react';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { AppState } from '../reducer';
 
 export function useAppState<T>(selector: (state: AppState) => T) {
     return useSelector((state: AppState) => selector(state));
@@ -21,4 +21,20 @@ export function useScrollToTop() {
 
 export function useThunkDispatch(): ThunkDispatch<AppState, any, AnyAction> {
     return useDispatch();
+}
+
+export function useDebounce<S>(value: S, delay: number): S {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
 }
