@@ -3,6 +3,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import './temagruppe-ekstra-info.less';
 import { useState } from 'react';
+import { Temagruppe } from '../utils/constants';
 
 interface Props {
     temagruppe: Temagruppe;
@@ -13,13 +14,9 @@ interface Info {
     intro: JSX.Element;
     elementer: string[];
 }
-export enum Temagruppe {
-    ARBD = 'ARBD',
-    FMLI = 'FMLI'
-}
 
 type TemagruppeInfo = {
-    [P in Temagruppe]: Array<Info>;
+    [P in Temagruppe]?: Array<Info>;
 };
 
 const temagruppeInfo: TemagruppeInfo = {
@@ -81,7 +78,7 @@ function TemagruppeEkstraInfo(props: Props) {
                 );
 
                 return (
-                    <>
+                    <React.Fragment key={props.temagruppe}>
                         <Lenke
                             href="#ekstrainfo"
                             className="temagruppe-ekstra-info__lenke"
@@ -90,7 +87,7 @@ function TemagruppeEkstraInfo(props: Props) {
                             ▼ {info.heading}
                         </Lenke>
                         {ekstraInfo}
-                    </>
+                    </React.Fragment>
                 );
             })}
         </div>

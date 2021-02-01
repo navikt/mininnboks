@@ -7,7 +7,7 @@ export enum MeldingsTyper {
     SPORSMAL_MODIA_UTGAAENDE = 'SPORSMAL_MODIA_UTGAAENDE'
 }
 
-export enum Temagrupper {
+export enum TemagruppeNavn {
     ORT_HJE = 'Ortopediske hjelpemidler',
     BIL = 'Hjelpemidler Bil',
     HJLPM = 'Hjelpemidler',
@@ -20,4 +20,22 @@ export enum Temagrupper {
     UFRT = 'Uføretrygd',
     HELSE = 'Helse',
     FDAG = 'Forskudd på dagpenger'
+}
+export enum Temagruppe {
+    ORT_HJE = 'ORT_HJE',
+    BIL = 'BIL',
+    HJLPM = 'HJLPM',
+    ARBD = 'ARBD',
+    PENS = 'PENS',
+    OKSOS = 'OKSOS',
+    OVRG = 'OVRG',
+    ANSOS = 'ANSOS',
+    FMLI = 'FMLI',
+    UFRT = 'UFRT',
+    HELSE = 'HELSE',
+    FDAG = 'FDAG'
+}
+
+export interface Ledetekster {
+    [key: string]: string;
 }
