@@ -38,8 +38,8 @@ const sendSvarConfig = (traadId: string, fritekst: string) => ({
 
 export const TRAADER_PATH = `${API_BASE_URL}/traader`;
 export const RESOURCES_PATH = `${API_BASE_URL}/resources`;
-export const FOLKREGISTRERT_ADRESSE_PATH = `${API_BASE_URL}/folkeregistrertadresse`;
-export const SOK_ADRESSE_PATH = `/sosialhjelp-soknad-api/informasjon/adressesok?sokestreng=`;
+export const FOLKREGISTRERT_ADRESSE_PATH = `${API_BASE_URL}/tilgang/folkeregistrertadresse`;
+export const SOK_ADRESSE_PATH = `/sosialhjelp-soknad-api/sosialhjelp/soknad-api/informasjon/adressesok?sokestreng=`;
 export const RATE_LIMITER_URL = `/rate-limiter/api/limit`;
 
 export function useLedetekster(): FetchResult<Ledetekster> {
