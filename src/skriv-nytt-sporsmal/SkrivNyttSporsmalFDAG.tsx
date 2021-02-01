@@ -15,7 +15,7 @@ import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate, useR
 import './skriv-nytt-sporsmal.less';
 import { Temagruppe } from '../utils/constants';
 
-const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
+const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
 function SkrivNyttSporsmalFDAG() {
     const dispatch = useThunkDispatch();
