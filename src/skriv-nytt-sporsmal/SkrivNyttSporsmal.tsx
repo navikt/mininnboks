@@ -18,12 +18,15 @@ import { useThunkDispatch } from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
     AndreFeilmeldinger,
+    FeilmeldingKommunalSjekk,
     SkrivNyttSporsmalForm,
     useFormstate,
-    useRatelimiter
+    useRatelimiter,
+    useTilgangSjekk
 } from './common';
 import './skriv-nytt-sporsmal.less';
 import { useLedetekster } from '../utils/api';
+import { STATUS } from '../ducks/ducks-utils';
 
 const spesialtHandterteTemagrupper = [Temagruppe.FDAG];
 
@@ -31,6 +34,7 @@ function SkrivNyttSporsmal() {
     const dispatch = useThunkDispatch();
     const rateLimiter = useRatelimiter();
     const ledetekster = useLedetekster();
+    const tilgang = useTilgangSjekk();
     const params = useParams<{ temagruppe: Temagruppe }>();
     const temagruppe = params.temagruppe.toUpperCase() as Temagruppe;
     const location = useLocation();
@@ -46,6 +50,19 @@ function SkrivNyttSporsmal() {
     } else if (hasError(ledetekster)) {
         return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
     }
+
+    if (temagruppe === Temagruppe.OKSOS) {
+        if (tilgang.status === STATUS.PENDING) {
+            return <Spinner />;
+        } else if (tilgang.status === STATUS.ERROR) {
+            return (
+                <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>
+            );
+        } else if (tilgang.status === STATUS.OK && tilgang.data.resultat !== 'OK') {
+            return <Alertstripe type="info">{FeilmeldingKommunalSjekk[tilgang.data.resultat]}</Alertstripe>;
+        }
+    }
+
     const godkjenteTemagrupper = ledetekster.data['temagruppe.liste'].split(' ');
 
     if (!godkjenteTemagrupper.includes(temagruppe)) {
