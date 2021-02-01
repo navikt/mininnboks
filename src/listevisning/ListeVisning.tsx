@@ -40,7 +40,7 @@ function ListeVisning() {
         aktiv: erAktiv(traad.nyeste)
     }));
 
-    const sendNyMeldingURL = `${getNAVBaseUrl()}/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/skriv+til+oss/`;
+    const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
     return (
         <article className="blokk-center">
