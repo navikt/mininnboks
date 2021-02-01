@@ -1,5 +1,5 @@
 import * as Api from '../utils/api';
-import { MeldingsTyper } from '../utils/constants';
+import { MeldingsTyper, Temagruppe } from '../utils/constants';
 import { eldsteMeldingForst } from '../utils';
 import { doThenDispatch, DucksData, STATUS } from './ducks-utils';
 import { Action, Dispatch } from 'redux';
@@ -126,7 +126,9 @@ export function hentTraader(pendingType: string = TypeKeys.HENT_ALLE_PENDING) {
     });
 }
 
-export const sendSporsmal = (temagruppe: string, fritekst: string, isDirekte: boolean) => (dispatch: Dispatch<any>) =>
+export const sendSporsmal = (temagruppe: Temagruppe, fritekst: string, isDirekte: boolean) => (
+    dispatch: Dispatch<any>
+) =>
     doThenDispatch(
         () =>
             Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() =>

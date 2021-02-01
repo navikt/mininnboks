@@ -1,89 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { Dispatch } from 'redux';
-import { visVilkarModal, skjulVilkarModal, TypeKeys } from './../ducks/ui';
-import { sendSporsmal } from './../ducks/traader';
+import React from 'react';
 import { Textarea } from 'nav-frontend-skjema';
-import Kvittering from './Kvittering';
-import Feilmelding from '../feilmelding/Feilmelding';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Sidetittel, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-
-import './skriv-nytt-sporsmal.less';
-import { feilmelding } from '../utils/validationutil';
-import { visibleIfHOC } from '../utils/hocs/visible-if';
-import { TilgangState } from '../ducks/tilgang';
-import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
-import { AppState } from '../reducer';
-import { Values } from '@nutgaard/use-formstate';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
+import { Values } from '@nutgaard/use-formstate';
+import { sendSporsmal } from '../ducks/traader';
+import Kvittering from './Kvittering';
+import { feilmelding } from '../utils/validationutil';
 import GodtaVilkar from './GodtaVilkar';
-import { STATUS } from '../ducks/ducks-utils';
-import { useFormstate } from './SkrivNyttSporsmal';
 import { getNAVBaseUrl } from '../environment';
 import { useThunkDispatch } from '../utils/custom-hooks';
+import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate, useRatelimiter } from './common';
+import './skriv-nytt-sporsmal.less';
+import { Temagruppe } from '../utils/constants';
 
-const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
+const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
-const ukjentTemagruppeTittel = 'Ikke gjenkjent temagruppe';
-
-const godkjenteTemagrupper = ['FDAG'];
-
-const temagruppe = 'FDAG';
-
-type SkrivNyttSporsmalFDAGForm = {
-    fritekst: string;
-    godkjennVilkaar: string;
-};
-
-interface Props {
-    actions: {
-        visVilkarModal: () => { type: TypeKeys; data: boolean };
-        skjulVilkarModal: () => { type: TypeKeys; data: boolean };
-    };
-    skalViseVilkarModal: boolean;
-    sendingStatus: string;
-    tilgang: TilgangState;
-}
-
-function SkrivNyttSporsmalFDAG(props: Props) {
-    const [rateLimiter, setRateLimiter] = useState(true);
-
+function SkrivNyttSporsmalFDAG() {
     const dispatch = useThunkDispatch();
+    const rateLimiter = useRatelimiter();
+    const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
 
-    const state = useFormstate({
-        fritekst: '',
-        godkjennVilkaar: 'false'
-    });
+    if (formstate.submittingSuccess) {
+        return <Kvittering />;
+    }
 
-    useEffect(() => {
-        sjekkRatelimiter().then((res) => setRateLimiter(res));
-    }, []);
-
-    function submitHandler<S>(values: Values<SkrivNyttSporsmalFDAGForm>): Promise<any> {
-        return sjekkOgOppdaterRatelimiter().then((isOK) => {
+    function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
+        return rateLimiter.update().then((isOK) => {
             if (isOK) {
-                return dispatch(sendSporsmal(temagruppe, values.fritekst, false));
+                return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
             } else {
-                setRateLimiter(isOK);
-                return new Promise((resolve, reject) => reject('rate-limiter feilmelding'));
+                return Promise.reject('rate-limiter feilmelding');
             }
         });
     }
 
-    if (!godkjenteTemagrupper.includes(temagruppe)) {
-        return <Feilmelding>{ukjentTemagruppeTittel}</Feilmelding>;
-    } else if (props.sendingStatus === STATUS.OK) {
-        return <Kvittering />;
-    }
-    const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
-
     return (
         <article className="blokk-center send-sporsmal-side skriv-nytt-sporsmal">
             <Sidetittel className="text-center blokk-m">Tilbakebetaling av forskudd på dagpenger</Sidetittel>
-            <form className="panel" onSubmit={state.onSubmit(submitHandler)}>
+            <form className="panel" onSubmit={formstate.onSubmit(submitHandler, { preventConcurrent: true })}>
                 <i className="meldingikon" />
                 <Innholdstittel tag="h2" className="blokk-xl text-center">
                     Skriv melding
@@ -93,13 +49,12 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
-                    <AlertstripeAdvarselVisibleIf visibleIf={props.sendingStatus === STATUS.ERROR}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={formstate.submittingFailed}>
                         Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                     </AlertstripeAdvarselVisibleIf>
                     <AlertStripeInfo className="blokk-xs">
-                        Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten
+                        Hvis spørsmålet ditt gjelder noe annet enn tilbakebetaling av forskudd kan du bruke tjenesten{' '}
                         <Lenke href={sendNyMeldingURL} className="Lenke">
-                            {' '}
                             Skriv til oss
                         </Lenke>
                     </AlertStripeInfo>
@@ -116,12 +71,11 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                     der.
                 </Normaltekst>
                 <Normaltekst className="typo-normal blokk-xs">
-                    Du kan også
+                    Du kan også{' '}
                     <Lenke
                         href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/kampanje-korona/tilbakebetaling-og-trekk-av-forskudd-pa-dagpenger"
                         className="Lenke"
                     >
-                        {' '}
                         lese om tilbakebetaling av forskudd.
                     </Lenke>
                 </Normaltekst>
@@ -130,20 +84,15 @@ function SkrivNyttSporsmalFDAG(props: Props) {
                         textareaClass="fritekst"
                         label={''}
                         maxLength={1000}
-                        {...state.fields.fritekst.input}
-                        feil={feilmelding(state.fields.fritekst)}
+                        {...formstate.fields.fritekst.input}
+                        feil={feilmelding(formstate.fields.fritekst)}
                     />
                     <GodtaVilkar
-                        visModal={props.skalViseVilkarModal}
-                        actions={props.actions}
                         label={'Jeg godtar vilkårene for bruk av tjenesten.'}
-                        fieldstate={state.fields.godkjennVilkaar}
-                        feil={feilmelding(state.fields.godkjennVilkaar)}
+                        fieldstate={formstate.fields.godkjennVilkaar}
+                        feil={feilmelding(formstate.fields.godkjennVilkaar)}
                     />
-                    <Hovedknapp
-                        spinner={props.sendingStatus === STATUS.PENDING}
-                        aria-disabled={props.sendingStatus === STATUS.PENDING}
-                    >
+                    <Hovedknapp spinner={formstate.submitting} aria-disabled={formstate.submitting}>
                         Send
                     </Hovedknapp>
                 </div>
@@ -151,16 +100,5 @@ function SkrivNyttSporsmalFDAG(props: Props) {
         </article>
     );
 }
-const mapStateToProps = ({ traader, ui, tilgang }: AppState) => ({
-    skalViseVilkarModal: ui.visVilkarModal,
-    sendingStatus: traader.innsendingStatus,
-    tilgang: tilgang
-});
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    actions: {
-        visVilkarModal: () => dispatch(visVilkarModal()),
-        skjulVilkarModal: () => dispatch(skjulVilkarModal())
-    }
-});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SkrivNyttSporsmalFDAG));
+export default SkrivNyttSporsmalFDAG;

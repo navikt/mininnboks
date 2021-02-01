@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { FieldState, checkboxAdapter } from '@nutgaard/use-formstate';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
 import Lenke from 'nav-frontend-lenker';
@@ -7,24 +8,20 @@ import { feilmelding } from '../utils/validationutil';
 import './godta-vilkar.less';
 
 interface Props extends CheckboxProps {
-    visModal: boolean;
-    actions: {
-        visVilkarModal: () => void;
-        skjulVilkarModal: () => void;
-    };
     fieldstate: FieldState;
 }
 
 function GodtaVilkar(props: Props) {
-    const { visModal, actions, fieldstate, ...rest } = props;
+    const [visVilkarModal, setVisVilkarModal] = useState<boolean>(false);
+    const { fieldstate, ...rest } = props;
     const godkjennVilkaar = () => {
         fieldstate.setValue('true');
-        actions.skjulVilkarModal();
+        setVisVilkarModal(false);
     };
 
     const avbryt = () => {
         fieldstate.setValue('false');
-        actions.skjulVilkarModal();
+        setVisVilkarModal(false);
     };
 
     return (
@@ -37,14 +34,14 @@ function GodtaVilkar(props: Props) {
                     className="checkbox"
                     aria-describedby="checkbox-feilmelding"
                 />
-                <Lenke href="#" className="vilkar-link" onClick={actions.visVilkarModal}>
+                <Lenke href="#" className="vilkar-link" onClick={() => setVisVilkarModal(true)}>
                     Vis vilkår
                 </Lenke>
                 <Betingelser
-                    visModal={visModal}
+                    visModal={visVilkarModal}
                     godkjennVilkaar={godkjennVilkaar}
                     avbryt={avbryt}
-                    lukkModal={actions.skjulVilkarModal}
+                    lukkModal={() => setVisVilkarModal(false)}
                 />
             </div>
         </div>
