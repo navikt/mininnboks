@@ -26,6 +26,7 @@ proxy:
 
   - contextPath: /sosialhjelp-soknad-api
     baseUrl: http://sosialhjelp-soknad-api.teamdigisos.svc.nais.local
+    requestRewrite: REMOVE_CONTEXT_PATH
     pingRequestPath: /sosialhjelp/soknad-api/internal/isAlive
 
   - contextPath: /rate-limiter
