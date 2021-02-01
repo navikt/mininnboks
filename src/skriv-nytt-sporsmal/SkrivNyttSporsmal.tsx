@@ -48,7 +48,7 @@ function SkrivNyttSporsmal() {
                 <Innholdstittel className="blokk-xl">Skriv melding</Innholdstittel>
                 <Undertittel className="blokk-s">{TemagruppeNavn[temagruppe]}</Undertittel>
                 <div className="blokk-xs">
-                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter.isOk}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
