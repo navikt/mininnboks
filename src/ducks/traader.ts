@@ -126,16 +126,20 @@ export function hentTraader(pendingType: string = TypeKeys.HENT_ALLE_PENDING) {
     });
 }
 
-export const sendSporsmal = (temagruppe: Temagruppe, fritekst: string, isDirekte: boolean) => (
-    dispatch: Dispatch<any>
-) =>
-    doThenDispatch(
-        () =>
-            Api.sendSporsmal(temagruppe, fritekst, isDirekte).then(() =>
+export function sendSporsmal(
+    temagruppe: Temagruppe,
+    fritekst: string,
+    isDirekte: boolean,
+    overstyrtGt?: string
+): ThunkAction<Promise<unknown>, AppState, null, Actions> {
+    return doThenDispatch(
+        (dispatch: Dispatch<any>) =>
+            Api.sendSporsmal(temagruppe, fritekst, overstyrtGt, isDirekte).then(() =>
                 dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))
             ),
         innsendingActions
-    )(dispatch);
+    );
+}
 
 export function sendSvar(traadId: string, fritekst: string): ThunkAction<Promise<unknown>, AppState, null, Actions> {
     return doThenDispatch(
@@ -144,12 +148,6 @@ export function sendSvar(traadId: string, fritekst: string): ThunkAction<Promise
         innsendingActions
     );
 }
-
-export const sendSvar2 = (traadId: string, fritekst: string) => (dispatch: Dispatch<any>) =>
-    doThenDispatch(
-        () => Api.sendSvar(traadId, fritekst).then(() => dispatch(hentTraader(TypeKeys.HENT_ALLE_RELOAD))),
-        innsendingActions
-    )(dispatch);
 
 export function markerTraadSomLest(traadId: string) {
     return doThenDispatch(() => Api.markerTraadSomLest(traadId), {

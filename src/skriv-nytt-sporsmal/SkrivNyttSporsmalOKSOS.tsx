@@ -61,10 +61,12 @@ function SkrivNyttSporsmalOKSOS() {
         return <Kvittering />;
     }
 
-    function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
+    function submitHandler<S>(values: Values<OKSOSSkrivNyttSporsmalForm>): Promise<any> {
         return rateLimiter.update().then((isOK) => {
             if (isOK) {
-                return dispatch(sendSporsmal(Temagruppe.OKSOS, values.fritekst, isDirekte));
+                return dispatch(
+                    sendSporsmal(Temagruppe.OKSOS, values.fritekst, isDirekte, values.geografiskTilknytning)
+                );
             } else {
                 return Promise.reject('rate-limiter feilmelding');
             }
