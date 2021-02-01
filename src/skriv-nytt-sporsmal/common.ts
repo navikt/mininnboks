@@ -6,7 +6,7 @@ import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
 import { useCallback, useEffect, useState } from 'react';
 import { STATUS } from '../ducks/ducks-utils';
 import { harTilgangTilKommunaleTemagrupper, TilgangState } from '../ducks/tilgang';
-import { sjekkOgOppdaterRatelimiter } from '../utils/api';
+import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
@@ -67,7 +67,7 @@ export function useRatelimiter(): { isOk: boolean; update: () => Promise<boolean
         return updatedValue;
     }, [setState]);
     useEffect(() => {
-        update();
+        sjekkRatelimiter().then((isOk) => setState(isOk));
     }, [update]);
 
     return { isOk: state, update };
