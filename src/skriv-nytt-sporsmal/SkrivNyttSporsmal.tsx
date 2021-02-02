@@ -28,6 +28,7 @@ import { Temagrupper } from '../utils/constants';
 import { useAppState, useOnMount, useThunkDispatch } from '../utils/custom-hooks';
 import { hentLedetekster } from '../ducks/ledetekster';
 import { laster, harFeil } from '../avhengigheter';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
@@ -70,6 +71,7 @@ function SkrivNyttSporsmal(props: Props) {
     const [rateLimiter, setRateLimiter] = useState(true);
     const params = useParams<{ temagruppe: Temagruppe }>();
     const dispatch = useThunkDispatch();
+    useBreadcrumbs([{ title: 'Ny melding', url: `/sporsmal/skriv/${params.temagruppe}` }]);
 
     const state = useFormstate({
         fritekst: '',

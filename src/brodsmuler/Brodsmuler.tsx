@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Brodsmule from './Brodsmule';
 import { selectTraaderMedSammenslatteMeldinger } from '../ducks/traader';
 import { useAppState } from '../utils/custom-hooks';
 import personSvg from './person.svg';
 import './brodsmuler.less';
+import { Breadcrumb } from '@navikt/nav-dekoratoren-moduler/dist/functions/breadcrumbs';
+import { useEffect } from 'react';
+import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
+import { History } from 'history';
 
 const typeMap: { [key: string]: string } = {
     dokument: 'Dokumentvisning',
@@ -34,7 +38,35 @@ function NyMeldingSmule() {
     return <>Ny melding</>;
 }
 
+const useLegacyCrumbs = false;
+const defaultCrumbs: Array<Breadcrumb> = [
+    { title: 'Ditt NAV', url: 'https://tjenester.nav.no/dittnav' },
+    { title: 'Min innboks', url: '/', handleInApp: true }
+];
+
+export function useBreadcrumbs(crumbs: Array<Breadcrumb>) {
+    useEffect(() => {
+        const inAppCrumbs = crumbs.map((crumb) => ({ ...crumb, handleInApp: true }));
+        setBreadcrumbs([...defaultCrumbs, ...inAppCrumbs]);
+    }, [crumbs]);
+}
+
+export function useBreadcrumbsListener(history: History) {
+    useEffect(() => {
+        onBreadcrumbClick((crumb) => {
+            history.push(crumb.url);
+        });
+    }, [history]);
+}
+
 function Brodsmuler() {
+    const history = useHistory();
+    useBreadcrumbsListener(history);
+
+    if (!useLegacyCrumbs) {
+        return null;
+    }
+
     return (
         <div className="brodsmuler">
             <img src={personSvg} alt="person-illustrasjon" className="brodsmuler__illustrasjon" />

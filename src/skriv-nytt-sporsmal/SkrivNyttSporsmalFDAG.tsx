@@ -24,6 +24,7 @@ import { STATUS } from '../ducks/ducks-utils';
 import { useFormstate } from './SkrivNyttSporsmal';
 import { getNAVBaseUrl } from '../environment';
 import { useThunkDispatch } from '../utils/custom-hooks';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);
 
@@ -49,6 +50,7 @@ interface Props {
 }
 
 function SkrivNyttSporsmalFDAG(props: Props) {
+    useBreadcrumbs([{ title: 'Ny melding', url: '/sporsmal/skriv/FDAG' }]);
     const [rateLimiter, setRateLimiter] = useState(true);
 
     const dispatch = useThunkDispatch();

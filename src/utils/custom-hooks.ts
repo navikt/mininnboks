@@ -1,9 +1,8 @@
-import { AppState } from '../reducer';
-import { useDispatch, useSelector } from 'react-redux';
 import { EffectCallback, useEffect } from 'react';
-import { ThunkDispatch } from 'redux-thunk';
+import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
-import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppState } from '../reducer';
 
 export function useAppState<T>(selector: (state: AppState) => T) {
     return useSelector((state: AppState) => selector(state));
@@ -22,10 +21,4 @@ export function useScrollToTop() {
 
 export function useThunkDispatch(): ThunkDispatch<AppState, any, AnyAction> {
     return useDispatch();
-}
-
-export function useBreadcrumbs(tittel: string, url: string) {
-    useEffect(() => {
-        setBreadcrumbs([{ title: tittel, url: url }]);
-    }, [tittel, url]);
 }
