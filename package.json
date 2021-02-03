@@ -34,7 +34,7 @@
         "@navikt/fnrvalidator": "^1.1.3",
         "@navikt/nav-dekoratoren-moduler": "^1.0.22",
         "@nutgaard/use-fetch": "^2.3.1",
-        "@nutgaard/use-formstate": "^2.4.2",
+        "@nutgaard/use-formstate": "^2.6.0",
         "@types/classnames": "^2.2.6",
         "@types/enzyme": "^3.10.7",
         "@types/enzyme-adapter-react-16": "^1.0.6",

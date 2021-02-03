@@ -1,4 +1,6 @@
 import { getCookie, fetchToJson } from '../ducks/ducks-utils';
+import useFetch, { FetchResult } from '@nutgaard/use-fetch';
+import { Ledetekster } from './constants';
 
 const API_BASE_URL = '/mininnboks-api';
 export const MED_CREDENTIALS: RequestInit = { credentials: 'same-origin' };
@@ -36,10 +38,12 @@ const sendSvarConfig = (traadId: string, fritekst: string) => ({
 
 export const TRAADER_PATH = `${API_BASE_URL}/traader`;
 export const RESOURCES_PATH = `${API_BASE_URL}/resources`;
+export const FOLKREGISTRERT_ADRESSE_PATH = `${API_BASE_URL}/tilgang/folkeregistrertadresse`;
+export const SOK_ADRESSE_PATH = `/sosialhjelp-soknad-api/sosialhjelp/soknad-api/informasjon/adressesok?sokestreng=`;
 export const RATE_LIMITER_URL = `/rate-limiter/api/limit`;
 
-export function hentLedetekster() {
-    return fetchToJson(RESOURCES_PATH, MED_CREDENTIALS);
+export function useLedetekster(): FetchResult<Ledetekster> {
+    return useFetch<Ledetekster>(RESOURCES_PATH, MED_CREDENTIALS);
 }
 
 export function hentTraader() {
