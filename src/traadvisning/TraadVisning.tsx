@@ -12,6 +12,7 @@ import { visBesvarBoks } from '../ducks/ui';
 import { STATUS } from '../ducks/ducks-utils';
 import { useAppState, useOnMount, useScrollToTop, useThunkDispatch } from '../utils/custom-hooks';
 import { getNAVBaseUrl } from '../environment';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
@@ -29,6 +30,8 @@ function TraadVisning() {
     useScrollToTop();
 
     const valgttraad = traader.data.find((traad) => traad.traadId === traadId);
+    const title = valgttraad?.nyeste.kassert ? 'Kassert dialog' : `Dialog om ${valgttraad?.nyeste.temagruppeNavn}`;
+    useBreadcrumbs([{ title, url: `/traad/${params.traadId}` }]);
     if (!valgttraad) {
         return <Feilmelding>Fant ikke tråden du var ute etter</Feilmelding>;
     }

@@ -27,6 +27,7 @@ import {
 import './skriv-nytt-sporsmal.less';
 import { useLedetekster } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const spesialtHandterteTemagrupper = [Temagruppe.FDAG];
 
@@ -41,6 +42,7 @@ function SkrivNyttSporsmal() {
     const isDirekte = location.pathname.includes('/direkte');
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
 
+    useBreadcrumbs([{ title: 'Ny melding', url: `/sporsmal/skriv/${params.temagruppe}` }]);
     if (spesialtHandterteTemagrupper.includes(temagruppe)) {
         return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
     }

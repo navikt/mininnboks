@@ -1,12 +1,23 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
-import { TRAADER_PATH, RESOURCES_PATH, RATE_LIMITER_URL } from '../utils/api';
+import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
+import { RATE_LIMITER_URL, RESOURCES_PATH, TRAADER_PATH } from '../utils/api';
 import traader from './traader.json';
 import resources from './resources.json';
 import { dokumentMock } from './dokument-mock';
+import fetchDekoratorHtml from './dekorator/fetchDekoratorHtml';
 
 console.log('==========================');
 console.log('======== MED MOCK ========');
 console.log('==========================');
+(window as any).setBreadcrumbs = setBreadcrumbs;
+(async () => {
+    const { scripts, styles, header, footer } = await fetchDekoratorHtml();
+    scripts.forEach((child) => document.body.append(child));
+    styles.forEach((child) => document.head.append(child));
+    header.reverse().forEach((child) => document.body.prepend(child));
+    footer.forEach((child) => document.body.append(child));
+})();
+
 const fetchMock = FetchMock.configure({
     enableFallback: true, // default: true
     middleware: MiddlewareUtils.combine(

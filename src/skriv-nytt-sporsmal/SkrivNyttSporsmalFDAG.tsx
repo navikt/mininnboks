@@ -14,10 +14,12 @@ import { useThunkDispatch } from '../utils/custom-hooks';
 import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate, useRatelimiter } from './common';
 import './skriv-nytt-sporsmal.less';
 import { Temagruppe } from '../utils/constants';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
 function SkrivNyttSporsmalFDAG() {
+    useBreadcrumbs([{ title: 'Ny melding', url: '/sporsmal/skriv/FDAG' }]);
     const dispatch = useThunkDispatch();
     const rateLimiter = useRatelimiter();
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });

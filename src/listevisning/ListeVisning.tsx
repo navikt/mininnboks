@@ -9,6 +9,7 @@ import { Melding, Traad } from '../Traad';
 import { useParams } from 'react-router';
 import { useAppState } from '../utils/custom-hooks';
 import { getNAVBaseUrl } from '../environment';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const getTraadLister = (traader: Traad[]) => {
     const sortert = traader.sort(nyesteTraadForst);
@@ -24,6 +25,7 @@ const getTraadLister = (traader: Traad[]) => {
 const erAktivRegel = (varselId?: string) => (melding: Melding) => melding.korrelasjonsId === varselId;
 
 function ListeVisning() {
+    useBreadcrumbs([]);
     const params = useParams<{ varselId?: string }>();
     const appState = useAppState((state) => state);
     const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
