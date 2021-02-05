@@ -4,10 +4,14 @@ import { History } from 'history';
 import { Breadcrumb } from '@navikt/nav-dekoratoren-moduler/dist/functions/breadcrumbs';
 import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 
+const defaultCrumbs: Array<Breadcrumb> = [
+    { title: 'Ditt NAV', url: 'https://tjenester.nav.no/dittnav' },
+    { title: 'Min innboks', url: '/', handleInApp: true }
+];
 export function useBreadcrumbs(crumbs: Array<Breadcrumb>) {
     useEffect(() => {
         const inAppCrumbs = crumbs.map((crumb) => ({ ...crumb, handleInApp: true }));
-        setBreadcrumbs([...inAppCrumbs]);
+        setBreadcrumbs([...defaultCrumbs, ...inAppCrumbs]);
     }, [crumbs]);
 }
 
