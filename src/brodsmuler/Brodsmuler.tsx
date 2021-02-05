@@ -8,7 +8,6 @@ const defaultCrumbs: Array<Breadcrumb> = [
     { title: 'Ditt NAV', url: 'https://tjenester.nav.no/dittnav' },
     { title: 'Min innboks', url: '/', handleInApp: true }
 ];
-
 export function useBreadcrumbs(crumbs: Array<Breadcrumb>) {
     useEffect(() => {
         const inAppCrumbs = crumbs.map((crumb) => ({ ...crumb, handleInApp: true }));
