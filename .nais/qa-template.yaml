@@ -60,4 +60,4 @@ spec:
     - name: LOGINSERVICE_URL
       value: "https://loginservice-q.nav.no/login"
     - name: MININNBOKS_URL
-      value: "https://mininnboks-q.nav.no"
+      value: "https://mininnboks.dev.nav.no"
