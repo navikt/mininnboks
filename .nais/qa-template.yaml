@@ -54,7 +54,7 @@ spec:
     - name: PUBLIC_NAMESPACE
       value: "{{namespace}}"
     - name: APPRES_CMS_URL
-      value: "{{ appresurl }}"
+      value: "https://dekoratoren.dev.nav.no"
     - name: SAKSOVERSIKT_LINK_URL
       value: "https://tjenester-{{ namespace }}.nav.no/saksoversikt"
     - name: LOGINSERVICE_URL
