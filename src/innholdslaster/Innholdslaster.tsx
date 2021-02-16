@@ -32,7 +32,7 @@ function Innholdslaster(props: Props) {
 
         const feilmelding = props.feilmelding || 'Det skjedde en feil ved innlastningen av data';
 
-        getLogger().error(`${feilmelding}: ${JSON.stringify(feilendeReducer)}`);
+        // getLogger().error(`${feilmelding}: ${JSON.stringify(feilendeReducer)}`);
 
         return <Feilmelding>{feilmelding}</Feilmelding>;
     }
