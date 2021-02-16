@@ -2,7 +2,7 @@ import * as React from 'react';
 import Feilmelding from '../feilmelding/Feilmelding';
 import Spinner from '../utils/Spinner';
 import { STATUS } from '../ducks/ducks-utils';
-import { getLogger } from '../utils';
+// import { getLogger } from '../utils';
 import { Avhengighet } from '../avhengigheter';
 
 const array = (value: unknown[]) => (Array.isArray(value) ? value : [value]);
