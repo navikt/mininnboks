@@ -30,7 +30,7 @@ proxy:
     pingRequestPath: /sosialhjelp/soknad-api/internal/isAlive
 
   - contextPath: /rate-limiter
-    baseUrl: http://rate-limiter.{{ NAIS_NAMESPACE }}.svc.nais.local
+    baseUrl: http://rate-limiter.personoversikt.svc.nais.local
     pingRequestPath: /rate-limiter/internal/isAlive
 
 redirect:
