@@ -1,10 +1,10 @@
 import React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
+import { Feiloppsummering, FeiloppsummeringFeil, Textarea } from 'nav-frontend-skjema';
 import { Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
-import { Values } from '@nutgaard/use-formstate';
+import { Values, Formstate } from '@nutgaard/use-formstate';
 import { sendSporsmal } from '../ducks/traader';
 import Kvittering from './Kvittering';
 import { feilmelding } from '../utils/validationutil';
@@ -17,6 +17,24 @@ import { Temagruppe } from '../utils/constants';
 import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
+
+export function lagFeilmeldingOppsummering(state: Formstate<SkrivNyttSporsmalForm>) {
+    //TODO: Er det mulig å gjøre dette finere slik at kun de feilmeldingene som er aktive blir vist? Nå løses det med å ha ha en liste som vi pusher opp feilmeldinger
+
+    const feilmeldinger: FeiloppsummeringFeil[] = [];
+    const feilmeldingFritekst = {
+        skjemaelementId: state.fields.fritekst.input.id,
+        feilmelding: state.fields.fritekst.error ?? ''
+    };
+    const feilmeldingVilkaar = {
+        skjemaelementId: state.fields.godkjennVilkaar.input.id,
+        feilmelding: state.fields.godkjennVilkaar.error ?? ''
+    };
+
+    if (state.fields.godkjennVilkaar.error) feilmeldinger.push(feilmeldingVilkaar);
+    if (state.fields.fritekst.error) feilmeldinger.push(feilmeldingFritekst);
+    return <Feiloppsummering tittel="For å gå sende spørsmål må du rette opp følgende:" feil={feilmeldinger} />;
+}
 
 function SkrivNyttSporsmalFDAG() {
     useBreadcrumbs([{ title: 'Ny melding', url: '/sporsmal/skriv/FDAG' }]);
@@ -46,6 +64,11 @@ function SkrivNyttSporsmalFDAG() {
                 <Innholdstittel tag="h2" className="blokk-xl text-center">
                     Skriv melding
                 </Innholdstittel>
+                <div className="blokk-xs">
+                    {((formstate.errors && formstate.fields.fritekst.touched) ||
+                        formstate.fields.godkjennVilkaar.touched) &&
+                        lagFeilmeldingOppsummering(formstate)}
+                </div>
                 <div className="blokk-xs">
                     <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter.isOk}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere

@@ -21,9 +21,9 @@ export const defaultFormstateConfig: Validation<SkrivNyttSporsmalForm> = {
     },
     fritekst(value: string) {
         if (value.length === 0) {
-            return 'Tekstfeltet er tomt';
+            return 'Tekstfeltet er tomt. Tekstfeltet må inneholde tekst for å kunne sende melding';
         } else if (value.length > 1000) {
-            return 'Teksten er for lang';
+            return 'Teksten er for lang. Teksten må kan ikke være lenger enn 1000 tegn. Gjør meldingen kortere for å kunne sende';
         }
         return undefined;
     }
