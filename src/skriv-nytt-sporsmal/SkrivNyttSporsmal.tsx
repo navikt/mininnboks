@@ -28,7 +28,7 @@ import './skriv-nytt-sporsmal.less';
 import { useLedetekster } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
 import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
-import { lagFeilmeldingOppsummering } from './SkrivNyttSporsmalFDAG';
+import { FeilmeldingOppsummering } from './FeilmeldingOppsummering';
 
 const spesialtHandterteTemagrupper = [Temagruppe.FDAG];
 
@@ -94,11 +94,10 @@ function SkrivNyttSporsmal() {
                 <i className="meldingikon" />
                 <Innholdstittel className="blokk-xl">Skriv melding</Innholdstittel>
                 <Undertittel className="blokk-s">{TemagruppeNavn[temagruppe]}</Undertittel>
-                <div className="blokk-xs">
-                    {formstate.errors &&
-                        (formstate.fields.fritekst.touched || formstate.fields.godkjennVilkaar.touched) &&
-                        lagFeilmeldingOppsummering(formstate)}
-                </div>
+                <FeilmeldingOppsummering
+                    tittel={'For å sende melding må du rette opp følgende:'}
+                    formstate={formstate}
+                />
                 <div className="blokk-xs">
                     <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter.isOk}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
