@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feiloppsummering, FeiloppsummeringFeil, Textarea } from 'nav-frontend-skjema';
+import { Textarea } from 'nav-frontend-skjema';
 import { Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
