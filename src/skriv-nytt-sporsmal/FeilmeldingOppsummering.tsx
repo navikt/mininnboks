@@ -9,13 +9,9 @@ interface Props {
 
 export function FeilmeldingOppsummering(props: Props) {
     const errors = Object.values(props.formstate.fields).filter((field) => field.touched);
-
-    if (!props.formstate.submittoken || errors.length === 0) {
-        return null;
-    }
+    const summaryRef = useRef<HTMLDivElement>(null);
 
     const submittoken = props.formstate.submittoken;
-    const summaryRef = useRef<HTMLDivElement>(null);
     // focus on summary ref when shown
     useEffect(() => {
         if (submittoken && summaryRef.current !== null) {
@@ -23,6 +19,10 @@ export function FeilmeldingOppsummering(props: Props) {
             summaryRef.current.scrollIntoView && summaryRef.current.scrollIntoView();
         }
     }, [submittoken, summaryRef]);
+
+    if (!props.formstate.submittoken || errors.length === 0) {
+        return null;
+    }
 
     const feilmeldinger = errors.map((field) => ({
         skjemaelementId: field.input.id,
