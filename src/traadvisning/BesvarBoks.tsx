@@ -22,10 +22,11 @@ type BesvarForm = {
 const validator = useFormstate<BesvarForm>((values) => {
     let fritekst = undefined;
     if (values.fritekst.length === 0) {
-        fritekst = 'Tekstfeltet er tomt';
+        fritekst = 'Tekstfeltet er tomt. Tekstfeltet må inneholde tekst for å kunne sende svar';
     }
     if (values.fritekst.length > 2500) {
-        fritekst = 'Teksten er for lang';
+        fritekst =
+            'Teksten er for lang. Teksten må kan ikke være lenger enn 2500 tegn. Gjør meldingen kortere for å kunne sende';
     }
 
     return { fritekst };

@@ -15,6 +15,7 @@ import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate, useR
 import './skriv-nytt-sporsmal.less';
 import { Temagruppe } from '../utils/constants';
 import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
+import { FeilmeldingOppsummering } from './FeilmeldingOppsummering';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
@@ -46,6 +47,10 @@ function SkrivNyttSporsmalFDAG() {
                 <Innholdstittel tag="h2" className="blokk-xl text-center">
                     Skriv melding
                 </Innholdstittel>
+                <FeilmeldingOppsummering
+                    formstate={formstate}
+                    tittel={'For å sende melding må du rette opp følgende:'}
+                />
                 <div className="blokk-xs">
                     <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter.isOk}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
