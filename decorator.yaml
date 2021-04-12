@@ -9,12 +9,12 @@ auth:
 
 proxy:
   - contextPath: /mininnboks-api
-    baseUrl: http://mininnboks-api.{{ NAIS_NAMESPACE }}.svc.nais.local
+    baseUrl: {{ MININNBOKS_API_URL }}
     requestRewrite: REMOVE_CONTEXT_PATH
     pingRequestPath: /internal/isAlive
 
   - contextPath: /mininnboks/tjenester
-    baseUrl: http://mininnboks-api.{{ NAIS_NAMESPACE }}.svc.nais.local
+    baseUrl: {{ MININNBOKS_API_URL }}
     requestRewrite: REMOVE_CONTEXT_PATH
     pingRequestPath: /internal/isAlive
     # må kunne kalle apiet med kun openAM-sesjon
