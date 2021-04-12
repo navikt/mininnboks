@@ -24,10 +24,12 @@ export function FeilmeldingOppsummering(props: Props) {
         return null;
     }
 
-    const feilmeldinger = errors.map((field) => ({
-        skjemaelementId: field.input.id,
-        feilmelding: field.error ?? ''
-    }));
+    const feilmeldinger = errors
+        .filter((field) => field.error)
+        .map((field) => ({
+            skjemaelementId: field.input.id,
+            feilmelding: field.error!!
+        }));
 
     return <Feiloppsummering innerRef={summaryRef} tittel={props.tittel} feil={feilmeldinger} />;
 }
