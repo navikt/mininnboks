@@ -23,6 +23,8 @@ proxy:
   - contextPath: /saksoversikt-api
     baseUrl: http://saksoversikt-api.personbruker.svc.nais.local
     pingRequestPath: /saksoversikt-api/internal/isAlive
+    # lar saksoversikt-api håndtere sin egen sikkerhet
+    validateOidcToken: false
 
   - contextPath: /sosialhjelp-soknad-api
     baseUrl: http://sosialhjelp-soknad-api.teamdigisos.svc.nais.local
