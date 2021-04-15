@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: mininnboks
-  namespace: default
+  namespace: personoversikt
   cluster: prod-sbs
   labels:
     team: personoversikt
@@ -63,4 +63,6 @@ spec:
       value: "https://mininnboks.nav.no"
     - name: RATE_LIMITER_URL
       value: "http://rate-limiter.personoversikt.svc.nais.local"
+    - name: MININNBOKS_API_URL
+      value: "http://mininnboks-api.personoversikt.svc.nais.local"
 
