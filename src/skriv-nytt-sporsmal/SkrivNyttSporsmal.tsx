@@ -14,7 +14,7 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import { feilmelding } from '../utils/validationutil';
 import Spinner from '../utils/Spinner';
 import { Temagruppe, TemagruppeNavn } from '../utils/constants';
-import { useThunkDispatch } from '../utils/custom-hooks';
+import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
     AndreFeilmeldinger,
@@ -42,6 +42,7 @@ function SkrivNyttSporsmal() {
     const location = useLocation();
     const isDirekte = location.pathname.includes('/direkte');
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
+    const innsedingStatus = useAppState((state) => state.traader.innsendingStatus);
 
     useBreadcrumbs([{ title: 'Ny melding', url: `/sporsmal/skriv/${params.temagruppe}` }]);
     if (spesialtHandterteTemagrupper.includes(temagruppe)) {
@@ -70,7 +71,7 @@ function SkrivNyttSporsmal() {
 
     if (!godkjenteTemagrupper.includes(temagruppe)) {
         return <Feilmelding>{AndreFeilmeldinger.IKKE_GODKJENT_TEMAGRUPPE}</Feilmelding>;
-    } else if (formstate.submittingSuccess) {
+    } else if (innsedingStatus === STATUS.OK) {
         return <Kvittering />;
     }
 
@@ -103,7 +104,7 @@ function SkrivNyttSporsmal() {
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
-                    <AlertstripeAdvarselVisibleIf visibleIf={formstate.submittingFailed}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsedingStatus === STATUS.ERROR}>
                         Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                     </AlertstripeAdvarselVisibleIf>
                 </div>
