@@ -37,17 +37,20 @@ export function sendResultatTilDispatch(dispatch: Dispatch<any>, action: string)
     };
 }
 
-export function handterFeil(dispatch: Dispatch<any>, action: string) {
+export function handterFeil(dispatch: Dispatch<any>, action: string): (error: ErrorWithResponse) => Promise<never> {
     return (error: ErrorWithResponse) => {
         if (error.response) {
             error.response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
                 dispatch({ type: action, data: { response: error.response, data } });
+                return Promise.reject(error.response);
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
             dispatch({ type: action, data: error.toString() });
+            return Promise.reject(error.toString());
         }
+        return Promise.reject(error.toString());
     };
 }
 

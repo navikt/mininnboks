@@ -134,21 +134,21 @@ describe('dokumenter-ducks', () => {
 
                 const res = store.dispatch(hentDokumentVisningData('', ''));
 
-                setTimeout(() => {
-                    // Må vente litt pga masse async/promise og dispatching.
-                    res.then(() => {
-                        expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK));
-                        expect(store).toHaveReceived([
-                            dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
-                            dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET)
-                        ]);
-                    });
-                    done();
-                }, 0);
+                res.then(() => {
+                    expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK));
+                    expect(store).toHaveReceived([
+                        dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
+                        dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET)
+                    ]);
+                });
+                done();
             });
 
-            it('skal sende pending, og error om dokumentmetadata feiler', (done) => {
-                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', { test: 'asda' });
+            it('skal sende pending, og error om journalpostmetadata feiler', (done) => {
+                fetchMock.get('^/saksoversikt-api/tjenester/dokumenter/dokumentmetadata', {
+                    test: 'asda',
+                    status: 200
+                });
                 fetchMock.mock('^/saksoversikt-api/tjenester/dokumenter/journalpostmetadata', {
                     body: { data: 'asda' },
                     status: 500
@@ -157,17 +157,14 @@ describe('dokumenter-ducks', () => {
 
                 const res = store.dispatch(hentDokumentVisningData('', ''));
 
-                setTimeout(() => {
-                    // Må vente litt pga masse async/promise og dispatching.
-                    res.then(() => {
-                        expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK));
-                        expect(store).toHaveReceived([
-                            dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
-                            dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET)
-                        ]);
-                    });
-                    done();
-                }, 0);
+                res.then(() => {
+                    expect(store).not.toHaveReceived(dataAction(TypeKeys.DOKUMENTVISNING_DATA_OK));
+                    expect(store).toHaveReceived([
+                        dataAction(TypeKeys.DOKUMENTVISNING_DATA_PENDING, undefined),
+                        dataAction(TypeKeys.DOKUMENTVISNING_DATA_FEILET)
+                    ]);
+                });
+                done();
             });
         });
 
