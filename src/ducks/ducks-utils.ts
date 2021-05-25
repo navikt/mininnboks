@@ -8,6 +8,7 @@ export enum STATUS {
     PENDING = 'PENDING',
     OK = 'OK',
     RELOADING = 'RELOADING',
+    TOOMANYREQUESTS = 'TOOMANYREQUESTS',
     ERROR = 'ERROR'
 }
 
@@ -37,13 +38,22 @@ export function sendResultatTilDispatch(dispatch: Dispatch<any>, action: string)
     };
 }
 
-export function handterFeil(dispatch: Dispatch<any>, action: string): (error: ErrorWithResponse) => Promise<never> {
+export function handterFeil(
+    dispatch: Dispatch<any>,
+    action: string,
+    tooManyRequestsAction?: string
+): (error: ErrorWithResponse) => Promise<never> {
     return (error: ErrorWithResponse) => {
         if (error.response) {
             error.response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({ type: action, data: { response: error.response, data } });
-                return Promise.reject(error.response);
+                if (tooManyRequestsAction !== undefined && error.response.status === 426) {
+                    dispatch({ type: tooManyRequestsAction, data: { response: error.response, data } });
+                    return Promise.reject(error.response);
+                } else {
+                    dispatch({ type: action, data: { response: error.response, data } });
+                    return Promise.reject(error.toString());
+                }
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
@@ -68,12 +78,18 @@ export type AsyncActions = {
     OK: string;
     PENDING?: string;
     FEILET: string;
+    TOOMANYREQUESTS?: string;
 };
-export function doThenDispatch(fn: (dispatch: Dispatch<any>) => Promise<any>, { OK, FEILET, PENDING }: AsyncActions) {
+export function doThenDispatch(
+    fn: (dispatch: Dispatch<any>) => Promise<any>,
+    { OK, FEILET, PENDING, TOOMANYREQUESTS }: AsyncActions
+) {
     return (dispatch: Dispatch<any>) => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }
-        return fn(dispatch).then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
+        return fn(dispatch)
+            .then(sendResultatTilDispatch(dispatch, OK))
+            .catch(handterFeil(dispatch, FEILET, TOOMANYREQUESTS));
     };
 }
