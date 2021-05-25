@@ -30,13 +30,11 @@ function SkrivNyttSporsmalFDAG() {
     }
 
     function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
-        return rateLimiter.update().then((isOK) => {
-            if (isOK) {
-                return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
-            } else {
-                return Promise.reject('rate-limiter feilmelding');
-            }
-        });
+        if (rateLimiter.isOk) {
+            return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
+        } else {
+            return Promise.reject('rate-limiter feilmelding');
+        }
     }
 
     return (
