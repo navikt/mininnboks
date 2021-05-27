@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 export type ErrorWithResponse = Error & { response: Response };
 export type DucksData<T> = { data: T };
-
+const Too_Many_Requests: number = 429;
 export enum STATUS {
     NOT_STARTED = 'NOT_STARTED',
     PENDING = 'PENDING',
@@ -42,12 +42,12 @@ export function handterFeil(
     dispatch: Dispatch<any>,
     action: string,
     tooManyRequestsAction?: string
-): (error: ErrorWithResponse) => Promise<never> {
+): (error: ErrorWithResponse) => Promise<Response | String> {
     return (error: ErrorWithResponse) => {
         if (error.response) {
             error.response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                if (tooManyRequestsAction !== undefined && error.response.status === 426) {
+                if (tooManyRequestsAction !== undefined && error.response.status === Too_Many_Requests) {
                     dispatch({ type: tooManyRequestsAction, data: { response: error.response, data } });
                     return Promise.reject(error.response);
                 } else {
