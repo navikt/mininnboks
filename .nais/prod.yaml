@@ -61,8 +61,6 @@ spec:
       value: "https://loginservice.nav.no/login"
     - name: MININNBOKS_URL
       value: "https://mininnboks.nav.no"
-    - name: RATE_LIMITER_URL
-      value: "http://rate-limiter.personoversikt.svc.nais.local"
     - name: MININNBOKS_API_URL
       value: "http://mininnboks-api.personoversikt.svc.nais.local"
 

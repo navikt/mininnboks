@@ -11,7 +11,7 @@ import { feilmelding } from '../utils/validationutil';
 import GodtaVilkar from './GodtaVilkar';
 import { getNAVBaseUrl } from '../environment';
 import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
-import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate, useRatelimiter } from './common';
+import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate } from './common';
 import './skriv-nytt-sporsmal.less';
 import { Temagruppe } from '../utils/constants';
 import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
@@ -23,7 +23,6 @@ const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 function SkrivNyttSporsmalFDAG() {
     useBreadcrumbs([{ title: 'Ny melding', url: '/sporsmal/skriv/FDAG' }]);
     const dispatch = useThunkDispatch();
-    const rateLimiter = useRatelimiter();
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
     const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
 
@@ -32,11 +31,7 @@ function SkrivNyttSporsmalFDAG() {
     }
 
     function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
-        if (rateLimiter.isOk) {
-            return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
-        } else {
-            return Promise.reject('rate-limiter feilmelding');
-        }
+        return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
     }
 
     return (
@@ -52,9 +47,7 @@ function SkrivNyttSporsmalFDAG() {
                     tittel={'For å sende melding må du rette opp følgende:'}
                 />
                 <div className="blokk-xs">
-                    <AlertstripeAdvarselVisibleIf
-                        visibleIf={!rateLimiter.isOk || innsendingStatus === STATUS.TOOMANYREQUESTS}
-                    >
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.TOOMANYREQUESTS}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>

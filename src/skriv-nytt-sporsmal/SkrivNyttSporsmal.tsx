@@ -21,7 +21,6 @@ import {
     FeilmeldingKommunalSjekk,
     SkrivNyttSporsmalForm,
     useFormstate,
-    useRatelimiter,
     useTilgangSjekk
 } from './common';
 import './skriv-nytt-sporsmal.less';
@@ -34,7 +33,6 @@ const spesialtHandterteTemagrupper = [Temagruppe.FDAG];
 
 function SkrivNyttSporsmal() {
     const dispatch = useThunkDispatch();
-    const rateLimiter = useRatelimiter();
     const ledetekster = useLedetekster();
     const tilgang = useTilgangSjekk();
     const params = useParams<{ temagruppe: Temagruppe }>();
@@ -76,11 +74,7 @@ function SkrivNyttSporsmal() {
     }
 
     function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
-        if (rateLimiter.isOk) {
-            return dispatch(sendSporsmal(temagruppe, values.fritekst, isDirekte));
-        } else {
-            return Promise.reject('rate-limiter feilmelding');
-        }
+        return dispatch(sendSporsmal(temagruppe, values.fritekst, isDirekte));
     }
 
     return (
@@ -98,9 +92,7 @@ function SkrivNyttSporsmal() {
                     formstate={formstate}
                 />
                 <div className="blokk-xs">
-                    <AlertstripeAdvarselVisibleIf
-                        visibleIf={!rateLimiter.isOk || innsendingStatus === STATUS.TOOMANYREQUESTS}
-                    >
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.TOOMANYREQUESTS}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
