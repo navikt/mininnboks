@@ -3,7 +3,7 @@ import { Avhengighet } from '../avhengigheter';
 import { AppState } from '../reducer';
 import { ThunkAction } from 'redux-thunk';
 import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { STATUS } from '../ducks/ducks-utils';
 import { harTilgangTilKommunaleTemagrupper, TilgangState } from '../ducks/tilgang';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
