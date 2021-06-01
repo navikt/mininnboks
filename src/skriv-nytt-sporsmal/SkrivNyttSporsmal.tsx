@@ -14,14 +14,13 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import { feilmelding } from '../utils/validationutil';
 import Spinner from '../utils/Spinner';
 import { Temagruppe, TemagruppeNavn } from '../utils/constants';
-import { useThunkDispatch } from '../utils/custom-hooks';
+import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
     AndreFeilmeldinger,
     FeilmeldingKommunalSjekk,
     SkrivNyttSporsmalForm,
     useFormstate,
-    useRatelimiter,
     useTilgangSjekk
 } from './common';
 import './skriv-nytt-sporsmal.less';
@@ -34,7 +33,6 @@ const spesialtHandterteTemagrupper = [Temagruppe.FDAG];
 
 function SkrivNyttSporsmal() {
     const dispatch = useThunkDispatch();
-    const rateLimiter = useRatelimiter();
     const ledetekster = useLedetekster();
     const tilgang = useTilgangSjekk();
     const params = useParams<{ temagruppe: Temagruppe }>();
@@ -42,6 +40,7 @@ function SkrivNyttSporsmal() {
     const location = useLocation();
     const isDirekte = location.pathname.includes('/direkte');
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
+    const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
 
     useBreadcrumbs([{ title: 'Ny melding', url: `/sporsmal/skriv/${params.temagruppe}` }]);
     if (spesialtHandterteTemagrupper.includes(temagruppe)) {
@@ -75,13 +74,7 @@ function SkrivNyttSporsmal() {
     }
 
     function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
-        return rateLimiter.update().then((isOK) => {
-            if (isOK) {
-                return dispatch(sendSporsmal(temagruppe, values.fritekst, isDirekte));
-            } else {
-                return Promise.reject('rate-limiter feilmelding');
-            }
-        });
+        return dispatch(sendSporsmal(temagruppe, values.fritekst, isDirekte));
     }
 
     return (
@@ -99,11 +92,11 @@ function SkrivNyttSporsmal() {
                     formstate={formstate}
                 />
                 <div className="blokk-xs">
-                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter.isOk}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.TOOMANYREQUESTS}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
-                    <AlertstripeAdvarselVisibleIf visibleIf={formstate.submittingFailed}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.ERROR}>
                         Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                     </AlertstripeAdvarselVisibleIf>
                 </div>
