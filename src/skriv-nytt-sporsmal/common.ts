@@ -3,10 +3,9 @@ import { Avhengighet } from '../avhengigheter';
 import { AppState } from '../reducer';
 import { ThunkAction } from 'redux-thunk';
 import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { STATUS } from '../ducks/ducks-utils';
 import { harTilgangTilKommunaleTemagrupper, TilgangState } from '../ducks/tilgang';
-import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
@@ -56,21 +55,6 @@ function useRestResource<S, T extends Avhengighet<S>>(
 
 export function useTilgangSjekk(): TilgangState {
     return useRestResource((state) => state.tilgang, harTilgangTilKommunaleTemagrupper);
-}
-
-export function useRatelimiter(): { isOk: boolean; update: () => Promise<boolean> } {
-    const [state, setState] = useState(true);
-    const update = useCallback(() => {
-        const updatedValue = sjekkOgOppdaterRatelimiter();
-        updatedValue.then((isOk) => setState(isOk));
-
-        return updatedValue;
-    }, [setState]);
-    useEffect(() => {
-        sjekkRatelimiter().then((isOk) => setState(isOk));
-    }, [update]);
-
-    return { isOk: state, update };
 }
 
 export const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);

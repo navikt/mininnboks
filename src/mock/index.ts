@@ -1,6 +1,6 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
-import { RATE_LIMITER_URL, RESOURCES_PATH, TRAADER_PATH } from '../utils/api';
+import { RESOURCES_PATH, TRAADER_PATH } from '../utils/api';
 import traader from './traader.json';
 import resources from './resources.json';
 import { dokumentMock } from './dokument-mock';
@@ -32,9 +32,6 @@ fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json(resources)));
 fetchMock.get('/mininnboks-api/tilgang/oksos', (req, res, ctx) =>
     res(ctx.json({ resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' }))
 );
-fetchMock.get(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(true)));
-
-fetchMock.post(RATE_LIMITER_URL, (req, res, ctx) => res(ctx.json(true)));
 fetchMock.post('/mininnboks-api/traader/svar', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/sporsmal', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));

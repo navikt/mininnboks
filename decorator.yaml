@@ -31,10 +31,6 @@ proxy:
     requestRewrite: REMOVE_CONTEXT_PATH
     pingRequestPath: /sosialhjelp/soknad-api/internal/isAlive
 
-  - contextPath: /rate-limiter
-    baseUrl: {{ RATE_LIMITER_URL }}
-    pingRequestPath: /rate-limiter/internal/isAlive
-
 redirect:
   - from: /mininnboks
     to: {{ MININNBOKS_URL }}
