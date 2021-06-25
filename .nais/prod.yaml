@@ -63,4 +63,6 @@ spec:
       value: "https://mininnboks.nav.no"
     - name: MININNBOKS_API_URL
       value: "http://mininnboks-api.personoversikt.svc.nais.local"
+    - name: FRONTENDLOGGER_URL
+      value: "http://frontendlogger.default.svc.nais.local"
 
