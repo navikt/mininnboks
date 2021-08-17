@@ -18,6 +18,12 @@ console.log('==========================');
     footer.forEach((child) => document.body.append(child));
 })();
 
+type ToggleMap = { [key: string]: boolean };
+const brukerSalesforceDialoger = true;
+const featureToggles: ToggleMap = {
+    'modiabrukerdialog.bruker-salesforce-dialoger': brukerSalesforceDialoger
+};
+
 const fetchMock = FetchMock.configure({
     enableFallback: true, // default: true
     middleware: MiddlewareUtils.combine(
@@ -53,3 +59,15 @@ fetchMock.get(
 fetchMock.get('/saksoversikt-api/tjenester/dokumenter/journalpostmetadata/:journalpostId', (req, res, ctx) =>
     res(ctx.json(dokumentMock))
 );
+
+fetchMock.get('/api/feature', (req, res, ctx) => {
+    const queryParam = req.queryParams['feature'] || [];
+    const features = Array.isArray(queryParam) ? queryParam : [queryParam];
+    const results = features
+        .map((feature) => [feature, featureToggles[feature] || false])
+        .reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+        }, {} as ToggleMap);
+    return res(ctx.json(results));
+})
