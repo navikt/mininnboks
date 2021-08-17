@@ -45,6 +45,13 @@ export function useLedetekster(): FetchResult<Ledetekster> {
     return useFetch<Ledetekster>(RESOURCES_PATH, MED_CREDENTIALS);
 }
 
+interface FeatureToggles {
+    'modiabrukerdialog.bruker-salesforce-dialoger': boolean;
+}
+export function useFeaturetoggles(): FetchResult<FeatureToggles> {
+    return useFetch<FeatureToggles>('/api/feature?feature=modiabrukerdialog.bruker-salesforce-dialoger', MED_CREDENTIALS)
+}
+
 export function hentTraader() {
     return fetchToJson(TRAADER_PATH, MED_CREDENTIALS);
 }
