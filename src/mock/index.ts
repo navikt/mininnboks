@@ -33,7 +33,11 @@ const fetchMock = FetchMock.configure({
     )
 });
 
-fetchMock.get(TRAADER_PATH, (req, res, ctx) => res(ctx.json(traader)));
+fetchMock.get(TRAADER_PATH, (req, res, ctx) => {
+    const traderSf = traader
+        .filter((trad) => trad.meldinger.every((melding: any) => ['DOKUMENT_VARSEL', 'OPPGAVE_VARSEL'].includes(melding.type)));
+    return res(ctx.json(brukerSalesforceDialoger ? traderSf : traader));
+});
 fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json(resources)));
 fetchMock.get('/mininnboks-api/tilgang/oksos', (req, res, ctx) =>
     res(ctx.json({ resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' }))
