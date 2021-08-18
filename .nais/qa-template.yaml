@@ -65,3 +65,5 @@ spec:
       value: "http://mininnboks-api-{{ namespace }}.personoversikt.svc.nais.local"
     - name: FRONTENDLOGGER_URL
       value: "http://frontendlogger.{{ namespace }}.svc.nais.local"
+    - name: PUBLIC_SF_DIALOG_URL
+      value: "http://unknown.io"
