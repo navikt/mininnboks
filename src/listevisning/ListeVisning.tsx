@@ -24,7 +24,7 @@ const getTraadLister = (traader: Traad[]) => {
 
 const erAktivRegel = (varselId?: string) => (melding: Melding) => melding.korrelasjonsId === varselId;
 
-function ListeVisning() {
+function ListeVisning(props: { brukerSFSomBackend: boolean }) {
     useBreadcrumbs([]);
     const params = useParams<{ varselId?: string }>();
     const appState = useAppState((state) => state);
@@ -47,11 +47,13 @@ function ListeVisning() {
     return (
         <article className="blokk-center">
             <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
-            <div className="text-center blokk-l">
-                <a href={sendNyMeldingURL} className="knapp knapp--hoved">
-                    Skriv ny melding
-                </a>
-            </div>
+            <VisibleIf visibleIf={!props.brukerSFSomBackend}>
+                <div className="text-center blokk-l">
+                    <a href={sendNyMeldingURL} className="knapp knapp--hoved">
+                        Skriv ny melding
+                    </a>
+                </div>
+            </VisibleIf>
             <VisibleIf visibleIf={traader.length === 0}>
                 <h2 className="typo-undertittel text-center">Her kan du lese referater og beskjeder til og fra NAV.</h2>
             </VisibleIf>
