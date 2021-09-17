@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { feilmelding } from '../utils/validationutil';
 import { STATUS } from '../ducks/ducks-utils';
-import { Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
+import Textarea from '../components/no-aria-textarea';
 
 import './besvar-boks.less';
 import { skjulBesvarBoks } from '../ducks/ui';

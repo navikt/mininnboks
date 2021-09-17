@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router';
-import { Textarea } from 'nav-frontend-skjema';
 import { Innholdstittel, Normaltekst, Sidetittel, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Values } from '@nutgaard/use-formstate';
 import { hasError, isPending } from '@nutgaard/use-fetch';
+import Textarea from '../components/no-aria-textarea';
 import { sendSporsmal } from '../ducks/traader';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';

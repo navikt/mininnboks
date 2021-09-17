@@ -1,10 +1,10 @@
 import React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
 import { Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { Values } from '@nutgaard/use-formstate';
+import Textarea from '../components/no-aria-textarea';
 import { sendSporsmal } from '../ducks/traader';
 import Kvittering from './Kvittering';
 import { feilmelding } from '../utils/validationutil';
