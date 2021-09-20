@@ -21,7 +21,7 @@ console.log('==========================');
 type ToggleMap = { [key: string]: boolean };
 const brukerSalesforceDialoger = true;
 const featureToggles: ToggleMap = {
-    'modiabrukerdialog.bruker-salesforce-dialoger': brukerSalesforceDialoger
+    'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger
 };
 
 const fetchMock = FetchMock.configure({

@@ -46,10 +46,10 @@ export function useLedetekster(): FetchResult<Ledetekster> {
 }
 
 interface FeatureToggles {
-    'modiabrukerdialog.bruker-salesforce-dialoger': boolean;
+    'modia.innboks.bruker-salesforce-dialoger': boolean;
 }
 export function useFeaturetoggles(): FetchResult<FeatureToggles> {
-    return useFetch<FeatureToggles>('/api/feature?feature=modiabrukerdialog.bruker-salesforce-dialoger', MED_CREDENTIALS)
+    return useFetch<FeatureToggles>('/api/feature?feature=modia.innboks.bruker-salesforce-dialoger', MED_CREDENTIALS)
 }
 
 export function hentTraader() {
