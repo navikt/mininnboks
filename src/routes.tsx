@@ -20,7 +20,7 @@ export default function () {
     } else if (isPending(featuretoggles)) {
         return null;
     }
-    const brukerSFSomBackend: boolean = featuretoggles.data["modiabrukerdialog.bruker-salesforce-dialoger"];
+    const brukerSFSomBackend: boolean = featuretoggles.data["modia.innboks.bruker-salesforce-dialoger"];
 
     return (
         <BrowserRouter>
