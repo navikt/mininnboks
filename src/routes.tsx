@@ -8,10 +8,11 @@ import DokumentVisningSide from './dokument-visning/DokumentVisningSide';
 import Traader from './traader/Traader';
 import Brodsmuler from './brodsmuler/Brodsmuler';
 import SkrivNyttSporsmalFDAG from "./skriv-nytt-sporsmal/SkrivNyttSporsmalFDAG";
-import NyDialogLosning from "./ny-dialog-losning/ny-dialog-losning";
+import NyDialogLosning from "./ny-dialog-losning-alerts/ny-dialog-losning";
 import { useFeaturetoggles } from "./utils/api";
 import { hasError, isPending } from "@nutgaard/use-fetch";
 import { AlertStripeAdvarsel } from "nav-frontend-alertstriper";
+import StengtSTO from "./ny-dialog-losning-alerts/stengt-sto";
 
 export default function () {
     const featuretoggles = useFeaturetoggles();
@@ -20,25 +21,28 @@ export default function () {
     } else if (isPending(featuretoggles)) {
         return null;
     }
+
+    const stengtSTO: boolean = featuretoggles.data["modia.innboks.steng-sto"];
     const brukerSFSomBackend: boolean = featuretoggles.data["modia.innboks.bruker-salesforce-dialoger"];
 
     return (
         <BrowserRouter>
             <Brodsmuler />
+            <StengtSTO visibleIf={stengtSTO && !brukerSFSomBackend} />
             <NyDialogLosning visibleIf={brukerSFSomBackend} />
             <Switch>
-                { !brukerSFSomBackend && <Route exact path="/sporsmal/skriv/FDAG" component={SkrivNyttSporsmalFDAG}/> }
-                { !brukerSFSomBackend && <Route exact path="/sporsmal/skriv/:temagruppe/" component={SkrivNyttSporsmal} /> }
-                { !brukerSFSomBackend && <Route exact path="/sporsmal/skriv/:temagruppe/direkte" component={SkrivNyttSporsmal} /> }
-                { brukerSFSomBackend && <Redirect from="/sporsmal" to="/" /> }
+                { (!stengtSTO && !brukerSFSomBackend) && <Route exact path="/sporsmal/skriv/FDAG" component={SkrivNyttSporsmalFDAG}/> }
+                { (!stengtSTO && !brukerSFSomBackend) && <Route exact path="/sporsmal/skriv/:temagruppe/" component={SkrivNyttSporsmal} /> }
+                { (!stengtSTO && !brukerSFSomBackend) && <Route exact path="/sporsmal/skriv/:temagruppe/direkte" component={SkrivNyttSporsmal} /> }
+                { (stengtSTO || brukerSFSomBackend) && <Redirect from="/sporsmal" to="/" /> }
                 <Route>
                     <Traader>
                         <Switch>
-                            { !brukerSFSomBackend && <Route exact path="/traad/:traadId" component={Traadvisning} /> }
+                            { !brukerSFSomBackend && <Route exact path="/traad/:traadId" render={() => <Traadvisning stengtSTO={stengtSTO} />} /> }
                             { brukerSFSomBackend && <Redirect from="/traad" to="/" /> }
                             <Route exact path="/dokument/:id" component={DokumentVisningSide} />
                             <Route exact path="/oppgave/:id" component={Oppgavevisning} />
-                            <Route render={() => <Listevisning brukerSFSomBackend={brukerSFSomBackend}/>} />
+                            <Route render={() => <Listevisning stengtSTO={stengtSTO} brukerSFSomBackend={brukerSFSomBackend}/>} />
                         </Switch>
                     </Traader>
                 </Route>

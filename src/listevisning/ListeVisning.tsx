@@ -24,7 +24,12 @@ const getTraadLister = (traader: Traad[]) => {
 
 const erAktivRegel = (varselId?: string) => (melding: Melding) => melding.korrelasjonsId === varselId;
 
-function ListeVisning(props: { brukerSFSomBackend: boolean }) {
+interface Props {
+    stengtSTO: boolean;
+    brukerSFSomBackend: boolean;
+}
+
+function ListeVisning(props: Props) {
     useBreadcrumbs([]);
     const params = useParams<{ varselId?: string }>();
     const appState = useAppState((state) => state);
@@ -47,7 +52,7 @@ function ListeVisning(props: { brukerSFSomBackend: boolean }) {
     return (
         <article className="blokk-center">
             <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
-            <VisibleIf visibleIf={!props.brukerSFSomBackend}>
+            <VisibleIf visibleIf={!props.brukerSFSomBackend && !props.stengtSTO}>
                 <div className="text-center blokk-l">
                     <a href={sendNyMeldingURL} className="knapp knapp--hoved">
                         Skriv ny melding
