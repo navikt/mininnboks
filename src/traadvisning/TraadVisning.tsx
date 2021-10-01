@@ -16,7 +16,11 @@ import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
-function TraadVisning() {
+interface Props {
+    stengtSTO: boolean;
+}
+
+function TraadVisning(props: Props) {
     const params = useParams<{ traadId: string }>();
     const skalViseBesvarBoks = useAppState((state) => state.ui.visBesvarBoks);
     const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
@@ -55,7 +59,7 @@ function TraadVisning() {
                 >
                     Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                 </AlertstripeVisibleIf>
-                <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks} onClick={skrivKnappOnClick} />
+                <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks && !props.stengtSTO} onClick={skrivKnappOnClick} />
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
                     <Normaltekst>
                         Dialogen er avsluttet. Vil du <a href={sendNyMeldingURL}>sende en ny beskjed</a>, kan du gjøre

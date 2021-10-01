@@ -19,8 +19,10 @@ console.log('==========================');
 })();
 
 type ToggleMap = { [key: string]: boolean };
-const brukerSalesforceDialoger = true;
+const stengtSTO = false;
+const brukerSalesforceDialoger = false;
 const featureToggles: ToggleMap = {
+    'modia.innboks.steng-sto': stengtSTO,
     'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger
 };
 
