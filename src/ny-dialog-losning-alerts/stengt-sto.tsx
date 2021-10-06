@@ -1,17 +1,15 @@
 import * as React from "react";
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { getSfUrl } from "../environment";
 import { visibleIfHOC } from "../utils/hocs/visible-if";
 
-function NyDialogLosning() {
-    const url = getSfUrl();
+function StengtSTO() {
     return (
         <AlertStripeInfo size="4rem" className="blokk-xl">
-            <Systemtittel>Ny dialogløsning etablert</Systemtittel>
-            <Normaltekst>Dine dialoger er flyttet til ny løsning: <a href={url}>{url}</a></Normaltekst>
+            <Systemtittel>Innsending av nye meldinger er midlertidig stengt.</Systemtittel>
+            <Normaltekst>Det jobbes med å flytte all informasjon til ny innboks, det er derfor ikke mulig å sende inn meldinger akkurat nå.</Normaltekst>
         </AlertStripeInfo>
     );
 }
 
-export default visibleIfHOC(NyDialogLosning);
+export default visibleIfHOC(StengtSTO);
