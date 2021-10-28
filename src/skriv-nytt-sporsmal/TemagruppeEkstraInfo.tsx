@@ -20,18 +20,6 @@ type TemagruppeInfo = {
 };
 
 const temagruppeInfo: TemagruppeInfo = {
-    FMLI: [
-        {
-            heading: 'Kontantstøtte: Skal du sende melding om barnehageplass?',
-            intro: <Normaltekst>Vi trenger følgende informasjon fra deg:</Normaltekst>,
-            elementer: [
-                'Fødselsdatoen til barnet',
-                'Navnet på barnehagen',
-                'Fra hvilken dato er barnet tildelt barnehageplass',
-                'Antall timer i uken barnet er tildelt barnehageplass'
-            ]
-        }
-    ],
     PENS: [
         {
             heading: 'Har du spørsmål om AFP-etteroppgjøret?',
