@@ -32,6 +32,25 @@ const temagruppeInfo: TemagruppeInfo = {
             ]
         }
     ],
+    PENS: [
+        {
+            heading: 'Har du spørsmål om AFP-etteroppgjøret?',
+            intro: (
+                <>
+                    <Normaltekst>
+                        For å beregne riktig etteroppgjør må vi ha nødvendig dokumentasjon fra deg.
+                        Du finner <a href="https://www.nav.no/no/person/pensjon/avtalefestet-pensjon-afp/hva-er-afp-etteroppgjoret" target="__blank">informasjon og skjema i denne artikkelen</a>.
+                    </Normaltekst>
+                    <Element>Eksempler på dokumentasjon som kan sendes inn:</Element>
+                </>
+            ),
+            elementer: [
+                'Lønnsslipp fra måneden før første uttak av AFP',
+                'Lønnsslipp fra måneden etter opphør av AFP',
+                'Lønns- og trekkoppgave for etteroppgjørsåret'
+            ]
+        }
+    ],
     ARBD: [
         {
             heading: 'Tar du utdanning med støtte fra Lånekassen?',
