@@ -20,15 +20,22 @@ type TemagruppeInfo = {
 };
 
 const temagruppeInfo: TemagruppeInfo = {
-    FMLI: [
+    PENS: [
         {
-            heading: 'Kontantstøtte: Skal du sende melding om barnehageplass?',
-            intro: <Normaltekst>Vi trenger følgende informasjon fra deg:</Normaltekst>,
+            heading: 'Har du spørsmål om AFP-etteroppgjøret?',
+            intro: (
+                <>
+                    <Normaltekst>
+                        For å beregne riktig etteroppgjør må vi ha nødvendig dokumentasjon fra deg.
+                        Du finner <a href="https://www.nav.no/no/person/pensjon/avtalefestet-pensjon-afp/hva-er-afp-etteroppgjoret" target="__blank">informasjon og skjema i denne artikkelen</a>.
+                    </Normaltekst>
+                    <Element>Eksempler på dokumentasjon som kan sendes inn:</Element>
+                </>
+            ),
             elementer: [
-                'Fødselsdatoen til barnet',
-                'Navnet på barnehagen',
-                'Fra hvilken dato er barnet tildelt barnehageplass',
-                'Antall timer i uken barnet er tildelt barnehageplass'
+                'Lønnsslipp fra måneden før første uttak av AFP',
+                'Lønnsslipp fra måneden etter opphør av AFP',
+                'Lønns- og trekkoppgave for etteroppgjørsåret'
             ]
         }
     ],
