@@ -58,7 +58,7 @@ spec:
     - name: SAKSOVERSIKT_LINK_URL
       value: "https://tjenester-{{ namespace }}.nav.no/saksoversikt"
     - name: LOGINSERVICE_URL
-      value: "https://loginservice.dev.nav.no/login"
+      value: "https://loginservice-q.nav.no/login"
     - name: MININNBOKS_URL
       value: "https://mininnboks.dev.nav.no"
     - name: MININNBOKS_API_URL
