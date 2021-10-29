@@ -2,6 +2,7 @@ import { EffectCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { useLocation } from 'react-router';
 import { AppState } from '../reducer';
 
 export function useAppState<T>(selector: (state: AppState) => T) {
@@ -21,4 +22,8 @@ export function useScrollToTop() {
 
 export function useThunkDispatch(): ThunkDispatch<AppState, any, AnyAction> {
     return useDispatch();
+}
+
+export function useQuery(): URLSearchParams {
+    return new URLSearchParams(useLocation().search);
 }

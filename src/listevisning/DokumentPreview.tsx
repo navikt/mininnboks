@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Traad } from '../Traad';
 import Lenkepanel from '../utils/Lenkepanel';
 import { formaterDato } from '../utils/date-utils';
+import { useOnMount } from '../utils/custom-hooks';
 
 interface Props {
     traad: Traad;
@@ -22,8 +23,16 @@ function DokumentPreview(props: Props) {
     const dato = formaterDato(dokument.opprettet);
     const temanavn = dokument.temaNavn;
 
+    const liRef = React.createRef<HTMLLIElement>();
+    useOnMount(() => {
+        if (props.aktiv) {
+            // Må legge ref på li-elementet siden `lenkepanel` ikke støtter forwardRefs
+            liRef.current?.querySelector('a')?.focus();
+        }
+    });
+
     return (
-        <li className="traad">
+        <li className="traad" ref={liRef}>
             <Lenkepanel href={`/dokument/${dokument.id}`} className={cls(props)}>
                 <p className="vekk">Dokument-ikon</p>
                 <Normaltekst>

@@ -6,8 +6,7 @@ import { selectTraaderMedSammenslatteMeldinger } from './../ducks/traader';
 import { Sidetittel } from 'nav-frontend-typografi';
 import './listevisning.less';
 import { Melding, Traad } from '../Traad';
-import { useParams } from 'react-router';
-import { useAppState } from '../utils/custom-hooks';
+import { useAppState, useQuery } from '../utils/custom-hooks';
 import { getNAVBaseUrl } from '../environment';
 import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
@@ -22,7 +21,9 @@ const getTraadLister = (traader: Traad[]) => {
     };
 };
 
-const erAktivRegel = (varselId?: string) => (melding: Melding) => melding.korrelasjonsId === varselId;
+const erAktivRegel = (varselId: string | null) => (melding: Melding) => {
+    return melding.korrelasjonsId === varselId;
+};
 
 interface Props {
     stengtSTO: boolean;
@@ -31,11 +32,12 @@ interface Props {
 
 function ListeVisning(props: Props) {
     useBreadcrumbs([]);
-    const params = useParams<{ varselId?: string }>();
+    const params = useQuery();
     const appState = useAppState((state) => state);
     const traader = selectTraaderMedSammenslatteMeldinger(appState).data;
     const traaderGruppert = getTraadLister(traader);
-    const erAktiv = erAktivRegel(params.varselId);
+
+    const erAktiv = erAktivRegel(params.get('varselId') || params.get('varselid'));
 
     const ulesteTraader = traaderGruppert.uleste.map((traad) => ({
         data: traad,
