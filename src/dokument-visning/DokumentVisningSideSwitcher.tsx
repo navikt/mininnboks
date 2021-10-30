@@ -2,6 +2,7 @@ import * as React from 'react';
 import {hasError, isPending} from "@nutgaard/use-fetch";
 import {useFeaturetoggles} from "../utils/api";
 import DokumentVisningSide from './v1/DokumentVisningSide';
+import DokumentVisningSideV2 from './v2/DokumentVarselVisningSide';
 
 function useSafSaker(): boolean | null {
     const featuretoggles = useFeaturetoggles();
@@ -17,7 +18,7 @@ function DokumentVisningSideSwitcher() {
     if (useSaf == null) {
         return null
     } else if (useSaf) {
-        return null;
+        return <DokumentVisningSideV2 />
     } else {
         return <DokumentVisningSide />
     }

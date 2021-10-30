@@ -5,6 +5,7 @@ import traader from './traader.json';
 import resources from './resources.json';
 import { dokumentMock } from './dokument-mock';
 import fetchDekoratorHtml from './dekorator/fetchDekoratorHtml';
+import {Dokumenter} from "../dokument-visning/v2/domain";
 
 console.log('==========================');
 console.log('======== MED MOCK ========');
@@ -49,6 +50,25 @@ fetchMock.post('/mininnboks-api/traader/svar', (req, res, ctx) => res(ctx.json({
 fetchMock.post('/mininnboks-api/traader/sporsmal', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
+
+const dokument: Dokumenter = {
+    tema: 'ARBD',
+    journalpostMetadata: {
+        dato: '2017-07-03T13:18:33+02:00',
+        navn: 'Navn Navnesen',
+        retning: 'UT',
+        avsender: 'NAV',
+        mottaker: 'SLUTTBRUKER'
+    },
+    dokumentMetadata: [
+        {
+            tittel: 'Ett eller annet vedtak'
+        }
+    ]
+}
+fetchMock.get('/mininnboks-api/dokument/:journalpostId', (req, res, ctx) => res(
+    ctx.json(dokument)
+))
 
 fetchMock.get(
     '/saksoversikt-api/tjenester/dokumenter/dokumentmetadata/:journalpostId/:dokumentmetadata',
