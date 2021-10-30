@@ -23,7 +23,8 @@ const stengtSTO = false;
 const brukerSalesforceDialoger = false;
 const featureToggles: ToggleMap = {
     'modia.innboks.steng-sto': stengtSTO,
-    'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger
+    'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger,
+    'modia.innboks.saf-saker': false
 };
 
 const fetchMock = FetchMock.configure({

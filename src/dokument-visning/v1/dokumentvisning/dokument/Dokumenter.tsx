@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Dokument from './Dokument';
-import { DokumentMetadata, JournalpostMetadata } from '../../../dokument';
+import { DokumentMetadata, JournalpostMetadata } from '../../../../dokument';
 
 interface Props {
     journalpostmetadata: JournalpostMetadata;
