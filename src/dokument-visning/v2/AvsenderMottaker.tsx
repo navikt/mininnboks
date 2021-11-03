@@ -1,24 +1,24 @@
 import * as React from 'react';
-import {JournalpostMetadata} from "./domain";
+import { Journalpost, Retning, AvsenderMottaker as Part } from './domain';
 
 interface Props {
-    journalpostMetadata: JournalpostMetadata;
+    journalpost: Journalpost;
 }
 
 function AvsenderMottaker(props: Props) {
-    const { navn, retning, avsender, mottaker } = props.journalpostMetadata;
-    if (retning === 'INN' && avsender === 'SLUTTBRUKER') {
+    const { retning, avsender, mottaker } = props.journalpost;
+    if (retning === Retning.INN && avsender === Part.SLUTTBRUKER) {
         return <span>Mottatt fra deg</span>;
-    } else if (retning === 'UT' && mottaker === 'SLUTTBRUKER') {
+    } else if (retning === Retning.UT && mottaker === Part.SLUTTBRUKER) {
         return <span>Sendt fra NAV til deg</span>;
-    } else if (retning === 'UT' && mottaker === 'EKSTERN_PART') {
-        return <span>Sendt fra NAV til {navn}</span>;
-    } else if (retning === 'INN' && avsender === 'EKSTERN_PART') {
-        return <span>Sendt fra {navn} til NAV</span>;
-    } else if (retning === 'INTERN') {
+    } else if (retning === Retning.UT && mottaker === Part.EKSTERN_PART) {
+        return <span>Sendt fra NAV til deg</span>;
+    } else if (retning === Retning.INN && avsender === Part.EKSTERN_PART) {
+        return <span>Sendt fra deg til NAV</span>;
+    } else if (retning === Retning.INTERN) {
         return <span>Samtalereferat</span>;
     }
     return null;
 }
 
-export default AvsenderMottaker
+export default AvsenderMottaker;

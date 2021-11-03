@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { DokumentMetadata } from "./domain";
-import PdfViewer from "../../components/pdfvisning/PdfViewer";
+import { Dokument } from './domain';
+import PdfViewer from '../../components/pdfvisning/PdfViewer';
 
 interface Props {
-    dokument: DokumentMetadata;
+    dokument: Dokument;
 }
 
 function feilmelding(statusKode: number): string {
@@ -21,10 +21,10 @@ function feilmelding(statusKode: number): string {
 function DokumentVisning(props: Props) {
     return (
         <PdfViewer
-            url={props.dokument.tittel} // TODO finn riktig url her
+            url={props.dokument.tittel ?? 'Magisk url her'} // TODO finn riktig url her
             httpErrorHandler={feilmelding}
         />
     );
 }
 
-export default DokumentVisning
+export default DokumentVisning;

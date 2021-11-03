@@ -5,7 +5,7 @@ import traader from './traader.json';
 import resources from './resources.json';
 import { dokumentMock } from './dokument-mock';
 import fetchDekoratorHtml from './dekorator/fetchDekoratorHtml';
-import {Dokumenter} from "../dokument-visning/v2/domain";
+import { AvsenderMottaker, Journalpost, Retning } from '../dokument-visning/v2/domain';
 
 console.log('==========================');
 console.log('======== MED MOCK ========');
@@ -25,7 +25,7 @@ const brukerSalesforceDialoger = false;
 const featureToggles: ToggleMap = {
     'modia.innboks.steng-sto': stengtSTO,
     'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger,
-    'modia.innboks.saf-saker': false
+    'modia.innboks.saf-saker': true
 };
 
 const fetchMock = FetchMock.configure({
@@ -38,8 +38,9 @@ const fetchMock = FetchMock.configure({
 });
 
 fetchMock.get(TRAADER_PATH, (req, res, ctx) => {
-    const traderSf = traader
-        .filter((trad) => trad.meldinger.every((melding: any) => ['DOKUMENT_VARSEL', 'OPPGAVE_VARSEL'].includes(melding.type)));
+    const traderSf = traader.filter((trad) =>
+        trad.meldinger.every((melding: any) => ['DOKUMENT_VARSEL', 'OPPGAVE_VARSEL'].includes(melding.type))
+    );
     return res(ctx.json(brukerSalesforceDialoger ? traderSf : traader));
 });
 fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json(resources)));
@@ -51,24 +52,46 @@ fetchMock.post('/mininnboks-api/traader/sporsmal', (req, res, ctx) => res(ctx.js
 fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
 
-const dokument: Dokumenter = {
-    tema: 'ARBD',
-    journalpostMetadata: {
-        dato: '2017-07-03T13:18:33+02:00',
-        navn: 'Navn Navnesen',
-        retning: 'UT',
-        avsender: 'NAV',
-        mottaker: 'SLUTTBRUKER'
-    },
-    dokumentMetadata: [
+const inngaendeDokument: Journalpost = {
+    journalpostId: '123456',
+    tittel: 'Søknad om dagpenger (ikke permittert)',
+    dato: '2021-11-03T18:25:46.061Z',
+    retning: Retning.INN,
+    tema: 'DAG',
+    avsender: AvsenderMottaker.SLUTTBRUKER,
+    mottaker: AvsenderMottaker.NAV,
+    dokumenter: [
         {
-            tittel: 'Ett eller annet vedtak'
+            dokumentId: '456789',
+            tittel: 'Søknad om dagpenger (ikke permittert)',
+            harTilgang: true
+        },
+        {
+            dokumentId: '987654',
+            tittel: 'Kvitteringsside for dokumentinnsending',
+            harTilgang: true
         }
     ]
-}
-fetchMock.get('/mininnboks-api/dokument/:journalpostId', (req, res, ctx) => res(
-    ctx.json(dokument)
-))
+};
+
+const utgaendeDokument: Journalpost = {
+    journalpostId: '654321',
+    tittel: 'Samtale med NAV',
+    dato: '2021-11-03T18:25:46.061Z',
+    retning: Retning.UT,
+    avsender: AvsenderMottaker.NAV,
+    mottaker: AvsenderMottaker.SLUTTBRUKER,
+    tema: 'AAP',
+    dokumenter: [
+        {
+            dokumentId: '951159',
+            tittel: 'Samtale med NAV',
+            harTilgang: true
+        }
+    ]
+};
+
+fetchMock.get('/mininnboks-api/dokument/:journalpostId', (req, res, ctx) => res(ctx.json(utgaendeDokument)));
 
 fetchMock.get(
     '/saksoversikt-api/tjenester/dokumenter/dokumentmetadata/:journalpostId/:dokumentmetadata',
@@ -97,4 +120,4 @@ fetchMock.get('/api/feature', (req, res, ctx) => {
             return acc;
         }, {} as ToggleMap);
     return res(ctx.json(results));
-})
+});
