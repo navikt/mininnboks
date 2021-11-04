@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { useEffect } from "react";
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import useFetch, { hasError, isPending } from '@nutgaard/use-fetch';
-import { useAppState, useOnMount, useScrollToTop } from '../../utils/custom-hooks';
+import { useAppState, useScrollToTop } from '../../utils/custom-hooks';
 import { useBreadcrumbs } from '../../brodsmuler/Brodsmuler';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../../ducks/traader';
 import Feilmelding from '../../feilmelding/Feilmelding';
@@ -13,6 +14,7 @@ import { Melding } from '../../Traad';
 import JournalpostInfo from './JournalpostInfo';
 import { Journalpost } from './domain';
 import Dokument from './Dokument';
+import './dokument-varsel-visning-side.less';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
@@ -35,16 +37,14 @@ function DokumentVarselVisningSide() {
         ?.meldinger?.at(0);
 
     const journalpostResource = useFetch<Journalpost>(lagDokumentUrl(dokumentVarsel), {}, { lazy: true });
-
-    useOnMount(() => {
-        const varselErLest = dokumentVarsel?.lest ?? false;
-        if (!varselErLest) {
-            dispatch(markerBehandlingsIdSomLest(params.id));
-        }
+    useEffect(() => {
         if (dokumentVarsel) {
             journalpostResource.rerun();
         }
-    });
+        if (dokumentVarsel && !dokumentVarsel.lest) {
+            dispatch(markerBehandlingsIdSomLest(dokumentVarsel.id));
+        }
+    }, [dokumentVarsel]);
 
     if (!dokumentVarsel) {
         return <Feilmelding>Fant ikke dokument</Feilmelding>;
@@ -61,13 +61,13 @@ function DokumentVarselVisningSide() {
     ));
 
     return (
-        <div className="dokinnsyn">
+        <div className="dokinnsyn dokinnsyn--v2">
             <section className="dokumentvisning-header blokk-m">
                 <JournalpostInfo journalpost={journalpost} />
-                <ul className="ustiled">
+                <ul className="ustilet">
                     <li>
                         {/*TODO må ha riktig url til ny mine-saker løsning*/}
-                        <Lenke href={`/minesaker/tema/${journalpost.tema}`}>Gå til "mine saker"</Lenke>
+                        <Lenke href={`/minesaker/tema/${journalpost.tema}`}>Gå til saksoversikt</Lenke>
                     </li>
                     <li>
                         <Lenke href={sendNyMeldingURL} className="lenke">
@@ -77,7 +77,7 @@ function DokumentVarselVisningSide() {
                 </ul>
             </section>
             <section className="dokumenter">
-                <ul className="dokumentIdListe">{dokumenter}</ul>
+                <ul className="dokumentliste">{dokumenter}</ul>
             </section>
         </div>
     );

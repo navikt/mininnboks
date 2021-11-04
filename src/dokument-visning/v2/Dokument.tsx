@@ -10,12 +10,12 @@ interface Props {
 
 function Dokument(props: Props) {
     return (
-        <>
-            <div className="dokumentheader blokk-xxxs">
+        <li className="dokument">
+            <div className="dokumentheader">
                 <Element tag="h1">{props.dokument.tittel ?? 'Ukjent tittel'}</Element>
             </div>
             <DokumentVisning dokument={props.dokument} />
-        </>
+        </li>
     );
 }
 

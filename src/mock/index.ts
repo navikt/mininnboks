@@ -21,7 +21,7 @@ console.log('==========================');
 
 type ToggleMap = { [key: string]: boolean };
 const stengtSTO = false;
-const brukerSalesforceDialoger = false;
+const brukerSalesforceDialoger = true;
 const featureToggles: ToggleMap = {
     'modia.innboks.steng-sto': stengtSTO,
     'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger,
@@ -52,46 +52,55 @@ fetchMock.post('/mininnboks-api/traader/sporsmal', (req, res, ctx) => res(ctx.js
 fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
 
-const inngaendeDokument: Journalpost = {
-    journalpostId: '123456',
-    tittel: 'Søknad om dagpenger (ikke permittert)',
-    dato: '2021-11-03T18:25:46.061Z',
-    retning: Retning.INN,
-    tema: 'DAG',
-    avsender: AvsenderMottaker.SLUTTBRUKER,
-    mottaker: AvsenderMottaker.NAV,
-    dokumenter: [
-        {
-            dokumentId: '456789',
-            tittel: 'Søknad om dagpenger (ikke permittert)',
-            harTilgang: true
-        },
-        {
-            dokumentId: '987654',
-            tittel: 'Kvitteringsside for dokumentinnsending',
-            harTilgang: true
-        }
-    ]
-};
+const journalposter: Journalpost[] = [
+    {
+        journalpostId: '410959806',
+        tittel: 'Søknad om dagpenger (ikke permittert)',
+        dato: '2021-11-03T18:25:46.061Z',
+        retning: Retning.INN,
+        tema: 'DAG',
+        avsender: AvsenderMottaker.SLUTTBRUKER,
+        mottaker: AvsenderMottaker.NAV,
+        dokumenter: [
+            {
+                dokumentId: '419361302',
+                tittel: 'Søknad om dagpenger (ikke permittert)',
+                harTilgang: true
+            },
+            {
+                dokumentId: '419361303',
+                tittel: 'Kvitteringsside for dokumentinnsending',
+                harTilgang: true
+            }
+        ]
+    },
+    {
+        journalpostId: '410959805',
+        tittel: 'Samtale med NAV',
+        dato: '2021-11-03T18:25:46.061Z',
+        retning: Retning.UT,
+        avsender: AvsenderMottaker.NAV,
+        mottaker: AvsenderMottaker.SLUTTBRUKER,
+        tema: 'AAP',
+        dokumenter: [
+            {
+                dokumentId: '419361301',
+                tittel: 'Samtale med NAV',
+                harTilgang: true
+            }
+        ]
+    }
+];
 
-const utgaendeDokument: Journalpost = {
-    journalpostId: '654321',
-    tittel: 'Samtale med NAV',
-    dato: '2021-11-03T18:25:46.061Z',
-    retning: Retning.UT,
-    avsender: AvsenderMottaker.NAV,
-    mottaker: AvsenderMottaker.SLUTTBRUKER,
-    tema: 'AAP',
-    dokumenter: [
-        {
-            dokumentId: '951159',
-            tittel: 'Samtale med NAV',
-            harTilgang: true
-        }
-    ]
-};
-
-fetchMock.get('/mininnboks-api/dokument/:journalpostId', (req, res, ctx) => res(ctx.json(utgaendeDokument)));
+fetchMock.get('/mininnboks-api/dokument/:journalpostId', (req, res, ctx) => {
+    const journalpostId = req.pathParams.journalpostId;
+    const journalpost = journalposter.find((it) => it.journalpostId === journalpostId);
+    if (!journalpost) {
+        return res(ctx.status(404));
+    } else {
+        return res(ctx.json(journalpost))
+    }
+});
 
 fetchMock.get(
     '/saksoversikt-api/tjenester/dokumenter/dokumentmetadata/:journalpostId/:dokumentmetadata',

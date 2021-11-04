@@ -22,7 +22,7 @@ function PdfViewer(props: Props) {
             type="application/pdf"
             url={url}
             width="100%"
-            height="100%"
+            height={75 * 16}
             onError={onError}
         >
             <div className="error">

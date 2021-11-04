@@ -10,7 +10,7 @@ interface Props {
 
 function JournalpostInfo(props: Props) {
     return (
-        <section className="blokk-m">
+        <section className="blokk-xs">
             <Undertittel tag="h1">
                 <AvsenderMottaker journalpost={props.journalpost} />
             </Undertittel>
