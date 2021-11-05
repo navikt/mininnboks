@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useEffect } from "react";
+import {useEffect, useMemo} from "react";
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
-import useFetch, { hasError, isPending } from '@nutgaard/use-fetch';
+import useFetch, {FetchResult, hasData, hasError, isPending} from '@nutgaard/use-fetch';
 import { useAppState, useScrollToTop } from '../../utils/custom-hooks';
 import { useBreadcrumbs } from '../../brodsmuler/Brodsmuler';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../../ducks/traader';
@@ -14,16 +14,17 @@ import { Melding } from '../../Traad';
 import JournalpostInfo from './JournalpostInfo';
 import { Journalpost } from './domain';
 import Dokument from './Dokument';
+import { urls as dokumentUrls } from './dokument-api';
 import './dokument-varsel-visning-side.less';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
+const fetchOptions = {};
 
-function lagDokumentUrl(melding: Melding | undefined): string {
+function lagJournalpostUrl(melding: Melding | undefined): string {
     if (!melding) {
         return '';
     }
-    const dokumentIdQueryParam = melding.dokumentIdListe.map((id) => `dokumentId=${id}`).join('&');
-    return `/mininnboks-api/dokument/${melding.journalpostId}?${dokumentIdQueryParam}`;
+    return dokumentUrls.journalpost(melding.journalpostId);
 }
 
 function DokumentVarselVisningSide() {
@@ -36,15 +37,16 @@ function DokumentVarselVisningSide() {
         .find((trad) => trad.traadId === params.id)
         ?.meldinger?.at(0);
 
-    const journalpostResource = useFetch<Journalpost>(lagDokumentUrl(dokumentVarsel), {}, { lazy: true });
+    const journalpostResource = useFetch<Journalpost>(
+        lagJournalpostUrl(dokumentVarsel),
+        fetchOptions,
+        { lazy: !dokumentVarsel}
+    );
     useEffect(() => {
-        if (dokumentVarsel) {
-            journalpostResource.rerun();
-        }
-        if (dokumentVarsel && !dokumentVarsel.lest) {
+        if (dokumentVarsel && !dokumentVarsel.lest && hasData(journalpostResource)) {
             dispatch(markerBehandlingsIdSomLest(dokumentVarsel.id));
         }
-    }, [dokumentVarsel]);
+    }, [journalpostResource, dokumentVarsel])
 
     if (!dokumentVarsel) {
         return <Feilmelding>Fant ikke dokument</Feilmelding>;

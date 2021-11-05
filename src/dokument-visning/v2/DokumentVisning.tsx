@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Dokument } from './domain';
+import {Dokument, Journalpost} from './domain';
 import PdfViewer from '../../components/pdfvisning/PdfViewer';
+import { urls as dokumentUrls } from './dokument-api';
 
 interface Props {
+    journalpost: Journalpost;
     dokument: Dokument;
 }
 
@@ -21,7 +23,7 @@ function feilmelding(statusKode: number): string {
 function DokumentVisning(props: Props) {
     return (
         <PdfViewer
-            url={props.dokument.tittel ?? 'Magisk url her'} // TODO finn riktig url her
+            url={dokumentUrls.dokument(props.journalpost.journalpostId, props.dokument.dokumentId)}
             httpErrorHandler={feilmelding}
         />
     );
