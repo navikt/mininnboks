@@ -18,8 +18,21 @@
 
     .dokumentheader {
       padding: 1rem;
+      display: flex;
+      justify-content: space-between;
       h1 {
         margin: 0;
+      }
+      &__lenker {
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-right: 0.25rem;
+        }
+        * + * {
+          margin-left: 1.5rem;
+        }
       }
     }
 

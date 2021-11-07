@@ -4,6 +4,8 @@ import { Dokument as DokumentType, Journalpost } from './domain';
 import DokumentVisning from './DokumentVisning';
 import Lenke from "nav-frontend-lenker";
 import { urls as dokumentUrls } from "./dokument-api";
+import { ReactComponent as Download } from "./Download.svg";
+import { ReactComponent as ExternalLink } from "./ExternalLink.svg";
 
 interface Props {
     journalpost: Journalpost;
@@ -16,7 +18,16 @@ function Dokument(props: Props) {
         <li className="dokument">
             <div className="dokumentheader">
                 <Element tag="h1">{props.dokument.tittel ?? 'Ukjent tittel'}</Element>
-                <Lenke href={dokumentUrl} target="_blank">Se i egen fane</Lenke>
+                <div className="dokumentheader__lenker">
+                    <Lenke href={dokumentUrl} download>
+                        <Download />
+                        Last ned
+                    </Lenke>
+                    <Lenke href={dokumentUrl} target="_blank">
+                        <ExternalLink />
+                        Se i egen fane
+                    </Lenke>
+                </div>
             </div>
             <DokumentVisning journalpost={props.journalpost} dokument={props.dokument} />
         </li>
