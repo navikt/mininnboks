@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Dokument from './Dokument';
-import { render } from '../../../test-config';
+import { render } from '../../../../test-config';
 
 const journalpostmetadata_test = {
     resultat: {

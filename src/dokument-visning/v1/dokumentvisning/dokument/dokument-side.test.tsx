@@ -1,6 +1,6 @@
 import DokumentSide from './DokumentSide';
 import * as React from 'react';
-import { render } from '../../../test-config';
+import { render } from '../../../../test-config';
 
 describe('DokumentBilde', () => {
     it('Viser feilmelding om bildet ikke kan vises', () => {

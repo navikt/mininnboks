@@ -2,8 +2,8 @@ import * as React from 'react';
 import DokumentSide from './DokumentSide';
 import DokumentHeader from './DokumentHeader';
 import Lenke from 'nav-frontend-lenker';
-import { DokumentMetadata, JournalpostMetadata } from '../../../dokument';
-import { useScrollToTop } from '../../../utils/custom-hooks';
+import { DokumentMetadata, JournalpostMetadata } from '../../../../dokument';
+import { useScrollToTop } from '../../../../utils/custom-hooks';
 
 const lagDokumentTittel = (kanVises: boolean, ekstrafeilinfo: { [key: string]: string }, tittel: string) => {
     if (kanVises) {
