@@ -49,7 +49,9 @@ const prototypeValue:PropertyDescriptor = {
     enumerable: false,
     configurable: true
 }
+// eslint-disable-next-line
 Object.defineProperty(Array.prototype, "at", prototypeValue);
+// eslint-disable-next-line
 Object.defineProperty(String.prototype, "at", prototypeValue);
 
 export {};

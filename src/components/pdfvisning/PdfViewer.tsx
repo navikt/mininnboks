@@ -11,10 +11,11 @@ interface Props {
 
 function PdfViewer(props: Props) {
     const url = getMockableUrl(props.url)
+    const httpErrorHandler = props.httpErrorHandler;
     const [error, setError] = useState('');
     const onError = useCallback(
-        (statusCode: number) => setError(props.httpErrorHandler(statusCode)),
-        [setError, props.httpErrorHandler]
+        (statusCode: number) => setError(httpErrorHandler(statusCode)),
+        [setError, httpErrorHandler]
     );
 
     return (

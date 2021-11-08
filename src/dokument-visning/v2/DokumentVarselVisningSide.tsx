@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useEffect, useMemo} from "react";
+import { useEffect } from "react";
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
-import useFetch, {FetchResult, hasData, hasError, isPending} from '@nutgaard/use-fetch';
+import useFetch, { hasData, hasError, isPending } from '@nutgaard/use-fetch';
 import { useAppState, useScrollToTop } from '../../utils/custom-hooks';
 import { useBreadcrumbs } from '../../brodsmuler/Brodsmuler';
 import { getTraaderSafe, markerBehandlingsIdSomLest } from '../../ducks/traader';
@@ -46,7 +46,7 @@ function DokumentVarselVisningSide() {
         if (dokumentVarsel && !dokumentVarsel.lest && hasData(journalpostResource)) {
             dispatch(markerBehandlingsIdSomLest(dokumentVarsel.id));
         }
-    }, [journalpostResource, dokumentVarsel])
+    }, [dispatch, journalpostResource, dokumentVarsel])
 
     if (!dokumentVarsel) {
         return <Feilmelding>Fant ikke dokument</Feilmelding>;
