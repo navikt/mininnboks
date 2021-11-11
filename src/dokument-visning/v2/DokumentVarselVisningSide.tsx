@@ -70,7 +70,7 @@ function DokumentVarselVisningSide() {
                 <ul className="ustilet">
                     <li>
                         {/*TODO må ha riktig url til ny mine-saker løsning*/}
-                        <Lenke href={mineSakerLenke}>Gå til Dine Saker</Lenke>
+                        <Lenke href={mineSakerLenke}>Gå til Mine Saker</Lenke>
                     </li>
                     <li>
                         <Lenke href={sendNyMeldingURL} className="lenke">
