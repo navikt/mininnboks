@@ -4,7 +4,8 @@ import Listevisning from './listevisning/ListeVisning';
 import Traadvisning from './traadvisning/TraadVisning';
 import Oppgavevisning from './oppgave-visning/OppgaveVisning';
 import SkrivNyttSporsmal from './skriv-nytt-sporsmal/SkrivNyttSporsmal';
-import DokumentVisningSide from './dokument-visning/DokumentVisningSide';
+import DokumentVisningSideSwitcher from './dokument-visning/DokumentVisningSideSwitcher';
+import DokumentVisningSideV2 from './dokument-visning/v2/DokumentVarselVisningSide';
 import Traader from './traader/Traader';
 import Brodsmuler from './brodsmuler/Brodsmuler';
 import SkrivNyttSporsmalFDAG from "./skriv-nytt-sporsmal/SkrivNyttSporsmalFDAG";
@@ -40,7 +41,8 @@ export default function () {
                         <Switch>
                             { !brukerSFSomBackend && <Route exact path="/traad/:traadId" render={() => <Traadvisning stengtSTO={stengtSTO} />} /> }
                             { brukerSFSomBackend && <Redirect from="/traad" to="/" /> }
-                            <Route exact path="/dokument/:id" component={DokumentVisningSide} />
+                            <Route exact path="/dokument/:id" component={DokumentVisningSideSwitcher} />
+                            <Route exact path="/v2/dokument/:id" component={DokumentVisningSideV2} />
                             <Route exact path="/oppgave/:id" component={Oppgavevisning} />
                             <Route render={() => <Listevisning stengtSTO={stengtSTO} brukerSFSomBackend={brukerSFSomBackend}/>} />
                         </Switch>

@@ -2,9 +2,9 @@ import * as React from 'react';
 import NavFrontendModal from 'nav-frontend-modal';
 import Alertstripe from 'nav-frontend-alertstriper';
 import './last-ned-pdf-modal.less';
-import { useAppState } from '../utils/custom-hooks';
+import { useAppState } from '../../utils/custom-hooks';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { slettDokumentUrl } from '../ducks/dokumenter';
+import { slettDokumentUrl } from '../../ducks/dokumenter';
 import { useDispatch } from 'react-redux';
 
 function pdfModalIsOpen(dokumentUrl: string | undefined | null) {
