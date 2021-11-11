@@ -9,7 +9,7 @@ import { getTraaderSafe, markerBehandlingsIdSomLest } from '../../ducks/traader'
 import Feilmelding from '../../feilmelding/Feilmelding';
 import Spinner from '../../utils/Spinner';
 import Lenke from 'nav-frontend-lenker';
-import { getNAVBaseUrl } from '../../environment';
+import { getNAVBaseUrl, getPersonNAVBaseUrl } from '../../environment';
 import { Melding } from '../../Traad';
 import JournalpostInfo from './JournalpostInfo';
 import { Journalpost } from './domain';
@@ -58,6 +58,7 @@ function DokumentVarselVisningSide() {
     }
 
     const journalpost = journalpostResource.data;
+    const mineSakerLenke = `${getPersonNAVBaseUrl()}/mine-saker/tema/${journalpost.tema}`;
     const dokumenter = journalpost.dokumenter.map((dokument) => (
         <Dokument key={dokument.dokumentId} journalpost={journalpost} dokument={dokument} />
     ));
@@ -69,7 +70,7 @@ function DokumentVarselVisningSide() {
                 <ul className="ustilet">
                     <li>
                         {/*TODO må ha riktig url til ny mine-saker løsning*/}
-                        <Lenke href={`/minesaker/tema/${journalpost.tema}`}>Gå til saksoversikt</Lenke>
+                        <Lenke href={mineSakerLenke}>Gå til Dine Saker</Lenke>
                     </li>
                     <li>
                         <Lenke href={sendNyMeldingURL} className="lenke">
