@@ -16,6 +16,7 @@ import { Journalpost } from './domain';
 import Dokument from './Dokument';
 import { urls as dokumentUrls } from './dokument-api';
 import './dokument-varsel-visning-side.less';
+import { getLogger } from "../../utils";
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 const fetchOptions = {};
@@ -26,6 +27,8 @@ function lagJournalpostUrl(melding: Melding | undefined): string {
     }
     return dokumentUrls.journalpost(melding.journalpostId);
 }
+
+const frontendlogger = getLogger();
 
 function DokumentVarselVisningSide() {
     useScrollToTop();
@@ -43,10 +46,15 @@ function DokumentVarselVisningSide() {
         { lazy: !dokumentVarsel}
     );
     useEffect(() => {
-        if (dokumentVarsel && !dokumentVarsel.lest && hasData(journalpostResource)) {
-            dispatch(markerBehandlingsIdSomLest(dokumentVarsel.id));
+        if (dokumentVarsel && hasData(journalpostResource)) {
+            const varselTema = dokumentVarsel.temaKode;
+            const journalpostTema = journalpostResource.data.tema;
+            frontendlogger.info(`[DOKUMENT] samsvar av tema for ${dokumentVarsel.id}: ${varselTema === journalpostTema}`);
+            if (!dokumentVarsel.lest) {
+                dispatch(markerBehandlingsIdSomLest(dokumentVarsel.id));
+            }
         }
-    }, [dispatch, journalpostResource, dokumentVarsel])
+    }, [dispatch, journalpostResource, dokumentVarsel]);
 
     if (!dokumentVarsel) {
         return <Feilmelding>Fant ikke dokument</Feilmelding>;
