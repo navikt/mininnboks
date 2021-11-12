@@ -16,7 +16,7 @@ function feilmelding(statusKode: number): string {
         case 404:
             return 'Dokument ikke funnet.';
         default:
-            return 'Ukjent feil ved henting av dokument. Kontakt brukerstøtte. Feilkode: ' + statusKode;
+            return 'Ukjent feil ved henting av dokument. Prøv å laste inn siden på nytt, og ta kontakt om feilen vedvarer. Feilkode: ' + statusKode;
     }
 }
 
