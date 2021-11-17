@@ -65,7 +65,7 @@ const journalposter: Journalpost[] = [
             {
                 dokumentId: '419361302',
                 tittel: 'Søknad om dagpenger (ikke permittert)',
-                harTilgang: true
+                harTilgang: false
             },
             {
                 dokumentId: '419361303',
@@ -97,6 +97,21 @@ fetchMock.get('/mininnboks-api/dokument/:journalpostId', (req, res, ctx) => {
     const journalpost = journalposter.find((it) => it.journalpostId === journalpostId);
     if (!journalpost) {
         return res(ctx.status(404));
+    } else {
+        return res(ctx.json(journalpost))
+    }
+});
+
+// Blir kun brukt om man disabler mock-pdf i mockable.pdf-url.ts
+fetchMock.get('/mininnboks-api/dokument/:journalpostId/:dokumentId', (req, res, ctx) => {
+    const journalpostId = req.pathParams.journalpostId;
+    const dokumentId = req.pathParams.dokumentId;
+    const journalpost = journalposter.find((it) => it.journalpostId === journalpostId);
+    const dokument = journalpost?.dokumenter?.find((it) => it.dokumentId === dokumentId);
+    if (!dokument) {
+        return res(ctx.status(404));
+    } else if (!dokument.harTilgang) {
+        return res(ctx.status(401));
     } else {
         return res(ctx.json(journalpost))
     }
