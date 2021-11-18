@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AlertStripeAdvarsel } from "nav-frontend-alertstriper";
 import {Dokument, Journalpost} from './domain';
 import PdfViewer from '../../components/pdfvisning/PdfViewer';
 import { urls as dokumentUrls } from './dokument-api';
@@ -21,6 +22,10 @@ function feilmelding(statusKode: number): string {
 }
 
 function DokumentVisning(props: Props) {
+    if (!props.dokument.harTilgang) {
+        return <AlertStripeAdvarsel>{feilmelding(401)}</AlertStripeAdvarsel>
+    }
+
     return (
         <PdfViewer
             url={dokumentUrls.dokument(props.journalpost.journalpostId, props.dokument.dokumentId)}
