@@ -66,4 +66,4 @@ spec:
     - name: FRONTENDLOGGER_URL
       value: "http://frontendlogger.default.svc.nais.local"
     - name: PUBLIC_SF_DIALOG_URL
-      value: "http://unknown.io"
+      value: "https://innboks.nav.no/"
