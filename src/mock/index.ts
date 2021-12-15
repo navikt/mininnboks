@@ -73,7 +73,7 @@ fetchMock.get(FOLKREGISTRERT_ADRESSE_PATH, (req, res, ctx) => {
     );
 });
 
-fetchMock.get('/sosialhjelp-soknad-api/informasjon/adressesok', (req, res, ctx) => {
+fetchMock.get('/sosialhjelp-soknad-api/sosialhjelp/soknad-api/informasjon/adressesok', (req, res, ctx) => {
     const forslag: Array<Adresse> = [
         {
             adresse: 'Kirkegata',
