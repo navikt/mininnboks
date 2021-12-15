@@ -14,18 +14,18 @@ import { feilmelding } from '../utils/validationutil';
 import { TilgangState } from '../ducks/tilgang';
 import Spinner from '../utils/Spinner';
 import { Temagruppe, TemagruppeNavn } from '../utils/constants';
-import { useThunkDispatch } from '../utils/custom-hooks';
+import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
     defaultFormstateConfig,
     FeilmeldingKommunalSjekk,
     SkrivNyttSporsmalForm,
-    useRatelimiter,
     useTilgangSjekk
 } from './common';
 import VelgAdresseModal from './geografisk-tilknytning/VelgAdresseModal';
 import { Adresse, formaterAdresseString } from './geografisk-tilknytning/AdresseUtils';
 import './skriv-nytt-sporsmal.less';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 type OKSOSSkrivNyttSporsmalForm = SkrivNyttSporsmalForm & { geografiskTilknytning: string };
 const config: Validation<OKSOSSkrivNyttSporsmalForm> = {
@@ -38,13 +38,14 @@ const config: Validation<OKSOSSkrivNyttSporsmalForm> = {
 const useFormstate = useFormstateFactory(config);
 
 function SkrivNyttSporsmalOKSOS() {
+    useBreadcrumbs([{ title: 'Ny melding', url: '/sporsmal/skriv/OKSOS' }]);
+    const dispatch = useThunkDispatch();
     const [visVelgAdresseModal, settVisVelgAdresseModal] = useState<boolean>(true);
     const [valgtAdresse, settValgtAdresse] = useState<Adresse | null>(null);
-    const dispatch = useThunkDispatch();
-    const rateLimiter = useRatelimiter();
     const tilgang: TilgangState = useTilgangSjekk();
     const location = useLocation();
     const isDirekte = location.pathname.includes('/direkte');
+    const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
     const formstate = useFormstate({
         fritekst: '',
         godkjennVilkaar: 'false',
@@ -62,15 +63,7 @@ function SkrivNyttSporsmalOKSOS() {
     }
 
     function submitHandler<S>(values: Values<OKSOSSkrivNyttSporsmalForm>): Promise<any> {
-        return rateLimiter.update().then((isOK) => {
-            if (isOK) {
-                return dispatch(
-                    sendSporsmal(Temagruppe.OKSOS, values.fritekst, isDirekte, values.geografiskTilknytning)
-                );
-            } else {
-                return Promise.reject('rate-limiter feilmelding');
-            }
-        });
+        return dispatch(sendSporsmal(Temagruppe.OKSOS, values.fritekst, isDirekte, values.geografiskTilknytning));
     }
 
     return (
@@ -93,7 +86,7 @@ function SkrivNyttSporsmalOKSOS() {
                 <Innholdstittel className="blokk-xl">Skriv melding</Innholdstittel>
                 <Undertittel className="blokk-s">{TemagruppeNavn.OKSOS}</Undertittel>
                 <div className="blokk-xs">
-                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.TOOMANYREQUESTS}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>

@@ -12,10 +12,15 @@ import { visBesvarBoks } from '../ducks/ui';
 import { STATUS } from '../ducks/ducks-utils';
 import { useAppState, useOnMount, useScrollToTop, useThunkDispatch } from '../utils/custom-hooks';
 import { getNAVBaseUrl } from '../environment';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 const AlertstripeVisibleIf = visibleIfHOC(Alertstripe);
 
-function TraadVisning() {
+interface Props {
+    stengtSTO: boolean;
+}
+
+function TraadVisning(props: Props) {
     const params = useParams<{ traadId: string }>();
     const skalViseBesvarBoks = useAppState((state) => state.ui.visBesvarBoks);
     const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
@@ -29,6 +34,8 @@ function TraadVisning() {
     useScrollToTop();
 
     const valgttraad = traader.data.find((traad) => traad.traadId === traadId);
+    const title = valgttraad?.nyeste.kassert ? 'Kassert dialog' : `Dialog om ${valgttraad?.nyeste.temagruppeNavn}`;
+    useBreadcrumbs([{ title, url: `/traad/${params.traadId}` }]);
     if (!valgttraad) {
         return <Feilmelding>Fant ikke tråden du var ute etter</Feilmelding>;
     }
@@ -52,7 +59,10 @@ function TraadVisning() {
                 >
                     Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                 </AlertstripeVisibleIf>
-                <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks} onClick={skrivKnappOnClick} />
+                <SkrivKnapp
+                    visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks && !props.stengtSTO}
+                    onClick={skrivKnappOnClick}
+                />
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
                     <Normaltekst>
                         Dialogen er avsluttet. Vil du <a href={sendNyMeldingURL}>sende en ny beskjed</a>, kan du gjøre

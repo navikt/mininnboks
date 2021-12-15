@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: mininnboks
-  namespace: default
+  namespace: personoversikt
   cluster: prod-sbs
   labels:
     team: personoversikt
@@ -61,3 +61,9 @@ spec:
       value: "https://loginservice.nav.no/login"
     - name: MININNBOKS_URL
       value: "https://mininnboks.nav.no"
+    - name: MININNBOKS_API_URL
+      value: "http://mininnboks-api.personoversikt.svc.nais.local"
+    - name: FRONTENDLOGGER_URL
+      value: "http://frontendlogger.default.svc.nais.local"
+    - name: PUBLIC_SF_DIALOG_URL
+      value: "https://innboks.nav.no/"

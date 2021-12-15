@@ -6,12 +6,16 @@ import { AppState } from '../reducer';
 import Spinner from '../utils/Spinner';
 import { useParams } from 'react-router';
 import { useOnMount, useThunkDispatch } from '../utils/custom-hooks';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 
 function OppgaveVisning() {
     const dispatch = useThunkDispatch();
     const params = useParams<{ id: string }>();
     const traaderResources = useSelector((state: AppState) => state.traader);
     const traader = getTraaderSafe(traaderResources);
+
+    useBreadcrumbs([{ title: 'Oppgavevisning', url: `/oppgave/${params.id}` }]);
+
     useOnMount(() => {
         const traadId = params.id;
         const traad = traader.find((trad: Traad) => trad.traadId === traadId);

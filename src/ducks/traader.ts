@@ -23,6 +23,7 @@ export enum TypeKeys {
     MARKERT_SOM_LEST_FEILET = 'mininnboks/traader/MARKERT_SOM_LEST_FEILET',
     INNSENDING_OK = 'mininnboks/traader/INNSENDING_OK',
     INNSENDING_FEILET = 'mininnboks/traader/INNSENDING_FEILET',
+    RATELIMITER_FEILET = 'mininnboks/traader/RATELIMITER_FEILET',
     INNSENDING_PENDING = 'mininnboks/traader/INNSENDING_PENDING'
 }
 
@@ -34,6 +35,7 @@ type MarkertSomLestOk = Action<TypeKeys.MARKERT_SOM_LEST_OK> & DucksData<{ traad
 type MarkertSomLestFeilet = Action<TypeKeys.MARKERT_SOM_LEST_FEILET> & DucksData<Error>;
 type InnsendingOk = Action<TypeKeys.INNSENDING_OK>;
 type InnsendingFeilet = Action<TypeKeys.INNSENDING_FEILET>;
+type RatelimiterFeilet = Action<TypeKeys.RATELIMITER_FEILET>;
 type InnsendingPending = Action<TypeKeys.INNSENDING_PENDING>;
 
 type Actions =
@@ -45,11 +47,19 @@ type Actions =
     | MarkertSomLestFeilet
     | InnsendingOk
     | InnsendingFeilet
-    | InnsendingPending;
+    | InnsendingPending
+    | RatelimiterFeilet;
+
 type OkInnsendingState = { innsendingStatus: STATUS.OK };
 type ErrorInnsendingState = { innsendingStatus: STATUS.ERROR };
+type RateLimiterErrorInnsendingState = { innsendingStatus: STATUS.TOOMANYREQUESTS };
+
 type OtherInnsendingState = { innsendingStatus: STATUS.NOT_STARTED | STATUS.PENDING };
-type InnsendingState = OkInnsendingState | ErrorInnsendingState | OtherInnsendingState;
+type InnsendingState =
+    | OkInnsendingState
+    | ErrorInnsendingState
+    | OtherInnsendingState
+    | RateLimiterErrorInnsendingState;
 
 type OkState = AvhengigheterOkState<Traad[]> & InnsendingState;
 type ErrorState = AvhengigheterErrorState & InnsendingState;
@@ -106,6 +116,9 @@ export default function reducer(state: TraaderState = initalState, action: Actio
             return { ...state, innsendingStatus: STATUS.ERROR };
         case TypeKeys.INNSENDING_PENDING:
             return { ...state, innsendingStatus: STATUS.PENDING };
+        case TypeKeys.RATELIMITER_FEILET:
+            return { ...state, innsendingStatus: STATUS.TOOMANYREQUESTS };
+
         default:
             return state;
     }
@@ -114,6 +127,7 @@ export default function reducer(state: TraaderState = initalState, action: Actio
 const innsendingActions = {
     OK: TypeKeys.INNSENDING_OK,
     FEILET: TypeKeys.INNSENDING_FEILET,
+    TOOMANYREQUESTS: TypeKeys.RATELIMITER_FEILET,
     PENDING: TypeKeys.INNSENDING_PENDING
 };
 

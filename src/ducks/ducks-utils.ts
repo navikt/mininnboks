@@ -2,12 +2,13 @@ import { Dispatch } from 'redux';
 
 export type ErrorWithResponse = Error & { response: Response };
 export type DucksData<T> = { data: T };
-
+const Too_Many_Requests: number = 429;
 export enum STATUS {
     NOT_STARTED = 'NOT_STARTED',
     PENDING = 'PENDING',
     OK = 'OK',
     RELOADING = 'RELOADING',
+    TOOMANYREQUESTS = 'TOOMANYREQUESTS',
     ERROR = 'ERROR'
 }
 
@@ -37,17 +38,29 @@ export function sendResultatTilDispatch(dispatch: Dispatch<any>, action: string)
     };
 }
 
-export function handterFeil(dispatch: Dispatch<any>, action: string) {
+export function handterFeil(
+    dispatch: Dispatch<any>,
+    action: string,
+    tooManyRequestsAction?: string
+): (error: ErrorWithResponse) => Promise<Response | String> {
     return (error: ErrorWithResponse) => {
         if (error.response) {
             error.response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({ type: action, data: { response: error.response, data } });
+                if (tooManyRequestsAction !== undefined && error.response.status === Too_Many_Requests) {
+                    dispatch({ type: tooManyRequestsAction, data: { response: error.response, data } });
+                    return Promise.reject(error.response);
+                } else {
+                    dispatch({ type: action, data: { response: error.response, data } });
+                    return Promise.reject(error.toString());
+                }
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
             dispatch({ type: action, data: error.toString() });
+            return Promise.reject(error.toString());
         }
+        return Promise.reject(error.toString());
     };
 }
 
@@ -65,12 +78,18 @@ export type AsyncActions = {
     OK: string;
     PENDING?: string;
     FEILET: string;
+    TOOMANYREQUESTS?: string;
 };
-export function doThenDispatch(fn: (dispatch: Dispatch<any>) => Promise<any>, { OK, FEILET, PENDING }: AsyncActions) {
+export function doThenDispatch(
+    fn: (dispatch: Dispatch<any>) => Promise<any>,
+    { OK, FEILET, PENDING, TOOMANYREQUESTS }: AsyncActions
+) {
     return (dispatch: Dispatch<any>) => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }
-        return fn(dispatch).then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
+        return fn(dispatch)
+            .then(sendResultatTilDispatch(dispatch, OK))
+            .catch(handterFeil(dispatch, FEILET, TOOMANYREQUESTS));
     };
 }

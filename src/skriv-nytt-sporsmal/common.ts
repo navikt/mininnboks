@@ -3,10 +3,9 @@ import { Avhengighet } from '../avhengigheter';
 import { AppState } from '../reducer';
 import { ThunkAction } from 'redux-thunk';
 import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { STATUS } from '../ducks/ducks-utils';
 import { harTilgangTilKommunaleTemagrupper, TilgangState } from '../ducks/tilgang';
-import { sjekkOgOppdaterRatelimiter, sjekkRatelimiter } from '../utils/api';
 import { visibleIfHOC } from '../utils/hocs/visible-if';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
@@ -21,9 +20,9 @@ export const defaultFormstateConfig: Validation<SkrivNyttSporsmalForm> = {
     },
     fritekst(value: string) {
         if (value.length === 0) {
-            return 'Tekstfeltet er tomt';
+            return 'Tekstfeltet er tomt. Tekstfeltet må inneholde tekst for å kunne sende melding';
         } else if (value.length > 1000) {
-            return 'Teksten er for lang';
+            return 'Teksten er for lang. Teksten må kan ikke være lenger enn 1000 tegn. Gjør meldingen kortere for å kunne sende';
         }
         return undefined;
     }
@@ -33,7 +32,8 @@ export const useFormstate = useFormstateFactory(defaultFormstateConfig);
 export enum FeilmeldingKommunalSjekk {
     FEILET = 'Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.',
     KODE6 = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.',
-    INGEN_ENHET = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.'
+    INGEN_ENHET = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.',
+    IKKE_AKTIV = 'Det er dessverre ikke mulig å sende inn spørsmål på denne temagruppen.'
 }
 
 export enum AndreFeilmeldinger {
@@ -56,21 +56,6 @@ function useRestResource<S, T extends Avhengighet<S>>(
 
 export function useTilgangSjekk(): TilgangState {
     return useRestResource((state) => state.tilgang, harTilgangTilKommunaleTemagrupper);
-}
-
-export function useRatelimiter(): { isOk: boolean; update: () => Promise<boolean> } {
-    const [state, setState] = useState(true);
-    const update = useCallback(() => {
-        const updatedValue = sjekkOgOppdaterRatelimiter();
-        updatedValue.then((isOk) => setState(isOk));
-
-        return updatedValue;
-    }, [setState]);
-    useEffect(() => {
-        sjekkRatelimiter().then((isOk) => setState(isOk));
-    }, [update]);
-
-    return { isOk: state, update };
 }
 
 export const AlertstripeAdvarselVisibleIf = visibleIfHOC(AlertStripeAdvarsel);

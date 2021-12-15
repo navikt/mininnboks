@@ -26,12 +26,19 @@ export const fn = (value: unknown) => (typeof value === 'function' ? value : () 
 export const getDisplayName = <T>(component: React.ComponentType<T>) =>
     component.displayName || component.name || 'Component';
 
-const mockLogger = {
+interface FrontendLogger {
+    info(message: string | object): void;
+    warn(message: string | object): void;
+    error(message: string | object): void;
+    event(message: string | object): void;
+}
+
+const mockLogger: FrontendLogger = {
     info: function () {},
     warn: function () {},
     error: function () {},
     event: function () {}
 };
-export function getLogger() {
+export function getLogger(): FrontendLogger {
     return (window as any)['frontendlogger'] || mockLogger;
 }

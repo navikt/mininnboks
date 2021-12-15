@@ -1,0 +1,45 @@
+.dokinnsyn {
+    &--v2 {
+        .dokumentvisning-header {
+            padding: 0;
+
+            li {
+                display: block;
+                &:first-child,
+                &:last-child {
+                    text-align: inherit;
+                    padding: 0;
+                }
+            }
+        }
+
+        .dokumentvisning-header li:not(:last-child):after {
+            content: '';
+        }
+
+        .dokumentheader {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            h1 {
+                margin: 0;
+            }
+            &__lenker {
+                display: flex;
+                align-items: center;
+
+                svg {
+                    margin-right: 0.25rem;
+                }
+                * + * {
+                    margin-left: 1.5rem;
+                }
+            }
+        }
+
+        .dokumenter {
+            padding-right: 0;
+            text-align: left;
+        }
+    }
+}

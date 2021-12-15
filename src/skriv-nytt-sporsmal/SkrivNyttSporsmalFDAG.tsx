@@ -1,39 +1,37 @@
 import React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
 import { Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { Values } from '@nutgaard/use-formstate';
+import Textarea from '../components/no-aria-textarea';
 import { sendSporsmal } from '../ducks/traader';
 import Kvittering from './Kvittering';
 import { feilmelding } from '../utils/validationutil';
 import GodtaVilkar from './GodtaVilkar';
 import { getNAVBaseUrl } from '../environment';
-import { useThunkDispatch } from '../utils/custom-hooks';
-import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate, useRatelimiter } from './common';
+import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
+import { AlertstripeAdvarselVisibleIf, SkrivNyttSporsmalForm, useFormstate } from './common';
 import './skriv-nytt-sporsmal.less';
 import { Temagruppe } from '../utils/constants';
+import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
+import { FeilmeldingOppsummering } from './FeilmeldingOppsummering';
+import { STATUS } from '../ducks/ducks-utils';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 
 function SkrivNyttSporsmalFDAG() {
+    useBreadcrumbs([{ title: 'Ny melding', url: '/sporsmal/skriv/FDAG' }]);
     const dispatch = useThunkDispatch();
-    const rateLimiter = useRatelimiter();
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
+    const innsendingStatus = useAppState((state) => state.traader.innsendingStatus);
 
     if (formstate.submittingSuccess) {
         return <Kvittering />;
     }
 
     function submitHandler<S>(values: Values<SkrivNyttSporsmalForm>): Promise<any> {
-        return rateLimiter.update().then((isOK) => {
-            if (isOK) {
-                return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
-            } else {
-                return Promise.reject('rate-limiter feilmelding');
-            }
-        });
+        return dispatch(sendSporsmal(Temagruppe.FDAG, values.fritekst, false));
     }
 
     return (
@@ -44,12 +42,16 @@ function SkrivNyttSporsmalFDAG() {
                 <Innholdstittel tag="h2" className="blokk-xl text-center">
                     Skriv melding
                 </Innholdstittel>
+                <FeilmeldingOppsummering
+                    formstate={formstate}
+                    tittel={'For å sende melding må du rette opp følgende:'}
+                />
                 <div className="blokk-xs">
-                    <AlertstripeAdvarselVisibleIf visibleIf={!rateLimiter.isOk}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.TOOMANYREQUESTS}>
                         Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
-                    <AlertstripeAdvarselVisibleIf visibleIf={formstate.submittingFailed}>
+                    <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.ERROR}>
                         Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                     </AlertstripeAdvarselVisibleIf>
                     <AlertStripeInfo className="blokk-xs">

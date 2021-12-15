@@ -3,9 +3,9 @@ import Lenke from 'nav-frontend-lenker';
 import Personalia from './dokumentvisning/personalia/Personalia';
 import Dokumenter from './dokumentvisning/dokument/Dokumenter';
 import './dokument-visning.less';
-import { DokumentMetadata, JournalpostMetadata } from '../dokument';
-import { getNAVBaseUrl } from '../environment';
-import { useScrollToTop } from '../utils/custom-hooks';
+import { DokumentMetadata, JournalpostMetadata } from '../../dokument';
+import { getNAVBaseUrl } from '../../environment';
+import { useScrollToTop } from '../../utils/custom-hooks';
 
 interface Props {
     dokumentmetadata: DokumentMetadata[];

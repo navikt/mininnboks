@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Feilmelding from '../../../feilmelding/Feilmelding';
+import Feilmelding from '../../../../feilmelding/Feilmelding';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import './dokument-feilmelding.less';

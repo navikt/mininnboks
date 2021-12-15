@@ -40,10 +40,26 @@ export const TRAADER_PATH = `${API_BASE_URL}/traader`;
 export const RESOURCES_PATH = `${API_BASE_URL}/resources`;
 export const FOLKREGISTRERT_ADRESSE_PATH = `${API_BASE_URL}/tilgang/folkeregistrertadresse`;
 export const SOK_ADRESSE_PATH = `/sosialhjelp-soknad-api/sosialhjelp/soknad-api/informasjon/adressesok?sokestreng=`;
-export const RATE_LIMITER_URL = `/rate-limiter/api/limit`;
 
 export function useLedetekster(): FetchResult<Ledetekster> {
     return useFetch<Ledetekster>(RESOURCES_PATH, MED_CREDENTIALS);
+}
+
+interface FeatureToggles {
+    'modia.innboks.bruker-salesforce-dialoger': boolean;
+    'modia.innboks.steng-sto': boolean;
+    'modia.innboks.saf-saker': boolean;
+}
+const featuretoggles = [
+    'modia.innboks.bruker-salesforce-dialoger',
+    'modia.innboks.steng-sto',
+    'modia.innboks.saf-saker'
+]
+    .map((toggle) => `feature=${toggle}`)
+    .join('&');
+
+export function useFeaturetoggles(): FetchResult<FeatureToggles> {
+    return useFetch<FeatureToggles>(`/api/feature?${featuretoggles}`, MED_CREDENTIALS);
 }
 
 export function hentTraader() {
@@ -84,20 +100,4 @@ export interface TilgangsDTO {
 
 export function harTilgangTilKommunaleTemagrupper(): Promise<TilgangsDTO> {
     return fetchToJson(`${API_BASE_URL}/tilgang/oksos`, MED_CREDENTIALS);
-}
-
-export function sjekkRatelimiter() {
-    return (
-        fetchToJson(RATE_LIMITER_URL, MED_CREDENTIALS)
-            // Ved feil sier vi at alt er greit slik at det ikke hindrer innsending
-            .catch(() => true)
-    );
-}
-export function sjekkOgOppdaterRatelimiter() {
-    return (
-        fetchToJson(RATE_LIMITER_URL, somPostConfig())
-            .then()
-            // Ved feil sier vi at alt er greit slik at det ikke hindrer innsending
-            .catch(() => true)
-    );
 }

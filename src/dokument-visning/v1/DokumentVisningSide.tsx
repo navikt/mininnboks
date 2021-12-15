@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { getTraaderSafe, markerBehandlingsIdSomLest } from '../ducks/traader';
-import { hentDokumentVisningData, settDokumentUrl } from '../ducks/dokumenter';
-import Feilmelding from '../feilmelding/Feilmelding';
+import { getTraaderSafe, markerBehandlingsIdSomLest } from '../../ducks/traader';
+import { hentDokumentVisningData, settDokumentUrl } from '../../ducks/dokumenter';
+import Feilmelding from '../../feilmelding/Feilmelding';
 import Dokumentvisning from './DokumentVisning';
 import LastNedPdfModal from './LastNedPdfModal';
 import { useParams } from 'react-router';
-import { useAppState, useOnMount } from '../utils/custom-hooks';
-import { harFeil, laster } from '../avhengigheter';
-import Spinner from '../utils/Spinner';
+import { useAppState, useOnMount } from '../../utils/custom-hooks';
+import { harFeil, laster } from '../../avhengigheter';
+import Spinner from '../../utils/Spinner';
 import Alertstripe from 'nav-frontend-alertstriper';
+import { useBreadcrumbs } from '../../brodsmuler/Brodsmuler';
 
 function DokumentVisningSide() {
     const params = useParams<{ id: string }>();
@@ -17,6 +18,8 @@ function DokumentVisningSide() {
     const traaderResource = useAppState((state) => state.traader);
     const dokumenter = useAppState((state) => state.dokumenter);
     const traader = getTraaderSafe(traaderResource);
+
+    useBreadcrumbs([{ title: 'Dokumentvisning', url: `/dokument/${params.id}` }]);
 
     useOnMount(() => {
         const traad = traader.find((traad) => traad.traadId === params.id);
