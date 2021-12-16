@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import useFetch, { hasData, hasError, isPending } from '@nutgaard/use-fetch';
@@ -16,7 +16,7 @@ import { Journalpost } from './domain';
 import Dokument from './Dokument';
 import { urls as dokumentUrls } from './dokument-api';
 import './dokument-varsel-visning-side.less';
-import { getLogger } from "../../utils";
+import { getLogger } from '../../utils';
 
 const sendNyMeldingURL = `${getNAVBaseUrl()}/person/kontakt-oss/skriv-til-oss`;
 const fetchOptions = {};
@@ -40,16 +40,16 @@ function DokumentVarselVisningSide() {
         .find((trad) => trad.traadId === params.id)
         ?.meldinger?.at(0);
 
-    const journalpostResource = useFetch<Journalpost>(
-        lagJournalpostUrl(dokumentVarsel),
-        fetchOptions,
-        { lazy: !dokumentVarsel}
-    );
+    const journalpostResource = useFetch<Journalpost>(lagJournalpostUrl(dokumentVarsel), fetchOptions, {
+        lazy: !dokumentVarsel
+    });
     useEffect(() => {
         if (dokumentVarsel && hasData(journalpostResource)) {
             const varselTema = dokumentVarsel.temaKode;
             const journalpostTema = journalpostResource.data.tema;
-            frontendlogger.info(`[DOKUMENT] samsvar av tema for ${dokumentVarsel.id}: ${varselTema === journalpostTema}`);
+            frontendlogger.info(
+                `[DOKUMENT] samsvar av tema for ${dokumentVarsel.id}: ${varselTema === journalpostTema}`
+            );
             if (!dokumentVarsel.lest) {
                 dispatch(markerBehandlingsIdSomLest(dokumentVarsel.id));
             }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { Dokument as DokumentType, Journalpost } from './domain';
 import DokumentVisning from './DokumentVisning';
-import DokumentLenker from "./DokumentLenker";
+import DokumentLenker from './DokumentLenker';
 
 interface Props {
     journalpost: Journalpost;

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { AlertStripeAdvarsel } from "nav-frontend-alertstriper";
-import {Dokument, Journalpost} from './domain';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Dokument, Journalpost } from './domain';
 import PdfViewer from '../../components/pdfvisning/PdfViewer';
 import { urls as dokumentUrls } from './dokument-api';
 
@@ -17,13 +17,16 @@ function feilmelding(statusKode: number): string {
         case 404:
             return 'Dokument ikke funnet.';
         default:
-            return 'Ukjent feil ved henting av dokument. Prøv å laste inn siden på nytt, og ta kontakt om feilen vedvarer. Feilkode: ' + statusKode;
+            return (
+                'Ukjent feil ved henting av dokument. Prøv å laste inn siden på nytt, og ta kontakt om feilen vedvarer. Feilkode: ' +
+                statusKode
+            );
     }
 }
 
 function DokumentVisning(props: Props) {
     if (!props.dokument.harTilgang) {
-        return <AlertStripeAdvarsel>{feilmelding(401)}</AlertStripeAdvarsel>
+        return <AlertStripeAdvarsel>{feilmelding(401)}</AlertStripeAdvarsel>;
     }
 
     return (

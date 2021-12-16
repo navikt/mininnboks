@@ -14,7 +14,7 @@ export const somPostConfig: () => RequestInit = () => ({
     }
 });
 
-const sendSporsmalConfig = (temagruppe: string, fritekst: string) => ({
+const sendSporsmalConfig = (temagruppe: string, fritekst: string, overstyrtGt: string | undefined) => ({
     credentials: 'same-origin',
     method: 'POST',
     headers: {
@@ -22,7 +22,7 @@ const sendSporsmalConfig = (temagruppe: string, fritekst: string) => ({
         NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'),
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ temagruppe, fritekst })
+    body: JSON.stringify({ temagruppe, fritekst, overstyrtGt })
 });
 
 const sendSvarConfig = (traadId: string, fritekst: string) => ({
@@ -49,17 +49,19 @@ interface FeatureToggles {
     'modia.innboks.bruker-salesforce-dialoger': boolean;
     'modia.innboks.steng-sto': boolean;
     'modia.innboks.saf-saker': boolean;
+    'modia.innboks.oksos-adressesok': boolean;
 }
-const featuretoggles= [
+const featuretoggles = [
     'modia.innboks.bruker-salesforce-dialoger',
     'modia.innboks.steng-sto',
-    'modia.innboks.saf-saker'
+    'modia.innboks.saf-saker',
+    'modia.innboks.oksos-adressesok'
 ]
     .map((toggle) => `feature=${toggle}`)
     .join('&');
 
 export function useFeaturetoggles(): FetchResult<FeatureToggles> {
-    return useFetch<FeatureToggles>(`/api/feature?${featuretoggles}`, MED_CREDENTIALS)
+    return useFetch<FeatureToggles>(`/api/feature?${featuretoggles}`, MED_CREDENTIALS);
 }
 
 export function hentTraader() {
@@ -74,11 +76,19 @@ export function markerSomLest(behandlingsId: string) {
     return fetchToJson(`${API_BASE_URL}/traader/lest/${behandlingsId}`, somPostConfig());
 }
 
-export function sendSporsmal(temagruppe: string, fritekst: string, isDirekte: boolean) {
+export function sendSporsmal(
+    temagruppe: string,
+    fritekst: string,
+    overstyrtGt: string | undefined,
+    isDirekte: boolean
+) {
     if (isDirekte) {
-        return fetchToJson(`${API_BASE_URL}/traader/sporsmaldirekte`, sendSporsmalConfig(temagruppe, fritekst));
+        return fetchToJson(
+            `${API_BASE_URL}/traader/sporsmaldirekte`,
+            sendSporsmalConfig(temagruppe, fritekst, overstyrtGt)
+        );
     }
-    return fetchToJson(`${API_BASE_URL}/traader/sporsmal`, sendSporsmalConfig(temagruppe, fritekst));
+    return fetchToJson(`${API_BASE_URL}/traader/sporsmal`, sendSporsmalConfig(temagruppe, fritekst, overstyrtGt));
 }
 
 export function sendSvar(traadId: string, fritekst: string) {
