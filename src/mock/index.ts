@@ -26,7 +26,8 @@ const brukerSalesforceDialoger = false;
 const featureToggles: ToggleMap = {
     'modia.innboks.steng-sto': stengtSTO,
     'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger,
-    'modia.innboks.saf-saker': true
+    'modia.innboks.saf-saker': true,
+    'modia.innboks.oksos-adressesok': true
 };
 
 const fetchMock = FetchMock.configure({

@@ -18,7 +18,6 @@ import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
     AndreFeilmeldinger,
-    FeilmeldingKommunalSjekk,
     SkrivNyttSporsmalForm,
     useFormstate
 } from './common';
@@ -49,10 +48,6 @@ function SkrivNyttSporsmal() {
         return <Spinner />;
     } else if (hasError(ledetekster)) {
         return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
-    }
-
-    if (temagruppe === Temagruppe.OKSOS) {
-        return <Alertstripe type="advarsel">{FeilmeldingKommunalSjekk.IKKE_AKTIV}</Alertstripe>;
     }
 
     const godkjenteTemagrupper = ledetekster.data['temagruppe.liste'].split(' ');

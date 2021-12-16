@@ -44,6 +44,7 @@ function Routes(props: { ledetekster: Ledetekster }) {
 
     const stengtSTO: boolean = featuretoggles.data['modia.innboks.steng-sto'];
     const brukerSFSomBackend: boolean = featuretoggles.data['modia.innboks.bruker-salesforce-dialoger'];
+    const oksosAdressesok: boolean = featuretoggles.data['modia.innboks.oksos-adressesok'];
 
     return (
         <BrowserRouter>
@@ -57,7 +58,7 @@ function Routes(props: { ledetekster: Ledetekster }) {
                             {!stengtSTO && !brukerSFSomBackend && (
                                 <Route exact path="/sporsmal/skriv/FDAG" component={SkrivNyttSporsmalFDAG} />
                             )}
-                            {!stengtSTO && !brukerSFSomBackend && (
+                            {oksosAdressesok && !stengtSTO && !brukerSFSomBackend && (
                                 <Route exact path="/sporsmal/skriv/OKSOS" component={SkrivNyttSporsmalOKSOS} />
                             )}
                             {!stengtSTO && !brukerSFSomBackend && (
