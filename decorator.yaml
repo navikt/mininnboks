@@ -20,12 +20,6 @@ proxy:
     # må kunne kalle apiet med kun openAM-sesjon
     validateOidcToken: false
 
-  - contextPath: /saksoversikt-api
-    baseUrl: http://saksoversikt-api.personbruker.svc.nais.local
-    pingRequestPath: /saksoversikt-api/internal/isAlive
-    # lar saksoversikt-api håndtere sin egen sikkerhet
-    validateOidcToken: false
-
   - contextPath: /sosialhjelp-soknad-api
     baseUrl: http://sosialhjelp-soknad-api.teamdigisos.svc.nais.local
     requestRewrite: REMOVE_CONTEXT_PATH
