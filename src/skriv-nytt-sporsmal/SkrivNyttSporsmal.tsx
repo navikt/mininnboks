@@ -4,36 +4,35 @@ import { Innholdstittel, Normaltekst, Sidetittel, Undertittel } from 'nav-fronte
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Values } from '@nutgaard/use-formstate';
-import { hasError, isPending } from '@nutgaard/use-fetch';
 import Textarea from '../components/no-aria-textarea';
 import { sendSporsmal } from '../ducks/traader';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';
 import TemagruppeEkstraInfo from './TemagruppeEkstraInfo';
-import Feilmelding from '../feilmelding/Feilmelding';
 import { feilmelding } from '../utils/validationutil';
 import Spinner from '../utils/Spinner';
 import { Temagruppe, TemagruppeNavn } from '../utils/constants';
 import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
-    AndreFeilmeldinger,
+    FeilmeldingKommunalSjekk,
     SkrivNyttSporsmalForm,
-    useFormstate
+    useFormstate,
+    useTilgangSjekk
 } from './common';
 import './skriv-nytt-sporsmal.less';
-import { useLedetekster } from '../utils/api';
 import { STATUS } from '../ducks/ducks-utils';
 import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
 import { FeilmeldingOppsummering } from './FeilmeldingOppsummering';
+import { TilgangState } from "../ducks/tilgang";
 
 const spesialtHandterteTemagrupper = [Temagruppe.FDAG];
 
 function SkrivNyttSporsmal() {
     const dispatch = useThunkDispatch();
-    const ledetekster = useLedetekster();
     const params = useParams<{ temagruppe: Temagruppe }>();
     const temagruppe = params.temagruppe.toUpperCase() as Temagruppe;
+    const tilgang: TilgangState = useTilgangSjekk();
     const location = useLocation();
     const isDirekte = location.pathname.includes('/direkte');
     const formstate = useFormstate({ fritekst: '', godkjennVilkaar: 'false' });
@@ -44,17 +43,16 @@ function SkrivNyttSporsmal() {
         return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
     }
 
-    if (isPending(ledetekster)) {
-        return <Spinner />;
-    } else if (hasError(ledetekster)) {
-        return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
+    if (temagruppe === Temagruppe.OKSOS) {
+        if (tilgang.status === STATUS.PENDING) {
+            return <Spinner />;
+        } else if (tilgang.status === STATUS.ERROR) {
+            return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
+        } else if (tilgang.status === STATUS.OK && tilgang.data.resultat !== 'OK') {
+            return <Alertstripe type="info">{FeilmeldingKommunalSjekk[tilgang.data.resultat]}</Alertstripe>;
+        }
     }
-
-    const godkjenteTemagrupper = ledetekster.data['temagruppe.liste'].split(' ');
-
-    if (!godkjenteTemagrupper.includes(temagruppe)) {
-        return <Feilmelding>{AndreFeilmeldinger.IKKE_GODKJENT_TEMAGRUPPE}</Feilmelding>;
-    } else if (formstate.submittingSuccess) {
+    if (formstate.submittingSuccess) {
         return <Kvittering />;
     }
 
