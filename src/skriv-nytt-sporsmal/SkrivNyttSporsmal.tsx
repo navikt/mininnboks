@@ -44,7 +44,7 @@ function SkrivNyttSporsmal() {
     }
 
     if (temagruppe === Temagruppe.OKSOS) {
-        if (tilgang.status === STATUS.PENDING) {
+        if ([STATUS.PENDING, STATUS.NOT_STARTED].includes(tilgang.status)) {
             return <Spinner />;
         } else if (tilgang.status === STATUS.ERROR) {
             return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;

@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { useLocation } from 'react-router';
-import { Textarea } from 'nav-frontend-skjema';
-import { Innholdstittel, Normaltekst, Sidetittel, Undertittel } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import {useState} from 'react';
+import {useLocation} from 'react-router';
+import {Textarea} from 'nav-frontend-skjema';
+import {Innholdstittel, Normaltekst, Sidetittel, Undertittel} from 'nav-frontend-typografi';
+import {Hovedknapp} from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
-import useFormstateFactory, { Validation, Values } from '@nutgaard/use-formstate';
-import { sendSporsmal } from '../ducks/traader';
-import { STATUS } from '../ducks/ducks-utils';
+import useFormstateFactory, {Validation, Values} from '@nutgaard/use-formstate';
+import {sendSporsmal} from '../ducks/traader';
+import {STATUS} from '../ducks/ducks-utils';
 import GodtaVilkar from './GodtaVilkar';
 import Kvittering from './Kvittering';
-import { feilmelding } from '../utils/validationutil';
-import { TilgangState } from '../ducks/tilgang';
+import {feilmelding} from '../utils/validationutil';
+import {TilgangState} from '../ducks/tilgang';
 import Spinner from '../utils/Spinner';
-import { Temagruppe, TemagruppeNavn } from '../utils/constants';
-import { useAppState, useThunkDispatch } from '../utils/custom-hooks';
+import {Temagruppe, TemagruppeNavn} from '../utils/constants';
+import {useAppState, useThunkDispatch} from '../utils/custom-hooks';
 import {
     AlertstripeAdvarselVisibleIf,
     defaultFormstateConfig,
@@ -23,9 +23,9 @@ import {
     useTilgangSjekk
 } from './common';
 import VelgAdresseModal from './geografisk-tilknytning/VelgAdresseModal';
-import { Adresse, formaterAdresseString } from './geografisk-tilknytning/AdresseUtils';
+import {Adresse, formaterAdresseString} from './geografisk-tilknytning/AdresseUtils';
 import './skriv-nytt-sporsmal.less';
-import { useBreadcrumbs } from '../brodsmuler/Brodsmuler';
+import {useBreadcrumbs} from '../brodsmuler/Brodsmuler';
 
 type OKSOSSkrivNyttSporsmalForm = SkrivNyttSporsmalForm & { geografiskTilknytning: string };
 const config: Validation<OKSOSSkrivNyttSporsmalForm> = {
@@ -52,7 +52,7 @@ function SkrivNyttSporsmalOKSOS() {
         geografiskTilknytning: ''
     });
 
-    if (tilgang.status === STATUS.PENDING) {
+    if ([STATUS.PENDING, STATUS.NOT_STARTED].includes(tilgang.status)) {
         return <Spinner />;
     } else if (tilgang.status === STATUS.ERROR) {
         return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
