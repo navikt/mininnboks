@@ -58,18 +58,20 @@ fetchMock.get(FOLKREGISTRERT_ADRESSE_PATH, (req, res, ctx) => {
     return res(
         ctx.delay(1000),
         ctx.json({
-            adresse: 'Folkegata',
-            tilleggsnavn: 'H0001 Lillo',
-            husnummer: '3',
-            husbokstav: 'A',
-            kommunenummer: '4321',
-            kommunenavn: 'Furtil',
-            postnummer: '1234',
-            poststed: 'Ossen',
-            geografiskTilknytning: '010101',
-            gatekode: null,
-            bydel: null,
-            type: 'VEGADRESSE'
+            adresse: {
+                adresse: 'Folkegata',
+                tilleggsnavn: 'H0001 Lillo',
+                husnummer: '3',
+                husbokstav: 'A',
+                kommunenummer: '4321',
+                kommunenavn: 'Furtil',
+                postnummer: '1234',
+                poststed: 'Ossen',
+                geografiskTilknytning: '010101',
+                gatekode: null,
+                bydel: null,
+                type: 'VEGADRESSE'
+            }
         })
     );
 });

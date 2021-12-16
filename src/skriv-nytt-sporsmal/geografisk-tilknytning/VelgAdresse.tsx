@@ -71,7 +71,7 @@ function VelgAdresse(props: Props) {
 }
 
 function AdresseLoader(props: Pick<Props, 'submit'>) {
-    const folkeregistrertAdresse = useFetch<Adresse>(FOLKREGISTRERT_ADRESSE_PATH, MED_CREDENTIALS);
+    const folkeregistrertAdresse = useFetch<{ adresse: Adresse }>(FOLKREGISTRERT_ADRESSE_PATH, MED_CREDENTIALS);
     if (isPending(folkeregistrertAdresse)) {
         return (
             <div className="adressevalg__spinner">
@@ -81,7 +81,7 @@ function AdresseLoader(props: Pick<Props, 'submit'>) {
     } else if (hasError(folkeregistrertAdresse)) {
         return <AlertStripeAdvarsel>Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</AlertStripeAdvarsel>;
     } else {
-        return <VelgAdresse submit={props.submit} folkeregistrertAdresse={folkeregistrertAdresse.data} />;
+        return <VelgAdresse submit={props.submit} folkeregistrertAdresse={folkeregistrertAdresse.data.adresse} />;
     }
 }
 
