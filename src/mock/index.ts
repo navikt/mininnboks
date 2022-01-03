@@ -3,7 +3,6 @@ import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 import { FOLKREGISTRERT_ADRESSE_PATH, RESOURCES_PATH, TRAADER_PATH } from '../utils/api';
 import traader from './traader.json';
 import resources from './resources.json';
-import { dokumentMock } from './dokument-mock';
 import fetchDekoratorHtml from './dekorator/fetchDekoratorHtml';
 import { AvsenderMottaker, Journalpost, Retning } from '../dokument-visning/v2/domain';
 import { Adresse } from '../skriv-nytt-sporsmal/geografisk-tilknytning/AdresseUtils';
@@ -26,7 +25,6 @@ const brukerSalesforceDialoger = false;
 const featureToggles: ToggleMap = {
     'modia.innboks.steng-sto': stengtSTO,
     'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger,
-    'modia.innboks.saf-saker': true,
     'modia.innboks.oksos-adressesok': true
 };
 
@@ -174,23 +172,6 @@ fetchMock.get('/mininnboks-api/dokument/:journalpostId/:dokumentId', (req, res, 
         return res(ctx.json(journalpost));
     }
 });
-
-fetchMock.get(
-    '/saksoversikt-api/tjenester/dokumenter/dokumentmetadata/:journalpostId/:dokumentmetadata',
-    (req, res, ctx) =>
-        res(
-            ctx.json({
-                bildeurler: ['/img/Dummy_dokument.png'],
-                kanVises: true,
-                feilmelding: 'feilmelding.dokumentikkefunnet',
-                ekstrafeilinfo: {},
-                dokumentreferanse: '419361301'
-            })
-        )
-);
-fetchMock.get('/saksoversikt-api/tjenester/dokumenter/journalpostmetadata/:journalpostId', (req, res, ctx) =>
-    res(ctx.json(dokumentMock))
-);
 
 fetchMock.get('/api/feature', (req, res, ctx) => {
     const queryParam = req.queryParams['feature'] || [];
