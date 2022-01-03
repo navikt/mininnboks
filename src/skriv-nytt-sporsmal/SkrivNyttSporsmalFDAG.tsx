@@ -48,7 +48,7 @@ function SkrivNyttSporsmalFDAG() {
                 />
                 <div className="blokk-xs">
                     <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.TOOMANYREQUESTS}>
-                        Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere
+                        Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på et senere
                         tidspunkt.
                     </AlertstripeAdvarselVisibleIf>
                     <AlertstripeAdvarselVisibleIf visibleIf={innsendingStatus === STATUS.ERROR}>
