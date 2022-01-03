@@ -55,7 +55,7 @@ function SkrivNyttSporsmalOKSOS() {
     if ([STATUS.PENDING, STATUS.NOT_STARTED].includes(tilgang.status)) {
         return <Spinner />;
     } else if (tilgang.status === STATUS.ERROR) {
-        return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</Alertstripe>;
+        return <Alertstripe type="advarsel">Noe gikk galt, vennligst prøv igjen på et senere tidspunkt.</Alertstripe>;
     } else if (tilgang.status === STATUS.OK && tilgang.data.resultat !== 'OK') {
         return <Alertstripe type="info">{FeilmeldingKommunalSjekk[tilgang.data.resultat]}</Alertstripe>;
     } else if (formstate.submittingSuccess) {

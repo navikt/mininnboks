@@ -79,7 +79,7 @@ function AdresseLoader(props: Pick<Props, 'submit'>) {
             </div>
         );
     } else if (hasError(folkeregistrertAdresse)) {
-        return <AlertStripeAdvarsel>Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.</AlertStripeAdvarsel>;
+        return <AlertStripeAdvarsel>Noe gikk galt, vennligst prøv igjen på et senere tidspunkt.</AlertStripeAdvarsel>;
     } else {
         return <VelgAdresse submit={props.submit} folkeregistrertAdresse={folkeregistrertAdresse.data.adresse} />;
     }

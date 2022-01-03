@@ -30,7 +30,7 @@ export const defaultFormstateConfig: Validation<SkrivNyttSporsmalForm> = {
 export const useFormstate = useFormstateFactory(defaultFormstateConfig);
 
 export enum FeilmeldingKommunalSjekk {
-    FEILET = 'Noe gikk galt, vennligst prøv igjen på ett senere tidspunkt.',
+    FEILET = 'Noe gikk galt, vennligst prøv igjen på et senere tidspunkt.',
     KODE6 = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.',
     INGEN_ENHET = 'Du har dessverre ikke mulighet til å benytte denne løsningen. Vi ber om at du kontakter oss på telefon.',
     IKKE_AKTIV = 'Det er dessverre ikke mulig å sende inn spørsmål på denne temagruppen.'
