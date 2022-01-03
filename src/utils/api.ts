@@ -48,13 +48,11 @@ export function useLedetekster(): FetchResult<Ledetekster> {
 interface FeatureToggles {
     'modia.innboks.bruker-salesforce-dialoger': boolean;
     'modia.innboks.steng-sto': boolean;
-    'modia.innboks.saf-saker': boolean;
     'modia.innboks.oksos-adressesok': boolean;
 }
 const featuretoggles = [
     'modia.innboks.bruker-salesforce-dialoger',
     'modia.innboks.steng-sto',
-    'modia.innboks.saf-saker',
     'modia.innboks.oksos-adressesok'
 ]
     .map((toggle) => `feature=${toggle}`)
