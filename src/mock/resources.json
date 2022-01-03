@@ -33,7 +33,7 @@
     "feilmelding.dokumentslettet.tittel": "Du kan ikke se innholdet i dokumentet fordi det er slettet fra NAVs arkiv",
     "feilmelding.dokumentikkefunnet.tittel": "Dokument ikke funnet",
     "feilmelding.dokumentikketilgjengelig.tekst": "Dokumentet er ikke tilgjengelig. Vennligst prøv igjen senere.",
-    "feilmelding.ratelimiter": "Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på ett senere tidspunkt.",
+    "feilmelding.ratelimiter": "Du har oversteget antall meldinger som kan sendes til NAV på kort tid. Prøv igjen på et senere tidspunkt.",
     "temagruppe.liste": "ARBD FMLI HJLPM BIL ORT_HJE OKSOS PENS UFRT"
 
 }

@@ -15,6 +15,6 @@ function Application() {
         return <Spinner />;
     }
 
-    return <Routes />;
+    return <Routes ledetekster={ledetekster.data} />;
 }
 export default Application;

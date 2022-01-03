@@ -33,33 +33,35 @@ if (!global.Intl) {
     (window as any).console = console; // tslint:disable-line no-any
 })(window.console);
 
-
 function at(n: number) {
     n = Math.trunc(n) || 0;
     // @ts-ignore
-    if (n < 0) { n += this.length }
+    if (n < 0) {
+        // @ts-ignore
+        n += this.length;
+    }
     // @ts-ignore
-    if (n < 0 || n >= this.length) return undefined
+    if (n < 0 || n >= this.length) return undefined;
     // @ts-ignore
     return this[n];
 }
-const prototypeValue:PropertyDescriptor = {
+const prototypeValue: PropertyDescriptor = {
     value: at,
     writable: true,
     enumerable: false,
     configurable: true
-}
+};
 // eslint-disable-next-line
-Object.defineProperty(Array.prototype, "at", prototypeValue);
+Object.defineProperty(Array.prototype, 'at', prototypeValue);
 // eslint-disable-next-line
-Object.defineProperty(String.prototype, "at", prototypeValue);
+Object.defineProperty(String.prototype, 'at', prototypeValue);
 
 export {};
 declare global {
     interface Array<T> {
-        at(n:number): T | undefined
+        at(n: number): T | undefined;
     }
     interface String {
-        at(n:number): String | undefined
+        at(n: number): String | undefined;
     }
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import Spinner from "../../utils/Spinner";
+import Spinner from '../../utils/Spinner';
 
 interface Props
     extends Omit<React.DetailedHTMLProps<React.ObjectHTMLAttributes<HTMLObjectElement>, HTMLObjectElement>, 'onError'> {
@@ -21,7 +21,7 @@ function useBlobLoader(url: string, onError: ErrorHandler): BlobData {
     useEffect(() => {
         let objectUrl = '';
         fetch(url)
-            .then(res => {
+            .then((res) => {
                 if (!res.ok) {
                     setError(true);
                     onError(res.status);
@@ -30,7 +30,7 @@ function useBlobLoader(url: string, onError: ErrorHandler): BlobData {
                 }
                 return res.blob();
             })
-            .then(blob => {
+            .then((blob) => {
                 objectUrl = URL.createObjectURL(blob);
                 setBlobUrl(objectUrl);
             });
@@ -39,7 +39,6 @@ function useBlobLoader(url: string, onError: ErrorHandler): BlobData {
             window.URL.revokeObjectURL(objectUrl);
         };
     }, [url, setBlobUrl, onError, setError]);
-
 
     return { hasError, blobUrl };
 }
@@ -56,4 +55,4 @@ function ObjectHttpErrorHandler(props: Props) {
     }
 }
 
-export default ObjectHttpErrorHandler
+export default ObjectHttpErrorHandler;

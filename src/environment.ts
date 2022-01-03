@@ -23,7 +23,6 @@ export function getPersonNAVBaseUrl(): string {
     return 'https://person.nav.no';
 }
 
-
 export function getSfUrl(): string {
     return window.mininnboks?.SF_DIALOG_URL || getNAVBaseUrl();
 }

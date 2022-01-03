@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Lenke from "nav-frontend-lenker";
-import { Dokument as DokumentType, Journalpost } from "./domain";
-import { urls as dokumentUrls } from "./dokument-api";
-import { ReactComponent as Download } from "./Download.svg";
-import { ReactComponent as ExternalLink } from "./ExternalLink.svg";
+import Lenke from 'nav-frontend-lenker';
+import { Dokument as DokumentType, Journalpost } from './domain';
+import { urls as dokumentUrls } from './dokument-api';
+import { ReactComponent as Download } from './Download.svg';
+import { ReactComponent as ExternalLink } from './ExternalLink.svg';
 
 interface Props {
     journalpost: Journalpost;
@@ -31,4 +31,4 @@ function DokumentLenker(props: Props) {
     );
 }
 
-export default DokumentLenker
+export default DokumentLenker;

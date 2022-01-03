@@ -59,7 +59,10 @@ function TraadVisning(props: Props) {
                 >
                     Det har skjedd en feil med innsendingen av spørsmålet ditt. Vennligst prøv igjen senere.
                 </AlertstripeVisibleIf>
-                <SkrivKnapp visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks && !props.stengtSTO} onClick={skrivKnappOnClick} />
+                <SkrivKnapp
+                    visibleIf={valgttraad.kanBesvares && !skalViseBesvarBoks && !props.stengtSTO}
+                    onClick={skrivKnappOnClick}
+                />
                 <AlertstripeVisibleIf type="info" visibleIf={valgttraad.avsluttet ?? false} className="blokk-m">
                     <Normaltekst>
                         Dialogen er avsluttet. Vil du <a href={sendNyMeldingURL}>sende en ny beskjed</a>, kan du gjøre

@@ -26,8 +26,14 @@ const temagruppeInfo: TemagruppeInfo = {
             intro: (
                 <>
                     <Normaltekst>
-                        For å beregne riktig etteroppgjør må vi ha nødvendig dokumentasjon fra deg.
-                        Du finner <a href="https://www.nav.no/no/person/pensjon/avtalefestet-pensjon-afp/hva-er-afp-etteroppgjoret" target="__blank">informasjon og skjema i denne artikkelen</a>.
+                        For å beregne riktig etteroppgjør må vi ha nødvendig dokumentasjon fra deg. Du finner{' '}
+                        <a
+                            href="https://www.nav.no/no/person/pensjon/avtalefestet-pensjon-afp/hva-er-afp-etteroppgjoret"
+                            target="__blank"
+                        >
+                            informasjon og skjema i denne artikkelen
+                        </a>
+                        .
                     </Normaltekst>
                     <Element>Eksempler på dokumentasjon som kan sendes inn:</Element>
                 </>
