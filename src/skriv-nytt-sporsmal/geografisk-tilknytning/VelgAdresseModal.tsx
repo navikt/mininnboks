@@ -24,7 +24,7 @@ function VelgAdresseModal(props: GtModalProps) {
             >
                 <h1>Adresse og NAV-kontor</h1>
                 <Normaltekst className="blokk-xxs">
-                    Her bør vi kanskje ha en liten tekst som sier noe om hvorfor vi vil at de skal velge adresse?
+                    For å sikre at beskjeden komme frem til riktig kontor må man verifisere sin oppholdsadresse.
                 </Normaltekst>
                 <VelgAdresse submit={props.close} />
             </Modal>
