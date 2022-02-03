@@ -6,10 +6,11 @@ import MainApp from './mainapp';
 import { render } from 'react-dom';
 import Modal from 'nav-frontend-modal';
 
-Modal.setAppElement('body');
+const rootElement = document.getElementById('app-root');
+Modal.setAppElement(rootElement);
 
 if (process.env.REACT_APP_MOCK_ENABLED === 'true') {
     require('./mock');
 }
 
-render(<MainApp />, document.getElementById('app-root'));
+render(<MainApp />, rootElement);
