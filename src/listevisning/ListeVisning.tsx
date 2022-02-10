@@ -51,7 +51,7 @@ function ListeVisning(props: Props) {
 
     return (
         <article className="blokk-center">
-            <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
+            <Sidetittel className="text-center blokk-l">Brev og vedtak</Sidetittel>
             <VisibleIf visibleIf={!props.brukerSFSomBackend && !props.stengtSTO}>
                 <div className="text-center blokk-l">
                     <a href={sendNyMeldingURL} className="knapp knapp--hoved">
