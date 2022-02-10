@@ -6,7 +6,7 @@ import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-modul
 
 const defaultCrumbs: Array<Breadcrumb> = [
     { title: 'Ditt NAV', url: 'https://tjenester.nav.no/dittnav' },
-    { title: 'Min innboks', url: '/', handleInApp: true }
+    { title: 'Brev og vedtak', url: '/', handleInApp: true }
 ];
 export function useBreadcrumbs(crumbs: Array<Breadcrumb>) {
     useEffect(() => {
