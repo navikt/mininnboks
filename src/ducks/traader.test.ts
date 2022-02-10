@@ -1,4 +1,4 @@
-import reducer, { selectTraaderMedSammenslatteMeldinger, TraaderState, TypeKeys } from './traader';
+import reducer, { TraaderState, TypeKeys } from './traader';
 import { MeldingsTyper } from '../utils/constants';
 import { STATUS } from './ducks-utils';
 import { AppState } from '../reducer';
@@ -93,18 +93,6 @@ describe('traader-ducks', () => {
                     ]
                 }
             } as unknown) as AppState;
-            it('skal ikke selecte delvise svar', () => {
-                const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
-                expect(sammenslaatteTraader.data[0].meldinger.length).toEqual(3);
-            });
-            it('skal merge teksten fra delvise svar inn i førstkommende skriftlige svar', () => {
-                const sammenslaatteTraader = selectTraaderMedSammenslatteMeldinger(initialState);
-                const avsluttendeSvar = sammenslaatteTraader.data[0].meldinger.find(
-                    (melding) => melding.id === AVSLUTTENDE_SVAR_MELDINGS_ID
-                ) as Melding;
-                expect(avsluttendeSvar.fritekst).toContain(DELVIS_SVAR_TEKST);
-                expect(avsluttendeSvar.fritekst).toContain(SVAR_TEKST);
-            });
         });
     });
 });

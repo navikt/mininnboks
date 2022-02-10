@@ -1,11 +1,10 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
-import { FOLKREGISTRERT_ADRESSE_PATH, RESOURCES_PATH, TRAADER_PATH } from '../utils/api';
+import { RESOURCES_PATH, TRAADER_PATH } from '../utils/api';
 import traader from './traader.json';
 import resources from './resources.json';
 import fetchDekoratorHtml from './dekorator/fetchDekoratorHtml';
 import { AvsenderMottaker, Journalpost, Retning } from '../dokument-visning/v2/domain';
-import { Adresse } from '../skriv-nytt-sporsmal/geografisk-tilknytning/AdresseUtils';
 
 console.log('==========================');
 console.log('======== MED MOCK ========');
@@ -19,15 +18,6 @@ console.log('==========================');
     footer.forEach((child) => document.body.append(child));
 })();
 
-type ToggleMap = { [key: string]: boolean };
-const stengtSTO = false;
-const brukerSalesforceDialoger = false;
-const featureToggles: ToggleMap = {
-    'modia.innboks.steng-sto': stengtSTO,
-    'modia.innboks.bruker-salesforce-dialoger': brukerSalesforceDialoger,
-    'modia.innboks.oksos-adressesok': true
-};
-
 const fetchMock = FetchMock.configure({
     enableFallback: true, // default: true
     middleware: MiddlewareUtils.combine(
@@ -38,75 +28,14 @@ const fetchMock = FetchMock.configure({
 });
 
 fetchMock.get(TRAADER_PATH, (req, res, ctx) => {
-    const traderSf = traader.filter((trad) =>
+    const trader = traader.filter((trad) =>
         trad.meldinger.every((melding: any) => ['DOKUMENT_VARSEL', 'OPPGAVE_VARSEL'].includes(melding.type))
     );
-    return res(ctx.json(brukerSalesforceDialoger ? traderSf : traader));
+    return res(ctx.json(trader));
 });
 fetchMock.get(RESOURCES_PATH, (req, res, ctx) => res(ctx.json(resources)));
-fetchMock.get('/mininnboks-api/tilgang/oksos', (req, res, ctx) =>
-    res(ctx.json({ resultat: 'OK', melding: 'Kunne ikke hente data fra pdl-api' }))
-);
-fetchMock.post('/mininnboks-api/traader/svar', (req, res, ctx) => res(ctx.json({})));
-fetchMock.post('/mininnboks-api/traader/sporsmal', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/lest/:id', (req, res, ctx) => res(ctx.json({})));
 fetchMock.post('/mininnboks-api/traader/allelest/:id', (req, res, ctx) => res(ctx.json({})));
-
-fetchMock.get(FOLKREGISTRERT_ADRESSE_PATH, (req, res, ctx) => {
-    return res(
-        ctx.delay(1000),
-        ctx.json({
-            adresse: {
-                adresse: 'Folkegata',
-                tilleggsnavn: 'H0001 Lillo',
-                husnummer: '3',
-                husbokstav: 'A',
-                kommunenummer: '4321',
-                kommunenavn: 'Furtil',
-                postnummer: '1234',
-                poststed: 'Ossen',
-                geografiskTilknytning: '010101',
-                gatekode: null,
-                bydel: null,
-                type: 'VEGADRESSE'
-            }
-        })
-    );
-});
-
-fetchMock.get('/sosialhjelp-soknad-api/sosialhjelp/soknad-api/informasjon/adressesok', (req, res, ctx) => {
-    const forslag: Array<Adresse> = [
-        {
-            adresse: 'Kirkegata',
-            tilleggsnavn: null,
-            husnummer: '12',
-            husbokstav: 'B',
-            kommunenummer: '4321',
-            kommunenavn: 'TURITULL',
-            postnummer: '1234',
-            poststed: 'Åsen',
-            geografiskTilknytning: '010101',
-            gatekode: null,
-            bydel: null,
-            type: null
-        },
-        {
-            adresse: 'Prostegata',
-            tilleggsnavn: null,
-            husnummer: '14',
-            husbokstav: 'A',
-            kommunenummer: '4322',
-            kommunenavn: 'Morokuln',
-            postnummer: '1238',
-            poststed: 'Åsane',
-            geografiskTilknytning: null,
-            gatekode: null,
-            bydel: null,
-            type: null
-        }
-    ];
-    return res(ctx.delay(1000), ctx.json(forslag));
-});
 
 const journalposter: Journalpost[] = [
     {
@@ -171,16 +100,4 @@ fetchMock.get('/mininnboks-api/dokument/:journalpostId/:dokumentId', (req, res, 
     } else {
         return res(ctx.json(journalpost));
     }
-});
-
-fetchMock.get('/api/feature', (req, res, ctx) => {
-    const queryParam = req.queryParams['feature'] || [];
-    const features = Array.isArray(queryParam) ? queryParam : [queryParam];
-    const results = features
-        .map((feature) => [feature, featureToggles[feature] || false])
-        .reduce((acc, [key, value]) => {
-            acc[key] = value;
-            return acc;
-        }, {} as ToggleMap);
-    return res(ctx.json(results));
 });
