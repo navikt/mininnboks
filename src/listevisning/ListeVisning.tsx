@@ -43,7 +43,7 @@ function ListeVisning() {
 
     return (
         <article className="blokk-center">
-            <Sidetittel className="text-center blokk-l">Innboks</Sidetittel>
+            <Sidetittel className="text-center blokk-l">Brev og vedtak</Sidetittel>
 
             <VisibleIf visibleIf={traader.length === 0}>
                 <h2 className="typo-undertittel text-center">Her kan du se dokumenter og oppgaver fra NAV.</h2>
