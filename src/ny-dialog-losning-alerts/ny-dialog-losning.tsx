@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { getSfUrl } from '../environment';
-import { visibleIfHOC } from '../utils/hocs/visible-if';
 import './sf-info-alertstriper.less';
 
 function NyDialogLosning() {
@@ -18,4 +17,4 @@ function NyDialogLosning() {
     );
 }
 
-export default visibleIfHOC(NyDialogLosning);
+export default NyDialogLosning;

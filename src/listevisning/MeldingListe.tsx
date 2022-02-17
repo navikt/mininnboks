@@ -1,5 +1,4 @@
 import * as React from 'react';
-import MeldingPreview from './MeldingPreview';
 import DokumentPreview from './DokumentPreview';
 import OppgavePreview from './OppgavePreview';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -18,8 +17,7 @@ interface Props {
 
 const previewMap: { [key: string]: React.ComponentType<any> } = {
     DOKUMENT_VARSEL: DokumentPreview,
-    OPPGAVE_VARSEL: OppgavePreview,
-    defaultVisning: MeldingPreview
+    OPPGAVE_VARSEL: OppgavePreview
 };
 
 function MeldingListe(props: Props) {
