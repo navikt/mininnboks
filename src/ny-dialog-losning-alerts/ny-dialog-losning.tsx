@@ -1,19 +1,22 @@
 import * as React from 'react';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { getSfUrl } from '../environment';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { getPersonNAVBaseUrl, getSfUrl } from '../environment';
 import './sf-info-alertstriper.less';
 
 function NyDialogLosning() {
-    const url = getSfUrl();
+    const dialogUrl = getSfUrl();
+    const sakerUrl = `${getPersonNAVBaseUrl()}/mine-saker/`;
     return (
-        <AlertStripeInfo size="4rem" className="blokk-xl alertstripe--utvided">
-            <Systemtittel>Ny innboks lansert</Systemtittel>
-            <Normaltekst>Denne løsningen vil nå vise dine brev og vedtak</Normaltekst>
+        <AlertStripeAdvarsel size="4rem" className="blokk-xl alertstripe--utvided">
+            <Systemtittel>Denne siden er under endring</Systemtittel>
             <Normaltekst>
-                Ønsker du å se dialog/meldinger mellom deg og NAV kan du gå hit: <a href={url}>{url}</a>
+                Dine tidligere meldinger er flyttet, og er nå tilgjengelig i den <a href={dialogUrl}>nye innboksen</a>.
             </Normaltekst>
-        </AlertStripeInfo>
+            <Normaltekst>
+                En oversikt over dine saker og dokumenter er tilgjengelig i <a href={sakerUrl}>Dine saker</a>.
+            </Normaltekst>
+        </AlertStripeAdvarsel>
     );
 }
 
