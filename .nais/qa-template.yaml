@@ -63,7 +63,7 @@ spec:
       value: "https://mininnboks.dev.nav.no"
     - name: MININNBOKS_API_URL
       value: "http://mininnboks-api-{{ namespace }}.personoversikt.svc.nais.local"
-    - name: FRONTENDLOGGER_URL
-      value: "http://frontendlogger.{{ namespace }}.svc.nais.local"
+    - name: DISABLE_FRONTEND_LOGGER
+      value: "true"
     - name: PUBLIC_SF_DIALOG_URL
       value: "http://maskert.io"
